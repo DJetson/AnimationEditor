@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:AnimationEditor.Resources">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="./Icons/SaveFile.xaml"/>
+        <ResourceDictionary Source="./Icons/NewFile.xaml"/>
+        <ResourceDictionary Source="./Icons/OpenFile.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
