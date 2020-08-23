@@ -3,5 +3,6 @@
                     xmlns:local="clr-namespace:AnimationEditor">
         <ResourceDictionary.MergedDictionaries>
             <ResourceDictionary Source="./Resources/Icons.xaml"/>
+            <ResourceDictionary Source="./Commands/ApplicationCommands.xaml"/>
         </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
