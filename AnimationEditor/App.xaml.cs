@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AnimationEditor.ViewModels;
+using AnimationEditor.Views;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,10 @@ namespace AnimationEditor
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            MainWindow = new MainWindow() { DataContext = new MainWindowViewModel() };
+            MainWindow.Show();
+        }
     }
 }
