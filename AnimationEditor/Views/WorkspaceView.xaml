@@ -3,12 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:UI="windows.ui.xaml."
              xmlns:local="clr-namespace:AnimationEditor.Views"
+             xmlns:ViewModels="clr-namespace:AnimationEditor.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <InkCanvas EditingMode="{Binding EditorTools.EditingMode}" Strokes="{Binding StrokeCollection}" DefaultDrawingAttributes="{Binding EditorTools.DrawingAttributes}">
-        </InkCanvas>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <InkCanvas Grid.Row="0" EditingMode="{Binding EditorTools.EditingMode}" Strokes="{Binding SelectedFrame.StrokeCollection}" DefaultDrawingAttributes="{Binding EditorTools.DrawingAttributes}"/>
+
+        <ListBox Grid.Row="1" ItemsSource="{Binding Frames}" SelectedItem="{Binding SelectedFrame, Mode=TwoWay}">
+            <ListBox.Resources>
+                <DataTemplate DataType="{x:Type ViewModels:FrameViewModel}">
+                    <Grid>
+                        <Grid.LayoutTransform>
+                            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="0.25" ScaleY="0.25"/>
+                        </Grid.LayoutTransform>
+                        <InkCanvas EditingMode="None" Strokes="{Binding StrokeCollection}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.Resources>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
     </Grid>
 </UserControl>

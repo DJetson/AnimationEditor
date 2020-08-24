@@ -9,14 +9,14 @@ namespace AnimationEditor.Interfaces
 {
     public interface IWorkspaceFileModel
     {
-        string Filepath { get; set; }
+        string Filepath { get; }
 
-        ICanvasPropertiesModel CanvasProperties { get; set; }
-        IAnimationPropertiesModel AnimationProperties { get; set; }
-        List<IFrameModel> Frames { get; set; }
+        ICanvasPropertiesModel CanvasProperties { get; }
+        IAnimationPropertiesModel AnimationProperties { get; }
+        List<IFrameModel> Frames { get; }
 
         void SyncToViewModel(WorkspaceViewModel workspaceViewModel);
-        void LoadWorkspaceFile(string filepath);
+        //IWorkspaceFileModel LoadWorkspaceFile(string filepath);
         void SaveWorkspaceFile(string filepath);
     }
 }

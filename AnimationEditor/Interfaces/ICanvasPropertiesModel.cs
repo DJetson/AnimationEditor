@@ -8,7 +8,7 @@ namespace AnimationEditor.Interfaces
 {
     public interface ICanvasPropertiesModel
     {
-        float Width { get; set; }
-        float Height { get; set; }
+        double Width { get; }
+        double Height { get; }
     }
 }

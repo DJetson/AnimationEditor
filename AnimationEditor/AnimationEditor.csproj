@@ -60,6 +60,7 @@
     <Compile Include="BaseClasses\RequeryBase.cs" />
     <Compile Include="Commands\CloseWorkspaceCommand.cs" />
     <Compile Include="Commands\CreateNewWorkspaceCommand.cs" />
+    <Compile Include="Commands\LoadWorkspaceCommand.cs" />
     <Compile Include="Commands\SaveWorkspaceCommand.cs" />
     <Compile Include="Interfaces\IAnimationPropertiesModel.cs" />
     <Compile Include="Interfaces\IEditorTool.cs" />
@@ -67,11 +68,19 @@
     <Compile Include="Interfaces\IWorkspaceFileModel.cs" />
     <Compile Include="Interfaces\ICanvasPropertiesModel.cs" />
     <Compile Include="Interfaces\IHasWorkspaceCollection.cs" />
+    <Compile Include="Models\AnimationPropertiesModel.cs" />
+    <Compile Include="Models\CanvasPropertiesModel.cs" />
+    <Compile Include="Models\FrameModel.cs" />
     <Compile Include="Models\WorkspaceFileModel.cs" />
     <Compile Include="Utilities\FileUtilities.cs" />
+    <Compile Include="ViewModels\AnimationTimelineViewModel.cs" />
     <Compile Include="ViewModels\EditorToolsViewModel.cs" />
     <Compile Include="ViewModels\EditorTools\BrushTool.cs" />
+    <Compile Include="ViewModels\FrameViewModel.cs" />
     <Compile Include="ViewModels\WorkspaceManagerViewModel.cs" />
+    <Compile Include="Views\AnimationTimelineView.xaml.cs">
+      <DependentUpon>AnimationTimelineView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditorToolSettings.xaml.cs">
       <DependentUpon>EditorToolSettings.xaml</DependentUpon>
     </Compile>
@@ -119,6 +128,10 @@
     <Page Include="Resources\Icons\SaveFile.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AnimationTimelineView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditorToolSettings.xaml">
       <SubType>Designer</SubType>

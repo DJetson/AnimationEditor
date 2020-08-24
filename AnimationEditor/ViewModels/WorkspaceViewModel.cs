@@ -43,18 +43,18 @@ namespace AnimationEditor.ViewModels
             get => Path.GetFileNameWithoutExtension(_DisplayName);
         }
 
-        private StrokeCollection _StrokeCollection = new StrokeCollection();
-        public StrokeCollection StrokeCollection
+        private FrameViewModel _SelectedFrame;
+        public FrameViewModel SelectedFrame
         {
-            get => _StrokeCollection;
-            set { _StrokeCollection = value; }
+            get => _SelectedFrame;
+            set { _SelectedFrame = value; NotifyPropertyChanged(); }
         }
 
-        private ObservableCollection<Stroke> _Strokes = new ObservableCollection<Stroke>();
-        public ObservableCollection<Stroke> Strokes
+        private ObservableCollection<FrameViewModel> _Frames = new ObservableCollection<FrameViewModel>();
+        public ObservableCollection<FrameViewModel> Frames
         {
-            get => _Strokes;
-            set { _Strokes = value; NotifyPropertyChanged(); }
+            get => _Frames;
+            set { _Frames = value; NotifyPropertyChanged(); }
         }
 
         private bool _HasUnsavedChanges = false;
@@ -72,21 +72,24 @@ namespace AnimationEditor.ViewModels
 
         public WorkspaceViewModel()
         {
-            StrokeCollection = new StrokeCollection();
-            StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
+            Frames = new ObservableCollection<FrameViewModel>();
+            Frames.Add(new FrameViewModel());
+            SelectedFrame = Frames.FirstOrDefault();
             EditorTools = EditorToolsViewModel.Instance;
         }
 
-        private void StrokeCollection_StrokesChanged(object sender, StrokeCollectionChangedEventArgs e)
+        public WorkspaceViewModel(IWorkspaceFileModel model)
         {
-            foreach (var stroke in e.Added)
+            _WorkspaceModel = model;
+
+            Frames = new ObservableCollection<FrameViewModel>();
+            foreach(var item in model.Frames)
             {
-                Strokes.Add(stroke);
+                Frames.Add(new FrameViewModel(item));
             }
-            foreach (var stroke in e.Removed)
-            {
-                Strokes.Remove(stroke);
-            }
+
+            SelectedFrame = Frames.FirstOrDefault();
+            EditorTools = EditorToolsViewModel.Instance;
         }
 
         public void Close()

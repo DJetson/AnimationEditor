@@ -8,6 +8,6 @@ namespace AnimationEditor.Interfaces
 {
     public interface IAnimationPropertiesModel
     {
-        float FramesPerSecond { get; set; }
+        double FramesPerSecond { get; }
     }
 }
