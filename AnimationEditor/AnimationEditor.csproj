@@ -55,18 +55,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BaseClasses\DelegateCommand.cs" />
+    <Compile Include="BaseClasses\Enum.cs" />
     <Compile Include="BaseClasses\RequeryBase.cs" />
     <Compile Include="Commands\CloseWorkspaceCommand.cs" />
     <Compile Include="Commands\CreateNewWorkspaceCommand.cs" />
     <Compile Include="Commands\SaveWorkspaceCommand.cs" />
     <Compile Include="Interfaces\IAnimationPropertiesModel.cs" />
+    <Compile Include="Interfaces\IEditorTool.cs" />
     <Compile Include="Interfaces\IFrameModel.cs" />
     <Compile Include="Interfaces\IWorkspaceFileModel.cs" />
     <Compile Include="Interfaces\ICanvasPropertiesModel.cs" />
     <Compile Include="Interfaces\IHasWorkspaceCollection.cs" />
     <Compile Include="Models\WorkspaceFileModel.cs" />
     <Compile Include="Utilities\FileUtilities.cs" />
+    <Compile Include="ViewModels\EditorToolsViewModel.cs" />
+    <Compile Include="ViewModels\EditorTools\BrushTool.cs" />
     <Compile Include="ViewModels\WorkspaceManagerViewModel.cs" />
+    <Compile Include="Views\EditorToolSettings.xaml.cs">
+      <DependentUpon>EditorToolSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditorToolsView.xaml.cs">
+      <DependentUpon>EditorToolsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WorkspaceManagerView.xaml.cs">
       <DependentUpon>WorkspaceManagerView.xaml</DependentUpon>
     </Compile>
@@ -89,6 +100,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Icons\DrawIconLight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\EraseIconLight.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Icons\NewFile.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -100,6 +119,14 @@
     <Page Include="Resources\Icons\SaveFile.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EditorToolSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditorToolsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

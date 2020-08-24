@@ -11,10 +11,16 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Menu>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
             <MenuItem Header="File">
                 <MenuItem Header="New" Command="{StaticResource CreateNewWorkspace}" CommandParameter="{Binding WorkspaceManager}"/>
                 <MenuItem Header="Open"/>
@@ -27,7 +33,7 @@
             </MenuItem>
         </Menu>
 
-        <ToolBarTray Grid.Row="1" Background="WhiteSmoke">
+        <ToolBarTray Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Background="WhiteSmoke">
             <ToolBar Background="LightGray">
                 <Button Width="25" Command="{StaticResource CreateNewWorkspace}" CommandParameter="{Binding WorkspaceManager}">
                     <Rectangle Stretch="UniformToFill" Fill="{StaticResource NewFile}" />
@@ -45,8 +51,23 @@
                 <Button Command="Paste" Content="Paste" />
             </ToolBar>
         </ToolBarTray>
+        <!--<ToolBarTray Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
+            <ToolBar>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Height="25" Text="{Binding Value, ElementName=BrushSizeSlider, StringFormat={}Brush Size:{0:n}}" Width="100"/>
+                    <Slider Grid.Column="1" x:Name="BrushSizeSlider" Value="{Binding CurrentTool.BrushSize, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}"  Width="75" Orientation="Horizontal" Minimum="1" Interval="1" Maximum="180" />
+                </Grid>
+            </ToolBar>
+        </ToolBarTray>-->
+        <Views:EditorToolSettings Grid.Column="0" Grid.ColumnSpan="4" DataContext="{Binding EditorToolsManager}"/>
 
-        <Views:WorkspaceManagerView Grid.Row="2" DataContext="{Binding WorkspaceManager}"/>
+        <Views:EditorToolsView Grid.Column="0" Grid.Row="3" DataContext="{Binding EditorToolsManager}"/>
+
+        <Views:WorkspaceManagerView Grid.Column="1" Grid.Row="3" DataContext="{Binding WorkspaceManager}"/>
         <!--<TabControl Grid.Row="2" ItemsSource="{Binding Workspaces}" SelectedItem="{Binding SelectedWorkspace}">
             <TabControl.ItemTemplate>
                 <DataTemplate>

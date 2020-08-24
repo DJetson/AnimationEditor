@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="AnimationEditor.Views.EditorToolsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AnimationEditor.Views"
+             xmlns:BaseClasses="clr-namespace:AnimationEditor.BaseClasses"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <ToolBarTray Orientation="Vertical">
+            <ToolBar>
+                <RadioButton Command="{Binding SelectTool}" CommandParameter="Brush" Width="35" Style="{StaticResource {x:Type ToggleButton}}" GroupName="EditorTools">
+                    <Rectangle Stretch="UniformToFill" Fill="{StaticResource DrawIconLight}" />
+                </RadioButton>
+                <RadioButton Command="{Binding SelectTool}" CommandParameter="Eraser"  Width="35" Style="{StaticResource {x:Type ToggleButton}}" GroupName="EditorTools">
+                    <Rectangle Stretch="UniformToFill" Fill="{StaticResource EraseIconLight}" />
+                </RadioButton>
+            </ToolBar>
+        </ToolBarTray>
+    </Grid>
+</UserControl>

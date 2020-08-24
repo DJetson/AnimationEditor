@@ -19,6 +19,13 @@ namespace AnimationEditor.ViewModels
             set { _WorkspaceManager = value; NotifyPropertyChanged(); }
         }
 
+        private EditorToolsViewModel _EditorToolsManager = EditorToolsViewModel.Instance;
+        public EditorToolsViewModel EditorToolsManager
+        {
+            get => _EditorToolsManager;
+            set { _EditorToolsManager = value; NotifyPropertyChanged(); }
+        }
+
         //private ObservableCollection<WorkspaceViewModel> _Workspaces = new ObservableCollection<WorkspaceViewModel>();
         //public ObservableCollection<WorkspaceViewModel> Workspaces
         //{

@@ -6,5 +6,7 @@
         <ResourceDictionary Source="./Icons/NewFile.xaml"/>
         <ResourceDictionary Source="./Icons/OpenFile.xaml"/>
         <ResourceDictionary Source="./Icons/CloseIcon.xaml"/>
+        <ResourceDictionary Source="./Icons/DrawIconLight.xaml"/>
+        <ResourceDictionary Source="./Icons/EraseIconLight.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

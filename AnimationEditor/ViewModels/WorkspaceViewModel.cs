@@ -24,6 +24,13 @@ namespace AnimationEditor.ViewModels
             set { _Host = value; NotifyPropertyChanged(); }
         }
 
+        private EditorToolsViewModel _EditorTools;
+        public EditorToolsViewModel EditorTools
+        {
+            get => _EditorTools;
+            set { _EditorTools = value; NotifyPropertyChanged(); }
+        }
+
         private string _Filepath;
         public string Filepath
         {
@@ -67,6 +74,7 @@ namespace AnimationEditor.ViewModels
         {
             StrokeCollection = new StrokeCollection();
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
+            EditorTools = EditorToolsViewModel.Instance;
         }
 
         private void StrokeCollection_StrokesChanged(object sender, StrokeCollectionChangedEventArgs e)
