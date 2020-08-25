@@ -29,8 +29,30 @@ namespace AnimationEditor.ViewModels
         public DrawingAttributes DrawingAttributes
         {
             get => _DrawingAttributes;
-            set { _DrawingAttributes = value; NotifyPropertyChanged(); }
+            set { _DrawingAttributes = value; NotifyPropertyChanged();/* NotifyPropertyChanged(nameof(OnionSkingDrawingAttributes));*/ }
         }
+
+        //public DrawingAttributes OnionSkingDrawingAttributes
+        //{
+        //    get
+        //    {
+        //        var onionSkinDrawingAttributes = new DrawingAttributes()
+        //        {
+        //            Color = Color.FromArgb(128, 255, 0, 0),
+        //            FitToCurve = _DrawingAttributes.FitToCurve,
+        //            Height = _DrawingAttributes.Height,
+        //            Width = _DrawingAttributes.Width,
+        //            IgnorePressure = _DrawingAttributes.IgnorePressure,
+        //            IsHighlighter = true,
+        //            StylusTip = _DrawingAttributes.StylusTip,
+        //            StylusTipTransform = _DrawingAttributes.StylusTipTransform
+        //        };
+
+        //        //onionSkinDrawingAttributes.IsHighlighter = true;
+        //        //onionSkinDrawingAttributes.Color = Color.FromArgb(128, 255, 0, 0);
+        //        return onionSkinDrawingAttributes;
+        //    }
+        //}
 
         public string BrushColor
         {

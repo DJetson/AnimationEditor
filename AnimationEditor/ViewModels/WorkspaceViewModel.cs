@@ -1,4 +1,5 @@
-﻿using AnimationEditor.Interfaces;
+﻿using AnimationEditor.BaseClasses;
+using AnimationEditor.Interfaces;
 using AnimationEditor.Models;
 using Microsoft.Win32;
 using System;
@@ -38,24 +39,38 @@ namespace AnimationEditor.ViewModels
             set { _Filepath = value; NotifyPropertyChanged(); NotifyPropertyChanged(nameof(Filename)); }
         }
 
+        private OnionSkinVisibility _OnionSkinVisibility = OnionSkinVisibility.NextFramesOnly;
+        public OnionSkinVisibility OnionSkinVisibility
+        {
+            get => _OnionSkinVisibility;
+            set { _OnionSkinVisibility = value; NotifyPropertyChanged(); }
+        }
+
         public string Filename
         {
             get => Path.GetFileNameWithoutExtension(_DisplayName);
         }
 
-        private FrameViewModel _SelectedFrame;
-        public FrameViewModel SelectedFrame
+        //private FrameViewModel _SelectedFrame;
+        //public FrameViewModel SelectedFrame
+        //{
+        //    get => _SelectedFrame;
+        //    set { _SelectedFrame = value; NotifyPropertyChanged(); }
+        //}
+
+        private AnimationTimelineViewModel _AnimationTimelineViewModel = new AnimationTimelineViewModel();
+        public AnimationTimelineViewModel AnimationTimelineViewModel
         {
-            get => _SelectedFrame;
-            set { _SelectedFrame = value; NotifyPropertyChanged(); }
+            get => _AnimationTimelineViewModel;
+            set { _AnimationTimelineViewModel = value; NotifyPropertyChanged(); }
         }
 
-        private ObservableCollection<FrameViewModel> _Frames = new ObservableCollection<FrameViewModel>();
-        public ObservableCollection<FrameViewModel> Frames
-        {
-            get => _Frames;
-            set { _Frames = value; NotifyPropertyChanged(); }
-        }
+        //private ObservableCollection<FrameViewModel> _Frames = new ObservableCollection<FrameViewModel>();
+        //public ObservableCollection<FrameViewModel> Frames
+        //{
+        //    get => _Frames;
+        //    set { _Frames = value; NotifyPropertyChanged(); }
+        //}
 
         private bool _HasUnsavedChanges = false;
         public bool HasUnsavedChanges
@@ -72,9 +87,7 @@ namespace AnimationEditor.ViewModels
 
         public WorkspaceViewModel()
         {
-            Frames = new ObservableCollection<FrameViewModel>();
-            Frames.Add(new FrameViewModel());
-            SelectedFrame = Frames.FirstOrDefault();
+            AnimationTimelineViewModel = new AnimationTimelineViewModel();
             EditorTools = EditorToolsViewModel.Instance;
         }
 
@@ -82,13 +95,7 @@ namespace AnimationEditor.ViewModels
         {
             _WorkspaceModel = model;
 
-            Frames = new ObservableCollection<FrameViewModel>();
-            foreach(var item in model.Frames)
-            {
-                Frames.Add(new FrameViewModel(item));
-            }
-
-            SelectedFrame = Frames.FirstOrDefault();
+            AnimationTimelineViewModel = new AnimationTimelineViewModel(model.Frames);
             EditorTools = EditorToolsViewModel.Instance;
         }
 

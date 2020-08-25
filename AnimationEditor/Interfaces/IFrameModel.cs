@@ -9,6 +9,7 @@ namespace AnimationEditor.Interfaces
 {
     public interface IFrameModel
     {
+        //int Order { get; }
         //Layers
         StrokeCollection StrokeCollection { get; }
     }

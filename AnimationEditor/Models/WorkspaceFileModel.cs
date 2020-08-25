@@ -67,7 +67,7 @@ namespace AnimationEditor.Models
             _Frames.Clear();
 
             //Frames = new ObservableCollection<FrameViewModel>();
-            foreach (var item in workspaceViewModel.Frames)
+            foreach (var item in workspaceViewModel.AnimationTimelineViewModel.Frames)
             {
                 _Frames.Add(new FrameModel(item.StrokeCollection));
             }

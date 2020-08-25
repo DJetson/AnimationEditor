@@ -25,6 +25,13 @@ namespace AnimationEditor.ViewModels
             set { _Strokes = value; NotifyPropertyChanged(); }
         }
 
+        //private int _Order;
+        //public int Order
+        //{
+        //    get => _Order;
+        //    set { _Order = value; NotifyPropertyChanged(); }
+        //}
+
         public FrameViewModel()
         {
             StrokeCollection = new StrokeCollection();
