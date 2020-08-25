@@ -37,6 +37,9 @@ namespace AnimationEditor.ViewModels
         {
             var newWorkspace = new WorkspaceViewModel() { DisplayName = FileUtilities.GetUniquePlaceholderName(this), HasUnsavedChanges = true, Host = this };
             Workspaces.Add(newWorkspace);
+
+            SelectedWorkspace = newWorkspace;
+
             return newWorkspace;
         }
 
@@ -46,6 +49,7 @@ namespace AnimationEditor.ViewModels
             {
                 item.Host = this;
                 Workspaces.Add(item);
+                SelectedWorkspace = item;
             }
         }
 

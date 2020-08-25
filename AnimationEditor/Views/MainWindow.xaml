@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ViewModels="clr-namespace:AnimationEditor.ViewModels"
+        xmlns:p="clr-namespace:AnimationEditor.Properties"
         xmlns:Views="clr-namespace:AnimationEditor.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -30,6 +31,13 @@
                 <MenuItem Header="Cut"/>
                 <MenuItem Header="Copy"/>
                 <MenuItem Header="Paste"/>
+            </MenuItem>
+            <MenuItem Header="View">
+                <MenuItem Header="Onionskin">
+                    <MenuItem Header="Onionskin Settings..." Command="{StaticResource ShowOnionSkinSettingsWindow}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+                    <MenuItem Header="Show Onionskins on Preceding Frames" IsCheckable="True" IsChecked="{Binding IsShowPreviousOnionSkinsEnabled, Source={x:Static p:Settings.Default}}"/>
+                    <MenuItem Header="Show Onionskins on Succeeding Frames" IsCheckable="True" IsChecked="{Binding IsShowNextOnionSkinsEnabled, Source={x:Static p:Settings.Default}}"/>
+                </MenuItem>
             </MenuItem>
         </Menu>
 
@@ -63,7 +71,7 @@
                 </Grid>
             </ToolBar>
         </ToolBarTray>-->
-        <Views:EditorToolSettings Grid.Column="0" Grid.ColumnSpan="4" DataContext="{Binding EditorToolsManager}"/>
+        <Views:EditorToolSettings Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" DataContext="{Binding EditorToolsManager}"/>
 
         <Views:EditorToolsView Grid.Column="0" Grid.Row="3" DataContext="{Binding EditorToolsManager}"/>
 

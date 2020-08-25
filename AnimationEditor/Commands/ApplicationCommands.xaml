@@ -6,4 +6,5 @@
     <Commands:CloseWorkspaceCommand x:Key="CloseWorkspace" />
     <Commands:SaveWorkspaceCommand x:Key="SaveWorkspace" />
     <Commands:LoadWorkspaceCommand x:Key="LoadWorkspace" />
+    <Commands:ShowOnionSkinSettingsWindowCommand x:Key="ShowOnionSkinSettingsWindow" />
 </ResourceDictionary>

@@ -20,5 +20,14 @@ namespace AnimationEditor
             MainWindow = new MainWindow() { DataContext = new MainWindowViewModel() };
             MainWindow.Show();
         }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            //This is the best way I can think of right now to save settings that are
+            //stored in the Settings table and also have their state bound directly to 
+            //File menu checkboxes as there is no other point in the existing control flow
+            //in which to reasonably insert a call to the Save method.
+            AnimationEditor.Properties.Settings.Default.Save();
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AnimationEditor.Interfaces;
+using AnimationEditor.Properties;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +13,8 @@ namespace AnimationEditor.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        public override string DisplayName => Resources.MainWindowViewModelDisplayName;
+
         private WorkspaceManagerViewModel _WorkspaceManager = new WorkspaceManagerViewModel();
         public WorkspaceManagerViewModel WorkspaceManager
         {

@@ -39,12 +39,12 @@ namespace AnimationEditor.ViewModels
             set { _Filepath = value; NotifyPropertyChanged(); NotifyPropertyChanged(nameof(Filename)); }
         }
 
-        private OnionSkinVisibility _OnionSkinVisibility = OnionSkinVisibility.NextFramesOnly;
-        public OnionSkinVisibility OnionSkinVisibility
-        {
-            get => _OnionSkinVisibility;
-            set { _OnionSkinVisibility = value; NotifyPropertyChanged(); }
-        }
+        //private OnionSkinVisibility _OnionSkinVisibility = OnionSkinVisibility.NextFramesOnly;
+        //public OnionSkinVisibility OnionSkinVisibility
+        //{
+        //    get => _OnionSkinVisibility;
+        //    set { _OnionSkinVisibility = value; NotifyPropertyChanged(); }
+        //}
 
         public string Filename
         {
