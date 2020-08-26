@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<DrawingBrush x:Key="Paste" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 72,40L 216,40L 216,240L 72,240L 72,40 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 144,15.9998C 139.582,15.9998 136,19.5815 136,23.9998C 136,28.4181 139.582,31.9998 144,31.9998C 148.418,31.9998 152,28.4181 152,23.9998C 152,19.5815 148.418,15.9998 144,15.9998 Z M 144,-3.05176e-005C 157.255,-3.05176e-005 168,10.7451 168,24L 168,31.9999L 184,32C 188.418,32 192,35.5817 192,40L 192,64C 192,68.4183 188.418,72 184,72L 104,72C 99.5817,72 96,68.4183 96,64L 96,40C 96,35.5817 99.5817,32 104,32L 120,31.9999L 120,24C 120,10.7451 130.745,-3.05176e-005 144,-3.05176e-005 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="1" MiterLimit="2.75" Brush="#FFFFFFFF"/>
+						</GeometryDrawing.Pen>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 71.2727,40L 88,40L 88,56L 80,56L 80,232L 208,232L 208,56L 200,56L 200,40L 216.727,40C 220.744,40 224,43.3259 224,47.4286L 224,240.571C 224,244.674 220.744,248 216.727,248L 71.2727,248C 67.2561,248 64,244.674 64,240.571L 64,47.4286C 64,43.3259 67.2561,40 71.2727,40 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 56,104L 144,104C 152.837,104 160,111.163 160,120L 160,240C 160,248.837 152.837,256 144,256L 56,256C 47.1634,256 40,248.837 40,240L 40,120C 40,111.163 47.1634,104 56,104 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="8" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" Brush="#FFFFFFFF"/>
+						</GeometryDrawing.Pen>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 58,120L 142,120C 143.105,120 144,120.895 144,122L 144,238C 144,239.105 143.105,240 142,240L 58,240C 56.8954,240 56,239.105 56,238L 56,122C 56,120.895 56.8954,120 58,120 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="8" MiterLimit="2.75" Brush="#FFFFFFFF"/>
+						</GeometryDrawing.Pen>
+					</GeometryDrawing>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+</ResourceDictionary>

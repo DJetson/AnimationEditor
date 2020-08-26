@@ -2,11 +2,24 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:AnimationEditor.Resources">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="./Icons/SaveFile.xaml"/>
-        <ResourceDictionary Source="./Icons/NewFile.xaml"/>
-        <ResourceDictionary Source="./Icons/OpenFile.xaml"/>
+        <ResourceDictionary Source="./Icons/AppendAfterLastFrame.xaml"/>
         <ResourceDictionary Source="./Icons/CloseIcon.xaml"/>
         <ResourceDictionary Source="./Icons/DrawIconLight.xaml"/>
+        <ResourceDictionary Source="./Icons/Duplicate.xaml"/>
         <ResourceDictionary Source="./Icons/EraseIconLight.xaml"/>
+        <ResourceDictionary Source="./Icons/InsertBeforeFirstFrame.xaml"/>
+        <ResourceDictionary Source="./Icons/InsertNewFrameNext.xaml"/>
+        <ResourceDictionary Source="./Icons/InsertNewFramePrevious.xaml"/>
+        <ResourceDictionary Source="./Icons/JumpToFirstFrame.xaml"/>
+        <ResourceDictionary Source="./Icons/JumpToLastFrame.xaml"/>
+        <ResourceDictionary Source="./Icons/NewFile.xaml"/>
+        <ResourceDictionary Source="./Icons/NextFrame.xaml"/>
+        <ResourceDictionary Source="./Icons/OpenFile.xaml"/>
+        <ResourceDictionary Source="./Icons/Paste.xaml"/>
+        <ResourceDictionary Source="./Icons/PauseIcon.xaml"/>
+        <ResourceDictionary Source="./Icons/PlayIcon.xaml"/>
+        <ResourceDictionary Source="./Icons/PreviousFrame.xaml"/>
+        <ResourceDictionary Source="./Icons/SaveFile.xaml"/>
+        <ResourceDictionary Source="./Icons/StopIcon.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

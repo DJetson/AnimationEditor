@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<DrawingBrush x:Key="InsertBeforeFirstFrame" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 55.9999,24.0001L 56,128L 55.9999,232L 31.9999,232L 31.9999,24.0001L 55.9999,24.0001 Z M 56,128L 224,24.0001L 224,232L 56,128 Z M 160,88L 160,120L 128,120L 128,136L 160,136L 160,168L 176,168L 176,136L 208,136L 208,120L 176,120L 176,88L 160,88 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+</ResourceDictionary>

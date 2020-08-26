@@ -9,6 +9,16 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="./Resources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="ImageButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate DataType="{x:Type DrawingBrush}">
+                            <Rectangle Stretch="UniformToFill" Fill="{Binding }"/>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

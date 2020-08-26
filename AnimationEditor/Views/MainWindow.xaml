@@ -42,60 +42,30 @@
         </Menu>
 
         <ToolBarTray Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Background="WhiteSmoke">
+            <ToolBarTray.Resources>
+                <Style x:Key="{x:Static ToolBar.ButtonStyleKey}" TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButtonStyle}">
+                    <Style.Setters>
+                        <Setter Property="Width" Value="25"/>
+                    </Style.Setters>
+                </Style>
+            </ToolBarTray.Resources>
             <ToolBar Background="LightGray">
-                <Button Width="25" Command="{StaticResource CreateNewWorkspace}" CommandParameter="{Binding WorkspaceManager}">
-                    <Rectangle Stretch="UniformToFill" Fill="{StaticResource NewFile}" />
-                </Button>
-                <Button Width="25" Command="{StaticResource LoadWorkspace}" CommandParameter="{Binding WorkspaceManager}">
-                    <Rectangle Stretch="UniformToFill" Fill="{StaticResource OpenFile}"/>
-                </Button>
-                <Button Width="25" Command="{StaticResource SaveWorkspace}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}">
-                    <Rectangle Stretch="UniformToFill" Fill="{StaticResource SaveFile}" />
-                </Button>
+                <Button Content="{StaticResource NewFile}" Command="{StaticResource CreateNewWorkspace}" CommandParameter="{Binding WorkspaceManager}"/>
+                <Button Content="{StaticResource OpenFile}" Command="{StaticResource LoadWorkspace}" CommandParameter="{Binding WorkspaceManager}"/>
+                <Button Content="{StaticResource SaveFile}" Command="{StaticResource SaveWorkspace}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
             </ToolBar>
             <ToolBar>
-                <Button Command="Cut" Content="Cut" />
-                <Button Command="Copy" Content="Copy" />
-                <Button Command="Paste" Content="Paste" />
+                <!--<Button Command="Cut" Content="Cut" />-->
+                <Button Content="{StaticResource Duplicate}" Command="Copy" />
+                <Button Content="{StaticResource Paste}" Command="Paste" />
             </ToolBar>
         </ToolBarTray>
-        <!--<ToolBarTray Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
-            <ToolBar>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Height="25" Text="{Binding Value, ElementName=BrushSizeSlider, StringFormat={}Brush Size:{0:n}}" Width="100"/>
-                    <Slider Grid.Column="1" x:Name="BrushSizeSlider" Value="{Binding CurrentTool.BrushSize, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}"  Width="75" Orientation="Horizontal" Minimum="1" Interval="1" Maximum="180" />
-                </Grid>
-            </ToolBar>
-        </ToolBarTray>-->
+
         <Views:EditorToolSettings Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" DataContext="{Binding EditorToolsManager}"/>
 
         <Views:EditorToolsView Grid.Column="0" Grid.Row="3" DataContext="{Binding EditorToolsManager}"/>
 
         <Views:WorkspaceManagerView Grid.Column="1" Grid.Row="3" DataContext="{Binding WorkspaceManager}"/>
-        <!--<TabControl Grid.Row="2" ItemsSource="{Binding Workspaces}" SelectedItem="{Binding SelectedWorkspace}">
-            <TabControl.ItemTemplate>
-                <DataTemplate>
-                    <DockPanel ToolTip="{Binding Filepath}">
-                        --><!--<Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>--><!--
-                        <TextBlock DockPanel.Dock="Left" Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis" />
-                        <Button DockPanel.Dock="Right" Height="15" Width="15" Margin="10,0,-5,0" >
-                            <Rectangle Stretch="UniformToFill" Fill="{StaticResource CloseIcon}" />
-                        </Button>
-                    </DockPanel>
-                </DataTemplate>
-            </TabControl.ItemTemplate>
-            <TabControl.ContentTemplate>
-                <DataTemplate DataType="{x:Type ViewModels:WorkspaceViewModel}">
-                    <Views:WorkspaceView />
-                </DataTemplate>
-            </TabControl.ContentTemplate>
-        </TabControl>-->
+
     </Grid>
 </Window>

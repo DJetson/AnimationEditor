@@ -15,6 +15,8 @@ using System.Windows.Threading;
 
 namespace AnimationEditor.ViewModels
 {
+    public enum FrameNavigation { Start, Previous, Current, Next, End };
+
     public class AnimationTimelineViewModel : ViewModelBase
     {
         private ObservableCollection<FrameViewModel> _Frames;
@@ -52,22 +54,53 @@ namespace AnimationEditor.ViewModels
             set { _FramesPerSecond = value; NotifyPropertyChanged(); }
         }
 
-        private DelegateCommand _AppendFrame;
-        public DelegateCommand AppendFrame
+        private DelegateCommand _AddBlankFrame;
+        public DelegateCommand AddBlankFrame
         {
-            get => _AppendFrame;
-            set { _AppendFrame = value; NotifyPropertyChanged(); }
+            get => _AddBlankFrame;
+            set { _AddBlankFrame = value; NotifyPropertyChanged(); }
         }
 
-        public void AppendFrame_Execute(object parameter)
+        public void AddBlankFrame_Execute(object parameter)
         {
             var newFrame = new FrameViewModel();
-            AddFrameAtIndex(newFrame, Frames.Count);
+
+            int insertAtIndex = Frames.Count;
+            int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
+            var Parameter = (FrameNavigation)Enum.Parse(typeof(FrameNavigation), parameter.ToString());
+            switch(Parameter)
+            {
+                case FrameNavigation.Start:
+                    insertAtIndex = 0;
+                    break;
+                case FrameNavigation.Previous:
+                    insertAtIndex = selectedFrameIndex; 
+                    break;
+                case FrameNavigation.Next:
+                    insertAtIndex = selectedFrameIndex + 1;
+                    break;
+                case FrameNavigation.End:
+                    insertAtIndex = Frames.Count;
+                    break;
+            }
+
+            AddFrameAtIndex(newFrame, insertAtIndex);
             SelectedFrame = newFrame;
         }
 
-        public bool AppendFrame_CanExecute(object parameter)
+        public bool AddBlankFrame_CanExecute(object parameter)
         {
+            if (IsInPlaybackMode)
+                return false;
+
+            FrameNavigation Parameter;
+
+            if (Enum.TryParse<FrameNavigation>(parameter.ToString(), out Parameter) == false)
+                return false;
+
+            if (Parameter == FrameNavigation.Current)
+                return false;
+
             return true;
         }
 
@@ -161,7 +194,7 @@ namespace AnimationEditor.ViewModels
 
         public bool StopAnimation_CanExecute(object parameter)
         {
-            if(_PlaybackState == null)
+            if (_PlaybackState == null)
                 return false;
             if (_PlaybackState.PlaybackState != AnimationPlaybackState.PlaybackStates.Play)
                 return false;
@@ -182,7 +215,8 @@ namespace AnimationEditor.ViewModels
             get
             {
                 if (NextFrame == null)
-                    return null;
+                    return new StrokeCollection();
+
                 var strokes = NextFrame.StrokeCollection.Clone();
                 foreach (var item in strokes)
                 {
@@ -198,7 +232,8 @@ namespace AnimationEditor.ViewModels
             get
             {
                 if (PreviousFrame == null)
-                    return null;
+                    return new StrokeCollection();
+
                 var strokes = PreviousFrame.StrokeCollection.Clone();
                 foreach (var item in strokes)
                 {
@@ -221,7 +256,7 @@ namespace AnimationEditor.ViewModels
 
         public void InitializeCommands()
         {
-            AppendFrame = new DelegateCommand(AppendFrame_CanExecute, AppendFrame_Execute);
+            AddBlankFrame = new DelegateCommand(AddBlankFrame_CanExecute, AddBlankFrame_Execute);
             PlayAnimation = new DelegateCommand(PlayAnimation_CanExecute, PlayAnimation_Execute);
             StopAnimation = new DelegateCommand(StopAnimation_CanExecute, StopAnimation_Execute);
         }
@@ -255,7 +290,7 @@ namespace AnimationEditor.ViewModels
             {
                 Frames.Insert(index, frame);
             }
-            else if (index == Frames.Count)
+            else if (index >= Frames.Count)
             {
                 Frames.Add(frame);
             }
