@@ -73,6 +73,7 @@
     <Compile Include="Models\CanvasPropertiesModel.cs" />
     <Compile Include="Models\FrameModel.cs" />
     <Compile Include="Models\WorkspaceFileModel.cs" />
+    <Compile Include="Utilities\AnimationPlaybackState.cs" />
     <Compile Include="Utilities\FileUtilities.cs" />
     <Compile Include="ViewModels\AnimationTimelineViewModel.cs" />
     <Compile Include="ViewModels\EditorToolsViewModel.cs" />
