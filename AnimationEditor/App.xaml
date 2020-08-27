@@ -10,15 +10,26 @@
                 <ResourceDictionary Source="./Resources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <Style x:Key="ImageButtonStyle" TargetType="{x:Type Button}">
-                <Setter Property="ContentTemplate">
-                    <Setter.Value>
-                        <DataTemplate DataType="{x:Type DrawingBrush}">
-                            <Rectangle Stretch="UniformToFill" Fill="{Binding }"/>
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
+            <!-- I'm just leaving this in here because it was an interesting thing I tried and it actually worked.
+                 I'd like to keep it around just in case I ever come across a situation where it proves useful.
+                 Which does seem rather unlikely, but still...
+            <Binding x:Key="PlaybackStateBinding" Path="AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState"/>
+
+            <Setter x:Key="StrokeSetter" Property="InkCanvas.Strokes" Value="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentFrame.StrokeCollection}"/>
+            <Setter x:Key="EditingModeSetter" Property="InkCanvas.EditingMode" Value="None"/>
+
+            <DataTrigger x:Key="AnimationPlaybackStateTriggerPlay" Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState}" Value="Play"/>
+            <DataTrigger x:Key="AnimationPlaybackStateTriggerPause" Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState}" Value="Play"/>
+
+            <DataTrigger Value="Play">
+                <DataTrigger.Binding>
+                    <StaticResource ResourceKey="PlaybackStateBinding"/>
+                </DataTrigger.Binding>
+                <StaticResource ResourceKey="StrokeSetter"/>
+                <StaticResource ResourceKey="EditingModeSetter"/>
+            </DataTrigger>
+            -->
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

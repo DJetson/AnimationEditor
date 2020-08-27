@@ -73,7 +73,7 @@
     <Compile Include="Models\CanvasPropertiesModel.cs" />
     <Compile Include="Models\FrameModel.cs" />
     <Compile Include="Models\WorkspaceFileModel.cs" />
-    <Compile Include="Utilities\AnimationPlaybackState.cs" />
+    <Compile Include="ViewModels\AnimationPlaybackViewModel.cs" />
     <Compile Include="Utilities\FileUtilities.cs" />
     <Compile Include="ViewModels\AnimationTimelineViewModel.cs" />
     <Compile Include="ViewModels\EditorToolsViewModel.cs" />
@@ -125,6 +125,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Icons\Duplicate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\DuplicateToNext.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\DuplicateToPrevious.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -193,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Styles\ImageButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\OnionSkinInkCanvas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

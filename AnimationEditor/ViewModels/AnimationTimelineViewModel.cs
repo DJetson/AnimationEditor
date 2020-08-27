@@ -1,6 +1,5 @@
 ﻿using AnimationEditor.BaseClasses;
 using AnimationEditor.Interfaces;
-using AnimationEditor.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,17 +18,18 @@ namespace AnimationEditor.ViewModels
 
     public class AnimationTimelineViewModel : ViewModelBase
     {
+        private AnimationPlaybackViewModel _AnimationPlaybackViewModel = new AnimationPlaybackViewModel();
+        public AnimationPlaybackViewModel AnimationPlaybackViewModel
+        {
+            get { return _AnimationPlaybackViewModel; }
+            set { _AnimationPlaybackViewModel = value; NotifyPropertyChanged(); }
+        }
+
         private ObservableCollection<FrameViewModel> _Frames;
         public ObservableCollection<FrameViewModel> Frames
         {
             get => _Frames;
-            set
-            {
-                _Frames = value;
-                NotifyPropertyChanged();
-
-                SelectedFrame = Frames.FirstOrDefault();
-            }
+            set { _Frames = value; NotifyPropertyChanged(); SelectedFrame = Frames.FirstOrDefault(); }
         }
 
         private FrameViewModel _SelectedFrame;
@@ -54,6 +54,117 @@ namespace AnimationEditor.ViewModels
             set { _FramesPerSecond = value; NotifyPropertyChanged(); }
         }
 
+        public StrokeCollection NextFrameStrokes
+        {
+            get
+            {
+                if (NextFrame == null)
+                    return new StrokeCollection();
+
+                var strokes = NextFrame.StrokeCollection.Clone();
+                foreach (var item in strokes)
+                {
+                    item.DrawingAttributes.IsHighlighter = true;
+                    item.DrawingAttributes.Color = Color.FromArgb(128, 0, 255, 0);
+                }
+                return strokes;
+            }
+        }
+
+        public StrokeCollection PreviousFrameStrokes
+        {
+            get
+            {
+                if (PreviousFrame == null)
+                    return new StrokeCollection();
+
+                var strokes = PreviousFrame.StrokeCollection.Clone();
+                foreach (var item in strokes)
+                {
+                    item.DrawingAttributes.IsHighlighter = true;
+                    item.DrawingAttributes.Color = Color.FromArgb(128, 255, 0, 0);
+                }
+                return strokes;
+            }
+        }
+
+        public FrameViewModel NextFrame => Frames.ElementAtOrDefault(Frames.IndexOf(SelectedFrame) + 1);
+        public FrameViewModel PreviousFrame => Frames.ElementAtOrDefault(Frames.IndexOf(SelectedFrame) - 1);
+
+        #region PlayAnimation Command
+        private DelegateCommand _PlayAnimation;
+        public DelegateCommand PlayAnimation
+        {
+            get { return _PlayAnimation; }
+            set { _PlayAnimation = value; NotifyPropertyChanged(); }
+        }
+
+        public void PlayAnimation_Execute(object parameter)
+        {
+            //NOTE: Eventually this will be able to be set to the set of currently selected frames as well
+            var playbackFrames = Frames.ToList();
+
+            //NOTE: I may have to eventually do some caching up top here. Rasterize all of the InkCanvases in the series
+            //      and just flip through those instead of directly showing the InkCanvases. It will depend entirely on
+            //      how well it performs in it's initial, most basic form.
+
+            switch (AnimationPlaybackViewModel.CurrentState)
+            {
+                case PlaybackStates.Pause:
+                    AnimationPlaybackViewModel.ResumePlayback();
+                    break;
+                case PlaybackStates.Play:
+                    AnimationPlaybackViewModel.PausePlayback();
+                    break;
+                case PlaybackStates.Stop:
+                    AnimationPlaybackViewModel.StartPlayback(playbackFrames, FramesPerSecond);
+                    break;
+            }
+        }
+
+        public bool PlayAnimation_CanExecute(object parameter)
+        {
+            //TODO: Eventually I need to add the conditions to return false If we're currently 
+            //in a "modal" state with the ink canvas for any reason, return false. We don't 
+            //need an active Scale transform going all screwy because the user accidentally hits 
+            //the play button before they resolve the resize, causing the playback object to yank 
+            //the target frame right out from under them
+
+            return true;
+        }
+        #endregion PlayAnimation Command
+
+        #region StopAnimation Command
+        private DelegateCommand _StopAnimation;
+        public DelegateCommand StopAnimation
+        {
+            get { return _StopAnimation; }
+            set { _StopAnimation = value; NotifyPropertyChanged(); }
+        }
+
+        public void StopAnimation_Execute(object parameter)
+        {
+            switch (AnimationPlaybackViewModel.CurrentState)
+            {
+                case PlaybackStates.Pause:
+                    AnimationPlaybackViewModel.StopPlayback();
+                    break;
+                case PlaybackStates.Play:
+                    AnimationPlaybackViewModel.StopPlayback();
+                    break;
+            }
+        }
+
+        public bool StopAnimation_CanExecute(object parameter)
+        {
+            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Stop)
+                return false;
+
+            return true;
+        }
+        #endregion StopAnimation Command
+
+        #region NavigateToFrame Command
         private DelegateCommand _NavigateToFrame;
         public DelegateCommand NavigateToFrame
         {
@@ -89,7 +200,7 @@ namespace AnimationEditor.ViewModels
 
         public bool NavigateToFrame_CanExecute(object parameter)
         {
-            if (IsInPlaybackMode)
+            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Play)
                 return false;
 
             if (Enum.TryParse<FrameNavigation>(parameter.ToString(), out FrameNavigation Parameter) == false)
@@ -100,7 +211,9 @@ namespace AnimationEditor.ViewModels
 
             return true;
         }
+        #endregion NavigateToFrame Command
 
+        #region AddBlankFrame Command
         private DelegateCommand _AddBlankFrame;
         public DelegateCommand AddBlankFrame
         {
@@ -137,7 +250,10 @@ namespace AnimationEditor.ViewModels
 
         public bool AddBlankFrame_CanExecute(object parameter)
         {
-            if (IsInPlaybackMode)
+            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Play)
+                return false;
+
+            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Pause)
                 return false;
 
             if (Enum.TryParse<FrameNavigation>(parameter.ToString(), out FrameNavigation Parameter) == false)
@@ -148,156 +264,66 @@ namespace AnimationEditor.ViewModels
 
             return true;
         }
+        #endregion AddBlankFrame Command
 
-        private DelegateCommand _PlayAnimation;
-        public DelegateCommand PlayAnimation
+        #region DuplicateCurrentFrame Command
+        private DelegateCommand _DuplicateCurrentFrame;
+        public DelegateCommand DuplicateCurrentFrame
         {
-            get { return _PlayAnimation; }
-            set { _PlayAnimation = value; NotifyPropertyChanged(); }
+            get { return _DuplicateCurrentFrame; }
+            set { _DuplicateCurrentFrame = value; NotifyPropertyChanged(); }
         }
 
-        private DelegateCommand _StopAnimation;
-        public DelegateCommand StopAnimation
+        public void DuplicateCurrentFrame_Execute(object parameter)
         {
-            get { return _StopAnimation; }
-            set { _StopAnimation = value; NotifyPropertyChanged(); }
-        }
+            var Parameter = (FrameNavigation)Enum.Parse(typeof(FrameNavigation), parameter.ToString());
 
-        private bool _IsInPlaybackMode = false;
-        public bool IsInPlaybackMode
-        {
-            get { return _IsInPlaybackMode; }
-            set { _IsInPlaybackMode = value; NotifyPropertyChanged(); }
-        }
+            int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
+            int DuplicateCurrentFrameToIndex = selectedFrameIndex;
 
-        private AnimationPlaybackState _PlaybackState;
-
-        public void PlayAnimation_Execute(object parameter)
-        {
-            //TODO: Turn off onionskins. This will require a minor refactor so that the binding used for onionskin
-            //      visibility is an AND between some flag that gets raised by this method, and the actual visibility
-            //      setting. So that it turns off when the animation is playing and turns back on when it stops.
-
-            //NOTE: I may have to eventually do some caching up top here. Rasterize all of the InkCanvases in the series
-            //      and just flip through those instead of directly showing the InkCanvases. It will depend entirely on
-            //      how well it performs in it's initial, most basic form.
-
-            if (IsInPlaybackMode == false)
+            var newFrame = new FrameViewModel()
             {
-                _PlaybackState = new AnimationPlaybackState(this);
-            }
-            else
+                StrokeCollection = SelectedFrame.StrokeCollection.Clone(),
+                Strokes = new ObservableCollection<Stroke>(SelectedFrame.Strokes),
+            };
+
+            switch (Parameter)
             {
-                _PlaybackState.RequestPlaybackState(this, AnimationPlaybackState.PlaybackStates.Pause);
-                IsInPlaybackMode = false;
+                //case FrameNavigation.Start:
+                //    DuplicateCurrentFrameToIndex = 0;
+                //    break;
+                case FrameNavigation.Previous:
+                    DuplicateCurrentFrameToIndex = selectedFrameIndex;
+                    break;
+                case FrameNavigation.Next:
+                    DuplicateCurrentFrameToIndex = selectedFrameIndex + 1;
+                    break;
+                //case FrameNavigation.End:
+                //    DuplicateCurrentFrameToIndex = Frames.Count - 1;
+                //    break;
             }
 
-            //Timer t = new Timer(AnimationTimerIntervalElapsed,null,0, (int)(1000 * (1.0/FramesPerSecond)));
-
-        }
-        public void StopAnimation_Execute(object parameter)
-        {
-            _PlaybackState.RequestPlaybackState(this, AnimationPlaybackState.PlaybackStates.Stop);
-
-            if (_PlaybackState.PlaybackState == AnimationPlaybackState.PlaybackStates.Stop)
-                _PlaybackState = null;
-
-            IsInPlaybackMode = false;
+            AddFrameAtIndex(newFrame, DuplicateCurrentFrameToIndex);
+            SelectedFrame = Frames[DuplicateCurrentFrameToIndex];
         }
 
-        //private void PauseAnimationPlayback()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //private void BeginAnimationPlayback()
-        //{
-        //    DispatcherTimer timer = new DispatcherTimer();
-        //    timer.Interval = new TimeSpan((int)(1000 * (1.0 / FramesPerSecond)));
-
-        //    int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
-
-        //    timer.Tick += (sender, e) =>
-        //    {
-        //        int nextFrameIndex = (selectedFrameIndex + 1) % Frames.Count;
-
-        //        SelectedFrame = Frames[nextFrameIndex];
-        //    };
-
-        //    IsInPlaybackMode = true;
-        //    timer.Start();
-        //}
-
-        //private void AnimationTimerIntervalElapsed(object state)
-        //{
-        //}
-
-        public bool PlayAnimation_CanExecute(object parameter)
+        public bool DuplicateCurrentFrame_CanExecute(object parameter)
         {
-            return true;
-        }
-
-        public bool StopAnimation_CanExecute(object parameter)
-        {
-            if (_PlaybackState == null)
+            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Play)
                 return false;
-            if (_PlaybackState.PlaybackState != AnimationPlaybackState.PlaybackStates.Play)
+
+            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Pause)
+                return false;
+
+            if (Enum.TryParse<FrameNavigation>(parameter.ToString(), out FrameNavigation Parameter) == false)
+                return false;
+
+            if (Parameter == FrameNavigation.Current)
                 return false;
 
             return true;
         }
-
-        //private ObservableCollection<FrameViewModel> _NextFrames = new ObservableCollection<FrameViewModel>();
-        //public ObservableCollection<FrameViewModel> NextFrames
-        //{
-        //    get => _NextFrames;
-        //    set { _NextFrames = value; NotifyPropertyChanged(); }
-        //}
-
-        //private FrameViewModel _NextFrame;
-        public StrokeCollection NextFrameStrokes
-        {
-            get
-            {
-                if (NextFrame == null)
-                    return new StrokeCollection();
-
-                var strokes = NextFrame.StrokeCollection.Clone();
-                foreach (var item in strokes)
-                {
-                    item.DrawingAttributes.IsHighlighter = true;
-                    item.DrawingAttributes.Color = Color.FromArgb(128, 0, 255, 0);
-                }
-                return strokes;
-            }
-        }
-
-        public StrokeCollection PreviousFrameStrokes
-        {
-            get
-            {
-                if (PreviousFrame == null)
-                    return new StrokeCollection();
-
-                var strokes = PreviousFrame.StrokeCollection.Clone();
-                foreach (var item in strokes)
-                {
-                    item.DrawingAttributes.IsHighlighter = true;
-                    item.DrawingAttributes.Color = Color.FromArgb(128, 255, 0, 0);
-                }
-                return strokes;
-            }
-        }
-
-        public FrameViewModel NextFrame
-        {
-            get => Frames.ElementAtOrDefault(Frames.IndexOf(SelectedFrame) + 1);
-        }
-
-        public FrameViewModel PreviousFrame
-        {
-            get => Frames.ElementAtOrDefault(Frames.IndexOf(SelectedFrame) - 1);
-        }
+        #endregion DuplicateCurrentFrame Command
 
         public void InitializeCommands()
         {
@@ -305,6 +331,7 @@ namespace AnimationEditor.ViewModels
             PlayAnimation = new DelegateCommand(PlayAnimation_CanExecute, PlayAnimation_Execute);
             StopAnimation = new DelegateCommand(StopAnimation_CanExecute, StopAnimation_Execute);
             NavigateToFrame = new DelegateCommand(NavigateToFrame_CanExecute, NavigateToFrame_Execute);
+            DuplicateCurrentFrame = new DelegateCommand(DuplicateCurrentFrame_CanExecute, DuplicateCurrentFrame_Execute);
         }
 
         public AnimationTimelineViewModel(List<IFrameModel> frames)
@@ -327,7 +354,6 @@ namespace AnimationEditor.ViewModels
             Frames = new ObservableCollection<FrameViewModel>();
             Frames.Add(new FrameViewModel());
             SelectedFrame = Frames.FirstOrDefault();
-
         }
 
         public void AddFrameAtIndex(FrameViewModel frame, int index)

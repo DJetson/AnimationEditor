@@ -1,0 +1,18 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:p="clr-namespace:AnimationEditor.Properties"
+                    xmlns:local="clr-namespace:AnimationEditor.Resources.Styles">
+    <Style x:Key="OnionSkinInkCanvasStyle" TargetType="{x:Type InkCanvas}">
+        <Style.Setters>
+            <Setter Property="Visibility" Value="Visible"/>
+        </Style.Setters>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState}" Value="Play">
+                <Setter Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState}" Value="Pause">
+                <Setter Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

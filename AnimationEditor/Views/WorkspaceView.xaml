@@ -16,27 +16,41 @@
         </Grid.RowDefinitions>
         <Border Grid.Row="0" BorderBrush="DarkGray" BorderThickness="1">
             <Grid>
-                <InkCanvas Grid.Row="0" EditingMode="{Binding EditorTools.EditingMode}" Strokes="{Binding AnimationTimelineViewModel.SelectedFrame.StrokeCollection}" DefaultDrawingAttributes="{Binding EditorTools.DrawingAttributes}"/>
-                <InkCanvas Grid.Row="0" IsHitTestVisible="False"  Background="Transparent" Strokes="{Binding AnimationTimelineViewModel.PreviousFrameStrokes}">
+                <InkCanvas Grid.Row="0" DefaultDrawingAttributes="{Binding EditorTools.DrawingAttributes}">
                     <InkCanvas.Style>
                         <Style TargetType="{x:Type InkCanvas}">
                             <Style.Setters>
-                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.SelectedFrame.StrokeCollection}"/>
+                                <Setter Property="EditingMode" Value="{Binding EditorTools.EditingMode}"/>
                             </Style.Setters>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsShowPreviousOnionSkinsEnabled, Source={x:Static p:Settings.Default}}" Value="False">
-                                    <Setter Property="Visibility" Value="Hidden"/>
+                                <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState}" Value="Play">
+                                    <Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentFrame.StrokeCollection}"/>
+                                    <Setter Property="EditingMode" Value="None"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState}" Value="Pause">
+                                    <Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentFrame.StrokeCollection}"/>
+                                    <Setter Property="EditingMode" Value="None"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </InkCanvas.Style>
                 </InkCanvas>
-                <InkCanvas Grid.Row="0" IsHitTestVisible="False"  Background="Transparent" Strokes="{Binding AnimationTimelineViewModel.NextFrameStrokes}" >
-                    <InkCanvas.Style>
-                        <Style TargetType="{x:Type InkCanvas}">
-                            <Style.Setters>
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </Style.Setters>
+                <Grid Grid.Row="0" IsHitTestVisible="False">
+                    <InkCanvas Grid.Row="0" IsHitTestVisible="False" Background="Transparent" Strokes="{Binding AnimationTimelineViewModel.PreviousFrameStrokes}">
+                        <InkCanvas.Style>
+                            <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource OnionSkinInkCanvasStyle}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsShowPreviousOnionSkinsEnabled, Source={x:Static p:Settings.Default}}" Value="False">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </InkCanvas.Style>
+                    </InkCanvas>
+                    <InkCanvas Grid.Row="0" IsHitTestVisible="False"  Background="Transparent" Strokes="{Binding AnimationTimelineViewModel.NextFrameStrokes}" >
+                        <InkCanvas.Style>
+                        <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource OnionSkinInkCanvasStyle}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsShowNextOnionSkinsEnabled, Source={x:Static p:Settings.Default}}" Value="False">
                                     <Setter Property="Visibility" Value="Hidden"/>
@@ -44,33 +58,10 @@
                             </Style.Triggers>
                         </Style>
                     </InkCanvas.Style>
-                </InkCanvas>
+                    </InkCanvas>
+                </Grid>
             </Grid>
         </Border>
         <Views:AnimationTimelineView Grid.Row="1" DataContext="{Binding AnimationTimelineViewModel}"/>
-        <!--<Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Button Content="Append Frame" Command="{Binding AppendFrame}" Width="80" Height="30"/>
-            <ListBox Grid.Row="1" ItemsSource="{Binding Frames}" SelectedItem="{Binding SelectedFrame, Mode=TwoWay}">
-                <ListBox.Resources>
-                    <DataTemplate DataType="{x:Type ViewModels:FrameViewModel}">
-                        <Grid>
-                            <Grid.LayoutTransform>
-                                <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="0.25" ScaleY="0.25"/>
-                            </Grid.LayoutTransform>
-                            <InkCanvas EditingMode="None" Strokes="{Binding StrokeCollection}"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.Resources>
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-            </ListBox>
-        </Grid>-->
     </Grid>
 </UserControl>

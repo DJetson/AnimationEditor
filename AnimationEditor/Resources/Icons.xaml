@@ -6,6 +6,8 @@
         <ResourceDictionary Source="./Icons/CloseIcon.xaml"/>
         <ResourceDictionary Source="./Icons/DrawIconLight.xaml"/>
         <ResourceDictionary Source="./Icons/Duplicate.xaml"/>
+        <ResourceDictionary Source="./Icons/DuplicateToNext.xaml"/>
+        <ResourceDictionary Source="./Icons/DuplicateToPrevious.xaml"/>
         <ResourceDictionary Source="./Icons/EraseIconLight.xaml"/>
         <ResourceDictionary Source="./Icons/InsertBeforeFirstFrame.xaml"/>
         <ResourceDictionary Source="./Icons/InsertNewFrameNext.xaml"/>
