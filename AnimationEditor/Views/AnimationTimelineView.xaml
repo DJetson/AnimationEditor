@@ -21,8 +21,9 @@
                 </Style>
             </ToolBarTray.Resources>
             <ToolBar>
-                <Button Content="{StaticResource JumpToFirstFrame}"/>
-                <Button Content="{StaticResource PreviousFrame}" />
+                <Button Content="{StaticResource JumpToFirstFrame}" Command="{Binding NavigateToFrame}" CommandParameter="Start"/>
+                <Button Content="{StaticResource PreviousFrame}" Command="{Binding NavigateToFrame}" CommandParameter="Previous"/>
+                <Button Content="{StaticResource StopIcon}" Command="{Binding StopAnimation}" CommandParameter="{Binding }"/>
                 <Button Command="{Binding PlayAnimation}" CommandParameter="{Binding }">
                     <Button.Style>
                         <Style BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" TargetType="{x:Type Button}">
@@ -39,9 +40,8 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <Button Content="{StaticResource NextFrame}"/>
-                <Button Content="{StaticResource JumpToLastFrame}"/>
-                <Button Content="{StaticResource StopIcon}" Command="{Binding StopAnimation}" CommandParameter="{Binding }"/>
+                <Button Content="{StaticResource NextFrame}" Command="{Binding NavigateToFrame}" CommandParameter="Next"/>
+                <Button Content="{StaticResource JumpToLastFrame}" Command="{Binding NavigateToFrame}" CommandParameter="End"/>
             </ToolBar>
             <ToolBar>
                 <Button Content="{StaticResource InsertBeforeFirstFrame}" Command="{Binding AddBlankFrame}" CommandParameter="Start"/>

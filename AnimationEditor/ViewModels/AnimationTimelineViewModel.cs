@@ -54,6 +54,53 @@ namespace AnimationEditor.ViewModels
             set { _FramesPerSecond = value; NotifyPropertyChanged(); }
         }
 
+        private DelegateCommand _NavigateToFrame;
+        public DelegateCommand NavigateToFrame
+        {
+            get { return _NavigateToFrame; }
+            set { _NavigateToFrame = value; NotifyPropertyChanged(); }
+        }
+
+        public void NavigateToFrame_Execute(object parameter)
+        {
+            var Parameter = (FrameNavigation)Enum.Parse(typeof(FrameNavigation), parameter.ToString());
+
+            int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
+            int navigateToFrameIndex = selectedFrameIndex;
+
+            switch (Parameter)
+            {
+                case FrameNavigation.Start:
+                    navigateToFrameIndex = 0;
+                    break;
+                case FrameNavigation.Previous:
+                    navigateToFrameIndex = Math.Max(selectedFrameIndex - 1, 0);
+                    break;
+                case FrameNavigation.Next:
+                    navigateToFrameIndex = Math.Min(selectedFrameIndex + 1, Frames.Count - 1);
+                    break;
+                case FrameNavigation.End:
+                    navigateToFrameIndex = Frames.Count - 1;
+                    break;
+            }
+
+            SelectedFrame = Frames[navigateToFrameIndex];
+        }
+
+        public bool NavigateToFrame_CanExecute(object parameter)
+        {
+            if (IsInPlaybackMode)
+                return false;
+
+            if (Enum.TryParse<FrameNavigation>(parameter.ToString(), out FrameNavigation Parameter) == false)
+                return false;
+
+            if (Parameter == FrameNavigation.Current)
+                return false;
+
+            return true;
+        }
+
         private DelegateCommand _AddBlankFrame;
         public DelegateCommand AddBlankFrame
         {
@@ -68,13 +115,13 @@ namespace AnimationEditor.ViewModels
             int insertAtIndex = Frames.Count;
             int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
             var Parameter = (FrameNavigation)Enum.Parse(typeof(FrameNavigation), parameter.ToString());
-            switch(Parameter)
+            switch (Parameter)
             {
                 case FrameNavigation.Start:
                     insertAtIndex = 0;
                     break;
                 case FrameNavigation.Previous:
-                    insertAtIndex = selectedFrameIndex; 
+                    insertAtIndex = selectedFrameIndex;
                     break;
                 case FrameNavigation.Next:
                     insertAtIndex = selectedFrameIndex + 1;
@@ -93,9 +140,7 @@ namespace AnimationEditor.ViewModels
             if (IsInPlaybackMode)
                 return false;
 
-            FrameNavigation Parameter;
-
-            if (Enum.TryParse<FrameNavigation>(parameter.ToString(), out Parameter) == false)
+            if (Enum.TryParse<FrameNavigation>(parameter.ToString(), out FrameNavigation Parameter) == false)
                 return false;
 
             if (Parameter == FrameNavigation.Current)
@@ -259,6 +304,7 @@ namespace AnimationEditor.ViewModels
             AddBlankFrame = new DelegateCommand(AddBlankFrame_CanExecute, AddBlankFrame_Execute);
             PlayAnimation = new DelegateCommand(PlayAnimation_CanExecute, PlayAnimation_Execute);
             StopAnimation = new DelegateCommand(StopAnimation_CanExecute, StopAnimation_Execute);
+            NavigateToFrame = new DelegateCommand(NavigateToFrame_CanExecute, NavigateToFrame_Execute);
         }
 
         public AnimationTimelineViewModel(List<IFrameModel> frames)

@@ -4,8 +4,8 @@
 		<DrawingBrush.Drawing>
 			<DrawingGroup>
 				<DrawingGroup.Children>
-					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 232,24L 208,24L 208,232L 232,232L 232,24 Z "/>
-					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 23.9998,128L 192,23.9999L 192,232L 23.9998,128 Z "/>
+                    <GeometryDrawing Brush="#FF5A5A5A" Geometry="F1 M 232,24L 208,24L 208,232L 232,232L 232,24 Z "/>
+                    <GeometryDrawing Brush="#FF5A5A5A" Geometry="F1 M 23.9998,128L 192,23.9999L 192,232L 23.9998,128 Z "/>
 				</DrawingGroup.Children>
 			</DrawingGroup>
 		</DrawingBrush.Drawing>

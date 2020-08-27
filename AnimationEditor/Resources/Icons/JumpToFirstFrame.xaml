@@ -4,7 +4,7 @@
 		<DrawingBrush.Drawing>
 			<DrawingGroup>
 				<DrawingGroup.Children>
-					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 56,24.0001L 56.0001,128L 224,24L 224,232L 56.0001,128L 56,232L 32,232L 32,24.0001L 56,24.0001 Z "/>
+					<GeometryDrawing Brush="#FF5A5A5A" Geometry="F1 M 56,24.0001L 56.0001,128L 224,24L 224,232L 56.0001,128L 56,232L 32,232L 32,24.0001L 56,24.0001 Z "/>
 				</DrawingGroup.Children>
 			</DrawingGroup>
 		</DrawingBrush.Drawing>

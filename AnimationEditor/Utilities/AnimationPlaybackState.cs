@@ -45,7 +45,7 @@ namespace AnimationEditor.Utilities
 
             _FramesPerSecond = animationTimelineViewModel.FramesPerSecond;
 
-            _PlaybackTimer = new DispatcherTimer()
+            _PlaybackTimer = new DispatcherTimer(DispatcherPriority.Render)
             {
                 Interval = new TimeSpan((int)(TimeSpan.TicksPerSecond * (1.0 / animationTimelineViewModel.FramesPerSecond)))
             };
