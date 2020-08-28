@@ -91,6 +91,7 @@
     <Compile Include="Commands\LoadWorkspaceCommand.cs" />
     <Compile Include="Commands\SaveWorkspaceCommand.cs" />
     <Compile Include="Commands\ShowOnionSkinSettingsWindowCommand.cs" />
+    <Compile Include="Gestures\MouseWheelGestures.cs" />
     <Compile Include="Interfaces\IEditorTool.cs" />
     <Compile Include="Interfaces\IHasWorkspaceCollection.cs" />
     <Compile Include="Models\AnimationPropertiesModel.cs" />
@@ -126,6 +127,10 @@
       <DependentUpon>WorkspaceView.xaml</DependentUpon>
     </Compile>
     <Page Include="Commands\ApplicationCommands.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Gestures\MouseGestures.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -190,6 +195,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Icons\EditorTools\SelectIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\EditorTools\ZoomIcon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

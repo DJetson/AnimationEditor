@@ -18,6 +18,16 @@ namespace AnimationEditor.ViewModels
     {
         private WorkspaceFileModel _WorkspaceModel;
 
+        public static double MaxZoomLevel => 5.0f;
+        public static double MinZoomLevel => 0.25f;
+
+        private double _ZoomLevel = 1.0f;
+        public double ZoomLevel
+        {
+            get { return _ZoomLevel; }
+            set { _ZoomLevel = value; NotifyPropertyChanged(); }
+        }
+
         private IHasWorkspaceCollection _Host;
         public IHasWorkspaceCollection Host
         {
@@ -85,10 +95,77 @@ namespace AnimationEditor.ViewModels
             set { _DisplayName = value.TrimEnd('*'); NotifyPropertyChanged(); }
         }
 
+        #region ZoomIn Command
+
+        private DelegateCommand _ZoomIn;
+        public DelegateCommand ZoomIn
+        {
+            get { return _ZoomIn; }
+            set { _ZoomIn = value; NotifyPropertyChanged(); }
+        }
+
+        public bool ZoomIn_CanExecute(object parameter)
+        {
+            if (!(parameter is EditorToolType))
+                return false;
+
+            if ((EditorToolType)parameter != EditorToolType.Zoom)
+                return false;
+
+            if (ZoomLevel >= MaxZoomLevel)
+                return false;
+
+            return true;
+        }
+
+        public void ZoomIn_Execute(object parameter)
+        {
+            ZoomLevel += 0.25f;
+            ZoomLevel = Math.Min(MaxZoomLevel, ZoomLevel);
+        }
+        #endregion ZoomIn Command
+
+        #region ZoomOut Command
+        private DelegateCommand _ZoomOut;
+        public DelegateCommand ZoomOut
+        {
+            get { return _ZoomOut; }
+            set { _ZoomOut = value; NotifyPropertyChanged(); }
+        }
+
+        public bool ZoomOut_CanExecute(object parameter)
+        {
+            if (!(parameter is EditorToolType))
+                return false;
+
+            if ((EditorToolType)parameter != EditorToolType.Zoom)
+                return false;
+
+            if (ZoomLevel <= MinZoomLevel)
+                return false;
+
+            return true;
+        }
+
+        public void ZoomOut_Execute(object parameter)
+        {
+            ZoomLevel -= 0.25f;
+            ZoomLevel = Math.Max(MinZoomLevel, ZoomLevel);
+        }
+        #endregion ZoomOut Command
+
         private System.Text.Json.JsonSerializerOptions JsonSerializerOptions { get; }
+
+        public void InitializeCommands()
+        {
+            ZoomIn = new DelegateCommand(ZoomIn_CanExecute, ZoomIn_Execute);
+            ZoomOut = new DelegateCommand(ZoomOut_CanExecute, ZoomOut_Execute);
+        }
 
         public WorkspaceViewModel()
         {
+            InitializeCommands();
+
             AnimationTimelineViewModel = new AnimationTimelineViewModel();
             EditorTools = EditorToolsViewModel.Instance;
 
@@ -98,6 +175,7 @@ namespace AnimationEditor.ViewModels
 
         public WorkspaceViewModel(WorkspaceFileModel model)
         {
+            InitializeCommands();
             _WorkspaceModel = model;
 
             AnimationTimelineViewModel = new AnimationTimelineViewModel(model.Frames);
