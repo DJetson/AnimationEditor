@@ -1,16 +1,10 @@
 ﻿using AnimationEditor.BaseClasses;
-using AnimationEditor.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Ink;
 using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace AnimationEditor.ViewModels
 {
@@ -334,7 +328,7 @@ namespace AnimationEditor.ViewModels
             DuplicateCurrentFrame = new DelegateCommand(DuplicateCurrentFrame_CanExecute, DuplicateCurrentFrame_Execute);
         }
 
-        public AnimationTimelineViewModel(List<IFrameModel> frames)
+        public AnimationTimelineViewModel(List<Models.FrameModel> frames)
         {
             InitializeCommands();
 

@@ -1,19 +1,9 @@
-﻿using AnimationEditor.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AnimationEditor.Models
+﻿namespace AnimationEditor.Models
 {
-    [Serializable]
-    public class CanvasPropertiesModel : ICanvasPropertiesModel
+    public class CanvasPropertiesModel
     {
-        private double _Width = 640;
-        public double Width => _Width;
+        public double Width { get; set; } = 640;
 
-        private double _Height = 480;
-        public double Height => _Height;
+        public double Height { get; set; } = 480;
     }
 }

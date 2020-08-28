@@ -1,10 +1,4 @@
-﻿using AnimationEditor.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Ink;
 
 namespace AnimationEditor.ViewModels
@@ -38,7 +32,7 @@ namespace AnimationEditor.ViewModels
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
         }
 
-        public FrameViewModel(IFrameModel model)
+        public FrameViewModel(Models.FrameModel model)
         {
             StrokeCollection = model.StrokeCollection;
 

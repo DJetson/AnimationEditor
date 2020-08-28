@@ -16,7 +16,7 @@ namespace AnimationEditor.ViewModels
 {
     public class WorkspaceViewModel : ViewModelBase
     {
-        private IWorkspaceFileModel _WorkspaceModel;
+        private WorkspaceFileModel _WorkspaceModel;
 
         private IHasWorkspaceCollection _Host;
         public IHasWorkspaceCollection Host
@@ -85,18 +85,26 @@ namespace AnimationEditor.ViewModels
             set { _DisplayName = value.TrimEnd('*'); NotifyPropertyChanged(); }
         }
 
+        private System.Text.Json.JsonSerializerOptions JsonSerializerOptions { get; }
+
         public WorkspaceViewModel()
         {
             AnimationTimelineViewModel = new AnimationTimelineViewModel();
             EditorTools = EditorToolsViewModel.Instance;
+
+            JsonSerializerOptions = new System.Text.Json.JsonSerializerOptions();
+            JsonSerializerOptions.Converters.Add(new Models.StrokeCollectionConverter());
         }
 
-        public WorkspaceViewModel(IWorkspaceFileModel model)
+        public WorkspaceViewModel(WorkspaceFileModel model)
         {
             _WorkspaceModel = model;
 
             AnimationTimelineViewModel = new AnimationTimelineViewModel(model.Frames);
             EditorTools = EditorToolsViewModel.Instance;
+
+            JsonSerializerOptions = new System.Text.Json.JsonSerializerOptions();
+            JsonSerializerOptions.Converters.Add(new Models.StrokeCollectionConverter());
         }
 
         public void Close()
@@ -141,7 +149,7 @@ namespace AnimationEditor.ViewModels
             _WorkspaceModel = _WorkspaceModel ?? new WorkspaceFileModel();
             _WorkspaceModel.SyncToViewModel(this);
 
-            _WorkspaceModel.SaveWorkspaceFile(Filepath);
+            _WorkspaceModel.SaveWorkspaceFile(Filepath, JsonSerializerOptions);
             HasUnsavedChanges = false;
         }
 
@@ -177,7 +185,7 @@ namespace AnimationEditor.ViewModels
         }
 
         //NOTE: MAY NOT BE A GOOD IDEA
-        private void SyncToModel(IWorkspaceFileModel model)
+        private void SyncToModel(WorkspaceFileModel model)
         {
             //Assign all of and only the NECESSARY properties from the model object to populate a ViewModel with this 
             //workspace.
