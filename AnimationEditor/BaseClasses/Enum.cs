@@ -1,4 +1,4 @@
 ﻿namespace AnimationEditor.BaseClasses
 {
-    public enum EditorToolType { Brush, Eraser, RectangularMarquee, CircularMarquee, Lasso };
+    public enum EditorToolType { Brush, Eraser, Lasso, Zoom };
 }

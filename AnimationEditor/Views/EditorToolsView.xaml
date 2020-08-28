@@ -16,9 +16,14 @@
                 <RadioButton Command="{Binding SelectTool}" CommandParameter="Eraser"  Width="35" Style="{StaticResource {x:Type ToggleButton}}" GroupName="EditorTools">
                     <Rectangle Stretch="UniformToFill" Fill="{StaticResource EraseIconLight}" />
                 </RadioButton>
-                <RadioButton Command="{Binding SelectTool}" CommandParameter="RectangularMarquee"  Width="35" Style="{StaticResource {x:Type ToggleButton}}" GroupName="EditorTools">
+                <RadioButton Command="{Binding SelectTool}" CommandParameter="Lasso"  Width="35" Style="{StaticResource {x:Type ToggleButton}}" GroupName="EditorTools">
                     <Rectangle Stretch="UniformToFill" Fill="{StaticResource SelectIcon}" />
                 </RadioButton>
+                <RadioButton Command="{Binding SelectTool}" CommandParameter="Zoom" Width="35" Style="{StaticResource {x:Type ToggleButton}}" GroupName="EditorTools">
+                    <Rectangle Stretch="UniformToFill" Fill="{StaticResource ZoomIcon}" />
+                </RadioButton>
+                
+
             </ToolBar>
         </ToolBarTray>
     </Grid>

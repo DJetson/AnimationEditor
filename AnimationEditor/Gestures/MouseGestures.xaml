@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Gestures="clr-namespace:AnimationEditor.Gestures">
+    <Gestures:MouseWheelUpGesture x:Key="MouseWheelUp" />
+    <Gestures:MouseWheelDownGesture x:Key="MouseWheelDown" />
+    <MouseGesture x:Key="MouseLeftClick" MouseAction="LeftClick"/>
+    <MouseGesture x:Key="MouseLeftClick+Alt" MouseAction="LeftClick" Modifiers="Alt" />
+    <MouseGesture x:Key="MouseLeftDoubleClick" MouseAction="LeftDoubleClick" />
+    <MouseGesture x:Key="MouseLeftDoubleClick+Alt" MouseAction="LeftDoubleClick" Modifiers="Alt" />
+</ResourceDictionary>

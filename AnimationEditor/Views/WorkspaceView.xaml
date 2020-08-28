@@ -8,59 +8,76 @@
              xmlns:p="clr-namespace:AnimationEditor.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0" BorderBrush="DarkGray" BorderThickness="1">
-            <Grid>
-                <InkCanvas Grid.Row="0" DefaultDrawingAttributes="{Binding EditorTools.DrawingAttributes}">
-                    <InkCanvas.Style>
-                        <Style TargetType="{x:Type InkCanvas}">
-                            <Style.Setters>
-                                <Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.SelectedFrame.StrokeCollection}"/>
-                                <Setter Property="EditingMode" Value="{Binding EditorTools.EditingMode}"/>
-                            </Style.Setters>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState}" Value="Play">
-                                    <Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentFrame.StrokeCollection}"/>
-                                    <Setter Property="EditingMode" Value="None"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState}" Value="Pause">
-                                    <Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentFrame.StrokeCollection}"/>
-                                    <Setter Property="EditingMode" Value="None"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </InkCanvas.Style>
-                </InkCanvas>
-                <Grid Grid.Row="0" IsHitTestVisible="False">
-                    <InkCanvas Grid.Row="0" IsHitTestVisible="False" Background="Transparent" Strokes="{Binding AnimationTimelineViewModel.PreviousFrameStrokes}">
-                        <InkCanvas.Style>
-                            <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource OnionSkinInkCanvasStyle}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsShowPreviousOnionSkinsEnabled, Source={x:Static p:Settings.Default}}" Value="False">
-                                        <Setter Property="Visibility" Value="Hidden"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </InkCanvas.Style>
-                    </InkCanvas>
-                    <InkCanvas Grid.Row="0" IsHitTestVisible="False"  Background="Transparent" Strokes="{Binding AnimationTimelineViewModel.NextFrameStrokes}" >
-                        <InkCanvas.Style>
-                        <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource OnionSkinInkCanvasStyle}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsShowNextOnionSkinsEnabled, Source={x:Static p:Settings.Default}}" Value="False">
-                                    <Setter Property="Visibility" Value="Hidden"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </InkCanvas.Style>
-                    </InkCanvas>
+            <Border.InputBindings>
+                <MouseBinding Command="{Binding ZoomIn}" CommandParameter="{Binding EditorTools.SelectedToolType}" Gesture="{StaticResource MouseLeftClick}" />
+                <MouseBinding Command="{Binding ZoomIn}" CommandParameter="{Binding EditorTools.SelectedToolType}" Gesture="{StaticResource MouseLeftDoubleClick}" />
+                <MouseBinding Command="{Binding ZoomOut}" CommandParameter="{Binding EditorTools.SelectedToolType}" Gesture="{StaticResource MouseLeftClick+Alt}" />
+                <MouseBinding Command="{Binding ZoomOut}" CommandParameter="{Binding EditorTools.SelectedToolType}" Gesture="{StaticResource MouseLeftDoubleClick+Alt}" />
+            </Border.InputBindings>
+            <ScrollViewer HorizontalScrollBarVisibility="Visible" Background="Transparent" Focusable="False">
+                <Grid x:Name="CanvasGrid" Background="LightGray">
+                    <Border BorderBrush="DarkGray" BorderThickness="1" >
+                        <Border.LayoutTransform>
+                            <ScaleTransform ScaleX="{Binding ZoomLevel}" ScaleY="{Binding ZoomLevel}"/>
+                        </Border.LayoutTransform>
+                        <Grid>
+                            <InkCanvas Grid.Row="0" MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}" MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" DefaultDrawingAttributes="{Binding EditorTools.DrawingAttributes}">
+                                <InkCanvas.CacheMode>
+                                    <BitmapCache RenderAtScale="{Binding ZoomLevel}"/>
+                                </InkCanvas.CacheMode>
+                                <InkCanvas.Style>
+                                    <Style TargetType="{x:Type InkCanvas}">
+                                        <Style.Setters>
+                                            <Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.SelectedFrame.StrokeCollection}"/>
+                                            <Setter Property="EditingMode" Value="{Binding EditorTools.EditingMode}"/>
+                                        </Style.Setters>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState}" Value="Play">
+                                                <Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentFrame.StrokeCollection}"/>
+                                                <Setter Property="EditingMode" Value="None"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState}" Value="Pause">
+                                                <Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentFrame.StrokeCollection}"/>
+                                                <Setter Property="EditingMode" Value="None"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </InkCanvas.Style>
+                            </InkCanvas>
+                            <Grid Grid.Row="0" IsHitTestVisible="False">
+                                <InkCanvas Grid.Row="0" IsHitTestVisible="False" Background="Transparent" Strokes="{Binding AnimationTimelineViewModel.PreviousFrameStrokes}">
+                                    <InkCanvas.Style>
+                                        <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource OnionSkinInkCanvasStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsShowPreviousOnionSkinsEnabled, Source={x:Static p:Settings.Default}}" Value="False">
+                                                    <Setter Property="Visibility" Value="Hidden"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </InkCanvas.Style>
+                                </InkCanvas>
+                                <InkCanvas Grid.Row="0" IsHitTestVisible="False"  Background="Transparent" Strokes="{Binding AnimationTimelineViewModel.NextFrameStrokes}" >
+                                    <InkCanvas.Style>
+                                        <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource OnionSkinInkCanvasStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsShowNextOnionSkinsEnabled, Source={x:Static p:Settings.Default}}" Value="False">
+                                                    <Setter Property="Visibility" Value="Hidden"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </InkCanvas.Style>
+                                </InkCanvas>
+                            </Grid>
+                        </Grid>
+                    </Border>
                 </Grid>
-            </Grid>
+            </ScrollViewer>
         </Border>
         <Views:AnimationTimelineView Grid.Row="1" DataContext="{Binding AnimationTimelineViewModel}"/>
     </Grid>

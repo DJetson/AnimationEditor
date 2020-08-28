@@ -5,5 +5,6 @@
             <ResourceDictionary Source="./Resources/Icons.xaml"/>
             <ResourceDictionary Source="./Resources/Styles.xaml"/>
             <ResourceDictionary Source="./Commands/ApplicationCommands.xaml"/>
-        </ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="./Gestures/MouseGestures.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

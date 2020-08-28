@@ -75,7 +75,7 @@
                 </Button.Style>
             </Button>-->
         </ToolBarTray>
-        <ListBox Grid.Row="1" ItemsSource="{Binding Frames}">
+        <ListBox Grid.Row="1" ItemsSource="{Binding Frames}" ScrollViewer.HorizontalScrollBarVisibility="Visible">
             <ListBox.Style>
                 <Style TargetType="{x:Type ListBox}">
                     <Style.Setters>

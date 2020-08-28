@@ -108,23 +108,34 @@ namespace AnimationEditor.ViewModels
             set { _EditingMode = value; NotifyPropertyChanged(); }
         }
 
+        private EditorToolType _SelectedToolType;
+        public EditorToolType SelectedToolType
+        {
+            get { return _SelectedToolType; }
+            set { _SelectedToolType = value; NotifyPropertyChanged(); }
+        }
+
+
         public void SelectTool_Execute(object obj)
         {
-            var Parameter = Enum.Parse(typeof(EditorToolType), obj.ToString());
+            var Parameter = (EditorToolType)Enum.Parse(typeof(EditorToolType), obj.ToString());
+
+            SelectedToolType = Parameter;
 
             switch (Parameter)
             {
                 case EditorToolType.Brush:
                     EditingMode = InkCanvasEditingMode.Ink;
-                    //CurrentTool = new BrushTool();
-                    //DrawingAttributes = new DrawingAttributes() { Width = CurrentTool.BrushSize, Height = CurrentTool.BrushSize };
-                    //break;
                     break;
                 case EditorToolType.Eraser:
                     EditingMode = InkCanvasEditingMode.EraseByPoint;
                     break;
-                case EditorToolType.RectangularMarquee:
+                case EditorToolType.Lasso:
                     EditingMode = InkCanvasEditingMode.Select;
+                    break;
+                case EditorToolType.Zoom:
+                    EditingMode = InkCanvasEditingMode.None;
+                    //Enable Detecting Clicks on InkCanvas
                     break;
             }
         }

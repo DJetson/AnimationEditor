@@ -13,6 +13,7 @@
         <ResourceDictionary Source="./Icons/EditorTools/DrawIconLight.xaml"/>
         <ResourceDictionary Source="./Icons/EditorTools/EraseIconLight.xaml"/>
         <ResourceDictionary Source="./Icons/EditorTools/SelectIcon.xaml"/>
+        <ResourceDictionary Source="./Icons/EditorTools/ZoomIcon.xaml"/>
         <!--Animation Timeline ToolBar Icons-->
             <!--Animation Content ToolBar Icons-->
             <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AppendAfterLastFrame.xaml"/>
