@@ -298,9 +298,9 @@ namespace AnimationEditor.ViewModels
                 case FrameNavigation.Next:
                     DuplicateCurrentFrameToIndex = selectedFrameIndex + 1;
                     break;
-                //case FrameNavigation.End:
-                //    DuplicateCurrentFrameToIndex = Frames.Count - 1;
-                //    break;
+                    //case FrameNavigation.End:
+                    //    DuplicateCurrentFrameToIndex = Frames.Count - 1;
+                    //    break;
             }
 
             AddFrameAtIndex(newFrame, DuplicateCurrentFrameToIndex);
@@ -325,8 +325,52 @@ namespace AnimationEditor.ViewModels
         }
         #endregion DuplicateCurrentFrame Command
 
+        #region DeleteCurrentFrame Command
+        private DelegateCommand _DeleteCurrentFrame;
+        public DelegateCommand DeleteCurrentFrame
+        {
+            get { return _DeleteCurrentFrame; }
+            set { _DeleteCurrentFrame = value; NotifyPropertyChanged(); }
+        }
+
+        public bool DeleteCurrentFrame_CanExecute(object parameter)
+        {
+            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Play)
+                return false;
+
+            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Pause)
+                return false;
+
+            if (SelectedFrame == null)
+                return false;
+
+            return true;
+        }
+
+        public void DeleteCurrentFrame_Execute(object parameter)
+        {
+            int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
+
+            Frames.Remove(SelectedFrame);
+
+            if (Frames.Count == 0)
+            {
+                var newFrame = new FrameViewModel();
+                AddFrameAtIndex(newFrame, 0);
+                SelectedFrame = newFrame;
+                return;
+            }
+
+            if (selectedFrameIndex >= Frames.Count)
+                selectedFrameIndex = Frames.Count - 1;
+
+            SelectedFrame = Frames[selectedFrameIndex];
+        }
+        #endregion DeleteCurrentFrame Command
+
         public void InitializeCommands()
         {
+            DeleteCurrentFrame = new DelegateCommand(DeleteCurrentFrame_CanExecute, DeleteCurrentFrame_Execute);
             AddBlankFrame = new DelegateCommand(AddBlankFrame_CanExecute, AddBlankFrame_Execute);
             PlayAnimation = new DelegateCommand(PlayAnimation_CanExecute, PlayAnimation_Execute);
             StopAnimation = new DelegateCommand(StopAnimation_CanExecute, StopAnimation_Execute);

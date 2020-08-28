@@ -15,6 +15,7 @@
         <!--Animation Timeline ToolBar Icons-->
             <!--Animation Content ToolBar Icons-->
             <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AppendAfterLastFrame.xaml"/>
+            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/DeleteIcon.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/DuplicateToNext.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/DuplicateToPrevious.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/InsertBeforeFirstFrame.xaml"/>

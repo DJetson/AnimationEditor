@@ -44,6 +44,7 @@
                 <Button Content="{StaticResource JumpToLastFrame}" Command="{Binding NavigateToFrame}" CommandParameter="End"/>
             </ToolBar>
             <ToolBar>
+                <Button Content="{StaticResource DeleteIcon}" Command="{Binding DeleteCurrentFrame}" />
                 <Button Content="{StaticResource InsertBeforeFirstFrame}" Command="{Binding AddBlankFrame}" CommandParameter="Start"/>
                 <Button Content="{StaticResource InsertNewFramePrevious}" Command="{Binding AddBlankFrame}" CommandParameter="Previous" />
                 <Button Content="{StaticResource DuplicateToPrevious}" Command="{Binding DuplicateCurrentFrame}" CommandParameter="Previous" />
