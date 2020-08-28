@@ -123,6 +123,9 @@ namespace AnimationEditor.ViewModels
                 case EditorToolType.Eraser:
                     EditingMode = InkCanvasEditingMode.EraseByPoint;
                     break;
+                case EditorToolType.RectangularMarquee:
+                    EditingMode = InkCanvasEditingMode.Select;
+                    break;
             }
         }
 
