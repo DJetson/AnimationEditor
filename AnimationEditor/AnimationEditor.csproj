@@ -91,11 +91,7 @@
     <Compile Include="Commands\LoadWorkspaceCommand.cs" />
     <Compile Include="Commands\SaveWorkspaceCommand.cs" />
     <Compile Include="Commands\ShowOnionSkinSettingsWindowCommand.cs" />
-    <Compile Include="Interfaces\IAnimationPropertiesModel.cs" />
     <Compile Include="Interfaces\IEditorTool.cs" />
-    <Compile Include="Interfaces\IFrameModel.cs" />
-    <Compile Include="Interfaces\IWorkspaceFileModel.cs" />
-    <Compile Include="Interfaces\ICanvasPropertiesModel.cs" />
     <Compile Include="Interfaces\IHasWorkspaceCollection.cs" />
     <Compile Include="Models\AnimationPropertiesModel.cs" />
     <Compile Include="Models\CanvasPropertiesModel.cs" />
