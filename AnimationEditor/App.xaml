@@ -6,10 +6,38 @@
              Exit="Application_Exit">
     <Application.Resources>
         <ResourceDictionary>
+
+            <!--
+                It seemed prudent to give a quick, high level explanation of how the Resource Library is 
+                assembled and organized, because changes are occasionally necessary, and if the necessary
+                files are not updated properly, some or all of the resources will become inaccessible and 
+                it can sometimes be incredibly challenging to track down those sorts of problems if you don't
+                know which areas should be checked.
+                Ultimately, all XAML resources are compiled into this main ResourceDictionary which 
+                immediately follows this comment. But there are several intermediate merged dictionaries
+                that are compiled along the way. The hierarchy is as follows:
+     
+                    App.xaml
+                    |-> Resources.xaml
+                        |-> ApplicationCommands.xaml
+                        |   |-> Any Command types that need to be accessible anywhere in the application, and
+                        |       can function properly using only static references (Ostensibly stateless)
+                        |
+                        |-> Icons.xaml
+                        |   |-> Any resources defined in a XAML ResourceDictionary in the Icons folder and its subfolders
+                        | 
+                        |-> Styles.xaml
+                            |-> Any resources defined in a XAML ResourceDictionary in the Styles fold and its subfolders
+                    
+                This tree should be kept as up to date as possible just to protect against any problems that might
+                arise with the merged dictionaries in the future.
+            -->
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="./Resources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            
+            
             <!-- I'm just leaving this in here because it was an interesting thing I tried and it actually worked.
                  I'd like to keep it around just in case I ever come across a situation where it proves useful.
                  Which does seem rather unlikely, but still...

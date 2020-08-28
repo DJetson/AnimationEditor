@@ -112,7 +112,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Icons\AppendAfterLastFrame.xaml">
+    <Page Include="Resources\Icons\AnimationTimeline\AnimationContent\AppendAfterLastFrame.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -120,7 +120,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Icons\DrawIconLight.xaml">
+    <Page Include="Resources\Icons\AnimationTimeline\AnimationContent\DeleteIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\EditorTools\DrawIconLight.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -128,35 +132,35 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Icons\DuplicateToNext.xaml">
+    <Page Include="Resources\Icons\AnimationTimeline\AnimationContent\DuplicateToNext.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Icons\DuplicateToPrevious.xaml">
+    <Page Include="Resources\Icons\AnimationTimeline\AnimationContent\DuplicateToPrevious.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Icons\EraseIconLight.xaml">
+    <Page Include="Resources\Icons\EditorTools\EraseIconLight.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Icons\InsertBeforeFirstFrame.xaml">
+    <Page Include="Resources\Icons\AnimationTimeline\AnimationContent\InsertBeforeFirstFrame.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Icons\InsertNewFrameNext.xaml">
+    <Page Include="Resources\Icons\AnimationTimeline\AnimationContent\InsertNewFrameNext.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Icons\InsertNewFramePrevious.xaml">
+    <Page Include="Resources\Icons\AnimationTimeline\AnimationContent\InsertNewFramePrevious.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Icons\JumpToFirstFrame.xaml">
+    <Page Include="Resources\Icons\AnimationTimeline\Navigation\JumpToFirstFrame.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Icons\JumpToLastFrame.xaml">
+    <Page Include="Resources\Icons\AnimationTimeline\Navigation\JumpToLastFrame.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -164,7 +168,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Icons\NextFrame.xaml">
+    <Page Include="Resources\Icons\AnimationTimeline\Navigation\NextFrame.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -176,15 +180,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Icons\PauseIcon.xaml">
+    <Page Include="Resources\Icons\AnimationTimeline\Navigation\PauseIcon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Icons\PlayIcon.xaml">
+    <Page Include="Resources\Icons\AnimationTimeline\Navigation\PlayIcon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Icons\PreviousFrame.xaml">
+    <Page Include="Resources\Icons\AnimationTimeline\Navigation\PreviousFrame.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -192,7 +196,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Icons\StopIcon.xaml">
+    <Page Include="Resources\Icons\AnimationTimeline\Navigation\StopIcon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
