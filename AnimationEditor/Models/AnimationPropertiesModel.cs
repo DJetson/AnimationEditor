@@ -1,16 +1,7 @@
-﻿using AnimationEditor.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AnimationEditor.Models
+﻿namespace AnimationEditor.Models
 {
-    [Serializable]
-    public class AnimationPropertiesModel : IAnimationPropertiesModel
+    public class AnimationPropertiesModel
     {
-        private double _FramesPerSecond = 24;
-        public double FramesPerSecond => _FramesPerSecond;
+        public double FramesPerSecond { get; set; } = 24;
     }
 }
