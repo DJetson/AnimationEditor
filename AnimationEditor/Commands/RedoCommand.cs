@@ -1,4 +1,5 @@
 ﻿using AnimationEditor.BaseClasses;
+using AnimationEditor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,15 @@ namespace AnimationEditor.Commands
     {
         public override bool CanExecute(object parameter)
         {
-            return base.CanExecute(parameter);
+            if (MainWindowViewModel.WorkspaceManager?.PeekRedo() == null)
+                return false;
+
+            return true;
         }
 
         public override void Execute(object parameter)
         {
-            throw new NotImplementedException();
+            MainWindowViewModel.WorkspaceManager.Redo();
         }
     }
 }

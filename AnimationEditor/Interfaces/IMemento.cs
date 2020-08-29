@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AnimationEditor.Interfaces
 {
-    public interface IMemento<T> where T : IMementoOriginator
+    public interface IMemento
     {
         IMementoOriginator Originator { get; }
     }

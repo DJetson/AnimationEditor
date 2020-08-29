@@ -112,6 +112,9 @@
     <Compile Include="ViewModels\FrameViewModel.cs" />
     <Compile Include="ViewModels\Settings\OnionSkinSettingsViewModel.cs" />
     <Compile Include="ViewModels\Settings\ViewSettingsViewModel.cs" />
+    <Compile Include="ViewModels\StateObjects\FrameState.cs" />
+    <Compile Include="ViewModels\StateObjects\StrokeState.cs" />
+    <Compile Include="ViewModels\UndoStateViewModel.cs" />
     <Compile Include="ViewModels\WorkspaceManagerViewModel.cs" />
     <Compile Include="Views\AnimationTimelineView.xaml.cs">
       <DependentUpon>AnimationTimelineView.xaml</DependentUpon>

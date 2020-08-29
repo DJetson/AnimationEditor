@@ -278,7 +278,7 @@ namespace AnimationEditor.ViewModels
             var newFrame = new FrameViewModel()
             {
                 StrokeCollection = SelectedFrame.StrokeCollection.Clone(),
-                Strokes = new ObservableCollection<Stroke>(SelectedFrame.Strokes),
+                //Strokes = new ObservableCollection<Stroke>(SelectedFrame.Strokes),
             };
 
             switch (Parameter)

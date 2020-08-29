@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace AnimationEditor.ViewModels
 {
-    public class WorkspaceManagerViewModel : ViewModelBase, IHasWorkspaceCollection
+    public class WorkspaceManagerViewModel : ViewModelBase, IHasWorkspaceCollection, IMementoCaretaker
     {
         private ObservableCollection<WorkspaceViewModel> _Workspaces = new ObservableCollection<WorkspaceViewModel>();
         public ObservableCollection<WorkspaceViewModel> Workspaces
@@ -26,6 +26,9 @@ namespace AnimationEditor.ViewModels
             get => _SelectedWorkspace;
             set { _SelectedWorkspace = value; NotifyPropertyChanged(); }
         }
+
+        private Stack<IMemento> _UndoStack = new Stack<IMemento>();
+        private Stack<IMemento> _RedoStack = new Stack<IMemento>();
 
         public WorkspaceManagerViewModel()
         {
@@ -57,6 +60,53 @@ namespace AnimationEditor.ViewModels
         {
             if (Workspaces.Contains(workspace))
                 Workspaces.Remove(workspace);
+        }
+
+        public List<IMemento> GetStateHistory()
+        {
+            return _UndoStack.ToList();
+        }
+
+        public IMemento PeekUndo()
+        {
+            if (_UndoStack == null || _UndoStack.Count == 0)
+                return null;
+
+            return _UndoStack.Peek();
+        }
+
+        public IMemento PeekRedo()
+        {
+            if (_RedoStack == null || _RedoStack.Count == 0)
+                return null;
+
+            return _RedoStack.Peek();
+        }
+
+        /// <summary>
+        /// This should be called BEFORE any undoable action takes place
+        /// </summary>
+        /// <param name="state">The object state</param>
+        public void AddHistoricalState(IMemento state)
+        {
+            _RedoStack.Clear();
+            _UndoStack.Push(state);
+        }
+
+        public void Undo()
+        {
+            var revertTo = _UndoStack.Pop();
+
+            _RedoStack.Push(revertTo.Originator.SaveState());
+            revertTo.Originator.LoadState(revertTo);
+        }
+
+        public void Redo()
+        {
+            var resumeTo = _RedoStack.Pop();
+
+            _UndoStack.Push(resumeTo.Originator.SaveState());
+            resumeTo.Originator.LoadState(resumeTo);
         }
     }
 }

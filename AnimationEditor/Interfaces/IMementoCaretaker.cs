@@ -8,11 +8,12 @@ namespace AnimationEditor.Interfaces
 {
     public interface IMementoCaretaker
     {
-        List<IMemento<IMementoOriginator>> GetStateHistory();
+        List<IMemento> GetStateHistory();
 
-        IMemento<IMementoOriginator> PeekUndo();
-        IMemento<IMementoOriginator> PeekRedo();
+        IMemento PeekUndo();
+        IMemento PeekRedo();
 
+        void AddHistoricalState(IMemento state);
         void Undo();
         void Redo();
     }
