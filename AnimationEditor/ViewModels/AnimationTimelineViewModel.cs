@@ -1,4 +1,6 @@
 ﻿using AnimationEditor.BaseClasses;
+using AnimationEditor.Interfaces;
+using AnimationEditor.ViewModels.StateObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +12,7 @@ namespace AnimationEditor.ViewModels
 {
     public enum FrameNavigation { Start, Previous, Current, Next, End };
 
-    public class AnimationTimelineViewModel : ViewModelBase
+    public class AnimationTimelineViewModel : ViewModelBase, IMementoOriginator
     {
         private AnimationPlaybackViewModel _AnimationPlaybackViewModel = new AnimationPlaybackViewModel();
         public AnimationPlaybackViewModel AnimationPlaybackViewModel
@@ -343,6 +345,8 @@ namespace AnimationEditor.ViewModels
 
         public void DeleteCurrentFrame_Execute(object parameter)
         {
+            MainWindowViewModel.WorkspaceManager.AddHistoricalState(SaveState());
+
             int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
 
             Frames.Remove(SelectedFrame);
@@ -396,6 +400,8 @@ namespace AnimationEditor.ViewModels
 
         public void AddFrameAtIndex(FrameViewModel frame, int index)
         {
+            MainWindowViewModel.WorkspaceManager.AddHistoricalState(SaveState());
+
             if (index < Frames.Count)
             {
                 Frames.Insert(index, frame);
@@ -408,6 +414,25 @@ namespace AnimationEditor.ViewModels
             {
                 Console.WriteLine($"WorkspaceViewModel.InsertFrame ERROR: Attempted to insert a frame at an invalid index = {index}");
             }
+        }
+
+        public IMemento SaveState()
+        {
+            var memento = new UndoStateViewModel<AnimationTimelineState>();
+
+            memento.Originator = this;
+            memento.State = new AnimationTimelineState(this);
+
+            return memento;
+        }
+
+        public void LoadState(IMemento state)
+        {
+            var Memento = (state as UndoStateViewModel<AnimationTimelineState>);
+
+            Frames = Memento.State.Frames;
+            FramesPerSecond = Memento.State.FramesPerSecond;
+            SelectedFrame = Memento.State.SelectedFrame;
         }
     }
 }

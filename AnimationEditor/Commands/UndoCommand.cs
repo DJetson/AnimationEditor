@@ -15,6 +15,10 @@ namespace AnimationEditor.Commands
             if (MainWindowViewModel.WorkspaceManager?.PeekUndo() == null)
                 return false;
 
+            if (MainWindowViewModel.WorkspaceManager?.SelectedWorkspace?.AnimationTimelineViewModel
+                ?.AnimationPlaybackViewModel.CurrentState != PlaybackStates.Stop)
+                return false;
+
             return true;
         }
 
