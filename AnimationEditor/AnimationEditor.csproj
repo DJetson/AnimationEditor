@@ -89,11 +89,16 @@
     <Compile Include="Commands\CloseWorkspaceCommand.cs" />
     <Compile Include="Commands\CreateNewWorkspaceCommand.cs" />
     <Compile Include="Commands\LoadWorkspaceCommand.cs" />
+    <Compile Include="Commands\RedoCommand.cs" />
     <Compile Include="Commands\SaveWorkspaceCommand.cs" />
     <Compile Include="Commands\ShowOnionSkinSettingsWindowCommand.cs" />
+    <Compile Include="Commands\UndoCommand.cs" />
     <Compile Include="Gestures\MouseWheelGestures.cs" />
     <Compile Include="Interfaces\IEditorTool.cs" />
     <Compile Include="Interfaces\IHasWorkspaceCollection.cs" />
+    <Compile Include="Interfaces\IMemento.cs" />
+    <Compile Include="Interfaces\IMementoCaretaker.cs" />
+    <Compile Include="Interfaces\IMementoOriginator.cs" />
     <Compile Include="Models\AnimationPropertiesModel.cs" />
     <Compile Include="Models\CanvasPropertiesModel.cs" />
     <Compile Include="Models\FrameModel.cs" />
@@ -230,6 +235,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Icons\RedoIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Icons\SaveFile.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -238,7 +247,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Icons\UndoIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles\EditableInkCanvas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

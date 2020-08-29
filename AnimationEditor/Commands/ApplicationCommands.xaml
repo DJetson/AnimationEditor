@@ -6,4 +6,6 @@
     <Commands:SaveWorkspaceCommand x:Key="SaveWorkspace" />
     <Commands:LoadWorkspaceCommand x:Key="LoadWorkspace" />
     <Commands:ShowOnionSkinSettingsWindowCommand x:Key="ShowOnionSkinSettingsWindow" />
+    <Commands:UndoCommand x:Key="Undo"/>
+    <Commands:RedoCommand x:Key="Redo"/>
 </ResourceDictionary>

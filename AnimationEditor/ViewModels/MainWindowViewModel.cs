@@ -15,11 +15,11 @@ namespace AnimationEditor.ViewModels
     {
         public override string DisplayName => Resources.MainWindowViewModelDisplayName;
 
-        private WorkspaceManagerViewModel _WorkspaceManager = new WorkspaceManagerViewModel();
-        public WorkspaceManagerViewModel WorkspaceManager
+        private static WorkspaceManagerViewModel _WorkspaceManager = new WorkspaceManagerViewModel();
+        public static WorkspaceManagerViewModel WorkspaceManager
         {
             get => _WorkspaceManager;
-            set { _WorkspaceManager = value; NotifyPropertyChanged(); }
+            //set { _WorkspaceManager = value; NotifyPropertyChanged(); }
         }
 
         private EditorToolsViewModel _EditorToolsManager = EditorToolsViewModel.Instance;

@@ -3,6 +3,7 @@
                     xmlns:local="clr-namespace:AnimationEditor.Resources">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="./Styles/ImageButton.xaml"/>
+        <ResourceDictionary Source="./Styles/EditableInkCanvas.xaml"/>
         <ResourceDictionary Source="./Styles/OnionSkinInkCanvas.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

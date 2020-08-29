@@ -8,7 +8,9 @@
         <ResourceDictionary Source="./Icons/NewFile.xaml"/>
         <ResourceDictionary Source="./Icons/OpenFile.xaml"/>
         <ResourceDictionary Source="./Icons/Paste.xaml"/>
+        <ResourceDictionary Source="./Icons/RedoIcon.xaml"/>
         <ResourceDictionary Source="./Icons/SaveFile.xaml"/>
+        <ResourceDictionary Source="./Icons/UndoIcon.xaml"/>
         <!--Editor Tools Panel Icons-->
         <ResourceDictionary Source="./Icons/EditorTools/DrawIconLight.xaml"/>
         <ResourceDictionary Source="./Icons/EditorTools/EraseIconLight.xaml"/>

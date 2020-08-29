@@ -27,31 +27,9 @@
                             <ScaleTransform ScaleX="{Binding ZoomLevel}" ScaleY="{Binding ZoomLevel}"/>
                         </Border.LayoutTransform>
                         <Grid>
-                            <InkCanvas Grid.Row="0" MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}" MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" DefaultDrawingAttributes="{Binding EditorTools.DrawingAttributes}">
-                                <InkCanvas.CacheMode>
-                                    <BitmapCache RenderAtScale="{Binding ZoomLevel}"/>
-                                </InkCanvas.CacheMode>
-                                <InkCanvas.Style>
-                                    <Style TargetType="{x:Type InkCanvas}">
-                                        <Style.Setters>
-                                            <Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.SelectedFrame.StrokeCollection}"/>
-                                            <Setter Property="EditingMode" Value="{Binding EditorTools.EditingMode}"/>
-                                        </Style.Setters>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState}" Value="Play">
-                                                <Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentFrame.StrokeCollection}"/>
-                                                <Setter Property="EditingMode" Value="None"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState}" Value="Pause">
-                                                <Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentFrame.StrokeCollection}"/>
-                                                <Setter Property="EditingMode" Value="None"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </InkCanvas.Style>
-                            </InkCanvas>
+                            <InkCanvas Grid.Row="0" Style="{StaticResource EditableInkCanvasStyle}"/>
                             <Grid Grid.Row="0" IsHitTestVisible="False">
-                                <InkCanvas Grid.Row="0" IsHitTestVisible="False" Background="Transparent" Strokes="{Binding AnimationTimelineViewModel.PreviousFrameStrokes}">
+                                <InkCanvas Grid.Row="0" Strokes="{Binding AnimationTimelineViewModel.PreviousFrameStrokes}">
                                     <InkCanvas.Style>
                                         <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource OnionSkinInkCanvasStyle}">
                                             <Style.Triggers>
@@ -62,7 +40,7 @@
                                         </Style>
                                     </InkCanvas.Style>
                                 </InkCanvas>
-                                <InkCanvas Grid.Row="0" IsHitTestVisible="False"  Background="Transparent" Strokes="{Binding AnimationTimelineViewModel.NextFrameStrokes}" >
+                                <InkCanvas Grid.Row="0" Strokes="{Binding AnimationTimelineViewModel.NextFrameStrokes}" >
                                     <InkCanvas.Style>
                                         <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource OnionSkinInkCanvasStyle}">
                                             <Style.Triggers>

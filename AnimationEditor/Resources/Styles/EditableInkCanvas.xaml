@@ -1,8 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:p="clr-namespace:AnimationEditor.Properties"
                     xmlns:local="clr-namespace:AnimationEditor.Resources.Styles">
-    <Style x:Key="OnionSkinInkCanvasStyle" TargetType="{x:Type InkCanvas}">
+    <Style x:Key="EditableInkCanvasStyle" TargetType="{x:Type InkCanvas}">
         <Style.Setters>
             <Setter Property="CacheMode">
                 <Setter.Value>
@@ -11,16 +10,18 @@
             </Setter>
             <Setter Property="MaxHeight" Value="{Binding ActualHeight, ElementName=CanvasGrid}"/>
             <Setter Property="MaxWidth" Value="{Binding ActualWidth, ElementName=CanvasGrid}"/>
-            <Setter Property="Visibility" Value="Visible"/>
-            <Setter Property="IsHitTestVisible" Value="False"/>
-            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="DefaultDrawingAttributes" Value="{Binding EditorTools.DrawingAttributes}"/>
+            <Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.SelectedFrame.StrokeCollection}"/>
+            <Setter Property="EditingMode" Value="{Binding EditorTools.EditingMode}"/>
         </Style.Setters>
         <Style.Triggers>
             <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState}" Value="Play">
-                <Setter Property="Visibility" Value="Hidden"/>
+                <Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentFrame.StrokeCollection}"/>
+                <Setter Property="EditingMode" Value="None"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState}" Value="Pause">
-                <Setter Property="Visibility" Value="Hidden"/>
+                <Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentFrame.StrokeCollection}"/>
+                <Setter Property="EditingMode" Value="None"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>
