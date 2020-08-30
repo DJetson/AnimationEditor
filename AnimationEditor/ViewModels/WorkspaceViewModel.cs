@@ -49,6 +49,12 @@ namespace AnimationEditor.ViewModels
             set { _Filepath = value; NotifyPropertyChanged(); NotifyPropertyChanged(nameof(Filename)); }
         }
 
+        private Stack<IMemento> _UndoStack = new Stack<IMemento>();
+        public Stack<IMemento> UndoStack => _UndoStack;
+
+        private Stack<IMemento> _RedoStack = new Stack<IMemento>();
+        public Stack<IMemento> RedoStack => _RedoStack;
+
         //private OnionSkinVisibility _OnionSkinVisibility = OnionSkinVisibility.NextFramesOnly;
         //public OnionSkinVisibility OnionSkinVisibility
         //{

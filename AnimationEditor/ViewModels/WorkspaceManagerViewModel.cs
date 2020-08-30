@@ -27,9 +27,6 @@ namespace AnimationEditor.ViewModels
             set { _SelectedWorkspace = value; NotifyPropertyChanged(); }
         }
 
-        private Stack<IMemento> _UndoStack = new Stack<IMemento>();
-        private Stack<IMemento> _RedoStack = new Stack<IMemento>();
-
         public WorkspaceManagerViewModel()
         {
             SelectedWorkspace = CreateNewWorkspace();
@@ -64,23 +61,26 @@ namespace AnimationEditor.ViewModels
 
         public List<IMemento> GetStateHistory()
         {
-            return _UndoStack.ToList();
+            return SelectedWorkspace.UndoStack.ToList();
         }
+
+        public Stack<IMemento> ActiveUndoStack => SelectedWorkspace.UndoStack;
+        public Stack<IMemento> ActiveRedoStack => SelectedWorkspace.RedoStack;
 
         public IMemento PeekUndo()
         {
-            if (_UndoStack == null || _UndoStack.Count == 0)
+            if (ActiveUndoStack == null || ActiveUndoStack.Count == 0)
                 return null;
 
-            return _UndoStack.Peek();
+            return ActiveUndoStack.Peek();
         }
 
         public IMemento PeekRedo()
         {
-            if (_RedoStack == null || _RedoStack.Count == 0)
+            if (ActiveRedoStack == null || ActiveRedoStack.Count == 0)
                 return null;
 
-            return _RedoStack.Peek();
+            return ActiveRedoStack.Peek();
         }
 
         /// <summary>
@@ -89,23 +89,23 @@ namespace AnimationEditor.ViewModels
         /// <param name="state">The object state</param>
         public void AddHistoricalState(IMemento state)
         {
-            _RedoStack.Clear();
-            _UndoStack.Push(state);
+            ActiveRedoStack.Clear();
+            ActiveUndoStack.Push(state);
         }
 
         public void Undo()
         {
-            var revertTo = _UndoStack.Pop();
+            var revertTo = ActiveUndoStack.Pop();
 
-            _RedoStack.Push(revertTo.Originator.SaveState());
+            ActiveRedoStack.Push(revertTo.Originator.SaveState());
             revertTo.Originator.LoadState(revertTo);
         }
 
         public void Redo()
         {
-            var resumeTo = _RedoStack.Pop();
+            var resumeTo = ActiveRedoStack.Pop();
 
-            _UndoStack.Push(resumeTo.Originator.SaveState());
+            ActiveUndoStack.Push(resumeTo.Originator.SaveState());
             resumeTo.Originator.LoadState(resumeTo);
         }
     }
