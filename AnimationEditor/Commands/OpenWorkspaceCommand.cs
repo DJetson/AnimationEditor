@@ -6,9 +6,11 @@ using Microsoft.Win32;
 
 namespace AnimationEditor.Commands
 {
-    public class LoadWorkspaceCommand : RequeryBase
+    public class OpenWorkspaceCommand : RequeryBase
     {
-        public LoadWorkspaceCommand()
+        public override string DisplayName => "Open Workspace";
+
+        public OpenWorkspaceCommand()
         {
             JsonSerializerOptions = new System.Text.Json.JsonSerializerOptions();
             JsonSerializerOptions.Converters.Add(new StrokeCollectionConverter());
@@ -41,7 +43,7 @@ namespace AnimationEditor.Commands
             {
                 var ofn = sender as OpenFileDialog;
 
-                var newModel = WorkspaceFileModel.LoadWorkspaceFile(ofn.FileName, JsonSerializerOptions);
+                var newModel = WorkspaceFileModel.OpenWorkspaceFile(ofn.FileName, JsonSerializerOptions);
 
                 var newViewModel = new WorkspaceViewModel(newModel);
 

@@ -1,5 +1,6 @@
 ﻿using AnimationEditor.Interfaces;
 using AnimationEditor.Utilities;
+using AnimationEditor.ViewModels.StateObjects;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -64,8 +65,8 @@ namespace AnimationEditor.ViewModels
             return SelectedWorkspace.UndoStack.ToList();
         }
 
-        public Stack<IMemento> ActiveUndoStack => SelectedWorkspace.UndoStack;
-        public Stack<IMemento> ActiveRedoStack => SelectedWorkspace.RedoStack;
+        public Stack<IMemento> ActiveUndoStack => SelectedWorkspace?.UndoStack;
+        public Stack<IMemento> ActiveRedoStack => SelectedWorkspace?.RedoStack;
 
         public IMemento PeekUndo()
         {
@@ -89,6 +90,17 @@ namespace AnimationEditor.ViewModels
         /// <param name="state">The object state</param>
         public void AddHistoricalState(IMemento state)
         {
+            //var lastTimelineState = ActiveUndoStack.Where(e => e.Originator is AnimationTimelineViewModel).FirstOrDefault() as UndoStateViewModel<AnimationTimelineState>;
+
+            //if(lastTimelineState != null && (lastTimelineState.State.SelectedFrame != SelectedWorkspace.AnimationTimelineViewModel.SelectedFrame))
+            //{
+            //    var selectionChangeState = SelectedWorkspace.AnimationTimelineViewModel.SaveState() as UndoStateViewModel<AnimationTimelineState>;
+            //    selectionChangeState.DisplayName = "Navigate to Frame";
+            //    AddHistoricalState(selectionChangeState);
+            //}
+
+            //if(SelectedWorkspace.AnimationTimelineViewModel.SelectedFrame != )
+                 
             ActiveRedoStack.Clear();
             ActiveUndoStack.Push(state);
         }
@@ -97,6 +109,8 @@ namespace AnimationEditor.ViewModels
         {
             var revertTo = ActiveUndoStack.Pop();
 
+            //Need to mess with the interface/class hierarchy for UndoState 
+            //objects so that DisplayName can be set here
             ActiveRedoStack.Push(revertTo.Originator.SaveState());
             revertTo.Originator.LoadState(revertTo);
         }

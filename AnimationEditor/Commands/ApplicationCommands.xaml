@@ -4,8 +4,8 @@
     <Commands:CreateNewWorkspaceCommand x:Key="CreateNewWorkspace" />
     <Commands:CloseWorkspaceCommand x:Key="CloseWorkspace" />
     <Commands:SaveWorkspaceCommand x:Key="SaveWorkspace" />
-    <Commands:LoadWorkspaceCommand x:Key="LoadWorkspace" />
+    <Commands:OpenWorkspaceCommand x:Key="OpenWorkspace" />
     <Commands:ShowOnionSkinSettingsWindowCommand x:Key="ShowOnionSkinSettingsWindow" />
-    <Commands:UndoCommand x:Key="Undo"/>
-    <Commands:RedoCommand x:Key="Redo"/>
+    <Commands:UndoCommand x:Key="Undo" DisplayName="Undo"/>
+    <Commands:RedoCommand x:Key="Redo" DisplayName="Redo"/>
 </ResourceDictionary>

@@ -10,6 +10,8 @@ namespace AnimationEditor.Commands
 {
     public class SaveWorkspaceCommand : RequeryBase
     {
+        public override string DisplayName => "Save Workspace";
+
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is WorkspaceViewModel Parameter))

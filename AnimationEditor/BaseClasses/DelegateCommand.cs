@@ -16,6 +16,12 @@ namespace AnimationEditor.BaseClasses
             _Execute = execute;
         }
 
+        public DelegateCommand(string displayName, Predicate<object> canExecute, Action<object> execute) : base(displayName)
+        {
+            _CanExecute = canExecute;
+            _Execute = execute;
+        }
+
         public DelegateCommand(Predicate<object> canExecute, Action<object> execute)
         {
             _CanExecute = canExecute;

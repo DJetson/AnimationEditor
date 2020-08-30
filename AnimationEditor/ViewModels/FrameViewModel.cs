@@ -48,8 +48,9 @@ namespace AnimationEditor.ViewModels
             //      Because strokes are applied to the InkCanvas BEFORE we're able to call SaveState
             //      So any changes to the StrokeCollection must be reversed on the StrokeCollection contained
             //      in the state being pushed on the undo stack
-            var state = SaveState();
-            var stateStrokeCollection = (state as UndoStateViewModel<FrameState>).State.StrokeCollection;
+            var state = SaveState() as UndoStateViewModel<FrameState>;
+            state.DisplayName = "Frame Content Change";
+            var stateStrokeCollection = state.State.StrokeCollection;
 
             foreach (var stroke in e.Added)
             {
@@ -79,8 +80,16 @@ namespace AnimationEditor.ViewModels
         //    MainWindowViewModel.WorkspaceManager.AddHistoricalState(state);
         //}
 
+        //public void ValidateUndoSelectionContext()
+        //{
+        //    //This 
+        //    if (MainWindowViewModel.WorkspaceManager.ActiveUndoStack.Peek().Originator is AnimationTimelineViewModel)
+
+        //}
+
         public IMemento SaveState()
         {
+
             var memento = new UndoStateViewModel<FrameState>();
 
             memento.Originator = this;

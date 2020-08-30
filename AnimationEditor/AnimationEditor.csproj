@@ -88,7 +88,7 @@
     <Compile Include="BaseClasses\RequeryBase.cs" />
     <Compile Include="Commands\CloseWorkspaceCommand.cs" />
     <Compile Include="Commands\CreateNewWorkspaceCommand.cs" />
-    <Compile Include="Commands\LoadWorkspaceCommand.cs" />
+    <Compile Include="Commands\OpenWorkspaceCommand.cs" />
     <Compile Include="Commands\RedoCommand.cs" />
     <Compile Include="Commands\SaveWorkspaceCommand.cs" />
     <Compile Include="Commands\ShowOnionSkinSettingsWindowCommand.cs" />

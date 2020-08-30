@@ -14,7 +14,7 @@ namespace AnimationEditor.Models
 
         public List<FrameModel> Frames { get; set; } = new List<FrameModel>();
 
-        public static WorkspaceFileModel LoadWorkspaceFile(string filepath, System.Text.Json.JsonSerializerOptions options)
+        public static WorkspaceFileModel OpenWorkspaceFile(string filepath, System.Text.Json.JsonSerializerOptions options)
         {
             return System.Text.Json.JsonSerializer.Deserialize<WorkspaceFileModel>(File.ReadAllText(filepath), options);
         }

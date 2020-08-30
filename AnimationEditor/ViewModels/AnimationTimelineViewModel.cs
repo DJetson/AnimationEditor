@@ -25,8 +25,11 @@ namespace AnimationEditor.ViewModels
         public ObservableCollection<FrameViewModel> Frames
         {
             get => _Frames;
-            set { _Frames = value; NotifyPropertyChanged(); SelectedFrame = Frames.FirstOrDefault(); }
+            set { _Frames = value; NotifyPropertyChanged(); UnbufferedFrameChange(Frames.FirstOrDefault()); }
         }
+
+        //private bool _HasUnrecordedFrameSelectionChange = false;
+        //public bool HasUnrecordedFrameSelectionChange => _HasUnrecordedFrameSelectionChange;
 
         private FrameViewModel _SelectedFrame;
         public FrameViewModel SelectedFrame
@@ -34,12 +37,16 @@ namespace AnimationEditor.ViewModels
             get => _SelectedFrame;
             set
             {
+                if (_SelectedFrame != null && value != null)
+                {
+                    UndoStateViewModel<AnimationTimelineState> state = SaveState() as UndoStateViewModel<AnimationTimelineState>;
+                    state.DisplayName = "Navigate to Frame";
+                    MainWindowViewModel.WorkspaceManager.AddHistoricalState(state);
+                }
+
                 _SelectedFrame = value;
-                NotifyPropertyChanged();
-                NotifyPropertyChanged(nameof(NextFrame));
-                NotifyPropertyChanged(nameof(PreviousFrame));
-                NotifyPropertyChanged(nameof(NextFrameStrokes));
-                NotifyPropertyChanged(nameof(PreviousFrameStrokes));
+                //_HasUnrecordedFrameSelectionChange = true;
+                NotifySelectedFrameAndDependents();
             }
         }
 
@@ -217,8 +224,29 @@ namespace AnimationEditor.ViewModels
             set { _AddBlankFrame = value; NotifyPropertyChanged(); }
         }
 
+        public bool AddBlankFrame_CanExecute(object parameter)
+        {
+            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Play)
+                return false;
+
+            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Pause)
+                return false;
+
+            if (Enum.TryParse<FrameNavigation>(parameter.ToString(), out FrameNavigation Parameter) == false)
+                return false;
+
+            if (Parameter == FrameNavigation.Current)
+                return false;
+
+            return true;
+        }
+
         public void AddBlankFrame_Execute(object parameter)
         {
+            var state = SaveState() as UndoStateViewModel<AnimationTimelineState>;
+            state.DisplayName = AddBlankFrame.DisplayName;
+            MainWindowViewModel.WorkspaceManager.AddHistoricalState(state);
+
             var newFrame = new FrameViewModel();
 
             int insertAtIndex = Frames.Count;
@@ -241,10 +269,34 @@ namespace AnimationEditor.ViewModels
             }
 
             AddFrameAtIndex(newFrame, insertAtIndex);
-            SelectedFrame = newFrame;
+            UnbufferedFrameChange(newFrame);
         }
 
-        public bool AddBlankFrame_CanExecute(object parameter)
+        private void UnbufferedFrameChange(FrameViewModel newFrame)
+        {
+            _SelectedFrame = newFrame;
+            NotifySelectedFrameAndDependents();
+        }
+
+        private void NotifySelectedFrameAndDependents()
+        {
+            NotifyPropertyChanged(nameof(SelectedFrame));
+            NotifyPropertyChanged(nameof(NextFrame));
+            NotifyPropertyChanged(nameof(PreviousFrame));
+            NotifyPropertyChanged(nameof(NextFrameStrokes));
+            NotifyPropertyChanged(nameof(PreviousFrameStrokes));
+        }
+        #endregion AddBlankFrame Command
+
+        #region DuplicateCurrentFrame Command
+        private DelegateCommand _DuplicateCurrentFrame;
+        public DelegateCommand DuplicateCurrentFrame
+        {
+            get { return _DuplicateCurrentFrame; }
+            set { _DuplicateCurrentFrame = value; NotifyPropertyChanged(); }
+        }
+
+        public bool DuplicateCurrentFrame_CanExecute(object parameter)
         {
             if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Play)
                 return false;
@@ -260,28 +312,23 @@ namespace AnimationEditor.ViewModels
 
             return true;
         }
-        #endregion AddBlankFrame Command
-
-        #region DuplicateCurrentFrame Command
-        private DelegateCommand _DuplicateCurrentFrame;
-        public DelegateCommand DuplicateCurrentFrame
-        {
-            get { return _DuplicateCurrentFrame; }
-            set { _DuplicateCurrentFrame = value; NotifyPropertyChanged(); }
-        }
 
         public void DuplicateCurrentFrame_Execute(object parameter)
         {
+            var state = SaveState() as UndoStateViewModel<AnimationTimelineState>;
+            state.DisplayName = DuplicateCurrentFrame.DisplayName;
+            MainWindowViewModel.WorkspaceManager.AddHistoricalState(state);
+
             var Parameter = (FrameNavigation)Enum.Parse(typeof(FrameNavigation), parameter.ToString());
 
             int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
             int DuplicateCurrentFrameToIndex = selectedFrameIndex;
 
-            var newFrame = new FrameViewModel()
-            {
-                StrokeCollection = SelectedFrame.StrokeCollection.Clone(),
-                //Strokes = new ObservableCollection<Stroke>(SelectedFrame.Strokes),
-            };
+            var newFrame = new FrameViewModel(SelectedFrame.StrokeCollection);
+            //{
+            //    StrokeCollection = SelectedFrame.StrokeCollection.Clone(),
+            //    //Strokes = new ObservableCollection<Stroke>(SelectedFrame.Strokes),
+            //};
 
             switch (Parameter)
             {
@@ -300,24 +347,8 @@ namespace AnimationEditor.ViewModels
             }
 
             AddFrameAtIndex(newFrame, DuplicateCurrentFrameToIndex);
-            SelectedFrame = Frames[DuplicateCurrentFrameToIndex];
-        }
-
-        public bool DuplicateCurrentFrame_CanExecute(object parameter)
-        {
-            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Play)
-                return false;
-
-            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Pause)
-                return false;
-
-            if (Enum.TryParse<FrameNavigation>(parameter.ToString(), out FrameNavigation Parameter) == false)
-                return false;
-
-            if (Parameter == FrameNavigation.Current)
-                return false;
-
-            return true;
+            //SelectedFrame = Frames[DuplicateCurrentFrameToIndex];
+            UnbufferedFrameChange(Frames[DuplicateCurrentFrameToIndex]);
         }
         #endregion DuplicateCurrentFrame Command
 
@@ -345,7 +376,9 @@ namespace AnimationEditor.ViewModels
 
         public void DeleteCurrentFrame_Execute(object parameter)
         {
-            MainWindowViewModel.WorkspaceManager.AddHistoricalState(SaveState());
+            var state = SaveState() as UndoStateViewModel<AnimationTimelineState>;
+            state.DisplayName = DeleteCurrentFrame.DisplayName;
+            MainWindowViewModel.WorkspaceManager.AddHistoricalState(state);
 
             int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
 
@@ -362,18 +395,21 @@ namespace AnimationEditor.ViewModels
             if (selectedFrameIndex >= Frames.Count)
                 selectedFrameIndex = Frames.Count - 1;
 
-            SelectedFrame = Frames[selectedFrameIndex];
+            //SelectedFrame = Frames[selectedFrameIndex];
+            UnbufferedFrameChange(Frames[selectedFrameIndex]);
+
         }
         #endregion DeleteCurrentFrame Command
 
         public void InitializeCommands()
         {
-            DeleteCurrentFrame = new DelegateCommand(DeleteCurrentFrame_CanExecute, DeleteCurrentFrame_Execute);
-            AddBlankFrame = new DelegateCommand(AddBlankFrame_CanExecute, AddBlankFrame_Execute);
             PlayAnimation = new DelegateCommand(PlayAnimation_CanExecute, PlayAnimation_Execute);
             StopAnimation = new DelegateCommand(StopAnimation_CanExecute, StopAnimation_Execute);
+
+            DeleteCurrentFrame = new DelegateCommand("Delete Frame", DeleteCurrentFrame_CanExecute, DeleteCurrentFrame_Execute);
+            AddBlankFrame = new DelegateCommand("Add Blank Frame", AddBlankFrame_CanExecute, AddBlankFrame_Execute);
             NavigateToFrame = new DelegateCommand(NavigateToFrame_CanExecute, NavigateToFrame_Execute);
-            DuplicateCurrentFrame = new DelegateCommand(DuplicateCurrentFrame_CanExecute, DuplicateCurrentFrame_Execute);
+            DuplicateCurrentFrame = new DelegateCommand("Duplicate Frame", DuplicateCurrentFrame_CanExecute, DuplicateCurrentFrame_Execute);
         }
 
         public AnimationTimelineViewModel(List<Models.FrameModel> frames)
@@ -386,7 +422,7 @@ namespace AnimationEditor.ViewModels
                 Frames.Add(new FrameViewModel(item));
             }
 
-            SelectedFrame = Frames.FirstOrDefault();
+            UnbufferedFrameChange(Frames.FirstOrDefault());
         }
 
         public AnimationTimelineViewModel()
@@ -395,12 +431,11 @@ namespace AnimationEditor.ViewModels
 
             Frames = new ObservableCollection<FrameViewModel>();
             Frames.Add(new FrameViewModel());
-            SelectedFrame = Frames.FirstOrDefault();
+            UnbufferedFrameChange(Frames.FirstOrDefault());
         }
 
         public void AddFrameAtIndex(FrameViewModel frame, int index)
         {
-            MainWindowViewModel.WorkspaceManager.AddHistoricalState(SaveState());
 
             if (index < Frames.Count)
             {
@@ -432,7 +467,7 @@ namespace AnimationEditor.ViewModels
 
             Frames = Memento.State.Frames;
             FramesPerSecond = Memento.State.FramesPerSecond;
-            SelectedFrame = Memento.State.SelectedFrame;
+            UnbufferedFrameChange(Memento.State.SelectedFrame);
         }
     }
 }

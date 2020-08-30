@@ -11,6 +11,8 @@ namespace AnimationEditor.Commands
 {
     public class CloseWorkspaceCommand : RequeryBase
     {
+        public override string DisplayName => "Close Workspace";
+
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is WorkspaceViewModel Parameter))

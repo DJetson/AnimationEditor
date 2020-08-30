@@ -10,6 +10,8 @@ namespace AnimationEditor.Commands
 {
     public class UndoCommand : RequeryBase
     {
+        //public override string DisplayName => "Undo";
+
         public override bool CanExecute(object parameter)
         {
             if (MainWindowViewModel.WorkspaceManager?.PeekUndo() == null)

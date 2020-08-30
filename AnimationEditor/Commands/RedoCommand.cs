@@ -10,6 +10,8 @@ namespace AnimationEditor.Commands
 {
     public class RedoCommand : RequeryBase
     {
+        //public override string DisplayName => "Redo";
+
         public override bool CanExecute(object parameter)
         {
             if (MainWindowViewModel.WorkspaceManager?.PeekRedo() == null)

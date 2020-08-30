@@ -10,6 +10,8 @@ namespace AnimationEditor.Commands
 {
     public class CreateNewWorkspaceCommand : RequeryBase
     {
+        public override string DisplayName => "Create New Workspace";
+
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is IHasWorkspaceCollection Parameter))

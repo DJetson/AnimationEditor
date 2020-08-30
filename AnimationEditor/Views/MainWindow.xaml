@@ -24,7 +24,7 @@
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
             <MenuItem Header="File">
                 <MenuItem Header="New" Command="{StaticResource CreateNewWorkspace}" CommandParameter="{Binding WorkspaceManager}"/>
-                <MenuItem Header="Open" Command="{StaticResource LoadWorkspace}" CommandParameter="{Binding WorkspaceManager}"/>
+                <MenuItem Header="Open" Command="{StaticResource OpenWorkspace}" CommandParameter="{Binding WorkspaceManager}"/>
                 <MenuItem Header="Save" Command="{StaticResource SaveWorkspace}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
             </MenuItem>
             <MenuItem Header="Edit">
@@ -51,7 +51,7 @@
             </ToolBarTray.Resources>
             <ToolBar Background="LightGray">
                 <Button Content="{StaticResource NewFile}" Command="{StaticResource CreateNewWorkspace}" CommandParameter="{Binding WorkspaceManager}"/>
-                <Button Content="{StaticResource OpenFile}" Command="{StaticResource LoadWorkspace}" CommandParameter="{Binding WorkspaceManager}"/>
+                <Button Content="{StaticResource OpenFile}" Command="{StaticResource OpenWorkspace}" CommandParameter="{Binding WorkspaceManager}"/>
                 <Button Content="{StaticResource SaveFile}" Command="{StaticResource SaveWorkspace}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
             </ToolBar>
             <ToolBar>

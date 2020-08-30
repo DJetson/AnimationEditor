@@ -164,8 +164,8 @@ namespace AnimationEditor.ViewModels
 
         public void InitializeCommands()
         {
-            ZoomIn = new DelegateCommand(ZoomIn_CanExecute, ZoomIn_Execute);
-            ZoomOut = new DelegateCommand(ZoomOut_CanExecute, ZoomOut_Execute);
+            ZoomIn = new DelegateCommand("Zoom In", ZoomIn_CanExecute, ZoomIn_Execute);
+            ZoomOut = new DelegateCommand("Zoom Out", ZoomOut_CanExecute, ZoomOut_Execute);
         }
 
         public WorkspaceViewModel()
