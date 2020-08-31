@@ -14,11 +14,27 @@ namespace AnimationEditor.Commands
 
         public override bool CanExecute(object parameter)
         {
-            if (MainWindowViewModel.WorkspaceManager?.PeekUndo() == null)
+            //if (!(parameter is MainWindowViewModel Parameter))
+            //{
+            //    try
+            //    {
+            //        if (MainWindowViewModel.WorkspaceManager?.PeekUndo() == null)
+            //            return false;
+            //    }
+            //    catch (TypeInitializationException e)
+            //    {
+            //        Console.WriteLine($"Undo.CanExecute failed:{e.Message}");
+            //    }
+            //}
+
+            if (!(parameter is MainWindowViewModel Parameter))
                 return false;
 
-            if (MainWindowViewModel.WorkspaceManager?.SelectedWorkspace?.AnimationTimelineViewModel
-                ?.AnimationPlaybackViewModel.CurrentState != PlaybackStates.Stop)
+            if (Parameter.WorkspaceManager.PeekUndo() == null)
+                return false;
+
+            if (Parameter?.WorkspaceManager?.SelectedWorkspace?.AnimationTimelineViewModel
+            ?.AnimationPlaybackViewModel.CurrentState != PlaybackStates.Stop)
                 return false;
 
             return true;
@@ -26,7 +42,7 @@ namespace AnimationEditor.Commands
 
         public override void Execute(object parameter)
         {
-            MainWindowViewModel.WorkspaceManager.Undo();
+            (parameter as MainWindowViewModel).WorkspaceManager.Undo();
         }
     }
 }

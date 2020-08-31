@@ -18,6 +18,13 @@ namespace AnimationEditor.ViewModels
             set { _StrokeCollection = value; NotifyPropertyChanged(); }
         }
 
+        private UndoStateViewModel<FrameState> _CurrentState;
+        public IMemento CurrentState
+        {
+            get => _CurrentState;
+            set { _CurrentState = value as UndoStateViewModel<FrameState>; NotifyPropertyChanged(); }
+        }
+
         //private int _Order;
         //public int Order
         //{
@@ -29,17 +36,48 @@ namespace AnimationEditor.ViewModels
         {
             StrokeCollection = new StrokeCollection();
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
+            CurrentState = new UndoStateViewModel<FrameState>()
+            {
+                State = new FrameState(this),
+                DisplayName = "New Frame",
+                Originator = this
+            };
         }
 
         public FrameViewModel(StrokeCollection strokeCollection)
         {
             StrokeCollection = new StrokeCollection(strokeCollection);
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
+
+            CurrentState = new UndoStateViewModel<FrameState>()
+            {
+                State = new FrameState(this),
+                DisplayName = "New Frame from Stroke Collection",
+                Originator = this
+            };
         }
 
         public FrameViewModel(Models.FrameModel model)
         {
             StrokeCollection = model.StrokeCollection;
+            StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
+
+            CurrentState = new UndoStateViewModel<FrameState>()
+            {
+                State = new FrameState(this),
+                DisplayName = "Loaded Frame from FrameModel",
+                Originator = this
+            };
+        }
+
+        public void PushUndoRecord(UndoStateViewModel<FrameState> nextState)
+        {
+            var mainWindowViewModel = App.Current.MainWindow.DataContext as MainWindowViewModel;
+            if (mainWindowViewModel != null)
+            {
+                mainWindowViewModel.WorkspaceManager.AddHistoricalState(CurrentState);
+            }
+            CurrentState = nextState;
         }
 
         private void StrokeCollection_StrokesChanged(object sender, StrokeCollectionChangedEventArgs e)
@@ -48,27 +86,30 @@ namespace AnimationEditor.ViewModels
             //      Because strokes are applied to the InkCanvas BEFORE we're able to call SaveState
             //      So any changes to the StrokeCollection must be reversed on the StrokeCollection contained
             //      in the state being pushed on the undo stack
-            var state = SaveState() as UndoStateViewModel<FrameState>;
-            state.DisplayName = "Frame Content Change";
-            var stateStrokeCollection = state.State.StrokeCollection;
+            //var state = SaveState() as UndoStateViewModel<FrameState>;
+            //state.DisplayName = "Frame Content Change";
+            //var stateStrokeCollection = state.State.StrokeCollection;
 
-            foreach (var stroke in e.Added)
-            {
-                //stroke.StylusPointsChanged += Stroke_Invalidated;
+            //foreach (var stroke in e.Added)
+            //{
+            //    //stroke.StylusPointsChanged += Stroke_Invalidated;
 
-                if (stateStrokeCollection.Contains(stroke))
-                    stateStrokeCollection.Remove(e.Added);
+            //    if (stateStrokeCollection.Contains(stroke))
+            //        stateStrokeCollection.Remove(e.Added);
 
-            }
-            foreach (var stroke in e.Removed)
-            {
-                if (!(stateStrokeCollection.Contains(stroke)))
-                    stateStrokeCollection.Add(e.Removed);
-            }
+            //}
+            //foreach (var stroke in e.Removed)
+            //{
+            //    if (!(stateStrokeCollection.Contains(stroke)))
+            //        stateStrokeCollection.Add(e.Removed);
+            //}
 
             //_PreviousStrokes = new StrokeCollection(StrokeCollection);
+            var state = SaveState() as UndoStateViewModel<FrameState>;
+            state.DisplayName = "Frame Content Change";
+            PushUndoRecord(state);
 
-            MainWindowViewModel.WorkspaceManager.AddHistoricalState(state);
+            //MainWindowViewModel.WorkspaceManager.AddHistoricalState(state);
         }
 
         //private void Stroke_Invalidated(object sender, EventArgs e)
@@ -105,6 +146,8 @@ namespace AnimationEditor.ViewModels
             StrokeCollection.StrokesChanged -= StrokeCollection_StrokesChanged;
             StrokeCollection = Memento.State.StrokeCollection;
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
+
+            CurrentState = Memento;
         }
     }
 }

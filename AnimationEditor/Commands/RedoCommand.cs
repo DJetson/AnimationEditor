@@ -14,20 +14,22 @@ namespace AnimationEditor.Commands
 
         public override bool CanExecute(object parameter)
         {
-            if (MainWindowViewModel.WorkspaceManager?.PeekRedo() == null)
+            if (!(parameter is MainWindowViewModel Parameter))
                 return false;
 
-            if (MainWindowViewModel.WorkspaceManager?.SelectedWorkspace
+            if (Parameter.WorkspaceManager?.PeekRedo() == null)
+                return false;
+
+            if (Parameter.WorkspaceManager?.SelectedWorkspace
                 ?.AnimationTimelineViewModel?.AnimationPlaybackViewModel.CurrentState != PlaybackStates.Stop)
                 return false;
-
 
             return true;
         }
 
         public override void Execute(object parameter)
         {
-            MainWindowViewModel.WorkspaceManager.Redo();
+            (parameter as MainWindowViewModel).WorkspaceManager.Redo();
         }
     }
 }

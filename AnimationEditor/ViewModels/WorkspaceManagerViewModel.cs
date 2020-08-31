@@ -100,7 +100,7 @@ namespace AnimationEditor.ViewModels
             //}
 
             //if(SelectedWorkspace.AnimationTimelineViewModel.SelectedFrame != )
-                 
+
             ActiveRedoStack.Clear();
             ActiveUndoStack.Push(state);
         }
@@ -111,7 +111,7 @@ namespace AnimationEditor.ViewModels
 
             //Need to mess with the interface/class hierarchy for UndoState 
             //objects so that DisplayName can be set here
-            ActiveRedoStack.Push(revertTo.Originator.SaveState());
+            ActiveRedoStack.Push(revertTo.Originator.CurrentState);
             revertTo.Originator.LoadState(revertTo);
         }
 
@@ -119,7 +119,7 @@ namespace AnimationEditor.ViewModels
         {
             var resumeTo = ActiveRedoStack.Pop();
 
-            ActiveUndoStack.Push(resumeTo.Originator.SaveState());
+            ActiveUndoStack.Push(resumeTo.Originator.CurrentState);
             resumeTo.Originator.LoadState(resumeTo);
         }
     }
