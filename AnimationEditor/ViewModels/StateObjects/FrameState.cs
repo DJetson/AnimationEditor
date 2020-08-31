@@ -7,7 +7,7 @@ using System.Windows.Ink;
 
 namespace AnimationEditor.ViewModels.StateObjects
 {
-    public class FrameState
+    public class FrameState : UndoStateViewModel
     {
         public StrokeCollection StrokeCollection;
 

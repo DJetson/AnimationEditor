@@ -25,7 +25,7 @@ namespace AnimationEditor.ViewModels
         public ObservableCollection<FrameViewModel> Frames
         {
             get => _Frames;
-            set { _Frames = value; NotifyPropertyChanged(); UnbufferedFrameChange(Frames.FirstOrDefault()); }
+            set { _Frames = value; NotifyPropertyChanged(); SelectedFrame = Frames.FirstOrDefault(); }
         }
 
         private FrameViewModel _SelectedFrame;
@@ -39,7 +39,7 @@ namespace AnimationEditor.ViewModels
 
                 if (_SelectedFrame != null && value != null)
                 {
-                    var state = SaveState() as UndoStateViewModel<AnimationTimelineState>;
+                    var state = SaveState() as AnimationTimelineState;
                     state.DisplayName = "Navigate to Frame";
                     PushUndoRecord(state);
                     //UndoStateViewModel<AnimationTimelineState> state = SaveState() as UndoStateViewModel<AnimationTimelineState>;
@@ -51,7 +51,13 @@ namespace AnimationEditor.ViewModels
             }
         }
 
-        public void PushUndoRecord(UndoStateViewModel<AnimationTimelineState> nextState)
+        public void SelectFrameWithoutUndoBuffer(FrameViewModel frame)
+        {
+            _SelectedFrame = frame;
+            NotifySelectedFrameAndDependents();
+        }
+
+        public void PushUndoRecord(AnimationTimelineState nextState)
         {
             var mainWindowViewModel = App.Current.MainWindow.DataContext as MainWindowViewModel;
             if (mainWindowViewModel != null)
@@ -280,18 +286,18 @@ namespace AnimationEditor.ViewModels
             }
 
             AddFrameAtIndex(newFrame, insertAtIndex);
-            UnbufferedFrameChange(newFrame);
+            SelectFrameWithoutUndoBuffer(newFrame);
 
-            var state = SaveState() as UndoStateViewModel<AnimationTimelineState>;
+            var state = SaveState() as AnimationTimelineState;
             state.DisplayName = AddBlankFrame.DisplayName;
             PushUndoRecord(state);
         }
 
-        private void UnbufferedFrameChange(FrameViewModel newFrame)
-        {
-            _SelectedFrame = newFrame;
-            NotifySelectedFrameAndDependents();
-        }
+        //private void UnbufferedFrameChange(FrameViewModel newFrame)
+        //{
+        //    _SelectedFrame = newFrame;
+        //    NotifySelectedFrameAndDependents();
+        //}
 
         private void NotifySelectedFrameAndDependents()
         {
@@ -362,10 +368,9 @@ namespace AnimationEditor.ViewModels
             }
 
             AddFrameAtIndex(newFrame, DuplicateCurrentFrameToIndex);
-            //SelectedFrame = Frames[DuplicateCurrentFrameToIndex];
-            UnbufferedFrameChange(Frames[DuplicateCurrentFrameToIndex]);
+            SelectFrameWithoutUndoBuffer(Frames[DuplicateCurrentFrameToIndex]);
 
-            var state = SaveState() as UndoStateViewModel<AnimationTimelineState>;
+            var state = SaveState() as AnimationTimelineState;
             state.DisplayName = DuplicateCurrentFrame.DisplayName;
             PushUndoRecord(state);
         }
@@ -379,11 +384,11 @@ namespace AnimationEditor.ViewModels
             set { _DeleteCurrentFrame = value; NotifyPropertyChanged(); }
         }
 
-        private UndoStateViewModel<AnimationTimelineState> _CurrentState;
+        private AnimationTimelineState _CurrentState;
         public IMemento CurrentState
         {
             get => _CurrentState;
-            set { _CurrentState = value as UndoStateViewModel<AnimationTimelineState>; NotifyPropertyChanged(); }
+            set { _CurrentState = value as AnimationTimelineState; NotifyPropertyChanged(); }
         }
 
         public bool DeleteCurrentFrame_CanExecute(object parameter)
@@ -402,10 +407,6 @@ namespace AnimationEditor.ViewModels
 
         public void DeleteCurrentFrame_Execute(object parameter)
         {
-            //var state = SaveState() as UndoStateViewModel<AnimationTimelineState>;
-            //state.DisplayName = DeleteCurrentFrame.DisplayName;
-            //MainWindowViewModel.WorkspaceManager.AddHistoricalState(state);
-
             int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
 
             Frames.Remove(SelectedFrame);
@@ -422,12 +423,11 @@ namespace AnimationEditor.ViewModels
                 selectedFrameIndex = Frames.Count - 1;
 
             //SelectedFrame = Frames[selectedFrameIndex];
-            UnbufferedFrameChange(Frames[selectedFrameIndex]);
+            SelectFrameWithoutUndoBuffer(Frames[selectedFrameIndex]);
 
-            var state = SaveState() as UndoStateViewModel<AnimationTimelineState>;
+            var state = SaveState() as AnimationTimelineState;
             state.DisplayName = DeleteCurrentFrame.DisplayName;
             PushUndoRecord(state);
-
         }
         #endregion DeleteCurrentFrame Command
 
@@ -452,9 +452,9 @@ namespace AnimationEditor.ViewModels
                 Frames.Add(new FrameViewModel(item));
             }
 
-            UnbufferedFrameChange(Frames.FirstOrDefault());
+            SelectFrameWithoutUndoBuffer(Frames.FirstOrDefault());
 
-            var state = SaveState() as UndoStateViewModel<AnimationTimelineState>;
+            var state = SaveState() as AnimationTimelineState;
             state.DisplayName = "Created AnimationTimeline from Frame Models";
             PushUndoRecord(state);
         }
@@ -465,9 +465,9 @@ namespace AnimationEditor.ViewModels
 
             Frames = new ObservableCollection<FrameViewModel>();
             Frames.Add(new FrameViewModel());
-            UnbufferedFrameChange(Frames.FirstOrDefault());
+            SelectFrameWithoutUndoBuffer(Frames.FirstOrDefault());
 
-            var state = SaveState() as UndoStateViewModel<AnimationTimelineState>;
+            var state = SaveState() as AnimationTimelineState;
             state.DisplayName = "Created AnimationTimeline";
             PushUndoRecord(state);
         }
@@ -491,21 +491,21 @@ namespace AnimationEditor.ViewModels
 
         public IMemento SaveState()
         {
-            var memento = new UndoStateViewModel<AnimationTimelineState>();
+            var memento = new AnimationTimelineState(this);
 
             memento.Originator = this;
-            memento.State = new AnimationTimelineState(this);
+            //memento.State = new AnimationTimelineState(this);
 
             return memento;
         }
 
         public void LoadState(IMemento state)
         {
-            var Memento = (state as UndoStateViewModel<AnimationTimelineState>);
+            var Memento = (state as AnimationTimelineState);
 
-            Frames = Memento.State.Frames;
-            FramesPerSecond = Memento.State.FramesPerSecond;
-            UnbufferedFrameChange(Memento.State.SelectedFrame);
+            Frames = Memento.Frames;
+            FramesPerSecond = Memento.FramesPerSecond;
+            SelectFrameWithoutUndoBuffer(Memento.SelectedFrame);
 
             CurrentState = Memento;
         }

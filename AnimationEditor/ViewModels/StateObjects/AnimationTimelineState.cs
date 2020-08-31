@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AnimationEditor.ViewModels.StateObjects
 {
-    public class AnimationTimelineState
+    public class AnimationTimelineState : UndoStateViewModel
     {
         public FrameViewModel SelectedFrame;
         public double FramesPerSecond;

@@ -18,11 +18,11 @@ namespace AnimationEditor.ViewModels
             set { _StrokeCollection = value; NotifyPropertyChanged(); }
         }
 
-        private UndoStateViewModel<FrameState> _CurrentState;
+        private FrameState _CurrentState;
         public IMemento CurrentState
         {
             get => _CurrentState;
-            set { _CurrentState = value as UndoStateViewModel<FrameState>; NotifyPropertyChanged(); }
+            set { _CurrentState = value as FrameState; NotifyPropertyChanged(); }
         }
 
         //private int _Order;
@@ -36,9 +36,8 @@ namespace AnimationEditor.ViewModels
         {
             StrokeCollection = new StrokeCollection();
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
-            CurrentState = new UndoStateViewModel<FrameState>()
+            CurrentState = new FrameState(this)
             {
-                State = new FrameState(this),
                 DisplayName = "New Frame",
                 Originator = this
             };
@@ -49,9 +48,8 @@ namespace AnimationEditor.ViewModels
             StrokeCollection = new StrokeCollection(strokeCollection);
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
 
-            CurrentState = new UndoStateViewModel<FrameState>()
+            CurrentState = new FrameState(this)
             {
-                State = new FrameState(this),
                 DisplayName = "New Frame from Stroke Collection",
                 Originator = this
             };
@@ -62,15 +60,14 @@ namespace AnimationEditor.ViewModels
             StrokeCollection = model.StrokeCollection;
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
 
-            CurrentState = new UndoStateViewModel<FrameState>()
+            CurrentState = new FrameState(this)
             {
-                State = new FrameState(this),
                 DisplayName = "Loaded Frame from FrameModel",
                 Originator = this
             };
         }
 
-        public void PushUndoRecord(UndoStateViewModel<FrameState> nextState)
+        public void PushUndoRecord(FrameState nextState)
         {
             var mainWindowViewModel = App.Current.MainWindow.DataContext as MainWindowViewModel;
             if (mainWindowViewModel != null)
@@ -105,7 +102,7 @@ namespace AnimationEditor.ViewModels
             //}
 
             //_PreviousStrokes = new StrokeCollection(StrokeCollection);
-            var state = SaveState() as UndoStateViewModel<FrameState>;
+            var state = SaveState() as FrameState;
             state.DisplayName = "Frame Content Change";
             PushUndoRecord(state);
 
@@ -131,20 +128,19 @@ namespace AnimationEditor.ViewModels
         public IMemento SaveState()
         {
 
-            var memento = new UndoStateViewModel<FrameState>();
+            var memento = new FrameState(this);
 
             memento.Originator = this;
-            memento.State = new FrameState(this);
 
             return memento;
         }
 
         public void LoadState(IMemento memento)
         {
-            var Memento = (memento as UndoStateViewModel<FrameState>);
+            var Memento = (memento as FrameState);
 
             StrokeCollection.StrokesChanged -= StrokeCollection_StrokesChanged;
-            StrokeCollection = Memento.State.StrokeCollection;
+            StrokeCollection = Memento.StrokeCollection;
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
 
             CurrentState = Memento;

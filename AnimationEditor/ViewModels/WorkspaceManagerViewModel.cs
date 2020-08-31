@@ -100,9 +100,10 @@ namespace AnimationEditor.ViewModels
             //}
 
             //if(SelectedWorkspace.AnimationTimelineViewModel.SelectedFrame != )
-
-            ActiveRedoStack.Clear();
-            ActiveUndoStack.Push(state);
+            if (ActiveRedoStack != null)
+                ActiveRedoStack.Clear();
+            if (ActiveUndoStack != null)
+                ActiveUndoStack.Push(state);
         }
 
         public void Undo()

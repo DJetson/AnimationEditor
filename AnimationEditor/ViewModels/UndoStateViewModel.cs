@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AnimationEditor.ViewModels
 {
-    public class UndoStateViewModel<T> : ViewModelBase, IMemento
+    public class UndoStateViewModel : ViewModelBase, IMemento
     {
         public override string DisplayName
         {
@@ -22,11 +22,16 @@ namespace AnimationEditor.ViewModels
             set { _Originator = value; NotifyPropertyChanged(); }
         }
 
-        private T _State;
-        public T State
+        //private T _State;
+        //public T State
+        //{
+        //    get => _State;
+        //    set { _State = value; NotifyPropertyChanged(); }
+        //}
+
+        public override string ToString()
         {
-            get => _State;
-            set { _State = value; NotifyPropertyChanged(); }
+            return DisplayName;
         }
     }
 }
