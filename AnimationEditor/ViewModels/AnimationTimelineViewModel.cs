@@ -14,6 +14,13 @@ namespace AnimationEditor.ViewModels
 
     public class AnimationTimelineViewModel : ViewModelBase, IMementoOriginator
     {
+        private WorkspaceViewModel _WorkspaceViewModel;
+        public WorkspaceViewModel WorkspaceViewModel
+        {
+            get { return _WorkspaceViewModel; }
+            set { _WorkspaceViewModel = value; NotifyPropertyChanged(); }
+        }
+
         private AnimationPlaybackViewModel _AnimationPlaybackViewModel = new AnimationPlaybackViewModel();
         public AnimationPlaybackViewModel AnimationPlaybackViewModel
         {
@@ -25,7 +32,7 @@ namespace AnimationEditor.ViewModels
         public ObservableCollection<FrameViewModel> Frames
         {
             get => _Frames;
-            set { _Frames = value; NotifyPropertyChanged(); SelectedFrame = Frames.FirstOrDefault(); }
+            set { _Frames = value; NotifyPropertyChanged(); SelectFrameWithoutUndoBuffer(Frames.FirstOrDefault()); }
         }
 
         private FrameViewModel _SelectedFrame;
@@ -59,11 +66,14 @@ namespace AnimationEditor.ViewModels
 
         public void PushUndoRecord(AnimationTimelineState nextState)
         {
-            var mainWindowViewModel = App.Current.MainWindow.DataContext as MainWindowViewModel;
-            if (mainWindowViewModel != null)
-            { 
-                mainWindowViewModel.WorkspaceManager.AddHistoricalState(CurrentState);
+            //var mainWindowViewModel = App.Current.MainWindow.DataContext as MainWindowViewModel;
+            //if (mainWindowViewModel != null)
+            //{ 
+            if (CurrentState != null)
+            {
+                WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(CurrentState);
             }
+            //}
             CurrentState = nextState;
         }
 
@@ -264,7 +274,7 @@ namespace AnimationEditor.ViewModels
             //state.DisplayName = AddBlankFrame.DisplayName;
             //MainWindowViewModel.WorkspaceManager.AddHistoricalState(state);
 
-            var newFrame = new FrameViewModel();
+            var newFrame = new FrameViewModel(WorkspaceViewModel);
 
             int insertAtIndex = Frames.Count;
             int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
@@ -413,7 +423,7 @@ namespace AnimationEditor.ViewModels
 
             if (Frames.Count == 0)
             {
-                var newFrame = new FrameViewModel();
+                var newFrame = new FrameViewModel(WorkspaceViewModel);
                 AddFrameAtIndex(newFrame, 0);
                 SelectedFrame = newFrame;
                 return;
@@ -459,12 +469,14 @@ namespace AnimationEditor.ViewModels
             PushUndoRecord(state);
         }
 
-        public AnimationTimelineViewModel()
+        public AnimationTimelineViewModel(WorkspaceViewModel workspace)
         {
+            WorkspaceViewModel = workspace;
+
             InitializeCommands();
 
             Frames = new ObservableCollection<FrameViewModel>();
-            Frames.Add(new FrameViewModel());
+            Frames.Add(new FrameViewModel(workspace));
             SelectFrameWithoutUndoBuffer(Frames.FirstOrDefault());
 
             var state = SaveState() as AnimationTimelineState;

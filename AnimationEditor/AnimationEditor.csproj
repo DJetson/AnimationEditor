@@ -117,6 +117,8 @@
     <Compile Include="ViewModels\StateObjects\StrokeState.cs" />
     <Compile Include="ViewModels\StateObjects\WorkspaceState.cs" />
     <Compile Include="ViewModels\UndoStateViewModel.cs" />
+    <Compile Include="ViewModels\WorkspaceHistoryItemViewModel.cs" />
+    <Compile Include="ViewModels\WorkspaceHistoryViewModel.cs" />
     <Compile Include="ViewModels\WorkspaceManagerViewModel.cs" />
     <Compile Include="Views\AnimationTimelineView.xaml.cs">
       <DependentUpon>AnimationTimelineView.xaml</DependentUpon>
@@ -129,6 +131,9 @@
     </Compile>
     <Compile Include="Views\OnionSkinSettingsWindow.xaml.cs">
       <DependentUpon>OnionSkinSettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WorkspaceHistoryView.xaml.cs">
+      <DependentUpon>WorkspaceHistoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WorkspaceManagerView.xaml.cs">
       <DependentUpon>WorkspaceManagerView.xaml</DependentUpon>
@@ -301,6 +306,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\OnionSkinSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WorkspaceHistoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

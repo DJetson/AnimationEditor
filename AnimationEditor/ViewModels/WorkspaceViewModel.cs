@@ -74,11 +74,18 @@ namespace AnimationEditor.ViewModels
         //    set { _SelectedFrame = value; NotifyPropertyChanged(); }
         //}
 
-        private AnimationTimelineViewModel _AnimationTimelineViewModel = new AnimationTimelineViewModel();
+        private AnimationTimelineViewModel _AnimationTimelineViewModel;
         public AnimationTimelineViewModel AnimationTimelineViewModel
         {
             get => _AnimationTimelineViewModel;
             set { _AnimationTimelineViewModel = value; NotifyPropertyChanged(); }
+        }
+
+        private WorkspaceHistoryViewModel _WorkspaceHistoryViewModel;
+        public WorkspaceHistoryViewModel WorkspaceHistoryViewModel
+        {
+            get { return _WorkspaceHistoryViewModel; }
+            set { _WorkspaceHistoryViewModel = value; NotifyPropertyChanged(); }
         }
 
         //private ObservableCollection<FrameViewModel> _Frames = new ObservableCollection<FrameViewModel>();
@@ -168,12 +175,17 @@ namespace AnimationEditor.ViewModels
             ZoomOut = new DelegateCommand("Zoom Out", ZoomOut_CanExecute, ZoomOut_Execute);
         }
 
+        public void InitializeDependentViewModels()
+        {
+            WorkspaceHistoryViewModel = new WorkspaceHistoryViewModel(this);
+            AnimationTimelineViewModel = new AnimationTimelineViewModel(this);
+            EditorTools = EditorToolsViewModel.Instance;
+        }
+
         public WorkspaceViewModel()
         {
+            InitializeDependentViewModels();
             InitializeCommands();
-
-            AnimationTimelineViewModel = new AnimationTimelineViewModel();
-            EditorTools = EditorToolsViewModel.Instance;
 
             JsonSerializerOptions = new System.Text.Json.JsonSerializerOptions();
             JsonSerializerOptions.Converters.Add(new Models.StrokeCollectionConverter());
@@ -183,6 +195,8 @@ namespace AnimationEditor.ViewModels
         {
             InitializeCommands();
             _WorkspaceModel = model;
+
+            WorkspaceHistoryViewModel = new WorkspaceHistoryViewModel(this);
 
             AnimationTimelineViewModel = new AnimationTimelineViewModel(model.Frames);
             EditorTools = EditorToolsViewModel.Instance;

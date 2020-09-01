@@ -10,11 +10,16 @@ namespace AnimationEditor.Interfaces
     {
         List<IMemento> GetStateHistory();
 
+        Stack<IMemento> UndoStack { get; }
+        Stack<IMemento> RedoStack { get; }
+
         IMemento PeekUndo();
         IMemento PeekRedo();
 
         void AddHistoricalState(IMemento state);
         void Undo();
+        void UndoToState(IMemento state);
         void Redo();
+        void RedoToState(IMemento state);
     }
 }

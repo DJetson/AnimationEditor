@@ -32,8 +32,18 @@ namespace AnimationEditor.ViewModels
         //    set { _Order = value; NotifyPropertyChanged(); }
         //}
 
-        public FrameViewModel()
+        private WorkspaceViewModel _WorkspaceViewModel;
+        public WorkspaceViewModel WorkspaceViewModel
         {
+            get { return _WorkspaceViewModel; }
+            set { _WorkspaceViewModel = value; NotifyPropertyChanged(); }
+        }
+
+
+        public FrameViewModel(WorkspaceViewModel workspace)
+        {
+            WorkspaceViewModel = workspace;
+
             StrokeCollection = new StrokeCollection();
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
             CurrentState = new FrameState(this)
@@ -69,11 +79,14 @@ namespace AnimationEditor.ViewModels
 
         public void PushUndoRecord(FrameState nextState)
         {
-            var mainWindowViewModel = App.Current.MainWindow.DataContext as MainWindowViewModel;
-            if (mainWindowViewModel != null)
+            //var mainWindowViewModel = App.Current.MainWindow.DataContext as MainWindowViewModel;
+            //if (mainWindowViewModel != null)
+            //{
+            if (CurrentState != null)
             {
-                mainWindowViewModel.WorkspaceManager.AddHistoricalState(CurrentState);
+                WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(CurrentState);
             }
+            //}
             CurrentState = nextState;
         }
 

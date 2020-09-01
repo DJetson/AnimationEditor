@@ -12,9 +12,9 @@ using System.Windows;
 
 namespace AnimationEditor.ViewModels
 {
-    public class WorkspaceManagerViewModel : ViewModelBase, IHasWorkspaceCollection, IMementoCaretaker
+    public class WorkspaceManagerViewModel : ViewModelBase, IHasWorkspaceCollection/*, IMementoCaretaker*/
     {
-        private ObservableCollection<WorkspaceViewModel> _Workspaces = new ObservableCollection<WorkspaceViewModel>();
+        private ObservableCollection<WorkspaceViewModel> _Workspaces;
         public ObservableCollection<WorkspaceViewModel> Workspaces
         {
             get => _Workspaces;
@@ -30,8 +30,21 @@ namespace AnimationEditor.ViewModels
 
         public WorkspaceManagerViewModel()
         {
-            SelectedWorkspace = CreateNewWorkspace();
-            //SelectedWorkspace = Workspaces.FirstOrDefault();
+            InitializeDependentViewModels();
+            SelectedWorkspace = Workspaces.LastOrDefault();
+        }
+
+        private void InitializeDependentViewModels()
+        {
+            Workspaces = new ObservableCollection<WorkspaceViewModel>();
+            var newWorkspace = new WorkspaceViewModel()
+            {
+                DisplayName = FileUtilities.GetUniquePlaceholderName(this),
+                HasUnsavedChanges = true,
+                Host = this
+            };
+
+            Workspaces.Add(newWorkspace);
         }
 
         public WorkspaceViewModel CreateNewWorkspace()
@@ -60,68 +73,111 @@ namespace AnimationEditor.ViewModels
                 Workspaces.Remove(workspace);
         }
 
-        public List<IMemento> GetStateHistory()
-        {
-            return SelectedWorkspace.UndoStack.ToList();
-        }
+        //public List<IMemento> GetStateHistory()
+        //{
+        //    return SelectedWorkspace.UndoStack.ToList();
+        //}
 
-        public Stack<IMemento> ActiveUndoStack => SelectedWorkspace?.UndoStack;
-        public Stack<IMemento> ActiveRedoStack => SelectedWorkspace?.RedoStack;
+        //public Stack<IMemento> UndoStack => SelectedWorkspace?.UndoStack;
+        //public Stack<IMemento> RedoStack => SelectedWorkspace?.RedoStack;
 
-        public IMemento PeekUndo()
-        {
-            if (ActiveUndoStack == null || ActiveUndoStack.Count == 0)
-                return null;
+        //public IMemento PeekUndo()
+        //{
+        //    if (UndoStack == null || UndoStack.Count == 0)
+        //        return null;
 
-            return ActiveUndoStack.Peek();
-        }
+        //    return UndoStack.Peek();
+        //}
 
-        public IMemento PeekRedo()
-        {
-            if (ActiveRedoStack == null || ActiveRedoStack.Count == 0)
-                return null;
+        //public IMemento PeekRedo()
+        //{
+        //    if (RedoStack == null || RedoStack.Count == 0)
+        //        return null;
 
-            return ActiveRedoStack.Peek();
-        }
+        //    return RedoStack.Peek();
+        //}
 
-        /// <summary>
-        /// This should be called BEFORE any undoable action takes place
-        /// </summary>
-        /// <param name="state">The object state</param>
-        public void AddHistoricalState(IMemento state)
-        {
-            //var lastTimelineState = ActiveUndoStack.Where(e => e.Originator is AnimationTimelineViewModel).FirstOrDefault() as UndoStateViewModel<AnimationTimelineState>;
+        ///// <summary>
+        ///// This should be called BEFORE any undoable action takes place
+        ///// </summary>
+        ///// <param name="state">The object state</param>
+        //public void AddHistoricalState(IMemento state)
+        //{
+        //    //var lastTimelineState = ActiveUndoStack.Where(e => e.Originator is AnimationTimelineViewModel).FirstOrDefault() as UndoStateViewModel<AnimationTimelineState>;
 
-            //if(lastTimelineState != null && (lastTimelineState.State.SelectedFrame != SelectedWorkspace.AnimationTimelineViewModel.SelectedFrame))
-            //{
-            //    var selectionChangeState = SelectedWorkspace.AnimationTimelineViewModel.SaveState() as UndoStateViewModel<AnimationTimelineState>;
-            //    selectionChangeState.DisplayName = "Navigate to Frame";
-            //    AddHistoricalState(selectionChangeState);
-            //}
+        //    //if(lastTimelineState != null && (lastTimelineState.State.SelectedFrame != SelectedWorkspace.AnimationTimelineViewModel.SelectedFrame))
+        //    //{
+        //    //    var selectionChangeState = SelectedWorkspace.AnimationTimelineViewModel.SaveState() as UndoStateViewModel<AnimationTimelineState>;
+        //    //    selectionChangeState.DisplayName = "Navigate to Frame";
+        //    //    AddHistoricalState(selectionChangeState);
+        //    //}
 
-            //if(SelectedWorkspace.AnimationTimelineViewModel.SelectedFrame != )
-            if (ActiveRedoStack != null)
-                ActiveRedoStack.Clear();
-            if (ActiveUndoStack != null)
-                ActiveUndoStack.Push(state);
-        }
+        //    //if(SelectedWorkspace.AnimationTimelineViewModel.SelectedFrame != )
+        //    if (RedoStack != null)
+        //        RedoStack.Clear();
+        //    if (UndoStack != null)
+        //        UndoStack.Push(state);
 
-        public void Undo()
-        {
-            var revertTo = ActiveUndoStack.Pop();
+        //    WorkspaceHistoryViewModel.PopulateHistory(UndoStack, RedoStack);
+        //}
 
-            //Need to mess with the interface/class hierarchy for UndoState 
-            //objects so that DisplayName can be set here
-            ActiveRedoStack.Push(revertTo.Originator.CurrentState);
-            revertTo.Originator.LoadState(revertTo);
-        }
+        //public void Undo()
+        //{
+        //    var revertTo = UndoStack.Pop();
 
-        public void Redo()
-        {
-            var resumeTo = ActiveRedoStack.Pop();
+        //    RedoStack.Push(revertTo.Originator.CurrentState);
+        //    revertTo.Originator.LoadState(revertTo);
+        //    WorkspaceHistoryViewModel.PopulateHistory(UndoStack, RedoStack);
+        //}
 
-            ActiveUndoStack.Push(resumeTo.Originator.CurrentState);
-            resumeTo.Originator.LoadState(resumeTo);
-        }
+        //public void UndoToState(IMemento state)
+        //{
+        //    if (!UndoStack.Contains(state))
+        //        throw new IndexOutOfRangeException($"The historical state \"{state}\" could not be found");
+
+        //    IMemento revertTo = null;
+
+        //    do
+        //    {
+        //        revertTo = UndoStack.Pop();
+        //        RedoStack.Push(revertTo.Originator.CurrentState);
+        //        revertTo.Originator.LoadState(revertTo);
+
+        //    } while (revertTo != state);
+
+        //    //revertTo.Originator.LoadState(revertTo);
+
+        //    WorkspaceHistoryViewModel.PopulateHistory(UndoStack, RedoStack);
+        //}
+
+        //public void Redo()
+        //{
+        //    var resumeTo = RedoStack.Pop();
+
+        //    UndoStack.Push(resumeTo.Originator.CurrentState);
+        //    resumeTo.Originator.LoadState(resumeTo);
+
+        //    WorkspaceHistoryViewModel.PopulateHistory(UndoStack, RedoStack);
+        //}
+
+        //public void RedoToState(IMemento state)
+        //{
+        //    if (!RedoStack.Contains(state))
+        //        throw new IndexOutOfRangeException($"The historical state \"{state}\" could not be found");
+
+        //    IMemento resumeTo = null;
+
+        //    do
+        //    {
+        //        resumeTo = RedoStack.Pop();
+        //        UndoStack.Push(resumeTo.Originator.CurrentState);
+        //        resumeTo.Originator.LoadState(resumeTo);
+
+        //    } while (resumeTo != state);
+
+        //    //revertTo.Originator.LoadState(revertTo);
+
+        //    WorkspaceHistoryViewModel.PopulateHistory(UndoStack, RedoStack);
+        //}
     }
 }

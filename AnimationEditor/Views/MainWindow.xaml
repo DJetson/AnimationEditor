@@ -56,8 +56,8 @@
             </ToolBar>
             <ToolBar>
                 <!--<Button Command="Cut" Content="Cut" />-->
-                <Button Content="{StaticResource UndoIcon}" Command="{StaticResource Undo}" CommandParameter="{Binding }"/>
-                <Button Content="{StaticResource RedoIcon}" Command="{StaticResource Redo}" CommandParameter="{Binding }"/>
+                <Button Content="{StaticResource UndoIcon}" Command="{StaticResource Undo}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
+                <Button Content="{StaticResource RedoIcon}" Command="{StaticResource Redo}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
                 <Button Content="{StaticResource Duplicate}" Command="Copy" />
                 <Button Content="{StaticResource Paste}" Command="Paste" />
             </ToolBar>
