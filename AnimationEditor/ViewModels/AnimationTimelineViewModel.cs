@@ -69,12 +69,15 @@ namespace AnimationEditor.ViewModels
             //var mainWindowViewModel = App.Current.MainWindow.DataContext as MainWindowViewModel;
             //if (mainWindowViewModel != null)
             //{ 
-            if (CurrentState != null)
-            {
-                WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(CurrentState);
-            }
+            //if (CurrentState != null)
+            //{
+            //    WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(CurrentState);
+            //    WorkspaceViewModel.WorkspaceHistoryViewModel.SelectedCurrentState = nextState;
             //}
-            CurrentState = nextState;
+            //}
+            WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(nextState);
+            //WorkspaceViewModel.WorkspaceHistoryViewModel.CurrentState = nextState;
+            //CurrentState = nextState;
         }
 
         private double _FramesPerSecond = 24;
@@ -355,7 +358,7 @@ namespace AnimationEditor.ViewModels
             int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
             int DuplicateCurrentFrameToIndex = selectedFrameIndex;
 
-            var newFrame = new FrameViewModel(SelectedFrame.StrokeCollection);
+            var newFrame = new FrameViewModel(SelectedFrame.WorkspaceViewModel, SelectedFrame.StrokeCollection);
             //{
             //    StrokeCollection = SelectedFrame.StrokeCollection.Clone(),
             //    //Strokes = new ObservableCollection<Stroke>(SelectedFrame.Strokes),
@@ -394,12 +397,12 @@ namespace AnimationEditor.ViewModels
             set { _DeleteCurrentFrame = value; NotifyPropertyChanged(); }
         }
 
-        private AnimationTimelineState _CurrentState;
-        public IMemento CurrentState
-        {
-            get => _CurrentState;
-            set { _CurrentState = value as AnimationTimelineState; NotifyPropertyChanged(); }
-        }
+        //private AnimationTimelineState _CurrentState;
+        //public IMemento CurrentState
+        //{
+        //    get => _CurrentState;
+        //    set { _CurrentState = value as AnimationTimelineState; NotifyPropertyChanged(); }
+        //}
 
         public bool DeleteCurrentFrame_CanExecute(object parameter)
         {
@@ -519,7 +522,7 @@ namespace AnimationEditor.ViewModels
             FramesPerSecond = Memento.FramesPerSecond;
             SelectFrameWithoutUndoBuffer(Memento.SelectedFrame);
 
-            CurrentState = Memento;
+            //CurrentState = Memento;
         }
     }
 }

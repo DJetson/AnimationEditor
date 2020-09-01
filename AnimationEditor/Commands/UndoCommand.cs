@@ -17,7 +17,7 @@ namespace AnimationEditor.Commands
             if (!(parameter is WorkspaceViewModel Parameter))
                 return false;
 
-            if (Parameter?.WorkspaceHistoryViewModel?.PeekUndo() == null)
+            if (Parameter?.WorkspaceHistoryViewModel?.UndoStack.Count <= 1)
                 return false;
 
             if (Parameter?.AnimationTimelineViewModel?.AnimationPlaybackViewModel.CurrentState != PlaybackStates.Stop)

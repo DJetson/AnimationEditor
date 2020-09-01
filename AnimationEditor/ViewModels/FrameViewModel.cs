@@ -18,12 +18,12 @@ namespace AnimationEditor.ViewModels
             set { _StrokeCollection = value; NotifyPropertyChanged(); }
         }
 
-        private FrameState _CurrentState;
-        public IMemento CurrentState
-        {
-            get => _CurrentState;
-            set { _CurrentState = value as FrameState; NotifyPropertyChanged(); }
-        }
+        //private FrameState _CurrentState;
+        //public IMemento CurrentState
+        //{
+        //    get => _CurrentState;
+        //    set { _CurrentState = value as FrameState; NotifyPropertyChanged(); }
+        //}
 
         //private int _Order;
         //public int Order
@@ -46,23 +46,32 @@ namespace AnimationEditor.ViewModels
 
             StrokeCollection = new StrokeCollection();
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
-            CurrentState = new FrameState(this)
-            {
-                DisplayName = "New Frame",
-                Originator = this
-            };
+
+            var state = SaveState() as FrameState;
+            state.DisplayName = "Create Blank Frame";
+            PushUndoRecord(state);
+            //CurrentState = new FrameState(this)
+            //{
+            //    DisplayName = "New Frame",
+            //    Originator = this
+            //};
         }
 
-        public FrameViewModel(StrokeCollection strokeCollection)
+        public FrameViewModel(WorkspaceViewModel workspace, StrokeCollection strokeCollection)
         {
+            WorkspaceViewModel = workspace;
             StrokeCollection = new StrokeCollection(strokeCollection);
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
 
-            CurrentState = new FrameState(this)
-            {
-                DisplayName = "New Frame from Stroke Collection",
-                Originator = this
-            };
+            var state = SaveState() as FrameState;
+            state.DisplayName = "Duplicate Frame";
+            PushUndoRecord(state);
+
+            //CurrentState = new FrameState(this)
+            //{
+            //    DisplayName = "New Frame from Stroke Collection",
+            //    Originator = this
+            //};
         }
 
         public FrameViewModel(Models.FrameModel model)
@@ -70,11 +79,11 @@ namespace AnimationEditor.ViewModels
             StrokeCollection = model.StrokeCollection;
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
 
-            CurrentState = new FrameState(this)
-            {
-                DisplayName = "Loaded Frame from FrameModel",
-                Originator = this
-            };
+            //CurrentState = new FrameState(this)
+            //{
+            //    DisplayName = "Loaded Frame from FrameModel",
+            //    Originator = this
+            //};
         }
 
         public void PushUndoRecord(FrameState nextState)
@@ -82,12 +91,13 @@ namespace AnimationEditor.ViewModels
             //var mainWindowViewModel = App.Current.MainWindow.DataContext as MainWindowViewModel;
             //if (mainWindowViewModel != null)
             //{
-            if (CurrentState != null)
-            {
-                WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(CurrentState);
-            }
+            //if (CurrentState != null)
+            //{
+            //    WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(CurrentState);
             //}
-            CurrentState = nextState;
+            ////}
+            //CurrentState = nextState;
+            WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(nextState);
         }
 
         private void StrokeCollection_StrokesChanged(object sender, StrokeCollectionChangedEventArgs e)
@@ -156,7 +166,7 @@ namespace AnimationEditor.ViewModels
             StrokeCollection = Memento.StrokeCollection;
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
 
-            CurrentState = Memento;
+            //CurrentState = Memento;
         }
     }
 }

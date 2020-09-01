@@ -8,7 +8,7 @@ namespace AnimationEditor.Interfaces
 {
     public interface IMementoOriginator
     {
-        IMemento CurrentState { get; }
+        //IMemento CurrentState { get; }
 
         IMemento SaveState();
         void LoadState(IMemento state);

@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace AnimationEditor.ViewModels
 {
+    public enum HistoryStateType { Undo, Current, Redo};
     public class WorkspaceHistoryItemViewModel : ViewModelBase
     {
-        private bool _IsUndoable;
-        public bool IsUndoable
+        private HistoryStateType _StateType;
+        public HistoryStateType StateType
         {
-            get { return _IsUndoable; }
-            set { _IsUndoable = value; NotifyPropertyChanged(); }
+            get { return _StateType; }
+            set { _StateType = value; NotifyPropertyChanged(); }
         }
 
         private UndoStateViewModel _State;

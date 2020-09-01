@@ -68,7 +68,7 @@ namespace AnimationEditor.ViewModels
 
         private bool ResumeToState_CanExecute(object parameter)
         {
-            if(!(parameter is WorkspaceHistoryItemViewModel Parameter))
+            if (!(parameter is WorkspaceHistoryItemViewModel Parameter))
                 return false;
 
             if (RedoStack.Contains(Parameter.State) == false)
@@ -83,6 +83,21 @@ namespace AnimationEditor.ViewModels
 
             RedoToState(Parameter.State);
         }
+
+        private UndoStateViewModel _CurrentState;
+        public UndoStateViewModel CurrentState
+        {
+            get { return _CurrentState; }
+            set { _CurrentState = value; NotifyPropertyChanged(); }
+        }
+
+
+        //private UndoStateViewModel _CurrentState;
+        //public UndoStateViewModel CurrentState
+        //{
+        //    get { return PeekUndo() as UndoStateViewModel; }
+
+        //}
 
         public void InitializeCommands()
         {
@@ -104,21 +119,22 @@ namespace AnimationEditor.ViewModels
             var undoRange = new List<WorkspaceHistoryItemViewModel>();
             foreach (UndoStateViewModel item in undoList)
             {
-                undoRange.Add(new WorkspaceHistoryItemViewModel(item) { IsUndoable = true });
+                undoRange.Add(new WorkspaceHistoryItemViewModel(item) { StateType = HistoryStateType.Undo });
             }
 
             //NOTE: I think this whole concept might be missing from the main undo manager. The Current State really needs to be stored
             // and updated in the IMementoCaretaker immediately when a state is pushed onto the undo or redo stack
-            var currentState = new WorkspaceHistoryItemViewModel(undoRange.Last().State.Originator.CurrentState as UndoStateViewModel) { IsUndoable = false };
-            undoRange.Add(currentState);
-            SelectedItem = currentState;
-
+            //var currentState = new WorkspaceHistoryItemViewModel(undoRange.Last().State.Originator.CurrentState as UndoStateViewModel) { IsUndoable = false };
+            //undoRange.Add(currentState);
+            SelectedItem = undoRange.Where(e => e.State == CurrentState).FirstOrDefault();
+            SelectedItem.StateType = HistoryStateType.Current;
+            //undoRange.Add(SelectedItem);
             var redoList = redoStack.ToList();
             redoList.Reverse();
             var redoRange = new List<WorkspaceHistoryItemViewModel>();
             foreach (UndoStateViewModel item in redoList)
             {
-                redoRange.Add(new WorkspaceHistoryItemViewModel(item) { IsUndoable = false });
+                redoRange.Add(new WorkspaceHistoryItemViewModel(item) { StateType = HistoryStateType.Redo });
             }
 
             HistoricalStates.Clear();
@@ -163,6 +179,30 @@ namespace AnimationEditor.ViewModels
             return RedoStack.Peek();
         }
 
+        public void SelectHistoricalState(UndoStateViewModel state)
+        {
+            if (PeekUndo() == (state as IMemento))
+            {
+                Undo();
+            }
+            else if (UndoStack.Contains(state as IMemento))
+            {
+                UndoToState(state);
+            }
+            else if (PeekRedo() == (state as IMemento))
+            {
+                Redo();
+            }
+            else if (RedoStack.Contains(state as IMemento))
+            {
+                RedoToState(state);
+            }
+            else
+            {
+                AddHistoricalState(state);
+            }
+        }
+
         /// <summary>
         /// This should be called BEFORE any undoable action takes place
         /// </summary>
@@ -170,19 +210,30 @@ namespace AnimationEditor.ViewModels
         public void AddHistoricalState(IMemento state)
         {
             //if (RedoStack != null)
-                RedoStack.Clear();
+            RedoStack.Clear();
             //if (UndoStack != null)
-                UndoStack.Push(state);
+            UndoStack.Push(state);
+
+            CurrentState = UndoStack.Peek() as UndoStateViewModel;
+            //            NotifyPropertyChanged(nameof(CurrentState));
 
             PopulateHistory(UndoStack, RedoStack);
         }
 
         public void Undo()
         {
-            var revertTo = UndoStack.Pop();
+            //var current = UndoStack.Pop();
 
-            RedoStack.Push(revertTo.Originator.CurrentState);
-            revertTo.Originator.LoadState(revertTo);
+            //            if (current != CurrentState)
+            //              Console.WriteLine($"Error: Undo.Top = [{current}] and CurrentState = [{CurrentState}]. These should always match. If they don't, it means the history is corrupted.");
+
+            //var CurrentState= UndoStack.Pop();
+            RedoStack.Push(UndoStack.Pop());
+            //UndoStack.Pop();
+            CurrentState = UndoStack.Peek() as UndoStateViewModel;
+            //NotifyPropertyChanged(nameof(CurrentState));
+            CurrentState.Originator.LoadState(CurrentState);
+
             PopulateHistory(UndoStack, RedoStack);
         }
 
@@ -191,15 +242,16 @@ namespace AnimationEditor.ViewModels
             if (!UndoStack.Contains(state))
                 throw new IndexOutOfRangeException($"The historical state \"{state}\" could not be found");
 
-            IMemento revertTo = null;
+            //IMemento revertTo = null;
 
-            do
+            while (CurrentState != state)
             {
-                revertTo = UndoStack.Pop();
-                RedoStack.Push(revertTo.Originator.CurrentState);
-                revertTo.Originator.LoadState(revertTo);
+                RedoStack.Push(UndoStack.Pop());
+                CurrentState = UndoStack.Peek() as UndoStateViewModel;
+                CurrentState.Originator.LoadState(CurrentState);
+                //NotifyPropertyChanged(nameof(CurrentState));
+            }
 
-            } while (revertTo != state);
 
             //revertTo.Originator.LoadState(revertTo);
 
@@ -208,10 +260,12 @@ namespace AnimationEditor.ViewModels
 
         public void Redo()
         {
-            var resumeTo = RedoStack.Pop();
+            //var resumeTo = RedoStack.Pop();
 
-            UndoStack.Push(resumeTo.Originator.CurrentState);
-            resumeTo.Originator.LoadState(resumeTo);
+            UndoStack.Push(RedoStack.Pop());
+            CurrentState = UndoStack.Peek() as UndoStateViewModel;
+            //NotifyPropertyChanged(nameof(CurrentState));
+            CurrentState.Originator.LoadState(CurrentState);
 
             PopulateHistory(UndoStack, RedoStack);
         }
@@ -221,15 +275,14 @@ namespace AnimationEditor.ViewModels
             if (!RedoStack.Contains(state))
                 throw new IndexOutOfRangeException($"The historical state \"{state}\" could not be found");
 
-            IMemento resumeTo = null;
-
-            do
+            while (CurrentState != state)
             {
-                resumeTo = RedoStack.Pop();
-                UndoStack.Push(resumeTo.Originator.CurrentState);
-                resumeTo.Originator.LoadState(resumeTo);
-
-            } while (resumeTo != state);
+                UndoStack.Push(RedoStack.Pop());
+                //UndoStack.Push(resumeTo.Originator.CurrentState);
+                CurrentState = UndoStack.Peek() as UndoStateViewModel;
+                CurrentState.Originator.LoadState(CurrentState);
+                //NotifyPropertyChanged(nameof(CurrentState));
+            }
 
             //revertTo.Originator.LoadState(revertTo);
 
