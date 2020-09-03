@@ -29,6 +29,6 @@
                 </DataTemplate>
             </TabControl.ContentTemplate>
         </TabControl>
-        <Views:WorkspaceHistoryView Width="100" Grid.Column="1" DataContext="{Binding SelectedWorkspace.WorkspaceHistoryViewModel}" />
+        <Views:WorkspaceHistoryView Grid.Column="1" DataContext="{Binding SelectedWorkspace.WorkspaceHistoryViewModel}" />
     </Grid>
 </UserControl>

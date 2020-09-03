@@ -49,7 +49,7 @@
                     </Style.Setters>
                 </Style>
             </ToolBarTray.Resources>
-            <ToolBar Background="LightGray">
+            <ToolBar>
                 <Button Content="{StaticResource NewFile}" Command="{StaticResource CreateNewWorkspace}" CommandParameter="{Binding WorkspaceManager}"/>
                 <Button Content="{StaticResource OpenFile}" Command="{StaticResource OpenWorkspace}" CommandParameter="{Binding WorkspaceManager}"/>
                 <Button Content="{StaticResource SaveFile}" Command="{StaticResource SaveWorkspace}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>

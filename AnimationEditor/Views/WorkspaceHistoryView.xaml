@@ -9,12 +9,27 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <ListBox x:Name="HistoryListBox" ItemsSource="{Binding HistoricalStates}" SelectedItem="{Binding SelectedItem}">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Style.Setters>
+                        <Setter Property="Margin" Value="0,0,0,0"/>
+                        <Setter Property="Padding" Value="0,0,0,0"/>
+                        <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                    </Style.Setters>
+                </Style>
+            </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type ViewModels:WorkspaceHistoryItemViewModel}">
                     <Button Content="{Binding State.DisplayName}">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Style.Setters>
+                                    <Setter Property="Height" Value="30"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                    <Setter Property="Margin" Value="0"/>
+                                    <Setter Property="Padding" Value="5"/>
                                     <Setter Property="Background" Value="WhiteSmoke"/>
                                     <Setter Property="BorderThickness" Value="2"/>
                                     <Setter Property="FontWeight" Value="SemiBold"/>
