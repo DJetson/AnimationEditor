@@ -424,8 +424,10 @@ namespace AnimationEditor.ViewModels
             DuplicateCurrentFrame = new DelegateCommand("Duplicate Frame", DuplicateCurrentFrame_CanExecute, DuplicateCurrentFrame_Execute);
         }
 
-        public AnimationTimelineViewModel(List<Models.FrameModel> frames)
+        public AnimationTimelineViewModel(List<Models.FrameModel> frames, WorkspaceViewModel workspace)
         {
+            WorkspaceViewModel = workspace;
+
             InitializeCommands();
 
             Frames = new ObservableCollection<FrameViewModel>();

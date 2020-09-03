@@ -191,7 +191,7 @@ namespace AnimationEditor.ViewModels
 
             WorkspaceHistoryViewModel = new WorkspaceHistoryViewModel(this);
 
-            AnimationTimelineViewModel = new AnimationTimelineViewModel(model.Frames);
+            AnimationTimelineViewModel = new AnimationTimelineViewModel(model.Frames, this);
             EditorTools = EditorToolsViewModel.Instance;
 
             JsonSerializerOptions = new System.Text.Json.JsonSerializerOptions();

@@ -2,7 +2,9 @@
 using AnimationEditor.ViewModels.StateObjects;
 using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Ink;
+using System.Windows.Input;
 
 namespace AnimationEditor.ViewModels
 {
@@ -46,10 +48,6 @@ namespace AnimationEditor.ViewModels
 
             StrokeCollection = new StrokeCollection();
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
-
-            //var state = SaveState() as FrameState;
-            //state.DisplayName = "Create Blank Frame";
-            //PushUndoRecord(state);
         }
 
         public FrameViewModel(WorkspaceViewModel workspace, StrokeCollection strokeCollection)
@@ -57,10 +55,6 @@ namespace AnimationEditor.ViewModels
             WorkspaceViewModel = workspace;
             StrokeCollection = new StrokeCollection(strokeCollection);
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
-
-            //var state = SaveState() as FrameState;
-            //state.DisplayName = "Duplicate Frame";
-            //PushUndoRecord(state);
         }
 
         public FrameViewModel(Models.FrameModel model)
@@ -69,16 +63,39 @@ namespace AnimationEditor.ViewModels
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
         }
 
-        public void PushUndoRecord(FrameState nextState)
+        public void PushUndoRecord(UndoStateViewModel nextState)
         {
             WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(nextState);
         }
 
+        private bool _IsErasing = false;
+
         private void StrokeCollection_StrokesChanged(object sender, StrokeCollectionChangedEventArgs e)
         {
-            var state = SaveState() as FrameState;
-            state.DisplayName = "Frame Content Change";
-            PushUndoRecord(state);
+            if (EditorToolsViewModel.Instance.SelectedToolType != BaseClasses.EditorToolType.Eraser)
+            {
+                var state = SaveState() as FrameState;
+                var multiState = new MultiState(null, "Added Frame Content", state);
+                PushUndoRecord(multiState);
+            }
+            else if (_IsErasing == false)
+            {
+                _IsErasing = true;
+                Mouse.AddMouseUpHandler(Mouse.PrimaryDevice.ActiveSource.RootVisual as DependencyObject, EraserOperation_MouseUp);
+            }
+        }
+
+        private void EraserOperation_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Released)
+            {
+                _IsErasing = false;
+
+                var state = SaveState() as FrameState;
+                var multiState = new MultiState(null, "Erased Frame Content", state);
+                PushUndoRecord(multiState);
+                Mouse.RemoveMouseUpHandler(Mouse.PrimaryDevice.ActiveSource.RootVisual as DependencyObject, EraserOperation_MouseUp);
+            }
         }
 
         public IMemento SaveState()
