@@ -88,13 +88,6 @@ namespace AnimationEditor.ViewModels
             set { _WorkspaceHistoryViewModel = value; NotifyPropertyChanged(); }
         }
 
-        //private ObservableCollection<FrameViewModel> _Frames = new ObservableCollection<FrameViewModel>();
-        //public ObservableCollection<FrameViewModel> Frames
-        //{
-        //    get => _Frames;
-        //    set { _Frames = value; NotifyPropertyChanged(); }
-        //}
-
         private bool _HasUnsavedChanges = false;
         public bool HasUnsavedChanges
         {

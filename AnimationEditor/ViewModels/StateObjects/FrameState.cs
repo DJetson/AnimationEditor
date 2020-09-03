@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnimationEditor.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,9 +12,15 @@ namespace AnimationEditor.ViewModels.StateObjects
     {
         public StrokeCollection StrokeCollection;
 
-        public FrameState(FrameViewModel frame)
+        public FrameState(FrameViewModel frame, string stateName = "") : base(frame, stateName)
         {
             StrokeCollection = new StrokeCollection(frame.StrokeCollection);
+        }
+
+        public override void LoadState()
+        {
+            FrameViewModel originator = Originator as FrameViewModel;
+            originator.LoadState(this);
         }
     }
 }

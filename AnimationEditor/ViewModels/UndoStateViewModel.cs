@@ -22,12 +22,16 @@ namespace AnimationEditor.ViewModels
             set { _Originator = value; NotifyPropertyChanged(); }
         }
 
-        //private T _State;
-        //public T State
-        //{
-        //    get => _State;
-        //    set { _State = value; NotifyPropertyChanged(); }
-        //}
+        public UndoStateViewModel(IMementoOriginator viewModel, string stateName = "")
+        {
+            Originator = viewModel;
+            DisplayName = stateName;
+        }
+
+        public virtual void LoadState()
+        {
+
+        }
 
         public override string ToString()
         {
