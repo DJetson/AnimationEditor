@@ -89,7 +89,16 @@ namespace AnimationEditor.ViewModels
         public UndoStateViewModel CurrentState
         {
             get { return _CurrentState; }
-            set { _CurrentState = value; NotifyPropertyChanged(); }
+            set
+            {
+                _CurrentState = value;
+                NotifyPropertyChanged();
+
+                if (WorkspaceViewModel != null)
+                {
+                    WorkspaceViewModel.HasUnsavedChanges = (_CurrentState != InitialState);
+                }
+            }
         }
 
         public void InitializeCommands()
@@ -98,9 +107,27 @@ namespace AnimationEditor.ViewModels
             ResumeToState = new DelegateCommand(ResumeToState_CanExecute, ResumeToState_Execute);
         }
 
-        public WorkspaceHistoryViewModel(WorkspaceViewModel workspace)
+        private UndoStateViewModel _InitialState;
+        public UndoStateViewModel InitialState
+        {
+            get { return _InitialState; }
+            set
+            {
+                _InitialState = value;
+                NotifyPropertyChanged();
+                if (WorkspaceViewModel != null)
+                {
+                    WorkspaceViewModel.HasUnsavedChanges = (CurrentState != _InitialState);
+                }
+            }
+        }
+
+
+        public WorkspaceHistoryViewModel(WorkspaceViewModel workspace, UndoStateViewModel initialState = null)
         {
             WorkspaceViewModel = workspace;
+
+            InitialState = initialState;
 
             InitializeCommands();
         }
@@ -166,7 +193,7 @@ namespace AnimationEditor.ViewModels
             return RedoStack.Peek();
         }
 
-        public void AddHistoricalState(IMemento state)
+        public void AddHistoricalState(IMemento state, bool raiseChangedFlag = true)
         {
             RedoStack.Clear();
             UndoStack.Push(state);
@@ -174,17 +201,19 @@ namespace AnimationEditor.ViewModels
             CurrentState = UndoStack.Peek() as UndoStateViewModel;
 
             PopulateHistory(UndoStack, RedoStack);
+
+            WorkspaceViewModel.HasUnsavedChanges = raiseChangedFlag;
         }
 
         public UndoStateViewModel GetLastStateChangeForType(Type type)
         {
-            foreach(var item in UndoStack.ToList())
+            foreach (var item in UndoStack.ToList())
             {
                 if (item.GetType() == type)
                 {
                     return item as UndoStateViewModel;
                 }
-                else if(item.GetType() == typeof(MultiState))
+                else if (item.GetType() == typeof(MultiState))
                 {
                     var state = (item as MultiState).GetStateOfType(type);
                     if (state != null)
@@ -207,13 +236,16 @@ namespace AnimationEditor.ViewModels
             {
                 foreach (var item in (currentState as MultiState).States)
                 {
-                    GetLastStateChangeForType(item.GetType()).LoadState();
+                    GetLastStateChangeForType(item.GetType())?.LoadState();
                 }
             }
             else
             {
                 CurrentState.LoadState();
             }
+
+            //if(UndoStack.Count == 1)
+            //    WorkspaceViewModel.HasUnsavedChanges = false;
 
             PopulateHistory(UndoStack, RedoStack);
         }
@@ -235,6 +267,9 @@ namespace AnimationEditor.ViewModels
             CurrentState = UndoStack.Peek() as UndoStateViewModel;
             CurrentState.LoadState();// Originator.LoadState(CurrentState);
 
+            //if (UndoStack.Count != 1)
+            //    WorkspaceViewModel.HasUnsavedChanges = true;
+
             PopulateHistory(UndoStack, RedoStack);
         }
 
@@ -249,7 +284,8 @@ namespace AnimationEditor.ViewModels
                 CurrentState = UndoStack.Peek() as UndoStateViewModel;
                 CurrentState.LoadState();//.Originator.LoadState(CurrentState);
             }
-
+            //if (UndoStack.Count != 1)
+            //    WorkspaceViewModel.HasUnsavedChanges = true;
             PopulateHistory(UndoStack, RedoStack);
         }
     }

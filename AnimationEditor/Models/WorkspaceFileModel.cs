@@ -14,16 +14,22 @@ namespace AnimationEditor.Models
 
         public List<FrameModel> Frames { get; set; } = new List<FrameModel>();
 
+        private System.Text.Json.JsonSerializerOptions JsonSerializerOptions { get; set; }
+
         public static WorkspaceFileModel OpenWorkspaceFile(string filepath, System.Text.Json.JsonSerializerOptions options)
         {
             return System.Text.Json.JsonSerializer.Deserialize<WorkspaceFileModel>(File.ReadAllText(filepath), options);
         }
 
-        public void SaveWorkspaceFile(string filepath, System.Text.Json.JsonSerializerOptions options)
+        //public void SaveWorkspaceFile(string filepath, System.Text.Json.JsonSerializerOptions options)
+        public void SaveWorkspaceFile(string filepath)
         {
+            JsonSerializerOptions = new System.Text.Json.JsonSerializerOptions();
+            JsonSerializerOptions.Converters.Add(new Models.StrokeCollectionConverter());
+
             Filepath = filepath;
 
-            File.WriteAllText(filepath, System.Text.Json.JsonSerializer.Serialize(this, options));
+            File.WriteAllText(filepath, System.Text.Json.JsonSerializer.Serialize(this, JsonSerializerOptions));
         }
 
         public void SyncToViewModel(WorkspaceViewModel workspaceViewModel)

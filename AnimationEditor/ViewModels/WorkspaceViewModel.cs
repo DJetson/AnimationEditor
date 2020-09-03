@@ -1,6 +1,7 @@
 ﻿using AnimationEditor.BaseClasses;
 using AnimationEditor.Interfaces;
 using AnimationEditor.Models;
+using AnimationEditor.ViewModels.StateObjects;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -92,7 +93,7 @@ namespace AnimationEditor.ViewModels
         public bool HasUnsavedChanges
         {
             get => _HasUnsavedChanges;
-            set { _HasUnsavedChanges = value; NotifyPropertyChanged(); }
+            set { _HasUnsavedChanges = value; NotifyPropertyChanged(); NotifyPropertyChanged(nameof(DisplayName)); }
         }
 
         public override string DisplayName
@@ -160,7 +161,7 @@ namespace AnimationEditor.ViewModels
         }
         #endregion ZoomOut Command
 
-        private System.Text.Json.JsonSerializerOptions JsonSerializerOptions { get; }
+        //private System.Text.Json.JsonSerializerOptions JsonSerializerOptions { get; }
 
         public void InitializeCommands()
         {
@@ -180,8 +181,8 @@ namespace AnimationEditor.ViewModels
             InitializeDependentViewModels();
             InitializeCommands();
 
-            JsonSerializerOptions = new System.Text.Json.JsonSerializerOptions();
-            JsonSerializerOptions.Converters.Add(new Models.StrokeCollectionConverter());
+            //JsonSerializerOptions = new System.Text.Json.JsonSerializerOptions();
+            //JsonSerializerOptions.Converters.Add(new Models.StrokeCollectionConverter());
         }
 
         public WorkspaceViewModel(WorkspaceFileModel model)
@@ -194,8 +195,12 @@ namespace AnimationEditor.ViewModels
             AnimationTimelineViewModel = new AnimationTimelineViewModel(model.Frames, this);
             EditorTools = EditorToolsViewModel.Instance;
 
-            JsonSerializerOptions = new System.Text.Json.JsonSerializerOptions();
-            JsonSerializerOptions.Converters.Add(new Models.StrokeCollectionConverter());
+            Filepath = model.Filepath;
+            //DisplayName = Filename);
+            DisplayName = Path.GetFileNameWithoutExtension(Filepath);
+            //NotifyPropertyChanged(nameof(Filename));
+            //JsonSerializerOptions = new System.Text.Json.JsonSerializerOptions();
+            //JsonSerializerOptions.Converters.Add(new Models.StrokeCollectionConverter());
         }
 
         public void Close()
@@ -218,6 +223,7 @@ namespace AnimationEditor.ViewModels
                 }
 
             }
+            Host.RemoveWorkspace(this);
         }
         public void UpdateModelAndSaveWorkspace()
         {
@@ -240,8 +246,11 @@ namespace AnimationEditor.ViewModels
             _WorkspaceModel = _WorkspaceModel ?? new WorkspaceFileModel();
             _WorkspaceModel.SyncToViewModel(this);
 
-            _WorkspaceModel.SaveWorkspaceFile(Filepath, JsonSerializerOptions);
-            HasUnsavedChanges = false;
+            _WorkspaceModel.SaveWorkspaceFile(Filepath);
+            //_WorkspaceModel.SaveWorkspaceFile(Filepath, JsonSerializerOptions);
+            //HasUnsavedChanges = false;
+
+            WorkspaceHistoryViewModel.InitialState = WorkspaceHistoryViewModel.CurrentState;
         }
 
         /// <summary>

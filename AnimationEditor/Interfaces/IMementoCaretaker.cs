@@ -16,7 +16,7 @@ namespace AnimationEditor.Interfaces
         IMemento PeekUndo();
         IMemento PeekRedo();
 
-        void AddHistoricalState(IMemento state);
+        void AddHistoricalState(IMemento state, bool raiseChangedFlag = true);
         void Undo();
         void UndoToState(IMemento state);
         void Redo();

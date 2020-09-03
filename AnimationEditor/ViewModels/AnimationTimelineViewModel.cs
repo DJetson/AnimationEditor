@@ -59,9 +59,9 @@ namespace AnimationEditor.ViewModels
             NotifySelectedFrameAndDependents();
         }
 
-        public void PushUndoRecord(UndoStateViewModel nextState)
+        public void PushUndoRecord(UndoStateViewModel nextState, bool raiseChangedFlag = true)
         {
-            WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(nextState);
+            WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(nextState, raiseChangedFlag);
         }
 
         private double _FramesPerSecond = 24;
@@ -433,14 +433,17 @@ namespace AnimationEditor.ViewModels
             Frames = new ObservableCollection<FrameViewModel>();
             foreach (var item in frames)
             {
-                Frames.Add(new FrameViewModel(item));
+                Frames.Add(new FrameViewModel(item, workspace));
             }
 
             SelectFrameWithoutUndoBuffer(Frames.FirstOrDefault());
 
             var state = SaveState() as AnimationTimelineState;
-            state.DisplayName = "Created AnimationTimeline from Frame Models";
-            PushUndoRecord(state);
+            var frameState = SelectedFrame.SaveState() as FrameState;
+            var multiState = new MultiState(null, "Opened File", state, frameState);
+            WorkspaceViewModel.WorkspaceHistoryViewModel.InitialState = multiState;
+            //state.DisplayName = "Opened File";
+            PushUndoRecord(multiState, false);
         }
 
         public AnimationTimelineViewModel(WorkspaceViewModel workspace)
@@ -457,8 +460,10 @@ namespace AnimationEditor.ViewModels
             var frameState = firstFrame.SaveState() as FrameState;
             var timelineState = SaveState() as AnimationTimelineState;
 
-            var state = new MultiState(null, "New Animation", frameState, timelineState);
-            PushUndoRecord(state);
+            var multiState = new MultiState(null, "New Animation", frameState, timelineState);
+            WorkspaceViewModel.WorkspaceHistoryViewModel.InitialState = multiState;
+
+            PushUndoRecord(multiState, false);
         }
 
         public void AddFrameAtIndex(FrameViewModel frame, int index)

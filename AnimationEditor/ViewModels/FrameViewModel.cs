@@ -57,15 +57,17 @@ namespace AnimationEditor.ViewModels
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
         }
 
-        public FrameViewModel(Models.FrameModel model)
+        public FrameViewModel(Models.FrameModel model, WorkspaceViewModel workspace)
         {
+            WorkspaceViewModel = workspace;
+
             StrokeCollection = model.StrokeCollection;
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
         }
 
-        public void PushUndoRecord(UndoStateViewModel nextState)
+        public void PushUndoRecord(UndoStateViewModel nextState, bool raiseChangedFlag = true)
         {
-            WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(nextState);
+            WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(nextState, raiseChangedFlag);
         }
 
         private bool _IsErasing = false;
