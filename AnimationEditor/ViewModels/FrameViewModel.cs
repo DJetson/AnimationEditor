@@ -114,7 +114,7 @@ namespace AnimationEditor.ViewModels
             var Memento = (memento as FrameState);
 
             StrokeCollection.StrokesChanged -= StrokeCollection_StrokesChanged;
-            StrokeCollection = Memento.StrokeCollection;
+            StrokeCollection = new StrokeCollection(Memento.StrokeCollection);
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
 
             //CurrentState = Memento;
