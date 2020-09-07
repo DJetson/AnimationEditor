@@ -107,6 +107,7 @@
     <Compile Include="ViewModels\AnimationPlaybackViewModel.cs" />
     <Compile Include="Utilities\FileUtilities.cs" />
     <Compile Include="ViewModels\AnimationTimelineViewModel.cs" />
+    <Compile Include="ViewModels\ColorPickerViewModel.cs" />
     <Compile Include="ViewModels\EditorToolsViewModel.cs" />
     <Compile Include="ViewModels\EditorTools\BrushTool.cs" />
     <Compile Include="ViewModels\FrameViewModel.cs" />
@@ -123,6 +124,9 @@
     <Compile Include="ViewModels\WorkspaceManagerViewModel.cs" />
     <Compile Include="Views\AnimationTimelineView.xaml.cs">
       <DependentUpon>AnimationTimelineView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ColorPickerView.xaml.cs">
+      <DependentUpon>ColorPickerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditorToolSettings.xaml.cs">
       <DependentUpon>EditorToolSettings.xaml</DependentUpon>
@@ -282,6 +286,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ColorPickerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\EditorToolSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -353,6 +361,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Behaviors\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Cursors\ColorPickerCursor.cur" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

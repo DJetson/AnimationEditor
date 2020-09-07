@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="AnimationEditor.Views.ColorPickerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AnimationEditor.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <LinearGradientBrush x:Key="PrimaryColorSlider" StartPoint="0.5,0" EndPoint="0.5,1">
+            <LinearGradientBrush.GradientStops>
+                <GradientStop Color="#FFFF0000" Offset="0"/>
+                <GradientStop Color="#FFFFFF00" Offset="0.166666"/>
+                <GradientStop Color="#FF00FF00" Offset="0.333333"/>
+                <GradientStop Color="#FF00FFFF" Offset="0.5"/>
+                <GradientStop Color="#FF0000FF" Offset="0.666666"/>
+                <GradientStop Color="#FFFF00FF" Offset="0.833333"/>
+                <GradientStop Color="#FFFF0000" Offset="1"/>
+            </LinearGradientBrush.GradientStops>
+        </LinearGradientBrush>
+        <RadialGradientBrush x:Key="BottomGradient"  RadiusX="1" RadiusY="1" Center="1,0" GradientOrigin="1,0">
+            <RadialGradientBrush.GradientStops>
+                <GradientStop Color="{Binding TriColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Offset="0"/>
+                <GradientStop Color="#FF000000" Offset="1"/>
+            </RadialGradientBrush.GradientStops>
+            <RadialGradientBrush.RelativeTransform>
+                <TransformGroup>
+                    <RotateTransform CenterX="1" CenterY="0" Angle="90"/>
+                </TransformGroup>
+            </RadialGradientBrush.RelativeTransform>
+        </RadialGradientBrush>
+        <RadialGradientBrush x:Key="TopGradient"  RadiusX="0.95" RadiusY="0.95" Center="-4.76837e-007,0" GradientOrigin="-4.76837e-007,0">
+            <RadialGradientBrush.GradientStops>
+                <GradientStop Color="#FFFFFFFF" Offset="0"/>
+                <GradientStop Color="#87FFFFFF" Offset="0.5"/>
+                <GradientStop Color="#00FFFFFF" Offset="1"/>
+            </RadialGradientBrush.GradientStops>
+            <RadialGradientBrush.RelativeTransform>
+                <TransformGroup>
+                    <RotateTransform CenterX="-4.76837e-007" CenterY="0" Angle="45"/>
+                </TransformGroup>
+            </RadialGradientBrush.RelativeTransform>
+        </RadialGradientBrush>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0"  MouseUp="Grid_MouseUp" MouseDown="Grid_MouseDown">
+            <Rectangle Cursor="../Resources/Cursors/ColorPickerCursor.cur" Fill="{StaticResource BottomGradient}" Stretch="Fill"/>
+            <Rectangle Cursor="../Resources/Cursors/ColorPickerCursor.cur" Fill="{StaticResource TopGradient}" Stretch="Fill"/>
+        </Grid>
+        <Slider Grid.Column="1" ValueChanged="Slider_ValueChanged" Orientation="Vertical" Minimum="256" Maximum="1791" Background="{StaticResource PrimaryColorSlider}"/>
+    </Grid>
+</UserControl>
