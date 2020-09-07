@@ -19,7 +19,7 @@ namespace AnimationEditor.Views
     /// <summary>
     /// Interaction logic for ColorPickerView.xaml
     /// </summary>
-    public partial class ColorPickerView : UserControl
+    public partial class ColorPickerView : Window
     {
         private static readonly DependencyProperty TriColorProperty = DependencyProperty.Register("TriColor", typeof(Color), typeof(ColorPickerView));
         public Color TriColor
@@ -45,6 +45,14 @@ namespace AnimationEditor.Views
 
         public ColorPickerView()
         {
+            InitializeComponent();
+        }
+
+        public ColorPickerView(Color currentColor, Color lastColor)
+        {
+            LastSelectedColor = lastColor;
+            SelectedColor = currentColor;
+
             InitializeComponent();
         }
 
@@ -146,6 +154,18 @@ namespace AnimationEditor.Views
 
         private void Grid_MouseLeave(object sender, MouseEventArgs e)
         {
+        }
+
+        private void OnOkClick(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+            Close();
+        }
+
+        private void OnCancelClick(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+            Close();
         }
     }
 }

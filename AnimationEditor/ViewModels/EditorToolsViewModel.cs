@@ -1,6 +1,7 @@
 ﻿using AnimationEditor.BaseClasses;
 using AnimationEditor.Interfaces;
 using AnimationEditor.ViewModels.EditorTools;
+using AnimationEditor.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,15 @@ namespace AnimationEditor.ViewModels
 {
     public class EditorToolsViewModel : ViewModelBase
     {
+
+        private DelegateCommand _ShowColorPickerWindow;
+        public DelegateCommand ShowColorPickerWindow
+        {
+            get { return _ShowColorPickerWindow; }
+            set { _ShowColorPickerWindow = value; NotifyPropertyChanged(); }
+        }
+
+
         private static EditorToolsViewModel _Instance = null;
         public static EditorToolsViewModel Instance
         {
@@ -54,6 +64,13 @@ namespace AnimationEditor.ViewModels
         //    }
         //}
 
+        private Color _LastSelectedBrushColor;
+        public Color LastSelectedBrushColor
+        {
+            get { return _LastSelectedBrushColor; }
+            set { _LastSelectedBrushColor = value; NotifyPropertyChanged(); }
+        }
+
         public string BrushColor
         {
             get => _DrawingAttributes.Color.ToString();
@@ -69,16 +86,30 @@ namespace AnimationEditor.ViewModels
             }
         }
 
+        private Color _SelectedBrushColor;
+        public Color SelectedBrushColor
+        {
+            get { return _SelectedBrushColor; }
+            set { _SelectedBrushColor = value; NotifyPropertyChanged(); UpdateDrawingAttributes(); }
+        }
+
+        private void UpdateDrawingAttributes()
+        {
+            _DrawingAttributes.Color = SelectedBrushColor;
+            _DrawingAttributes.Width = BrushWidth;
+            _DrawingAttributes.Height = BrushHeight;
+        }
+
         public double BrushWidth
         {
             get => _DrawingAttributes.Width;
-            set { _DrawingAttributes.Width = value; NotifyPropertyChanged(); }
+            set { _DrawingAttributes.Width = value; NotifyPropertyChanged(); UpdateDrawingAttributes(); }
         }
 
         public double BrushHeight
         {
             get => _DrawingAttributes.Height;
-            set { _DrawingAttributes.Height = value; NotifyPropertyChanged(); }
+            set { _DrawingAttributes.Height = value; NotifyPropertyChanged(); UpdateDrawingAttributes(); }
         }
 
 
@@ -96,9 +127,32 @@ namespace AnimationEditor.ViewModels
             set { _SelectTool = value; NotifyPropertyChanged(); }
         }
 
-        private EditorToolsViewModel()
+        public void InitializeCommands()
         {
             SelectTool = new DelegateCommand(SelectTool_CanExecute, SelectTool_Execute);
+            ShowColorPickerWindow = new DelegateCommand(ShowColorPickerWindow_CanExecute, ShowColorPickerWindow_Execute);
+        }
+
+        private EditorToolsViewModel()
+        {
+            InitializeCommands();
+        }
+
+        public bool ShowColorPickerWindow_CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public void ShowColorPickerWindow_Execute(object parameter)
+        {
+            var ColorPickerWindow = new ColorPickerView(SelectedBrushColor, LastSelectedBrushColor);
+            var result = ColorPickerWindow.ShowDialog();
+
+            if(result == true)
+            {
+                LastSelectedBrushColor = ColorPickerWindow.LastSelectedColor;
+                SelectedBrushColor = ColorPickerWindow.SelectedColor;
+            }
         }
 
         private InkCanvasEditingMode _EditingMode = InkCanvasEditingMode.Ink;

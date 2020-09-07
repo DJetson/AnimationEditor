@@ -23,8 +23,16 @@
                     <Slider Grid.Column="1" Value="{Binding BrushWidth}"  Width="75" Orientation="Horizontal" Minimum="1" Interval="1" Maximum="180" />
                     <TextBlock Height="25" Grid.Column="2" Text="{Binding BrushHeight, StringFormat={}Brush Size:{0:n}}" Width="100"/>
                     <Slider Grid.Column="3" Value="{Binding BrushHeight}"  Width="75" Orientation="Horizontal" Minimum="1" Interval="1" Maximum="180" />
-                    <TextBlock Height="25" Grid.Column="4" Text="Brush Color" Width="100"/>
-                    <TextBox Grid.Column="5" Text="{Binding BrushColor}"/>
+                    <!--<Button Grid.Column="4" Command="{Binding ShowColorPickerWindow}" Width="25">
+                        <Button.Background>
+                            <SolidColorBrush Color="{Binding LastSelectedBrushColor}"/>
+                        </Button.Background>
+                    </Button>-->
+                    <Button Grid.Column="5" Command="{Binding ShowColorPickerWindow}" Width="25">
+                        <Button.Background>
+                            <SolidColorBrush Color="{Binding SelectedBrushColor}"/>
+                        </Button.Background>
+                    </Button>
                 </Grid>
             </ToolBar>
         </ToolBarTray>
