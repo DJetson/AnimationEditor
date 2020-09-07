@@ -28,11 +28,18 @@ namespace AnimationEditor.Views
             set { SetValue(TriColorProperty, (Color)value); }
         }
 
-        private static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorPickerView));
+        private static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorPickerView), new FrameworkPropertyMetadata(Color.FromArgb(255, 255, 0, 0)));
         public Color SelectedColor
         {
             get => (Color)GetValue(SelectedColorProperty);
             set { SetValue(SelectedColorProperty, (Color)value); }
+        }
+
+        private static readonly DependencyProperty LastSelectedColorProperty = DependencyProperty.Register("LastSelectedColor", typeof(Color), typeof(ColorPickerView), new FrameworkPropertyMetadata(Color.FromArgb(255, 255, 0, 0)));
+        public Color LastSelectedColor
+        {
+            get => (Color)GetValue(LastSelectedColorProperty);
+            set { SetValue(LastSelectedColorProperty, (Color)value); }
         }
 
 
@@ -121,10 +128,10 @@ namespace AnimationEditor.Views
                     (byte)(normalizedPosition.Y * (TriColor.G + ((255 - TriColor.G) * normalizedPosition.X))),
                     (byte)(normalizedPosition.Y * (TriColor.B + ((255 - TriColor.B) * normalizedPosition.X))));
 
+                LastSelectedColor = SelectedColor;
                 SelectedColor = selectedColor;
 
                 Console.WriteLine($"SelectedColor:{SelectedColor}");
-
             }
         }
 

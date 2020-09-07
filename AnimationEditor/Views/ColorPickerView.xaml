@@ -45,12 +45,32 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <Grid Grid.Column="0"  MouseUp="Grid_MouseUp" MouseDown="Grid_MouseDown">
             <Rectangle Cursor="../Resources/Cursors/ColorPickerCursor.cur" Fill="{StaticResource BottomGradient}" Stretch="Fill"/>
             <Rectangle Cursor="../Resources/Cursors/ColorPickerCursor.cur" Fill="{StaticResource TopGradient}" Stretch="Fill"/>
         </Grid>
         <Slider Grid.Column="1" ValueChanged="Slider_ValueChanged" Orientation="Vertical" Minimum="256" Maximum="1791" Background="{StaticResource PrimaryColorSlider}"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle>
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="{Binding LastSelectedColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Rectangle Grid.Column="1">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="{Binding SelectedColor, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                </Rectangle.Fill>
+            </Rectangle>
+        </Grid>
     </Grid>
 </UserControl>

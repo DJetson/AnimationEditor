@@ -20,7 +20,7 @@ namespace AnimationEditor
             MainWindow = new MainWindow() { DataContext = new MainWindowViewModel() };
             MainWindow.Show();
 
-            //new Window() { Content = new ColorPickerView() { DataContext = new ColorPickerViewModel() } }.Show();
+            //new Window() { Content = new ColorPickerView() }.Show();
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)
