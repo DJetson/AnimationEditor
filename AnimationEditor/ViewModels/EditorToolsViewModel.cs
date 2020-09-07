@@ -86,7 +86,7 @@ namespace AnimationEditor.ViewModels
             }
         }
 
-        private Color _SelectedBrushColor;
+        private Color _SelectedBrushColor = Color.FromArgb(255,0,0,0);
         public Color SelectedBrushColor
         {
             get { return _SelectedBrushColor; }
