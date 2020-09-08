@@ -8,4 +8,5 @@
     <Commands:ShowOnionSkinSettingsWindowCommand x:Key="ShowOnionSkinSettingsWindow" />
     <Commands:UndoCommand x:Key="Undo" DisplayName="Undo"/>
     <Commands:RedoCommand x:Key="Redo" DisplayName="Redo"/>
+    <Commands:SelectToolCommand x:Key="SelectTool" DisplayName="Select Tool"/>
 </ResourceDictionary>

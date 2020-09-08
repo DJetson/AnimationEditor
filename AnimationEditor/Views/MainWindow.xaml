@@ -11,6 +11,10 @@
     <Window.InputBindings>
         <KeyBinding Key="Z" Modifiers="Ctrl" Command="{StaticResource Undo}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
         <KeyBinding Key="Y" Modifiers="Ctrl" Command="{StaticResource Redo}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
+        <KeyBinding Key="B" Command="{StaticResource SelectTool}" CommandParameter="Brush"/>
+        <KeyBinding Key="E" Command="{StaticResource SelectTool}" CommandParameter="Eraser"/>
+        <KeyBinding Key="S" Command="{StaticResource SelectTool}" CommandParameter="Lasso"/>
+        <KeyBinding Key="Z" Command="{StaticResource SelectTool}" CommandParameter="Zoom"/>
     </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>

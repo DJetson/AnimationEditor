@@ -91,6 +91,7 @@
     <Compile Include="Commands\OpenWorkspaceCommand.cs" />
     <Compile Include="Commands\RedoCommand.cs" />
     <Compile Include="Commands\SaveWorkspaceCommand.cs" />
+    <Compile Include="Commands\SelectToolCommand.cs" />
     <Compile Include="Commands\ShowOnionSkinSettingsWindowCommand.cs" />
     <Compile Include="Commands\UndoCommand.cs" />
     <Compile Include="Gestures\MouseWheelGestures.cs" />

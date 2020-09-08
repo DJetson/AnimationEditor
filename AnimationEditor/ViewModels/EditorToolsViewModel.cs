@@ -23,6 +23,26 @@ namespace AnimationEditor.ViewModels
             set { _ShowColorPickerWindow = value; NotifyPropertyChanged(); }
         }
 
+        public static void SelectToolType(EditorToolType parameter)
+        {
+            Instance.SelectedToolType = parameter;
+
+            switch (parameter)
+            {
+                case EditorToolType.Brush:
+                    Instance.EditingMode = InkCanvasEditingMode.Ink;
+                    break;
+                case EditorToolType.Eraser:
+                    Instance.EditingMode = InkCanvasEditingMode.EraseByPoint;
+                    break;
+                case EditorToolType.Lasso:
+                    Instance.EditingMode = InkCanvasEditingMode.Select;
+                    break;
+                case EditorToolType.Zoom:
+                    Instance.EditingMode = InkCanvasEditingMode.None;
+                    break;
+            }
+        }
 
         private static EditorToolsViewModel _Instance = null;
         public static EditorToolsViewModel Instance
@@ -49,21 +69,6 @@ namespace AnimationEditor.ViewModels
             set { _LastSelectedBrushColor = value; NotifyPropertyChanged(); }
         }
 
-        public string BrushColor
-        {
-            get => _DrawingAttributes.Color.ToString();
-            set
-            {
-                _DrawingAttributes.Color = new Color()
-                {
-                    A = Byte.Parse(value.TrimStart('#').Substring(0, 2), System.Globalization.NumberStyles.HexNumber),
-                    R = Byte.Parse(value.TrimStart('#').Substring(2, 2), System.Globalization.NumberStyles.HexNumber),
-                    G = Byte.Parse(value.TrimStart('#').Substring(4, 2), System.Globalization.NumberStyles.HexNumber),
-                    B = Byte.Parse(value.TrimStart('#').Substring(6, 2), System.Globalization.NumberStyles.HexNumber)
-                };
-            }
-        }
-
         private Color _SelectedBrushColor = Color.FromArgb(255,0,0,0);
         public Color SelectedBrushColor
         {
@@ -77,7 +82,6 @@ namespace AnimationEditor.ViewModels
             _DrawingAttributes.Color = colorWithOpacity;
             _DrawingAttributes.Width = BrushSize;
             _DrawingAttributes.Height = BrushSize;
-            //_DrawingAttributes.Height = BrushHeight;
         }
 
         public double BrushSize
@@ -93,14 +97,6 @@ namespace AnimationEditor.ViewModels
             set { _BrushOpacity = value; NotifyPropertyChanged(); UpdateDrawingAttributes(); }
         }
 
-
-        //public double BrushHeight
-        //{
-        //    get => _DrawingAttributes.Height;
-        //    set { _DrawingAttributes.Height = value; NotifyPropertyChanged(); UpdateDrawingAttributes(); }
-        //}
-
-
         private IEditorTool _CurrentTool;
         public IEditorTool CurrentTool
         {
@@ -108,16 +104,8 @@ namespace AnimationEditor.ViewModels
             set { _CurrentTool = value; NotifyPropertyChanged(); }
         }
 
-        private DelegateCommand _SelectTool;
-        public DelegateCommand SelectTool
-        {
-            get => _SelectTool;
-            set { _SelectTool = value; NotifyPropertyChanged(); }
-        }
-
         public void InitializeCommands()
         {
-            SelectTool = new DelegateCommand(SelectTool_CanExecute, SelectTool_Execute);
             ShowColorPickerWindow = new DelegateCommand(ShowColorPickerWindow_CanExecute, ShowColorPickerWindow_Execute);
         }
 
@@ -155,38 +143,6 @@ namespace AnimationEditor.ViewModels
         {
             get { return _SelectedToolType; }
             set { _SelectedToolType = value; NotifyPropertyChanged(); }
-        }
-
-
-        public void SelectTool_Execute(object obj)
-        {
-            var Parameter = (EditorToolType)Enum.Parse(typeof(EditorToolType), obj.ToString());
-
-            SelectedToolType = Parameter;
-
-            switch (Parameter)
-            {
-                case EditorToolType.Brush:
-                    EditingMode = InkCanvasEditingMode.Ink;
-                    break;
-                case EditorToolType.Eraser:
-                    EditingMode = InkCanvasEditingMode.EraseByPoint;
-                    break;
-                case EditorToolType.Lasso:
-                    EditingMode = InkCanvasEditingMode.Select;
-                    break;
-                case EditorToolType.Zoom:
-                    EditingMode = InkCanvasEditingMode.None;
-                    //Enable Detecting Clicks on InkCanvas
-                    break;
-            }
-        }
-
-        public bool SelectTool_CanExecute(object obj)
-        {
-            var Parameter = Enum.Parse(typeof(EditorToolType), obj.ToString());
-
-            return true;
         }
     }
 }
