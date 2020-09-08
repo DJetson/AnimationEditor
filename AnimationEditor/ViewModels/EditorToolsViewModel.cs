@@ -42,28 +42,6 @@ namespace AnimationEditor.ViewModels
             set { _DrawingAttributes = value; NotifyPropertyChanged();/* NotifyPropertyChanged(nameof(OnionSkingDrawingAttributes));*/ }
         }
 
-        //public DrawingAttributes OnionSkingDrawingAttributes
-        //{
-        //    get
-        //    {
-        //        var onionSkinDrawingAttributes = new DrawingAttributes()
-        //        {
-        //            Color = Color.FromArgb(128, 255, 0, 0),
-        //            FitToCurve = _DrawingAttributes.FitToCurve,
-        //            Height = _DrawingAttributes.Height,
-        //            Width = _DrawingAttributes.Width,
-        //            IgnorePressure = _DrawingAttributes.IgnorePressure,
-        //            IsHighlighter = true,
-        //            StylusTip = _DrawingAttributes.StylusTip,
-        //            StylusTipTransform = _DrawingAttributes.StylusTipTransform
-        //        };
-
-        //        //onionSkinDrawingAttributes.IsHighlighter = true;
-        //        //onionSkinDrawingAttributes.Color = Color.FromArgb(128, 255, 0, 0);
-        //        return onionSkinDrawingAttributes;
-        //    }
-        //}
-
         private Color _LastSelectedBrushColor;
         public Color LastSelectedBrushColor
         {
@@ -95,22 +73,32 @@ namespace AnimationEditor.ViewModels
 
         private void UpdateDrawingAttributes()
         {
-            _DrawingAttributes.Color = SelectedBrushColor;
-            _DrawingAttributes.Width = BrushWidth;
-            _DrawingAttributes.Height = BrushHeight;
+            var colorWithOpacity = Color.FromArgb((byte)(255 * (BrushOpacity / 100)), SelectedBrushColor.R, SelectedBrushColor.G, SelectedBrushColor.B);
+            _DrawingAttributes.Color = colorWithOpacity;
+            _DrawingAttributes.Width = BrushSize;
+            _DrawingAttributes.Height = BrushSize;
+            //_DrawingAttributes.Height = BrushHeight;
         }
 
-        public double BrushWidth
+        public double BrushSize
         {
             get => _DrawingAttributes.Width;
             set { _DrawingAttributes.Width = value; NotifyPropertyChanged(); UpdateDrawingAttributes(); }
         }
 
-        public double BrushHeight
+        private double _BrushOpacity = 100;
+        public double BrushOpacity
         {
-            get => _DrawingAttributes.Height;
-            set { _DrawingAttributes.Height = value; NotifyPropertyChanged(); UpdateDrawingAttributes(); }
+            get { return _BrushOpacity; }
+            set { _BrushOpacity = value; NotifyPropertyChanged(); UpdateDrawingAttributes(); }
         }
+
+
+        //public double BrushHeight
+        //{
+        //    get => _DrawingAttributes.Height;
+        //    set { _DrawingAttributes.Height = value; NotifyPropertyChanged(); UpdateDrawingAttributes(); }
+        //}
 
 
         private IEditorTool _CurrentTool;
