@@ -44,12 +44,12 @@ namespace AnimationEditor.ViewModels
                 _SelectedFrame = value;
                 NotifySelectedFrameAndDependents();
 
-                if (_SelectedFrame != null && value != null)
-                {
-                    var state = SaveState() as AnimationTimelineState;
-                    var multiState = new MultiState(null, "Navigate to Frame", state);
-                    PushUndoRecord(multiState);
-                }
+                //if (_SelectedFrame != null && value != null)
+                //{
+                //    var state = SaveState() as AnimationTimelineState;
+                //    var multiState = new MultiState(null, "Navigate to Frame", state);
+                //    PushUndoRecord(multiState);
+                //}
             }
         }
 
@@ -181,55 +181,6 @@ namespace AnimationEditor.ViewModels
         }
         #endregion StopAnimation Command
 
-        #region NavigateToFrame Command
-        //private DelegateCommand _NavigateToFrame;
-        //public DelegateCommand NavigateToFrame
-        //{
-        //    get { return _NavigateToFrame; }
-        //    set { _NavigateToFrame = value; NotifyPropertyChanged(); }
-        //}
-
-        //public void NavigateToFrame_Execute(object parameter)
-        //{
-        //    var Parameter = (FrameNavigation)Enum.Parse(typeof(FrameNavigation), parameter.ToString());
-
-        //    int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
-        //    int navigateToFrameIndex = selectedFrameIndex;
-
-        //    switch (Parameter)
-        //    {
-        //        case FrameNavigation.Start:
-        //            navigateToFrameIndex = 0;
-        //            break;
-        //        case FrameNavigation.Previous:
-        //            navigateToFrameIndex = Math.Max(selectedFrameIndex - 1, 0);
-        //            break;
-        //        case FrameNavigation.Next:
-        //            navigateToFrameIndex = Math.Min(selectedFrameIndex + 1, Frames.Count - 1);
-        //            break;
-        //        case FrameNavigation.End:
-        //            navigateToFrameIndex = Frames.Count - 1;
-        //            break;
-        //    }
-
-        //    SelectedFrame = Frames[navigateToFrameIndex];
-        //}
-
-        //public bool NavigateToFrame_CanExecute(object parameter)
-        //{
-        //    if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Play)
-        //        return false;
-
-        //    if (Enum.TryParse<FrameNavigation>(parameter.ToString(), out FrameNavigation Parameter) == false)
-        //        return false;
-
-        //    if (Parameter == FrameNavigation.Current)
-        //        return false;
-
-        //    return true;
-        //}
-        #endregion NavigateToFrame Command
-
         #region AddBlankFrame Command
         private DelegateCommand _AddBlankFrame;
         public DelegateCommand AddBlankFrame
@@ -283,7 +234,7 @@ namespace AnimationEditor.ViewModels
             var frameState = newFrame.SaveState() as FrameState;
             SelectFrameWithoutUndoBuffer(newFrame);
             var timelineState = SaveState() as AnimationTimelineState;
-            var multiState = new MultiState(this, "New Frame", frameState, timelineState);
+            var multiState = new MultiState(this, $"Added Frame {Frames.Count}", frameState, timelineState);
 
             PushUndoRecord(multiState);
         }
@@ -339,8 +290,7 @@ namespace AnimationEditor.ViewModels
             var frameState = newFrame.SaveState() as FrameState;
             SelectFrameWithoutUndoBuffer(newFrame);
             var timelineState = SaveState() as AnimationTimelineState;
-
-            var multiState = new MultiState(this, DuplicateCurrentFrame.DisplayName, frameState, timelineState);
+            var multiState = new MultiState(this, $"Insert Duplicate {(Parameter == FrameNavigation.Previous ? "Before" : "After")} Frame {selectedFrameIndex}", frameState, timelineState);
 
             PushUndoRecord(multiState);
         }
@@ -488,7 +438,7 @@ namespace AnimationEditor.ViewModels
                     break;
             }
 
-            SelectedFrame = Frames[navigateToFrameIndex];
+            SelectFrameWithoutUndoBuffer(Frames[navigateToFrameIndex]);
         }
 
         public void AddFrameAtIndex(FrameViewModel frame, int index)
@@ -521,7 +471,7 @@ namespace AnimationEditor.ViewModels
         {
             var Memento = (state as AnimationTimelineState);
 
-            Frames = Memento.Frames;
+            Frames = new ObservableCollection<FrameViewModel>(Memento.Frames);
             FramesPerSecond = Memento.FramesPerSecond;
             SelectFrameWithoutUndoBuffer(Memento.SelectedFrame);
         }
