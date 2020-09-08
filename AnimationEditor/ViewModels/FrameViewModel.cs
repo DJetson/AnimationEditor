@@ -53,7 +53,7 @@ namespace AnimationEditor.ViewModels
         public FrameViewModel(WorkspaceViewModel workspace, StrokeCollection strokeCollection)
         {
             WorkspaceViewModel = workspace;
-            StrokeCollection = new StrokeCollection(strokeCollection);
+            StrokeCollection = strokeCollection.Clone();
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
         }
 
