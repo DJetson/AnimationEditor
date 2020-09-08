@@ -9,16 +9,16 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.InputBindings>
-        <KeyBinding Key="Z" Modifiers="Ctrl" Command="{StaticResource Undo}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
-        <KeyBinding Key="Y" Modifiers="Ctrl" Command="{StaticResource Redo}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
+        <KeyBinding Gesture="CTRL+ALT+Z" Command="{StaticResource Undo}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
+        <KeyBinding Gesture="CTRL+SHIFT+Z" Command="{StaticResource Redo}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
         <KeyBinding Key="B" Command="{StaticResource SelectTool}" CommandParameter="Brush"/>
         <KeyBinding Key="E" Command="{StaticResource SelectTool}" CommandParameter="Eraser"/>
         <KeyBinding Key="S" Command="{StaticResource SelectTool}" CommandParameter="Lasso"/>
         <KeyBinding Key="Z" Command="{StaticResource SelectTool}" CommandParameter="Zoom"/>
-        <KeyBinding Key="OemComma" Modifiers="Ctrl" Command="{StaticResource NavigateToFirstFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.AnimationTimelineViewModel}"/>
+        <KeyBinding Gesture="CTRL+OemComma" Command="{StaticResource NavigateToFirstFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.AnimationTimelineViewModel}"/>
         <KeyBinding Key="OemComma" Command="{StaticResource NavigateToPreviousFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.AnimationTimelineViewModel}"/>
         <KeyBinding Key="OemPeriod" Command="{StaticResource NavigateToNextFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.AnimationTimelineViewModel}"/>
-        <KeyBinding Key="OemPeriod" Modifiers="Ctrl" Command="{StaticResource NavigateToLastFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.AnimationTimelineViewModel}"/>
+        <KeyBinding Gesture="CTRL+OemPeriod" Command="{StaticResource NavigateToLastFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.AnimationTimelineViewModel}"/>
 
     </Window.InputBindings>
     <Grid>
