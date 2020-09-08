@@ -288,14 +288,6 @@ namespace AnimationEditor.ViewModels
             PushUndoRecord(multiState);
         }
 
-        private void NotifySelectedFrameAndDependents()
-        {
-            NotifyPropertyChanged(nameof(SelectedFrame));
-            NotifyPropertyChanged(nameof(NextFrame));
-            NotifyPropertyChanged(nameof(PreviousFrame));
-            NotifyPropertyChanged(nameof(NextFrameStrokes));
-            NotifyPropertyChanged(nameof(PreviousFrameStrokes));
-        }
         #endregion AddBlankFrame Command
 
         #region DuplicateCurrentFrame Command
@@ -422,6 +414,15 @@ namespace AnimationEditor.ViewModels
             AddBlankFrame = new DelegateCommand("Add Blank Frame", AddBlankFrame_CanExecute, AddBlankFrame_Execute);
             NavigateToFrame = new DelegateCommand(NavigateToFrame_CanExecute, NavigateToFrame_Execute);
             DuplicateCurrentFrame = new DelegateCommand("Duplicate Frame", DuplicateCurrentFrame_CanExecute, DuplicateCurrentFrame_Execute);
+        }
+
+        private void NotifySelectedFrameAndDependents()
+        {
+            NotifyPropertyChanged(nameof(SelectedFrame));
+            NotifyPropertyChanged(nameof(NextFrame));
+            NotifyPropertyChanged(nameof(PreviousFrame));
+            NotifyPropertyChanged(nameof(NextFrameStrokes));
+            NotifyPropertyChanged(nameof(PreviousFrameStrokes));
         }
 
         public AnimationTimelineViewModel(List<Models.FrameModel> frames, WorkspaceViewModel workspace)

@@ -27,12 +27,12 @@ namespace AnimationEditor.ViewModels
         //    set { _CurrentState = value as FrameState; NotifyPropertyChanged(); }
         //}
 
-        //private int _Order;
-        //public int Order
-        //{
-        //    get => _Order;
-        //    set { _Order = value; NotifyPropertyChanged(); }
-        //}
+        private int _Order;
+        public int Order
+        {
+            get => _Order;
+            set { _Order = value; NotifyPropertyChanged(); }
+        }
 
         private WorkspaceViewModel _WorkspaceViewModel;
         public WorkspaceViewModel WorkspaceViewModel
