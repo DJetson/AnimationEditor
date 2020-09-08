@@ -15,6 +15,11 @@
         <KeyBinding Key="E" Command="{StaticResource SelectTool}" CommandParameter="Eraser"/>
         <KeyBinding Key="S" Command="{StaticResource SelectTool}" CommandParameter="Lasso"/>
         <KeyBinding Key="Z" Command="{StaticResource SelectTool}" CommandParameter="Zoom"/>
+        <KeyBinding Key="OemComma" Modifiers="Ctrl" Command="{StaticResource NavigateToFirstFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.AnimationTimelineViewModel}"/>
+        <KeyBinding Key="OemComma" Command="{StaticResource NavigateToPreviousFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.AnimationTimelineViewModel}"/>
+        <KeyBinding Key="OemPeriod" Command="{StaticResource NavigateToNextFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.AnimationTimelineViewModel}"/>
+        <KeyBinding Key="OemPeriod" Modifiers="Ctrl" Command="{StaticResource NavigateToLastFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.AnimationTimelineViewModel}"/>
+
     </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>

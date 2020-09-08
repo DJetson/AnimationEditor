@@ -182,52 +182,52 @@ namespace AnimationEditor.ViewModels
         #endregion StopAnimation Command
 
         #region NavigateToFrame Command
-        private DelegateCommand _NavigateToFrame;
-        public DelegateCommand NavigateToFrame
-        {
-            get { return _NavigateToFrame; }
-            set { _NavigateToFrame = value; NotifyPropertyChanged(); }
-        }
+        //private DelegateCommand _NavigateToFrame;
+        //public DelegateCommand NavigateToFrame
+        //{
+        //    get { return _NavigateToFrame; }
+        //    set { _NavigateToFrame = value; NotifyPropertyChanged(); }
+        //}
 
-        public void NavigateToFrame_Execute(object parameter)
-        {
-            var Parameter = (FrameNavigation)Enum.Parse(typeof(FrameNavigation), parameter.ToString());
+        //public void NavigateToFrame_Execute(object parameter)
+        //{
+        //    var Parameter = (FrameNavigation)Enum.Parse(typeof(FrameNavigation), parameter.ToString());
 
-            int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
-            int navigateToFrameIndex = selectedFrameIndex;
+        //    int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
+        //    int navigateToFrameIndex = selectedFrameIndex;
 
-            switch (Parameter)
-            {
-                case FrameNavigation.Start:
-                    navigateToFrameIndex = 0;
-                    break;
-                case FrameNavigation.Previous:
-                    navigateToFrameIndex = Math.Max(selectedFrameIndex - 1, 0);
-                    break;
-                case FrameNavigation.Next:
-                    navigateToFrameIndex = Math.Min(selectedFrameIndex + 1, Frames.Count - 1);
-                    break;
-                case FrameNavigation.End:
-                    navigateToFrameIndex = Frames.Count - 1;
-                    break;
-            }
+        //    switch (Parameter)
+        //    {
+        //        case FrameNavigation.Start:
+        //            navigateToFrameIndex = 0;
+        //            break;
+        //        case FrameNavigation.Previous:
+        //            navigateToFrameIndex = Math.Max(selectedFrameIndex - 1, 0);
+        //            break;
+        //        case FrameNavigation.Next:
+        //            navigateToFrameIndex = Math.Min(selectedFrameIndex + 1, Frames.Count - 1);
+        //            break;
+        //        case FrameNavigation.End:
+        //            navigateToFrameIndex = Frames.Count - 1;
+        //            break;
+        //    }
 
-            SelectedFrame = Frames[navigateToFrameIndex];
-        }
+        //    SelectedFrame = Frames[navigateToFrameIndex];
+        //}
 
-        public bool NavigateToFrame_CanExecute(object parameter)
-        {
-            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Play)
-                return false;
+        //public bool NavigateToFrame_CanExecute(object parameter)
+        //{
+        //    if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Play)
+        //        return false;
 
-            if (Enum.TryParse<FrameNavigation>(parameter.ToString(), out FrameNavigation Parameter) == false)
-                return false;
+        //    if (Enum.TryParse<FrameNavigation>(parameter.ToString(), out FrameNavigation Parameter) == false)
+        //        return false;
 
-            if (Parameter == FrameNavigation.Current)
-                return false;
+        //    if (Parameter == FrameNavigation.Current)
+        //        return false;
 
-            return true;
-        }
+        //    return true;
+        //}
         #endregion NavigateToFrame Command
 
         #region AddBlankFrame Command
@@ -412,7 +412,7 @@ namespace AnimationEditor.ViewModels
 
             DeleteCurrentFrame = new DelegateCommand("Delete Frame", DeleteCurrentFrame_CanExecute, DeleteCurrentFrame_Execute);
             AddBlankFrame = new DelegateCommand("Add Blank Frame", AddBlankFrame_CanExecute, AddBlankFrame_Execute);
-            NavigateToFrame = new DelegateCommand(NavigateToFrame_CanExecute, NavigateToFrame_Execute);
+            //NavigateToFrame = new DelegateCommand(NavigateToFrame_CanExecute, NavigateToFrame_Execute);
             DuplicateCurrentFrame = new DelegateCommand("Duplicate Frame", DuplicateCurrentFrame_CanExecute, DuplicateCurrentFrame_Execute);
         }
 
@@ -465,6 +465,30 @@ namespace AnimationEditor.ViewModels
             WorkspaceViewModel.WorkspaceHistoryViewModel.InitialState = multiState;
 
             PushUndoRecord(multiState, false);
+        }
+
+        public void NavigateToFrame(FrameNavigation navigation)
+        {
+            int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
+            int navigateToFrameIndex = selectedFrameIndex;
+
+            switch (navigation)
+            {
+                case FrameNavigation.Start:
+                    navigateToFrameIndex = 0;
+                    break;
+                case FrameNavigation.Previous:
+                    navigateToFrameIndex = Math.Max(selectedFrameIndex - 1, 0);
+                    break;
+                case FrameNavigation.Next:
+                    navigateToFrameIndex = Math.Min(selectedFrameIndex + 1, Frames.Count - 1);
+                    break;
+                case FrameNavigation.End:
+                    navigateToFrameIndex = Frames.Count - 1;
+                    break;
+            }
+
+            SelectedFrame = Frames[navigateToFrameIndex];
         }
 
         public void AddFrameAtIndex(FrameViewModel frame, int index)

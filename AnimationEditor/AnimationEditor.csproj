@@ -88,6 +88,10 @@
     <Compile Include="BaseClasses\RequeryBase.cs" />
     <Compile Include="Commands\CloseWorkspaceCommand.cs" />
     <Compile Include="Commands\CreateNewWorkspaceCommand.cs" />
+    <Compile Include="Commands\NavigateToFirstFrameCommand.cs" />
+    <Compile Include="Commands\NavigateToLastFrameCommand.cs" />
+    <Compile Include="Commands\NavigateToNextFrameCommand.cs" />
+    <Compile Include="Commands\NavigateToPreviousFrameCommand.cs" />
     <Compile Include="Commands\OpenWorkspaceCommand.cs" />
     <Compile Include="Commands\RedoCommand.cs" />
     <Compile Include="Commands\SaveWorkspaceCommand.cs" />

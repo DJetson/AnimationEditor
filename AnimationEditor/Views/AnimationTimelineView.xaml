@@ -21,8 +21,8 @@
                 </Style>
             </ToolBarTray.Resources>
             <ToolBar>
-                <Button Content="{StaticResource JumpToFirstFrame}" Command="{Binding NavigateToFrame}" CommandParameter="Start"/>
-                <Button Content="{StaticResource PreviousFrame}" Command="{Binding NavigateToFrame}" CommandParameter="Previous"/>
+                <Button Content="{StaticResource JumpToFirstFrame}" Command="{StaticResource NavigateToFirstFrame}" CommandParameter="{Binding }"/>
+                <Button Content="{StaticResource PreviousFrame}" Command="{StaticResource NavigateToPreviousFrame}" CommandParameter="{Binding }"/>
                 <Button Content="{StaticResource StopIcon}" Command="{Binding StopAnimation}" CommandParameter="{Binding }"/>
                 <Button Command="{Binding PlayAnimation}" CommandParameter="{Binding }">
                     <Button.Style>
@@ -40,8 +40,8 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <Button Content="{StaticResource NextFrame}" Command="{Binding NavigateToFrame}" CommandParameter="Next"/>
-                <Button Content="{StaticResource JumpToLastFrame}" Command="{Binding NavigateToFrame}" CommandParameter="End"/>
+                <Button Content="{StaticResource NextFrame}" Command="{StaticResource NavigateToNextFrame}" CommandParameter="{Binding }"/>
+                <Button Content="{StaticResource JumpToLastFrame}" Command="{StaticResource NavigateToLastFrame}" CommandParameter="{Binding }"/>
             </ToolBar>
             <ToolBar>
                 <Button Content="{StaticResource DeleteIcon}" Command="{Binding DeleteCurrentFrame}" />
