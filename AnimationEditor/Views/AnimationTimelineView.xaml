@@ -52,6 +52,10 @@
                 <Button Content="{StaticResource InsertNewFrameNext}" Command="{Binding AddBlankFrame}" CommandParameter="Next"/>
                 <Button Content="{StaticResource AppendAfterLastFrame}" Command="{Binding AddBlankFrame}" CommandParameter="End" />
             </ToolBar>
+            <ToolBar>
+                <TextBlock VerticalAlignment="Center" Text="FPS:" />
+                <TextBox Text="{Binding FramesPerSecond, UpdateSourceTrigger=PropertyChanged, Delay=750}" />
+            </ToolBar>
             <!--<Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Style.Setters>
