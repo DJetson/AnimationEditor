@@ -77,7 +77,7 @@ namespace AnimationEditor.ViewModels
             if (EditorToolsViewModel.Instance.SelectedToolType != BaseClasses.EditorToolType.Eraser)
             {
                 var state = SaveState() as FrameState;
-                var multiState = new MultiState(null, "Added Frame Content", state);
+                var multiState = new MultiState(null, $"Added Content to Frame {Order}", state);
                 PushUndoRecord(multiState);
             }
             else if (_IsErasing == false)
@@ -94,7 +94,7 @@ namespace AnimationEditor.ViewModels
                 _IsErasing = false;
 
                 var state = SaveState() as FrameState;
-                var multiState = new MultiState(null, "Erased Frame Content", state);
+                var multiState = new MultiState(null, $"Erased Content from Frame {Order}", state);
                 PushUndoRecord(multiState);
                 Mouse.RemoveMouseUpHandler(Mouse.PrimaryDevice.ActiveSource.RootVisual as DependencyObject, EraserOperation_MouseUp);
             }

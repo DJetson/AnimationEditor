@@ -318,11 +318,22 @@ namespace AnimationEditor.ViewModels
             return true;
         }
 
+        public void RemoveFrame(FrameViewModel frame)
+        {
+            var framesToUpdate = Frames.Where(e => e.Order > frame.Order);
+            foreach (var item in framesToUpdate)
+            {
+                item.Order -= 1;
+            }
+
+            Frames.Remove(frame);
+        }
+
         public void DeleteCurrentFrame_Execute(object parameter)
         {
             int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
 
-            Frames.Remove(SelectedFrame);
+            RemoveFrame(SelectedFrame);
             FrameViewModel newFrame = null;
             if (Frames.Count == 0)
             {
@@ -443,7 +454,7 @@ namespace AnimationEditor.ViewModels
 
         public void AddFrameAtIndex(FrameViewModel frame, int index)
         {
-
+            frame.Order = index;
             if (index < Frames.Count)
             {
                 Frames.Insert(index, frame);

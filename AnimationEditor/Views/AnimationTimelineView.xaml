@@ -98,11 +98,16 @@
             <ListBox.Resources>
                 <DataTemplate DataType="{x:Type ViewModels:FrameViewModel}">
                     <Border BorderBrush="DarkGray" BorderThickness="1" Height="70" Width="140">
-                        <Grid >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <!--<RowDefinition Height="Auto"/>-->
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
                             <Grid.LayoutTransform>
                                 <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="0.1" ScaleY="0.1"/>
                             </Grid.LayoutTransform>
-                            <InkCanvas EditingMode="None" Strokes="{Binding StrokeCollection}"/>
+                            <InkCanvas Grid.Row="0" EditingMode="None" Strokes="{Binding StrokeCollection}"/>
+                            <TextBlock Grid.Row="0" Text="{Binding Order}" FontSize="96" Background="Transparent" FontWeight="Bold"/>
                         </Grid>
                     </Border>
                 </DataTemplate>
