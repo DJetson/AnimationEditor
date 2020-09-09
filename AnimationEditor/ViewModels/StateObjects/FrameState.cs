@@ -15,6 +15,11 @@ namespace AnimationEditor.ViewModels.StateObjects
         public FrameState(FrameViewModel frame, string stateName = "") : base(frame, stateName)
         {
             StrokeCollection = new StrokeCollection(frame.StrokeCollection);
+            StrokeCollection.Clear();
+            foreach(var stroke in frame.StrokeCollection)
+            {
+                StrokeCollection.Add(stroke.Clone());
+            }
         }
 
         public override void LoadState()

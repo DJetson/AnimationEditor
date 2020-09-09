@@ -1,4 +1,5 @@
-﻿using AnimationEditor.Interfaces;
+﻿using AnimationEditor.BaseClasses;
+using AnimationEditor.Interfaces;
 using AnimationEditor.ViewModels.StateObjects;
 using System;
 using System.Collections.ObjectModel;
@@ -60,7 +61,6 @@ namespace AnimationEditor.ViewModels
         public FrameViewModel(Models.FrameModel model, WorkspaceViewModel workspace)
         {
             WorkspaceViewModel = workspace;
-
             StrokeCollection = model.StrokeCollection;
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
         }
@@ -74,27 +74,58 @@ namespace AnimationEditor.ViewModels
 
         private void StrokeCollection_StrokesChanged(object sender, StrokeCollectionChangedEventArgs e)
         {
-            if (EditorToolsViewModel.Instance.SelectedToolType != BaseClasses.EditorToolType.Eraser)
+            foreach (var stroke in e.Added)
+            {
+                stroke.StylusPointsChanged += Stroke_StylusPointsChanged;
+            }
+            foreach (var stroke in e.Removed)
+            {
+                stroke.StylusPointsChanged -= Stroke_StylusPointsChanged;
+            }
+
+            if(EditorToolsViewModel.Instance.SelectedToolType == EditorToolType.Brush)
             {
                 var state = SaveState() as FrameState;
                 var multiState = new MultiState(null, $"Added Content to Frame {Order}", state);
                 PushUndoRecord(multiState);
             }
-            else if (_IsErasing == false)
+            else if (EditorToolsViewModel.Instance.SelectedToolType == EditorToolType.Lasso && _IsErasing == false)
+            {
+                var state = SaveState() as FrameState;
+                var multiState = new MultiState(null, $"Deleted Content from Frame {Order}", state);
+                PushUndoRecord(multiState);
+            }
+            else if (EditorToolsViewModel.Instance.SelectedToolType == EditorToolType.Eraser && _IsErasing == false)
             {
                 _IsErasing = true;
                 Mouse.AddMouseUpHandler(Mouse.PrimaryDevice.ActiveSource.RootVisual as DependencyObject, EraserOperation_MouseUp);
             }
         }
 
+        private void Stroke_StylusPointsChanged(object sender, EventArgs e)
+        {
+            var state = SaveState() as FrameState;
+            var multiState = new MultiState(null, $"Modified Frame {Order} Content", state);
+            PushUndoRecord(multiState);
+        }
+
         private void EraserOperation_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Released)
+            if (e.LeftButton == MouseButtonState.Released && EditorToolsViewModel.Instance.SelectedToolType == BaseClasses.EditorToolType.Eraser)
             {
                 _IsErasing = false;
 
                 var state = SaveState() as FrameState;
                 var multiState = new MultiState(null, $"Erased Content from Frame {Order}", state);
+                PushUndoRecord(multiState);
+                Mouse.RemoveMouseUpHandler(Mouse.PrimaryDevice.ActiveSource.RootVisual as DependencyObject, EraserOperation_MouseUp);
+            }
+            else if (e.LeftButton == MouseButtonState.Released && EditorToolsViewModel.Instance.SelectedToolType == BaseClasses.EditorToolType.Lasso)
+            {
+                _IsErasing = false;
+
+                var state = SaveState() as FrameState;
+                var multiState = new MultiState(null, $"Moved Frame {Order} Content", state);
                 PushUndoRecord(multiState);
                 Mouse.RemoveMouseUpHandler(Mouse.PrimaryDevice.ActiveSource.RootVisual as DependencyObject, EraserOperation_MouseUp);
             }

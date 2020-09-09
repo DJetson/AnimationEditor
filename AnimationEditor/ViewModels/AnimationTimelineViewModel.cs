@@ -395,7 +395,10 @@ namespace AnimationEditor.ViewModels
             Frames = new ObservableCollection<FrameViewModel>();
             foreach (var item in frames)
             {
-                Frames.Add(new FrameViewModel(item, workspace));
+                var newFrame = new FrameViewModel(item, workspace);
+                newFrame.Order = Frames.Count;
+                Frames.Add(newFrame);
+                
             }
 
             SelectFrameWithoutUndoBuffer(Frames.FirstOrDefault());
