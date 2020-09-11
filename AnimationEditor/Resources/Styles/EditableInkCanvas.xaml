@@ -15,11 +15,7 @@
             <Setter Property="EditingMode" Value="{Binding EditorTools.EditingMode}"/>
         </Style.Setters>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState}" Value="Play">
-                <Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentFrame.StrokeCollection}"/>
-                <Setter Property="EditingMode" Value="None"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState}" Value="Pause">
+            <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive}" Value="True">
                 <Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentFrame.StrokeCollection}"/>
                 <Setter Property="EditingMode" Value="None"/>
             </DataTrigger>

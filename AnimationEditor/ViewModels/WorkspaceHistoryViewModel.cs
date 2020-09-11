@@ -47,6 +47,9 @@ namespace AnimationEditor.ViewModels
             if (!(parameter is WorkspaceHistoryItemViewModel Parameter))
                 return false;
 
+            if (WorkspaceViewModel.AnimationTimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive)
+                return false;
+
             if (UndoStack?.Contains(Parameter.State) == false)
                 return false;
 
@@ -70,6 +73,9 @@ namespace AnimationEditor.ViewModels
         private bool ResumeToState_CanExecute(object parameter)
         {
             if (!(parameter is WorkspaceHistoryItemViewModel Parameter))
+                return false;
+
+            if (WorkspaceViewModel.AnimationTimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive)
                 return false;
 
             if (RedoStack.Contains(Parameter.State) == false)

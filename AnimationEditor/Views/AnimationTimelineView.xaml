@@ -24,22 +24,7 @@
                 <Button Content="{StaticResource JumpToFirstFrame}" Command="{StaticResource NavigateToFirstFrame}" CommandParameter="{Binding }"/>
                 <Button Content="{StaticResource PreviousFrame}" Command="{StaticResource NavigateToPreviousFrame}" CommandParameter="{Binding }"/>
                 <Button Content="{StaticResource StopIcon}" Command="{Binding StopAnimation}" CommandParameter="{Binding }"/>
-                <Button Command="{Binding PlayAnimation}" CommandParameter="{Binding }">
-                    <Button.Style>
-                        <Style BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" TargetType="{x:Type Button}">
-                            <Style.Setters>
-                                <Setter Property="ToolTip" Value="Start Playback"/>
-                                <Setter Property="Content" Value="{StaticResource PlayIcon}"/>
-                            </Style.Setters>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding AnimationPlaybackViewModel.CurrentState}" Value="Play">
-                                    <Setter Property="ToolTip" Value="Pause Playback"/>
-                                    <Setter Property="Content" Value="{StaticResource PauseIcon}"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
+                <Button Command="{Binding PlayAnimation}" CommandParameter="{Binding }" ToolTip="Start Playback" Content="{StaticResource PlayIcon}"/>
                 <Button Content="{StaticResource NextFrame}" Command="{StaticResource NavigateToNextFrame}" CommandParameter="{Binding }"/>
                 <Button Content="{StaticResource JumpToLastFrame}" Command="{StaticResource NavigateToLastFrame}" CommandParameter="{Binding }"/>
             </ToolBar>
@@ -56,28 +41,6 @@
                 <TextBlock VerticalAlignment="Center" Text="FPS:" />
                 <TextBox Text="{Binding FramesPerSecond, UpdateSourceTrigger=PropertyChanged, Delay=750}" />
             </ToolBar>
-            <!--<Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Style.Setters>
-                            <Setter Property="Content">
-                                <Setter.Value>
-                                    <Rectangle Stretch="UniformToFill" Fill="{StaticResource PlayIcon}"/>
-                                </Setter.Value>
-                            </Setter>
-                        </Style.Setters>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsInPlaybackMode}" Value="True">
-                                <Setter Property="ToolTip" Value="Pause Playback"/>
-                                <Setter Property="Content">
-                                    <Setter.Value>
-                                        <Rectangle Stretch="UniformToFill" Fill="{StaticResource PauseIcon}"/>
-                                    </Setter.Value>
-                                </Setter>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>-->
         </ToolBarTray>
         <ListBox Grid.Row="1" ItemsSource="{Binding Frames}" ScrollViewer.HorizontalScrollBarVisibility="Visible">
             <ListBox.Style>
@@ -86,10 +49,7 @@
                         <Setter Property="SelectedItem" Value="{Binding SelectedFrame, Mode=TwoWay}"/>
                     </Style.Setters>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding AnimationPlaybackViewModel.CurrentState}" Value="Pause">
-                            <Setter Property="SelectedItem" Value="{Binding AnimationPlaybackViewModel.CurrentFrame}"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding AnimationPlaybackViewModel.CurrentState}" Value="Play">
+                        <DataTrigger Binding="{Binding AnimationPlaybackViewModel.IsPlaybackActive}" Value="True">
                             <Setter Property="SelectedItem" Value="{Binding AnimationPlaybackViewModel.CurrentFrame}"/>
                         </DataTrigger>
                     </Style.Triggers>

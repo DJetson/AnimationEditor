@@ -29,7 +29,6 @@
             <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/JumpToFirstFrame.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/JumpToLastFrame.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/NextFrame.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PauseIcon.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PlayIcon.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PreviousFrame.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/StopIcon.xaml"/>

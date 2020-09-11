@@ -20,7 +20,7 @@ namespace AnimationEditor.ViewModels
     //      DelegateCommands defined directly on the ViewModels) and making a version of each, or a single 
     //      common ancestor that acknowledges playback states, and automatically returns a false from 
     //      CanExecute if the playback state is anything but Stop.
-    public enum PlaybackStates { Stop, Play, Pause };
+    public enum PlaybackStates { Stop, Play };
 
     public class AnimationPlaybackViewModel : ViewModelBase
     {
@@ -36,11 +36,11 @@ namespace AnimationEditor.ViewModels
             set { _CurrentFrame = value; NotifyPropertyChanged(); }
         }
 
-        private PlaybackStates _CurrentState = PlaybackStates.Stop;
-        public PlaybackStates CurrentState
+        private bool _IsPlaybackActive = false;
+        public bool IsPlaybackActive
         {
-            get { return _CurrentState; }
-            set { _CurrentState = value; NotifyPropertyChanged(); }
+            get { return _IsPlaybackActive; }
+            set { _IsPlaybackActive = value; NotifyPropertyChanged(); }
         }
 
         private double _PlaybackFps;
@@ -65,14 +65,10 @@ namespace AnimationEditor.ViewModels
 
         public void StartPlayback(List<FrameViewModel> playbackFrames, double animationFps)
         {
-            if (CurrentState == PlaybackStates.Play)
+            if (IsPlaybackActive)
             {
                 Console.WriteLine("Playback has already Started. This, and any further calls to StartPlayback() on this instance are unnecessary and will have no effect while it remains in the Play state.");
                 return;
-            }
-            else if (CurrentState == PlaybackStates.Pause)
-            {
-                throw new InvalidOperationException("CurrentState = Pause. But playback can only be Started when CurrentState == Stop. Try calling ResumePlayback instead.");
             }
             else
             {
@@ -84,49 +80,36 @@ namespace AnimationEditor.ViewModels
                 PlaybackFps = animationFps * _PlaybackFpsMultiplier;
                 _PlaybackTimer.Interval = new TimeSpan((int)(TimeSpan.TicksPerSecond * (1.0 / PlaybackFps)));
 
-                CurrentState = PlaybackStates.Play;
+                IsPlaybackActive = true;
                 _PlaybackTimer.Start();
             }
         }
 
         public void ResumePlayback()
         {
-            if (CurrentState == PlaybackStates.Play)
+            if (IsPlaybackActive)
             {
                 Console.WriteLine("Playback has already Resumed. This, and any further calls to ResumePlayback() on this instance are unnecessary and will have no effect while it remains in the Play state.");
                 return;
             }
-            else if (CurrentState == PlaybackStates.Stop)
+            else if (!IsPlaybackActive)
             {
-                throw new InvalidOperationException("CurrentState = Stop. But playback can only be Resumed when CurrentState == Pause. Try calling StartPlayback instead.");
+                throw new InvalidOperationException("IsPlaybackActive = Stop. But playback can only be Resumed when IsPlaybackActive == Pause. Try calling StartPlayback instead.");
             }
             else
             {
-                CurrentState = PlaybackStates.Play;
+                IsPlaybackActive = true;
                 _PlaybackTimer.Start();
-            }
-        }
-
-        public void PausePlayback()
-        {
-            if (CurrentState == PlaybackStates.Pause || CurrentState == PlaybackStates.Stop)
-            {
-                Console.WriteLine($"CurrentState is {CurrentState}. This, and any further calls to PausePlayback() on this instance are unnecessary and will have no effect while it remains in the {CurrentState} state.");
-            }
-            else
-            {
-                _PlaybackTimer.Stop();
-                CurrentState = PlaybackStates.Pause;
             }
         }
 
         public void StopPlayback()
         {
-            if (CurrentState == PlaybackStates.Stop)
+            if (!IsPlaybackActive)
             {
                 Console.WriteLine("Playback has already been Stopped. This, and any further calls to StopPlayback() on this instance are unnecessary and will have no effect while it remains in the Stop state.");
             }
-            else if (CurrentState == PlaybackStates.Play)
+            else if (IsPlaybackActive)
             {
                 _PlaybackTimer.Stop();
             }
@@ -134,7 +117,7 @@ namespace AnimationEditor.ViewModels
             CurrentFrame = _OriginalFrame;
             _OriginalFrame = null;
             _Frames.Clear();
-            CurrentState = PlaybackStates.Stop;
+            IsPlaybackActive = false;
         }
 
         private void DispatcherTimer_Elapsed(object sender, EventArgs e)

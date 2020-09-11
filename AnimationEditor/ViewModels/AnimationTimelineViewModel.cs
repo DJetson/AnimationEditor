@@ -125,18 +125,8 @@ namespace AnimationEditor.ViewModels
             //      and just flip through those instead of directly showing the InkCanvases. It will depend entirely on
             //      how well it performs in it's initial, most basic form.
 
-            switch (AnimationPlaybackViewModel.CurrentState)
-            {
-                case PlaybackStates.Pause:
-                    AnimationPlaybackViewModel.ResumePlayback();
-                    break;
-                case PlaybackStates.Play:
-                    AnimationPlaybackViewModel.PausePlayback();
-                    break;
-                case PlaybackStates.Stop:
-                    AnimationPlaybackViewModel.StartPlayback(playbackFrames, FramesPerSecond);
-                    break;
-            }
+            if(!AnimationPlaybackViewModel.IsPlaybackActive)
+                AnimationPlaybackViewModel.StartPlayback(playbackFrames, FramesPerSecond);
         }
 
         public bool PlayAnimation_CanExecute(object parameter)
@@ -146,6 +136,10 @@ namespace AnimationEditor.ViewModels
             //need an active Scale transform going all screwy because the user accidentally hits 
             //the play button before they resolve the resize, causing the playback object to yank 
             //the target frame right out from under them
+            if(AnimationPlaybackViewModel.IsPlaybackActive)
+            {
+                return false;
+            }
 
             return true;
         }
@@ -161,20 +155,15 @@ namespace AnimationEditor.ViewModels
 
         public void StopAnimation_Execute(object parameter)
         {
-            switch (AnimationPlaybackViewModel.CurrentState)
+            if(AnimationPlaybackViewModel.IsPlaybackActive)
             {
-                case PlaybackStates.Pause:
-                    AnimationPlaybackViewModel.StopPlayback();
-                    break;
-                case PlaybackStates.Play:
-                    AnimationPlaybackViewModel.StopPlayback();
-                    break;
+                AnimationPlaybackViewModel.StopPlayback();
             }
         }
 
         public bool StopAnimation_CanExecute(object parameter)
         {
-            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Stop)
+            if (AnimationPlaybackViewModel.IsPlaybackActive == false)
                 return false;
 
             return true;
@@ -191,10 +180,7 @@ namespace AnimationEditor.ViewModels
 
         public bool AddBlankFrame_CanExecute(object parameter)
         {
-            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Play)
-                return false;
-
-            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Pause)
+            if (AnimationPlaybackViewModel.IsPlaybackActive)
                 return false;
 
             if (Enum.TryParse<FrameNavigation>(parameter.ToString(), out FrameNavigation Parameter) == false)
@@ -251,10 +237,7 @@ namespace AnimationEditor.ViewModels
 
         public bool DuplicateCurrentFrame_CanExecute(object parameter)
         {
-            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Play)
-                return false;
-
-            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Pause)
+            if (AnimationPlaybackViewModel.IsPlaybackActive)
                 return false;
 
             if (Enum.TryParse<FrameNavigation>(parameter.ToString(), out FrameNavigation Parameter) == false)
@@ -306,10 +289,7 @@ namespace AnimationEditor.ViewModels
 
         public bool DeleteCurrentFrame_CanExecute(object parameter)
         {
-            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Play)
-                return false;
-
-            if (AnimationPlaybackViewModel.CurrentState == PlaybackStates.Pause)
+            if (AnimationPlaybackViewModel.IsPlaybackActive)
                 return false;
 
             if (SelectedFrame == null)

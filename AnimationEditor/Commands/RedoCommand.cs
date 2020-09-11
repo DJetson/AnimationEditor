@@ -20,7 +20,10 @@ namespace AnimationEditor.Commands
             if (Parameter?.WorkspaceHistoryViewModel?.RedoStack.Count < 1)
                 return false;
 
-            if (Parameter?.AnimationTimelineViewModel?.AnimationPlaybackViewModel.CurrentState != PlaybackStates.Stop)
+            if (Parameter?.AnimationTimelineViewModel?.AnimationPlaybackViewModel == null)
+                return false;
+
+            if (Parameter.AnimationTimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive)
                 return false;
 
             return true;

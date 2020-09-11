@@ -16,10 +16,7 @@
             <Setter Property="Background" Value="Transparent"/>
         </Style.Setters>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState}" Value="Play">
-                <Setter Property="Visibility" Value="Hidden"/>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentState}" Value="Pause">
+            <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive}" Value="True">
                 <Setter Property="Visibility" Value="Hidden"/>
             </DataTrigger>
         </Style.Triggers>

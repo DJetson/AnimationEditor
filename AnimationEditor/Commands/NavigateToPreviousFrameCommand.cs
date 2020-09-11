@@ -17,6 +17,9 @@ namespace AnimationEditor.Commands
                 return false;
             }
 
+            if (Parameter.AnimationPlaybackViewModel.IsPlaybackActive)
+                return false;
+
             if (Parameter?.Frames == null)
             {
                 return false;

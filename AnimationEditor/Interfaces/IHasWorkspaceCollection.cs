@@ -11,6 +11,7 @@ namespace AnimationEditor.Interfaces
     public interface IHasWorkspaceCollection
     {
         ObservableCollection<WorkspaceViewModel> Workspaces { get; set; }
+        WorkspaceViewModel SelectedWorkspace { get; set; }
         WorkspaceViewModel CreateNewWorkspace();
         void AddWorkspace(WorkspaceViewModel workspace);
         void RemoveWorkspace(WorkspaceViewModel workspace);
