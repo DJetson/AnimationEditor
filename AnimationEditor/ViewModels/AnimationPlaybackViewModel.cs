@@ -20,7 +20,6 @@ namespace AnimationEditor.ViewModels
     //      DelegateCommands defined directly on the ViewModels) and making a version of each, or a single 
     //      common ancestor that acknowledges playback states, and automatically returns a false from 
     //      CanExecute if the playback state is anything but Stop.
-    public enum PlaybackStates { Stop, Play };
 
     public class AnimationPlaybackViewModel : ViewModelBase
     {
