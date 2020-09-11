@@ -1,6 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:AnimationEditor.Resources.Styles">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style x:Key="EditableInkCanvasStyle" TargetType="{x:Type InkCanvas}">
         <Style.Setters>
             <Setter Property="CacheMode">
@@ -8,6 +7,7 @@
                     <BitmapCache RenderAtScale="{Binding ZoomLevel}"/>
                 </Setter.Value>
             </Setter>
+            <Setter Property="Visibility" Value="Visible"/>
             <Setter Property="MaxHeight" Value="{Binding ActualHeight, ElementName=CanvasGrid}"/>
             <Setter Property="MaxWidth" Value="{Binding ActualWidth, ElementName=CanvasGrid}"/>
             <Setter Property="DefaultDrawingAttributes" Value="{Binding EditorTools.DrawingAttributes}"/>
@@ -16,8 +16,9 @@
         </Style.Setters>
         <Style.Triggers>
             <DataTrigger Binding="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive}" Value="True">
-                <Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentFrame.StrokeCollection}"/>
-                <Setter Property="EditingMode" Value="None"/>
+                <Setter Property="Visibility" Value="Hidden"/>
+                <!--<Setter Property="Strokes" Value="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel.CurrentFrame.StrokeCollection}"/>-->
+                <!--<Setter Property="EditingMode" Value="None"/>-->
             </DataTrigger>
         </Style.Triggers>
     </Style>

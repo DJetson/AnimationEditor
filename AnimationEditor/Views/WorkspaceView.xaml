@@ -28,6 +28,7 @@
                         </Border.LayoutTransform>
                         <Grid>
                             <InkCanvas Grid.Row="0" Style="{StaticResource EditableInkCanvasStyle}"/>
+                            <Views:AnimationPlaybackView DataContext="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel}"/>
                             <Grid Grid.Row="0" IsHitTestVisible="False">
                                 <InkCanvas Grid.Row="0" Strokes="{Binding AnimationTimelineViewModel.PreviousFrameStrokes}">
                                     <InkCanvas.Style>
