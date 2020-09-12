@@ -17,8 +17,24 @@ namespace AnimationEditor.ViewModels.StateObjects
             set { _States = value; NotifyPropertyChanged(); }
         }
 
-        public MultiState(IMementoOriginator viewModel, string stateName = "", params UndoStateViewModel [] dependentStates) : base(null, stateName)
+        public MultiState(IMementoOriginator viewModel, string stateName = "", params UndoStateViewModel[] dependentStates) : base(null, stateName)
         {
+            foreach (var state in dependentStates)
+            {
+                States.Add(state);
+            }
+        }
+
+        public MultiState(IMementoOriginator viewModel, string stateName = "", List<UndoStateViewModel> states = null, params UndoStateViewModel[] dependentStates) : base(viewModel, stateName)
+        {
+            if (states != null)
+            {
+                foreach (var state in states)
+                {
+                    States.Add(state);
+                }
+            }
+
             foreach (var state in dependentStates)
             {
                 States.Add(state);
@@ -33,13 +49,27 @@ namespace AnimationEditor.ViewModels.StateObjects
             }
         }
 
+        public UndoStateViewModel GetStateOfType(Type type, ObservableCollection<UndoStateViewModel> states)
+        {
+            foreach (var state in states)
+            {
+                if (state is MultiState multiState)
+                {
+                    return GetStateOfType(type, multiState.States);
+                }
+                else if (state.GetType() == type)
+                    return state;
+            }
+            return null;
+        }
+
         public UndoStateViewModel GetStateOfType(Type type)
         {
-            foreach(var state in States)
+            foreach (var state in States)
             {
-                if (state is MultiState)
+                if (state is MultiState multiState)
                 {
-                    return GetStateOfType(type);
+                    return GetStateOfType(type, multiState.States);
                 }
                 else if (state.GetType() == type)
                     return state;

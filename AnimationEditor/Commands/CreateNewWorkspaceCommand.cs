@@ -17,6 +17,9 @@ namespace AnimationEditor.Commands
             if (!(parameter is IHasWorkspaceCollection Parameter))
                 return false;
 
+            if (Parameter?.SelectedWorkspace == null)
+                return true;
+
             if (Parameter.SelectedWorkspace.AnimationTimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive)
                 return false;
 

@@ -120,12 +120,13 @@ namespace AnimationEditor.ViewModels
         {
             //NOTE: Eventually this will be able to be set to the set of currently selected frames as well
             var playbackFrames = Frames.ToList();
+            playbackFrames.ForEach(e => e.FlattenStrokesForPlayback());
 
             //NOTE: I may have to eventually do some caching up top here. Rasterize all of the InkCanvases in the series
             //      and just flip through those instead of directly showing the InkCanvases. It will depend entirely on
             //      how well it performs in it's initial, most basic form.
 
-            if(!AnimationPlaybackViewModel.IsPlaybackActive)
+            if (!AnimationPlaybackViewModel.IsPlaybackActive)
                 AnimationPlaybackViewModel.StartPlayback(playbackFrames, FramesPerSecond);
         }
 
@@ -136,7 +137,7 @@ namespace AnimationEditor.ViewModels
             //need an active Scale transform going all screwy because the user accidentally hits 
             //the play button before they resolve the resize, causing the playback object to yank 
             //the target frame right out from under them
-            if(AnimationPlaybackViewModel.IsPlaybackActive)
+            if (AnimationPlaybackViewModel.IsPlaybackActive)
             {
                 return false;
             }
@@ -155,7 +156,7 @@ namespace AnimationEditor.ViewModels
 
         public void StopAnimation_Execute(object parameter)
         {
-            if(AnimationPlaybackViewModel.IsPlaybackActive)
+            if (AnimationPlaybackViewModel.IsPlaybackActive)
             {
                 AnimationPlaybackViewModel.StopPlayback();
             }
@@ -216,11 +217,14 @@ namespace AnimationEditor.ViewModels
             }
 
             AddFrameAtIndex(newFrame, insertAtIndex);
+            var firstLayer = new LayerViewModel(newFrame);
+            newFrame.AddLayer(firstLayer, false);
 
+            var layerState = firstLayer.SaveState() as LayerState;
             var frameState = newFrame.SaveState() as FrameState;
             SelectFrameWithoutUndoBuffer(newFrame);
             var timelineState = SaveState() as AnimationTimelineState;
-            var multiState = new MultiState(this, $"Added Frame {Frames.Count}", frameState, timelineState);
+            var multiState = new MultiState(this, $"Added Frame {newFrame.Order}", layerState, frameState, timelineState);
 
             PushUndoRecord(multiState);
         }
@@ -256,7 +260,7 @@ namespace AnimationEditor.ViewModels
             int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
             int DuplicateCurrentFrameToIndex = selectedFrameIndex;
 
-            var newFrame = new FrameViewModel(SelectedFrame.WorkspaceViewModel, SelectedFrame.StrokeCollection);
+            var newFrame = new FrameViewModel(SelectedFrame);
 
             switch (Parameter)
             {
@@ -269,11 +273,14 @@ namespace AnimationEditor.ViewModels
             }
 
             AddFrameAtIndex(newFrame, DuplicateCurrentFrameToIndex);
+            //var firstLayer = new LayerViewModel(newFrame);
+            //newFrame.AddLayer(firstLayer, false);
 
+            var layerState = newFrame.SaveLayerStates();
             var frameState = newFrame.SaveState() as FrameState;
             SelectFrameWithoutUndoBuffer(newFrame);
             var timelineState = SaveState() as AnimationTimelineState;
-            var multiState = new MultiState(this, $"Insert Duplicate {(Parameter == FrameNavigation.Previous ? "Before" : "After")} Frame {selectedFrameIndex}", frameState, timelineState);
+            var multiState = new MultiState(this, $"Insert Duplicate {(Parameter == FrameNavigation.Previous ? "Before" : "After")} Frame {selectedFrameIndex}", layerState, frameState, timelineState);
 
             PushUndoRecord(multiState);
         }
@@ -378,7 +385,7 @@ namespace AnimationEditor.ViewModels
                 var newFrame = new FrameViewModel(item, workspace);
                 newFrame.Order = Frames.Count;
                 Frames.Add(newFrame);
-                
+
             }
 
             SelectFrameWithoutUndoBuffer(Frames.FirstOrDefault());
@@ -398,14 +405,17 @@ namespace AnimationEditor.ViewModels
             InitializeCommands();
 
             Frames = new ObservableCollection<FrameViewModel>();
-            var firstFrame = new FrameViewModel(workspace);
+            var firstFrame = new FrameViewModel(workspace, false);
+            var firstLayer = new LayerViewModel(firstFrame);
+            firstFrame.AddLayer(firstLayer, false);
             Frames.Add(firstFrame);
             SelectFrameWithoutUndoBuffer(Frames.FirstOrDefault());
 
+            var layerState = firstLayer.SaveState() as LayerState;
             var frameState = firstFrame.SaveState() as FrameState;
             var timelineState = SaveState() as AnimationTimelineState;
 
-            var multiState = new MultiState(null, "New Animation", frameState, timelineState);
+            var multiState = new MultiState(null, "New Animation", layerState, frameState, timelineState);
             WorkspaceViewModel.WorkspaceHistoryViewModel.InitialState = multiState;
 
             PushUndoRecord(multiState, false);

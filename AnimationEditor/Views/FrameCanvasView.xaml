@@ -20,13 +20,31 @@
         </Style>
     </UserControl.Style>
     <Grid>
-        <InkCanvas Strokes="{Binding SelectedFrame.StrokeCollection}" 
+        <ItemsControl ItemsSource="{Binding SelectedFrame.Layers}" Background="White">
+            <ItemsControl.Resources>
+                <DataTemplate DataType="{x:Type ViewModels:LayerViewModel}">
+                    <InkCanvas Strokes="{Binding StrokeCollection}" Background="{x:Null}"
+                               DefaultDrawingAttributes="{Binding DrawingAttributes, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}" 
+                               EditingMode="{Binding EditingMode, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}" 
+                               Style="{StaticResource EditableInkCanvasStyle}">
+                        <InkCanvas.CacheMode>
+                            <BitmapCache RenderAtScale="{Binding FrameViewModel.WorkspaceViewModel.ZoomLevel}"/>
+                        </InkCanvas.CacheMode>
+                    </InkCanvas>
+                </DataTemplate>
+            </ItemsControl.Resources>
+            <!--<ItemsPanelTemplate>
+                --><!--<Grid/>--><!--
+                <Canvas />
+            </ItemsPanelTemplate>-->
+        </ItemsControl>
+        <!--<InkCanvas Strokes="{Binding SelectedFrame.StrokeCollection}" 
                    DefaultDrawingAttributes="{Binding DrawingAttributes, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}" 
                    EditingMode="{Binding EditingMode, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}" 
                    Style="{StaticResource EditableInkCanvasStyle}">
             <InkCanvas.CacheMode>
                 <BitmapCache RenderAtScale="{Binding WorkspaceViewModel.ZoomLevel}"/>
             </InkCanvas.CacheMode>
-        </InkCanvas>
+        </InkCanvas>-->
     </Grid>
 </UserControl>

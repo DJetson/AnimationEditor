@@ -107,6 +107,7 @@
     <Compile Include="Models\AnimationPropertiesModel.cs" />
     <Compile Include="Models\CanvasPropertiesModel.cs" />
     <Compile Include="Models\FrameModel.cs" />
+    <Compile Include="Models\LayerModel.cs" />
     <Compile Include="Models\StrokeCollectionConverter.cs" />
     <Compile Include="Models\WorkspaceFileModel.cs" />
     <Compile Include="ViewModels\AnimationPlaybackViewModel.cs" />
@@ -115,10 +116,12 @@
     <Compile Include="ViewModels\EditorToolsViewModel.cs" />
     <Compile Include="ViewModels\EditorTools\BrushTool.cs" />
     <Compile Include="ViewModels\FrameViewModel.cs" />
+    <Compile Include="ViewModels\LayerViewModel.cs" />
     <Compile Include="ViewModels\Settings\OnionSkinSettingsViewModel.cs" />
     <Compile Include="ViewModels\Settings\ViewSettingsViewModel.cs" />
     <Compile Include="ViewModels\StateObjects\AnimationTimelineState.cs" />
     <Compile Include="ViewModels\StateObjects\FrameState.cs" />
+    <Compile Include="ViewModels\StateObjects\LayerState.cs" />
     <Compile Include="ViewModels\StateObjects\MultiState.cs" />
     <Compile Include="ViewModels\StateObjects\StrokeState.cs" />
     <Compile Include="ViewModels\StateObjects\WorkspaceState.cs" />

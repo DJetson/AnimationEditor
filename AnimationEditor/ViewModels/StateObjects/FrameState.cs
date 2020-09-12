@@ -1,6 +1,7 @@
 ﻿using AnimationEditor.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,15 +12,22 @@ namespace AnimationEditor.ViewModels.StateObjects
     public class FrameState : UndoStateViewModel
     {
         public StrokeCollection StrokeCollection;
+        public ObservableCollection<LayerViewModel> Layers;
 
         public FrameState(FrameViewModel frame, string stateName = "") : base(frame, stateName)
         {
-            StrokeCollection = new StrokeCollection(frame.StrokeCollection);
-            StrokeCollection.Clear();
-            foreach(var stroke in frame.StrokeCollection)
+            Layers = new ObservableCollection<LayerViewModel>();
+            foreach(var layer in frame.Layers)
             {
-                StrokeCollection.Add(stroke.Clone());
+                Layers.Add(new LayerViewModel(layer));
             }
+
+            //StrokeCollection = new StrokeCollection(frame.StrokeCollection);
+            //StrokeCollection.Clear();
+            //foreach(var stroke in frame.StrokeCollection)
+            //{
+            //    StrokeCollection.Add(stroke.Clone());
+            //}
         }
 
         public override void LoadState()

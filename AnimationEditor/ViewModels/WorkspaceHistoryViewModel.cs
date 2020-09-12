@@ -219,7 +219,7 @@ namespace AnimationEditor.ViewModels
                 {
                     return item as UndoStateViewModel;
                 }
-                else if (item.GetType() == typeof(MultiState))
+                else if (item is MultiState multiState)
                 {
                     var state = (item as MultiState).GetStateOfType(type);
                     if (state != null)
@@ -238,9 +238,9 @@ namespace AnimationEditor.ViewModels
             RedoStack.Push(currentState);
             CurrentState = UndoStack.Peek() as UndoStateViewModel;
 
-            if (currentState is MultiState)
+            if (currentState is MultiState multiState)
             {
-                foreach (var item in (currentState as MultiState).States)
+                foreach (var item in multiState.States)
                 {
                     GetLastStateChangeForType(item.GetType())?.LoadState();
                 }
