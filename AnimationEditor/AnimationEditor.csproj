@@ -141,6 +141,9 @@
     <Compile Include="Views\EditorToolsView.xaml.cs">
       <DependentUpon>EditorToolsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FrameCanvasView.xaml.cs">
+      <DependentUpon>FrameCanvasView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\OnionSkinSettingsWindow.xaml.cs">
       <DependentUpon>OnionSkinSettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -302,6 +305,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditorToolsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FrameCanvasView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

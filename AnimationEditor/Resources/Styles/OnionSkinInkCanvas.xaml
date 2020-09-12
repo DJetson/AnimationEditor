@@ -4,11 +4,6 @@
                     xmlns:local="clr-namespace:AnimationEditor.Resources.Styles">
     <Style x:Key="OnionSkinInkCanvasStyle" TargetType="{x:Type InkCanvas}">
         <Style.Setters>
-            <Setter Property="CacheMode">
-                <Setter.Value>
-                    <BitmapCache RenderAtScale="{Binding ZoomLevel}"/>
-                </Setter.Value>
-            </Setter>
             <Setter Property="MaxHeight" Value="{Binding ActualHeight, ElementName=CanvasGrid}"/>
             <Setter Property="MaxWidth" Value="{Binding ActualWidth, ElementName=CanvasGrid}"/>
             <Setter Property="Visibility" Value="Visible"/>

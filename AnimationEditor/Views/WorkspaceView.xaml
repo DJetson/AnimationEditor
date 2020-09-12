@@ -27,10 +27,13 @@
                             <ScaleTransform ScaleX="{Binding ZoomLevel}" ScaleY="{Binding ZoomLevel}"/>
                         </Border.LayoutTransform>
                         <Grid>
-                            <InkCanvas Grid.Row="0" Style="{StaticResource EditableInkCanvasStyle}"/>
-                            <Views:AnimationPlaybackView DataContext="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel}"/>
+                            <Views:AnimationPlaybackView MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}" MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" DataContext="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel}"/>
+                            <Views:FrameCanvasView DataContext="{Binding AnimationTimelineViewModel}"/>
                             <Grid Grid.Row="0" IsHitTestVisible="False">
                                 <InkCanvas Grid.Row="0" Strokes="{Binding AnimationTimelineViewModel.PreviousFrameStrokes}">
+                                    <InkCanvas.CacheMode>
+                                        <BitmapCache RenderAtScale="{Binding ZoomLevel}"/>
+                                    </InkCanvas.CacheMode>
                                     <InkCanvas.Style>
                                         <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource OnionSkinInkCanvasStyle}">
                                             <Style.Triggers>
@@ -42,6 +45,9 @@
                                     </InkCanvas.Style>
                                 </InkCanvas>
                                 <InkCanvas Grid.Row="0" Strokes="{Binding AnimationTimelineViewModel.NextFrameStrokes}" >
+                                    <InkCanvas.CacheMode>
+                                        <BitmapCache RenderAtScale="{Binding ZoomLevel}"/>
+                                    </InkCanvas.CacheMode>
                                     <InkCanvas.Style>
                                         <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource OnionSkinInkCanvasStyle}">
                                             <Style.Triggers>
