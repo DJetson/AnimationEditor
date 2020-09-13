@@ -14,6 +14,8 @@ namespace AnimationEditor.ViewModels
 {
     public class LayerViewModel : ViewModelBase, IMementoOriginator
     {
+        public override string DisplayName => $"Layer {LayerId}"; 
+
         private StrokeCollection _StrokeCollection = new StrokeCollection();
         public StrokeCollection StrokeCollection
         {
@@ -25,8 +27,16 @@ namespace AnimationEditor.ViewModels
         public int LayerId
         {
             get => _LayerId;
-            set { Console.WriteLine($"Setting LayerId [Old={_LayerId} New={value}]"); _LayerId = value; NotifyPropertyChanged(); }
+            set { _LayerId = value; NotifyPropertyChanged(); NotifyPropertyChanged(nameof(DisplayName)); }
         }
+
+        private bool _IsActive;
+        public bool IsActive
+        {
+            get { return _IsActive; }
+            set { _IsActive = value; NotifyPropertyChanged(); }
+        }
+
 
         private FrameViewModel _FrameViewModel;
         public FrameViewModel FrameViewModel

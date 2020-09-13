@@ -147,6 +147,9 @@
     <Compile Include="Views\FrameCanvasView.xaml.cs">
       <DependentUpon>FrameCanvasView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LayerNavigationView.xaml.cs">
+      <DependentUpon>LayerNavigationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\OnionSkinSettingsWindow.xaml.cs">
       <DependentUpon>OnionSkinSettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -312,6 +315,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FrameCanvasView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LayerNavigationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

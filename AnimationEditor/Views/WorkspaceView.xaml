@@ -13,7 +13,12 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" BorderBrush="DarkGray" BorderThickness="1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Views:LayerNavigationView DataContext="{Binding AnimationTimelineViewModel.SelectedFrame}"/>
+        <Border Grid.Row="0" Grid.Column="1" BorderBrush="DarkGray" BorderThickness="1">
             <Border.InputBindings>
                 <MouseBinding Command="{Binding ZoomIn}" CommandParameter="{Binding EditorTools.SelectedToolType}" Gesture="{StaticResource MouseLeftClick}" />
                 <MouseBinding Command="{Binding ZoomIn}" CommandParameter="{Binding EditorTools.SelectedToolType}" Gesture="{StaticResource MouseLeftDoubleClick}" />
@@ -64,6 +69,6 @@
                 </Grid>
             </ScrollViewer>
         </Border>
-        <Views:AnimationTimelineView Grid.Row="1" DataContext="{Binding AnimationTimelineViewModel}"/>
+        <Views:AnimationTimelineView Grid.Row="1" Grid.ColumnSpan="2" DataContext="{Binding AnimationTimelineViewModel}"/>
     </Grid>
 </UserControl>

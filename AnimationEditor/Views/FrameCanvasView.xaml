@@ -24,19 +24,34 @@
             <ItemsControl.Resources>
                 <DataTemplate DataType="{x:Type ViewModels:LayerViewModel}">
                     <InkCanvas Strokes="{Binding StrokeCollection}" Background="{x:Null}"
-                               DefaultDrawingAttributes="{Binding DrawingAttributes, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}" 
-                               EditingMode="{Binding EditingMode, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}" 
-                               Style="{StaticResource EditableInkCanvasStyle}">
+                               DefaultDrawingAttributes="{Binding DrawingAttributes, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}">
                         <InkCanvas.CacheMode>
                             <BitmapCache RenderAtScale="{Binding FrameViewModel.WorkspaceViewModel.ZoomLevel}"/>
                         </InkCanvas.CacheMode>
+                        <InkCanvas.Style>
+                            <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource EditableInkCanvasStyle}">
+                                <Style.Setters>
+                                    <Setter Property="EditingMode" Value="{Binding EditingMode, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}"/>
+                                    <Setter Property="IsHitTestVisible" Value="True"/>
+                                    <Setter Property="Panel.ZIndex" Value="-1"/>
+                                </Style.Setters>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsActive}" Value="False">
+                                        <Setter Property="Panel.ZIndex" Value="{Binding LayerId}"/>
+                                        <Setter Property="EditingMode" Value="None"/>
+                                        <Setter Property="IsHitTestVisible" Value="False"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </InkCanvas.Style>
                     </InkCanvas>
                 </DataTemplate>
             </ItemsControl.Resources>
-            <!--<ItemsPanelTemplate>
-                --><!--<Grid/>--><!--
-                <Canvas />
-            </ItemsPanelTemplate>-->
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
         </ItemsControl>
         <!--<InkCanvas Strokes="{Binding SelectedFrame.StrokeCollection}" 
                    DefaultDrawingAttributes="{Binding DrawingAttributes, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}" 
