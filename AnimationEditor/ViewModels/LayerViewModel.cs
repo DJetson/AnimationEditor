@@ -14,8 +14,6 @@ namespace AnimationEditor.ViewModels
 {
     public class LayerViewModel : ViewModelBase, IMementoOriginator
     {
-        public override string DisplayName => $"Layer {LayerId}"; 
-
         private StrokeCollection _StrokeCollection = new StrokeCollection();
         public StrokeCollection StrokeCollection
         {

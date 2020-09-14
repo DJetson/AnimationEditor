@@ -13,22 +13,20 @@ namespace AnimationEditor.ViewModels
 {
     public class FrameViewModel : ViewModelBase, IMementoOriginator
     {
-        //private StrokeCollection _PreviousStrokes = new StrokeCollection();
-        //public StrokeCollection PreviousStrokes => _PreviousStrokes;
-
-        //private LayerViewModel _ActiveLayer;
-        //public LayerViewModel ActiveLayer
-        //{
-        //    get { return _ActiveLayer; }
-        //    set { _ActiveLayer = value; NotifyPropertyChanged(); NotifyPropertyChanged(nameof(ActiveLayerIndex)); }
-        //}
-
-        private DelegateCommand _InsertLayer;
-        public DelegateCommand InsertLayer
+        private DelegateCommand _InsertLayerAbove;
+        public DelegateCommand InsertLayerAbove
         {
-            get { return _InsertLayer; }
-            set { _InsertLayer = value; NotifyPropertyChanged(); }
+            get { return _InsertLayerAbove; }
+            set { _InsertLayerAbove = value; NotifyPropertyChanged(); }
         }
+
+        private DelegateCommand _InsertLayerBelow;
+        public DelegateCommand InsertLayerBelow
+        {
+            get { return _InsertLayerBelow; }
+            set { _InsertLayerBelow = value; NotifyPropertyChanged(); }
+        }
+
 
         private DelegateCommand _RemoveLayer;
         public DelegateCommand RemoveLayer
@@ -56,23 +54,6 @@ namespace AnimationEditor.ViewModels
             }
         }
 
-
-        //public LayerViewModel ActiveLayer
-        //{
-        //    get => Layers[ActiveLayerIndex];
-        //    //set { _ActiveLayerIndex = Layers.IndexOf(ActiveLayer); }
-        //}
-        //public int ActiveLayerIndex => Layers?.IndexOf(ActiveLayer) ?? -1;
-
-
-        //private int _ActiveLayerIndex = 0;
-        //public int ActiveLayerIndex
-        //{
-        //    get { return _ActiveLayerIndex; }
-        //    set { _ActiveLayerIndex = value; NotifyPropertyChanged(); ActiveLayer.IsActive = false; NotifyPropertyChanged(nameof(ActiveLayer)); ActiveLayer.IsActive = true; }
-        //}
-
-
         private ObservableCollection<LayerViewModel> _Layers;
         public ObservableCollection<LayerViewModel> Layers
         {
@@ -86,13 +67,6 @@ namespace AnimationEditor.ViewModels
             get => _StrokeCollection;
             set { _StrokeCollection = value; NotifyPropertyChanged(); }
         }
-
-        //private FrameState _CurrentState;
-        //public IMemento CurrentState
-        //{
-        //    get => _CurrentState;
-        //    set { _CurrentState = value as FrameState; NotifyPropertyChanged(); }
-        //}
 
         private int _Order;
         public int Order
@@ -115,6 +89,8 @@ namespace AnimationEditor.ViewModels
 
             var newLayer = new LayerViewModel(this);
             Layers.Add(newLayer);
+
+            PopulateLayerIds();
             //ActiveLayerIndex = Layers.IndexOf(newLayer);
             ActiveLayer = newLayer;
 
@@ -124,20 +100,64 @@ namespace AnimationEditor.ViewModels
 
         public void InitializeCommands()
         {
-            InsertLayer = new DelegateCommand(InsertLayer_CanExecute, InsertLayer_Execute);
+            InsertLayerAbove = new DelegateCommand(InsertLayerAbove_CanExecute, InsertLayerAbove_Execute);
+            InsertLayerBelow = new DelegateCommand(InsertLayerBelow_CanExecute, InsertLayerBelow_Execute);
             RemoveLayer = new DelegateCommand(RemoveLayer_CanExecute, RemoveLayer_Execute);
         }
 
-        private bool InsertLayer_CanExecute(object parameter)
+        private bool InsertLayerBelow_CanExecute(object parameter)
         {
+            if (!(parameter is LayerViewModel Parameter))
+            {
+                return false;
+            }
+
             return true;
         }
 
-        private void InsertLayer_Execute(object parameter)
+        private void InsertLayerBelow_Execute(object parameter)
         {
+            var Parameter = parameter as LayerViewModel;
+
+            //var newLayer = new LayerViewModel(this);
+            //newLayer.LayerId = Layers.Count;
+            AddNewLayerAtIndex(Layers.IndexOf(Parameter));
+            //Layers.Insert(Layers.IndexOf(Parameter), newLayer);
+
+            //PopulateLayerIds(0);
+
+            //var layerState = newLayer.SaveState() as LayerState;
+            //var frameState = SaveState() as FrameState;
+
+            //var multiState = new MultiState(null, $"Added Layer {newLayer.LayerId} to Frame {Order}", layerState, frameState);
+
+            //PushUndoRecord(multiState);
+        }
+
+        private bool InsertLayerAbove_CanExecute(object parameter)
+        {
+            if (!(parameter is LayerViewModel Parameter))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private void InsertLayerAbove_Execute(object parameter)
+        {
+            var Parameter = parameter as LayerViewModel;
+
             var newLayer = new LayerViewModel(this);
             newLayer.LayerId = Layers.Count;
-            Layers.Insert(/*ActiveLayerIndex*/Layers.IndexOf(ActiveLayer), newLayer);
+
+            if (Layers.IndexOf(Parameter) < Layers.Count - 1)
+                Layers.Insert(Layers.IndexOf(Parameter) + 1, newLayer);
+            else
+                Layers.Add(newLayer);
+
+            PopulateLayerIds();
+
             var layerState = newLayer.SaveState() as LayerState;
             var frameState = SaveState() as FrameState;
 
@@ -148,35 +168,76 @@ namespace AnimationEditor.ViewModels
 
         private bool RemoveLayer_CanExecute(object parameter)
         {
-            //if (ActiveLayerIndex < 0 || ActiveLayerIndex > Layers.Count)
-            if (!Layers.Contains(ActiveLayer))
+            if (!(parameter is LayerViewModel Parameter))
+            {
                 return false;
+            }
 
             return true;
         }
 
-        private void RemoveLayer_Execute(object parameter)
+        public void PopulateLayerIds(int startIndex = 0)
         {
-            var toRemove = ActiveLayer;//Layers[ActiveLayerIndex];
-            var toRemoveIndex = Layers.IndexOf(toRemove);
-            Layers.Remove(toRemove);
-
-            foreach (var layer in Layers.Where(e => e.LayerId > toRemoveIndex))
+            foreach (var layer in Layers.Where(e => e.LayerId >= startIndex))
             {
                 layer.LayerId = Layers.IndexOf(layer);
             }
+        }
+
+        private void RemoveLayer_Execute(object parameter)
+        {
+            var toRemove = parameter as LayerViewModel;
+
+            var toRemoveIndex = Layers.IndexOf(toRemove);
+            Layers.Remove(toRemove);
+
+            LayerState newLayerState = null;
 
             if (Layers.Count == 0)
             {
-                AddLayer(new LayerViewModel(this), false);
+                var newLayer = new LayerViewModel(this);
+                AddNewLayerAtIndex(Layers.Count,$"Layer {Layers.Count}", false);
+                newLayerState = newLayer.SaveState() as LayerState;
             }
 
-            //var layerState = toRemove.SaveState() as LayerState;
+            PopulateLayerIds();
+
             var frameState = SaveState() as FrameState;
 
-            var multiState = new MultiState(null, $"Removed Layer {toRemove.LayerId} from Frame {Order}", frameState);
+            if (newLayerState != null)
+            {
+                var multiState = new MultiState(null, $"Removed Layer {toRemove.LayerId} from Frame {Order}", newLayerState, frameState);
+                PushUndoRecord(multiState);
+            }
+            else
+            {
+                var multiState = new MultiState(null, $"Removed Layer {toRemove.LayerId} from Frame {Order}", frameState);
+                PushUndoRecord(multiState);
+            }
+        }
 
-            PushUndoRecord(multiState);
+        public void AddNewLayerAtIndex(int index, string layerName = "", bool createUndoState = true)
+        {
+            if (Layers == null)
+                Layers = new ObservableCollection<LayerViewModel>();
+
+            if (String.IsNullOrWhiteSpace(layerName))
+            {
+                layerName = $"Layer {Layers.Count}";
+            }
+
+            var newLayer = new LayerViewModel(this) { LayerId = Layers.Count, DisplayName = layerName };
+
+            if (index < Layers.Count)
+                Layers.Insert(index, newLayer);
+            else
+                Layers.Add(newLayer);
+
+            ActiveLayer = newLayer;
+            PopulateLayerIds();
+
+            if (createUndoState)
+                PushUndoRecord(CreateUndoState($"Added New {newLayer.DisplayName} to Frame {Order}"));
         }
 
         public void AddLayer(LayerViewModel layer, bool createUndoState = true)
@@ -184,10 +245,11 @@ namespace AnimationEditor.ViewModels
             if (Layers == null)
                 Layers = new ObservableCollection<LayerViewModel>();
 
-            //var newLayer = new LayerViewModel(this);
             layer.LayerId = Layers.Count;
             Layers.Add(layer);
             ActiveLayer = layer;
+
+            PopulateLayerIds();
 
             if (createUndoState)
                 PushUndoRecord(CreateUndoState($"Added New Layer to Frame {Order}"));
@@ -197,14 +259,14 @@ namespace AnimationEditor.ViewModels
         {
             InitializeCommands();
             WorkspaceViewModel = workspace;
-            //AddLayer();
             Layers = new ObservableCollection<LayerViewModel>();
 
             if (createFirstLayer)
                 Layers.Add(new LayerViewModel(this));
 
+            PopulateLayerIds();
+
             StrokeCollection = new StrokeCollection();
-            //StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
         }
 
         public List<UndoStateViewModel> SaveLayerStates()
@@ -223,19 +285,9 @@ namespace AnimationEditor.ViewModels
         {
             InitializeCommands();
             WorkspaceViewModel = frame.WorkspaceViewModel;
-            //StrokeCollection = frame.StrokeCollection.Clone();
             Layers = new ObservableCollection<LayerViewModel>(frame.Layers.ToList().Select(e => new LayerViewModel(this, e.StrokeCollection)));
-            //Layers.ToList().ForEach(e => e.LayerId = Layers.IndexOf(e));
             ActiveLayer = Layers[frame.Layers.IndexOf(frame.ActiveLayer)];
-            //StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
         }
-
-        //public FrameViewModel(WorkspaceViewModel workspace, StrokeCollection strokeCollection)
-        //{
-        //    WorkspaceViewModel = workspace;
-        //    StrokeCollection = strokeCollection.Clone();
-        //    StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
-        //}
 
         public void FlattenStrokesForPlayback()
         {
@@ -347,12 +399,6 @@ namespace AnimationEditor.ViewModels
             {
                 Layers.Add(new LayerViewModel(layer));
             }
-
-            //StrokeCollection.StrokesChanged -= StrokeCollection_StrokesChanged;
-            //StrokeCollection = new StrokeCollection(Memento.StrokeCollection);
-            //StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
-
-            //CurrentState = Memento;
         }
 
         public FrameViewModel Clone()
@@ -366,9 +412,6 @@ namespace AnimationEditor.ViewModels
                 newLayer.LayerId = newFrame.Layers.Count;
                 newFrame.AddLayer(newLayer, false);
             }
-
-            //if (ActiveLayerIndex >= 0 && ActiveLayerIndex < newFrame.Layers.Count)
-            //newFrame.ActiveLayerIndex = ActiveLayerIndex;
 
             newFrame.ActiveLayer = newFrame.Layers[Layers.IndexOf(ActiveLayer)];
 

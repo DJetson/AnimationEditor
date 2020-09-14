@@ -11,10 +11,10 @@
             <RowDefinition Height="30" />
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
+        <!--<StackPanel Orientation="Horizontal">
             <Button Content="+" Command="{Binding InsertLayer}"/>
             <Button Content="-" Command="{Binding RemoveLayer}"/>
-        </StackPanel>
+        </StackPanel>-->
         <ListBox Grid.Row="1" ItemsSource="{Binding Layers}" SelectedItem="{Binding ActiveLayer, Mode=TwoWay}">
             <ListBox.ItemTemplate>
                 <ItemContainerTemplate>
@@ -26,8 +26,16 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding DisplayName}" />
+                        <TextBlock Grid.Column="0" Text="{Binding DisplayName}" VerticalAlignment="Center" />
+                        <Button Width="35" Height="35" Padding="2,5,2,0" Grid.Column="1" Style="{StaticResource ImageButtonStyle}" Content="{StaticResource InsertLayerBelow}" Command="{Binding FrameViewModel.InsertLayerBelow}" CommandParameter="{Binding }"/>
+                        <Button Width="35" Height="35" Padding="2,5,2,0" Grid.Column="2" Style="{StaticResource ImageButtonStyle}" Content="{StaticResource DuplicateLayerBelow}" Command="{Binding FrameViewModel.DuplicateLayerBelow}" CommandParameter="{Binding }"/>
+                        <Button Width="35" Height="35" Padding="2,0,2,5" Grid.Column="3" Style="{StaticResource ImageButtonStyle}" Content="{StaticResource DuplicateLayerAbove}" Command="{Binding FrameViewModel.DuplicateLayerAbove}" CommandParameter="{Binding }"/>
+                        <Button Width="35" Height="35" Padding="2,0,2,5" Grid.Column="4" Style="{StaticResource ImageButtonStyle}" Content="{StaticResource InsertLayerAbove}" Command="{Binding FrameViewModel.InsertLayerAbove}" CommandParameter="{Binding }"/>
+                        <Button Width="35" Height="35" Padding="2" Grid.Column="5" Style="{StaticResource ImageButtonStyle}" Content="{StaticResource DeleteIcon}" Command="{Binding FrameViewModel.RemoveLayer}" CommandParameter="{Binding }"/>
                     </Grid>
                 </ItemContainerTemplate>
             </ListBox.ItemTemplate>

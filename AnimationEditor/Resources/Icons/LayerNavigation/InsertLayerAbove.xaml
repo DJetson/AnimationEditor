@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<DrawingBrush x:Key="InsertLayerAbove" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 208,248L 208,216L -5.72205e-006,216L -5.72205e-006,248L 208,248 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 56,136L 88,136L 88,104L 120,104L 120,136L 152,136L 152,168L 120,168L 120,200L 88,200L 88,168L 56,168L 56,136 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 136,104L 208,104L 208,144L 168,144L 168,120L 136,120L 136,104 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 1.33514e-005,104L 72,104L 72,120L 40,120L 40,144L 0,144L 1.33514e-005,104 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 40,184L 72,184L 72,200L 0,200L 0,160L 40,160L 40,184 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 208,200L 136,200L 136,184L 168,184L 168,160L 208,160L 208,200 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 104,0L 160,56L 208,56L 208,88L 0,88L 7.82013e-005,56L 48,56L 104,0 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+</ResourceDictionary>

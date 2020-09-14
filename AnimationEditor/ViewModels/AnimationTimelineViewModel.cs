@@ -218,7 +218,7 @@ namespace AnimationEditor.ViewModels
 
             AddFrameAtIndex(newFrame, insertAtIndex);
             var firstLayer = new LayerViewModel(newFrame);
-            newFrame.AddLayer(firstLayer, false);
+            newFrame.AddNewLayerAtIndex(0, "Layer 0", false);
 
             var layerState = firstLayer.SaveState() as LayerState;
             var frameState = newFrame.SaveState() as FrameState;
@@ -407,7 +407,7 @@ namespace AnimationEditor.ViewModels
             Frames = new ObservableCollection<FrameViewModel>();
             var firstFrame = new FrameViewModel(workspace, false);
             var firstLayer = new LayerViewModel(firstFrame);
-            firstFrame.AddLayer(firstLayer, false);
+            firstFrame.AddNewLayerAtIndex(0, "Layer 0", false);
             Frames.Add(firstFrame);
             SelectFrameWithoutUndoBuffer(Frames.FirstOrDefault());
 

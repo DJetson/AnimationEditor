@@ -11,6 +11,8 @@
         <ResourceDictionary Source="./Icons/RedoIcon.xaml"/>
         <ResourceDictionary Source="./Icons/SaveFile.xaml"/>
         <ResourceDictionary Source="./Icons/UndoIcon.xaml"/>
+        <!--General Icons-->
+        <ResourceDictionary Source="./Icons/General/DeleteIcon.xaml"/>
         <!--Editor Tools Panel Icons-->
         <ResourceDictionary Source="./Icons/EditorTools/DrawIconLight.xaml"/>
         <ResourceDictionary Source="./Icons/EditorTools/EraseIconLight.xaml"/>
@@ -19,7 +21,6 @@
         <!--Animation Timeline ToolBar Icons-->
             <!--Animation Content ToolBar Icons-->
             <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AppendAfterLastFrame.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/DeleteIcon.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/DuplicateToNext.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/DuplicateToPrevious.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/InsertBeforeFirstFrame.xaml"/>
@@ -33,5 +34,10 @@
             <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PreviousFrame.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/StopIcon.xaml"/>
         <!--End of Animation Timeline ToolBar Icons-->
+        <!--Layer Navigation Icons-->
+        <ResourceDictionary Source="./Icons/LayerNavigation/DuplicateLayerAbove.xaml"/>
+        <ResourceDictionary Source="./Icons/LayerNavigation/DuplicateLayerBelow.xaml"/>
+        <ResourceDictionary Source="./Icons/LayerNavigation/InsertLayerAbove.xaml"/>
+        <ResourceDictionary Source="./Icons/LayerNavigation/InsertLayerBelow.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
