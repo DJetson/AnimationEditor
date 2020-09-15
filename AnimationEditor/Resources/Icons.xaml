@@ -39,5 +39,8 @@
         <ResourceDictionary Source="./Icons/LayerNavigation/DuplicateLayerBelow.xaml"/>
         <ResourceDictionary Source="./Icons/LayerNavigation/InsertLayerAbove.xaml"/>
         <ResourceDictionary Source="./Icons/LayerNavigation/InsertLayerBelow.xaml"/>
+        <ResourceDictionary Source="./Icons/LayerNavigation/IsActiveIcon.xaml"/>
+        <ResourceDictionary Source="./Icons/LayerNavigation/IsVisibleIcon.xaml"/>
+        <ResourceDictionary Source="./Icons/LayerNavigation/IsNotVisibleIcon.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

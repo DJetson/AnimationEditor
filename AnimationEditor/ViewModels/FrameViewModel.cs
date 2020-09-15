@@ -148,22 +148,24 @@ namespace AnimationEditor.ViewModels
         {
             var Parameter = parameter as LayerViewModel;
 
-            var newLayer = new LayerViewModel(this);
-            newLayer.LayerId = Layers.Count;
+            AddNewLayerAtIndex(Layers.IndexOf(Parameter) + 1);
 
-            if (Layers.IndexOf(Parameter) < Layers.Count - 1)
-                Layers.Insert(Layers.IndexOf(Parameter) + 1, newLayer);
-            else
-                Layers.Add(newLayer);
+            //var newLayer = new LayerViewModel(this);
+            //newLayer.LayerId = Layers.Count;
 
-            PopulateLayerIds();
+            //if (Layers.IndexOf(Parameter) < Layers.Count - 1)
+            //    Layers.Insert(Layers.IndexOf(Parameter) + 1, newLayer);
+            //else
+            //    Layers.Add(newLayer);
 
-            var layerState = newLayer.SaveState() as LayerState;
-            var frameState = SaveState() as FrameState;
+            //PopulateLayerIds();
 
-            var multiState = new MultiState(null, $"Added Layer {newLayer.LayerId} to Frame {Order}", layerState, frameState);
+            //var layerState = newLayer.SaveState() as LayerState;
+            //var frameState = SaveState() as FrameState;
 
-            PushUndoRecord(multiState);
+            //var multiState = new MultiState(null, $"Added Layer {newLayer.LayerId} to Frame {Order}", layerState, frameState);
+
+            //PushUndoRecord(multiState);
         }
 
         private bool RemoveLayer_CanExecute(object parameter)
