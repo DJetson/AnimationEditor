@@ -276,6 +276,7 @@ namespace AnimationEditor.ViewModels
             PopulateLayerIds();
 
             StrokeCollection = new StrokeCollection();
+            FlattenStrokesForPlayback();
         }
 
         public List<UndoStateViewModel> SaveLayerStates()
@@ -296,6 +297,7 @@ namespace AnimationEditor.ViewModels
             WorkspaceViewModel = frame.WorkspaceViewModel;
             Layers = new ObservableCollection<LayerViewModel>(frame.Layers.ToList().Select(e => new LayerViewModel(this, e.StrokeCollection)));
             ActiveLayer = Layers[frame.Layers.IndexOf(frame.ActiveLayer)];
+            FlattenStrokesForPlayback();
         }
 
         public void FlattenStrokesForPlayback()
@@ -414,6 +416,7 @@ namespace AnimationEditor.ViewModels
                 clonedLayer.FrameViewModel = this;
                 Layers.Add(clonedLayer);
             }
+            FlattenStrokesForPlayback();
         }
 
         public FrameViewModel Clone()
@@ -429,10 +432,16 @@ namespace AnimationEditor.ViewModels
                 newFrame.AddLayer(newLayer, false);
             }
 
-            newFrame.ActiveLayer = newFrame.Layers[Layers.IndexOf(ActiveLayer)];
-
+            if (ActiveLayer == null)
+            {
+                newFrame.ActiveLayer = newFrame.Layers[0];
+            }
+            else
+            {
+                newFrame.ActiveLayer = newFrame.Layers[Layers.IndexOf(ActiveLayer)];
+            }
             newFrame.Order = Order;
-
+            newFrame.FlattenStrokesForPlayback();
             return newFrame;
         }
     }

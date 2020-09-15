@@ -53,7 +53,9 @@ namespace AnimationEditor.ViewModels
         public LayerViewModel(LayerViewModel layer)
         {
             FrameViewModel = layer.FrameViewModel;
-
+            LayerId = layer.LayerId;
+            DisplayName = layer.DisplayName;
+            IsVisible = layer.IsVisible;
             StrokeCollection = new StrokeCollection();
             //StrokeCollection = layer.StrokeCollection.Clone();
 
@@ -140,6 +142,7 @@ namespace AnimationEditor.ViewModels
             {
                 stroke.StylusPointsChanged -= Stroke_StylusPointsChanged;
             }
+            FrameViewModel.FlattenStrokesForPlayback();
         }
 
         private void Stroke_StylusPointsChanged(object sender, EventArgs e)
