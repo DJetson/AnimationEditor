@@ -313,8 +313,10 @@ namespace AnimationEditor.ViewModels
         {
             InitializeCommands();
             WorkspaceViewModel = workspace;
-            StrokeCollection = model.StrokeCollection;
-            StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
+            //StrokeCollection = model.StrokeCollection;
+            //StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
+            Layers = new ObservableCollection<LayerViewModel>(model.Layers.Select(e => new LayerViewModel(e, this)));
+            Order = model.Order;
         }
 
         public MultiState CreateUndoState(string title)

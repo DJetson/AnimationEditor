@@ -1,28 +1,31 @@
 ﻿using AnimationEditor.Interfaces;
+using AnimationEditor.ViewModels;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Ink;
 
 namespace AnimationEditor.Models
 {
     public class FrameModel
     {
-        public StrokeCollection StrokeCollection { get; set; }
-
-        //private int _Order;
-        //public int Order => _Order;
+        public List<LayerModel> Layers { get; set; }
+        public int Order { get; set; }
 
         public FrameModel()
         {
         }
 
-        public FrameModel(StrokeCollection strokeCollection)
+        public FrameModel(FrameViewModel frame)
         {
-            StrokeCollection = strokeCollection;
+            Order = frame.Order;
+            Layers = new List<LayerModel>(frame.Layers.Select(e => new LayerModel(e)));
         }
 
-        public FrameModel(Stream stream)
+        public FrameModel(Stream stream, int order, List<LayerViewModel> layers)
         {
-            StrokeCollection = new StrokeCollection(stream);
+            Order = order;
+            Layers = new List<LayerModel>(layers.Select(e => new LayerModel(stream, e.LayerId, e.IsVisible)));
         }
     }
 }

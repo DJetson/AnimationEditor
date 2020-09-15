@@ -41,7 +41,7 @@ namespace AnimationEditor.Models
             //Frames = new ObservableCollection<FrameViewModel>();
             foreach (var item in workspaceViewModel.AnimationTimelineViewModel.Frames)
             {
-                Frames.Add(new FrameModel(item.StrokeCollection));
+                Frames.Add(new FrameModel(item));
             }
 
             //TODO: These should eventually be coming from the workspace VM

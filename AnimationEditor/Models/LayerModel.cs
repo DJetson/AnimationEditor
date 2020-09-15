@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnimationEditor.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,18 +12,26 @@ namespace AnimationEditor.Models
     public class LayerModel
     {
         public StrokeCollection StrokeCollection { get; set; }
+        public bool IsVisible { get; set; }
+        public int LayerId { get; set; }
+        public string DisplayName { get; set; }
 
         public LayerModel()
         {
         }
 
-        public LayerModel(StrokeCollection strokeCollection)
+        public LayerModel(LayerViewModel layer)
         {
-            StrokeCollection = strokeCollection;
+            DisplayName = layer.DisplayName;
+            IsVisible = layer.IsVisible;
+            LayerId = layer.LayerId;
+            StrokeCollection = new StrokeCollection(layer.StrokeCollection);
         }
 
-        public LayerModel(Stream stream)
+        public LayerModel(Stream stream, int layerId, bool isVisible)
         {
+            LayerId = layerId;
+            IsVisible = isVisible;
             StrokeCollection = new StrokeCollection(stream);
         }
     }

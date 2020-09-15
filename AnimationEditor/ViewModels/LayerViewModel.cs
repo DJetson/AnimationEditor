@@ -89,6 +89,9 @@ namespace AnimationEditor.ViewModels
         public LayerViewModel(Models.LayerModel model, FrameViewModel frame)
         {
             FrameViewModel = frame;
+            DisplayName = model.DisplayName;
+            IsVisible = model.IsVisible;
+            LayerId = model.LayerId;
             StrokeCollection = model.StrokeCollection;
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
         }
