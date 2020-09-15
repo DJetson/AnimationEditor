@@ -260,7 +260,7 @@ namespace AnimationEditor.ViewModels
             int selectedFrameIndex = Frames.IndexOf(SelectedFrame);
             int DuplicateCurrentFrameToIndex = selectedFrameIndex;
 
-            var newFrame = new FrameViewModel(SelectedFrame);
+            var newFrame = SelectedFrame.Clone();
 
             switch (Parameter)
             {
@@ -406,8 +406,9 @@ namespace AnimationEditor.ViewModels
 
             Frames = new ObservableCollection<FrameViewModel>();
             var firstFrame = new FrameViewModel(workspace, false);
-            var firstLayer = new LayerViewModel(firstFrame);
+            //var firstLayer = new LayerViewModel(firstFrame);
             firstFrame.AddNewLayerAtIndex(0, "Layer 0", false);
+            var firstLayer = firstFrame.Layers.FirstOrDefault();
             Frames.Add(firstFrame);
             SelectFrameWithoutUndoBuffer(Frames.FirstOrDefault());
 

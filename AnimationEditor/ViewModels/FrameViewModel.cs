@@ -27,7 +27,6 @@ namespace AnimationEditor.ViewModels
             set { _InsertLayerBelow = value; NotifyPropertyChanged(); }
         }
 
-
         private DelegateCommand _RemoveLayer;
         public DelegateCommand RemoveLayer
         {
@@ -198,7 +197,7 @@ namespace AnimationEditor.ViewModels
             if (Layers.Count == 0)
             {
                 var newLayer = new LayerViewModel(this);
-                AddNewLayerAtIndex(Layers.Count,$"Layer {Layers.Count}", false);
+                AddNewLayerAtIndex(Layers.Count, $"Layer {Layers.Count}", false);
                 newLayerState = newLayer.SaveState() as LayerState;
             }
 
@@ -228,12 +227,20 @@ namespace AnimationEditor.ViewModels
                 layerName = $"Layer {Layers.Count}";
             }
 
-            var newLayer = new LayerViewModel(this) { LayerId = Layers.Count, DisplayName = layerName };
+            var newLayer = new LayerViewModel(this) { LayerId = Layers.Count, DisplayName = layerName, IsVisible = true };
 
-            if (index < Layers.Count)
+            if (index < 0)
+            {
+                Layers.Insert(0, newLayer);
+            }
+            else if (index < Layers.Count)
+            {
                 Layers.Insert(index, newLayer);
+            }
             else
+            {
                 Layers.Add(newLayer);
+            }
 
             ActiveLayer = newLayer;
             PopulateLayerIds();
@@ -297,7 +304,8 @@ namespace AnimationEditor.ViewModels
 
             foreach (var layer in Layers)
             {
-                StrokeCollection.Add(layer.StrokeCollection);
+                if (layer.IsVisible)
+                    StrokeCollection.Add(layer.StrokeCollection);
             }
         }
 
@@ -399,7 +407,9 @@ namespace AnimationEditor.ViewModels
 
             foreach (var layer in Memento.Layers)
             {
-                Layers.Add(new LayerViewModel(layer));
+                var clonedLayer = layer.Clone();
+                clonedLayer.FrameViewModel = this;
+                Layers.Add(clonedLayer);
             }
         }
 
@@ -411,7 +421,8 @@ namespace AnimationEditor.ViewModels
             foreach (var layer in Layers)
             {
                 var newLayer = layer.Clone();
-                newLayer.LayerId = newFrame.Layers.Count;
+                newLayer.FrameViewModel = newFrame;
+                //newLayer.LayerId = newFrame.Layers.Count;
                 newFrame.AddLayer(newLayer, false);
             }
 

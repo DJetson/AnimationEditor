@@ -10,9 +10,14 @@ namespace AnimationEditor.ViewModels.StateObjects
     public class LayerState : UndoStateViewModel
     {
         public StrokeCollection StrokeCollection;
+        public int LayerId;
+        public bool IsVisible;
 
         public LayerState(LayerViewModel layer, string stateName = "") : base(layer, stateName)
         {
+            DisplayName = layer.DisplayName;
+            LayerId = layer.LayerId;
+            IsVisible = layer.IsVisible;
             StrokeCollection = new StrokeCollection(layer.StrokeCollection);
             StrokeCollection.Clear();
             foreach (var stroke in layer.StrokeCollection)

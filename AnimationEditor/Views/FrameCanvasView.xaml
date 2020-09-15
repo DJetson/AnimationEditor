@@ -31,6 +31,7 @@
                         <InkCanvas.Style>
                             <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource EditableInkCanvasStyle}">
                                 <Style.Setters>
+                                    <Setter Property="Visibility" Value="Visible"/>
                                     <Setter Property="EditingMode" Value="{Binding EditingMode, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}"/>
                                     <Setter Property="IsHitTestVisible" Value="True"/>
                                     <Setter Property="Panel.ZIndex" Value="-1"/>
@@ -38,6 +39,11 @@
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding IsActive}" Value="False">
                                         <Setter Property="Panel.ZIndex" Value="{Binding LayerId}"/>
+                                        <Setter Property="EditingMode" Value="None"/>
+                                        <Setter Property="IsHitTestVisible" Value="False"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                        <Setter Property="Visibility" Value="Hidden"/>
                                         <Setter Property="EditingMode" Value="None"/>
                                         <Setter Property="IsHitTestVisible" Value="False"/>
                                     </DataTrigger>

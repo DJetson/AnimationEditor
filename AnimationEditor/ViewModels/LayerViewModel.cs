@@ -21,6 +21,13 @@ namespace AnimationEditor.ViewModels
             set { Console.WriteLine($"Setting StrokeCollection [OldCount={_StrokeCollection.Count} New={value.Count}]"); _StrokeCollection = value; NotifyPropertyChanged(); }
         }
 
+        private bool _IsVisible;
+        public bool IsVisible
+        {
+            get { return _IsVisible; }
+            set { _IsVisible = value; NotifyPropertyChanged(); }
+        }
+
         private int _LayerId;
         public int LayerId
         {
@@ -168,6 +175,10 @@ namespace AnimationEditor.ViewModels
         {
             var Memento = (memento as LayerState);
 
+            LayerId = Memento.LayerId;
+            DisplayName = Memento.DisplayName;
+            IsVisible = Memento.IsVisible;
+
             StrokeCollection.StrokesChanged -= StrokeCollection_StrokesChanged;
             StrokeCollection = new StrokeCollection(Memento.StrokeCollection);
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
@@ -177,6 +188,8 @@ namespace AnimationEditor.ViewModels
         {
             var newLayer = new LayerViewModel(FrameViewModel, StrokeCollection);
             newLayer.LayerId = LayerId;
+            newLayer.DisplayName = DisplayName;
+            newLayer.IsVisible = IsVisible;
 
             return newLayer;
         }
