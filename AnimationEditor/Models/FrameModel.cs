@@ -11,6 +11,7 @@ namespace AnimationEditor.Models
     {
         public List<LayerModel> Layers { get; set; }
         public int Order { get; set; }
+        public int ActiveLayerIndex { get; set; }
 
         public FrameModel()
         {
@@ -20,12 +21,14 @@ namespace AnimationEditor.Models
         {
             Order = frame.Order;
             Layers = new List<LayerModel>(frame.Layers.Select(e => new LayerModel(e)));
+            ActiveLayerIndex = frame.Layers.IndexOf(frame.ActiveLayer);
         }
 
-        public FrameModel(Stream stream, int order, List<LayerViewModel> layers)
+        public FrameModel(Stream stream, int order, List<LayerViewModel> layers, int activeLayerIndex)
         {
             Order = order;
             Layers = new List<LayerModel>(layers.Select(e => new LayerModel(stream, e.LayerId, e.IsVisible)));
+            ActiveLayerIndex = activeLayerIndex;
         }
     }
 }

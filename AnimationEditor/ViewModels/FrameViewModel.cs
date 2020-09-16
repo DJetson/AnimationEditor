@@ -273,6 +273,8 @@ namespace AnimationEditor.ViewModels
             if (createFirstLayer)
                 Layers.Add(new LayerViewModel(this));
 
+            ActiveLayer = Layers.FirstOrDefault();
+
             PopulateLayerIds();
 
             StrokeCollection = new StrokeCollection();
@@ -319,6 +321,7 @@ namespace AnimationEditor.ViewModels
             //StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
             Layers = new ObservableCollection<LayerViewModel>(model.Layers.Select(e => new LayerViewModel(e, this)));
             Order = model.Order;
+            ActiveLayer = Layers[model.ActiveLayerIndex];
             FlattenStrokesForPlayback();
         }
 

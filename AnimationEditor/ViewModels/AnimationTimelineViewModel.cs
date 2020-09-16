@@ -223,10 +223,9 @@ namespace AnimationEditor.ViewModels
             }
 
             AddFrameAtIndex(newFrame, insertAtIndex);
-            var firstLayer = new LayerViewModel(newFrame);
-            newFrame.AddNewLayerAtIndex(0, "Layer 0", false);
-
-            var layerState = firstLayer.SaveState() as LayerState;
+            //var firstLayer = new LayerViewModel(newFrame);
+            //newFrame.AddNewLayerAtIndex(0, "Layer 0", false);
+            var layerState = newFrame.SaveLayerStates();
             var frameState = newFrame.SaveState() as FrameState;
             SelectFrameWithoutUndoBuffer(newFrame);
             var timelineState = SaveState() as AnimationTimelineState;
@@ -347,6 +346,8 @@ namespace AnimationEditor.ViewModels
             }
 
             Frames.Remove(frame);
+
+            UpdateFrameOrderIds();
         }
 
         public void DeleteCurrentFrame_Execute(object parameter)
@@ -479,6 +480,14 @@ namespace AnimationEditor.ViewModels
             SelectFrameWithoutUndoBuffer(Frames[navigateToFrameIndex]);
         }
 
+        public void UpdateFrameOrderIds()
+        {
+            foreach(var frame in Frames)
+            {
+                frame.Order = Frames.IndexOf(frame);
+            }
+        }
+
         public void AddFrameAtIndex(FrameViewModel frame, int index)
         {
             frame.Order = index;
@@ -494,6 +503,8 @@ namespace AnimationEditor.ViewModels
             {
                 Console.WriteLine($"WorkspaceViewModel.InsertFrame ERROR: Attempted to insert a frame at an invalid index = {index}");
             }
+
+            UpdateFrameOrderIds();
         }
 
         public IMemento SaveState()
