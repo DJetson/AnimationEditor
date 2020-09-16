@@ -34,11 +34,13 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
+        <InkCanvas x:Name="renderCanvas" Grid.ColumnSpan="3" Grid.RowSpan="4" Grid.Column="0" Grid.Row="0"/>
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
             <MenuItem Header="File">
                 <MenuItem Header="New" Command="{StaticResource CreateNewWorkspace}" CommandParameter="{Binding WorkspaceManager}"/>
                 <MenuItem Header="Open" Command="{StaticResource OpenWorkspace}" CommandParameter="{Binding WorkspaceManager}"/>
                 <MenuItem Header="Save" Command="{StaticResource SaveWorkspace}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
+                <MenuItem Header="Export Animation..." Command="{Binding WorkspaceManager.SelectedWorkspace.ExportToGif}" CommandParameter="{Binding ElementName=renderCanvas}"/>
             </MenuItem>
             <MenuItem Header="Edit">
                 <MenuItem Header="Cut"/>
@@ -79,6 +81,7 @@
         <Views:EditorToolSettings Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" DataContext="{Binding EditorToolsManager}"/>
 
         <Views:EditorToolsView Grid.Column="0" Grid.Row="3" DataContext="{Binding EditorToolsManager}"/>
+
 
         <Views:WorkspaceManagerView Grid.Column="1" Grid.Row="3" DataContext="{Binding WorkspaceManager}"/>
 

@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BumpKit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bumpkit.1.0.2\lib\BumpKit.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -43,6 +46,7 @@
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -88,6 +92,7 @@
     <Compile Include="BaseClasses\RequeryBase.cs" />
     <Compile Include="Commands\CloseWorkspaceCommand.cs" />
     <Compile Include="Commands\CreateNewWorkspaceCommand.cs" />
+    <Compile Include="Commands\ExportToGifCommand.cs" />
     <Compile Include="Commands\NavigateToFirstFrameCommand.cs" />
     <Compile Include="Commands\NavigateToLastFrameCommand.cs" />
     <Compile Include="Commands\NavigateToNextFrameCommand.cs" />
@@ -110,6 +115,7 @@
     <Compile Include="Models\LayerModel.cs" />
     <Compile Include="Models\StrokeCollectionConverter.cs" />
     <Compile Include="Models\WorkspaceFileModel.cs" />
+    <Compile Include="Utilities\ImageUtilities.cs" />
     <Compile Include="ViewModels\AnimationPlaybackViewModel.cs" />
     <Compile Include="Utilities\FileUtilities.cs" />
     <Compile Include="ViewModels\AnimationTimelineViewModel.cs" />

@@ -1,7 +1,9 @@
 ﻿using AnimationEditor.BaseClasses;
 using AnimationEditor.Interfaces;
 using AnimationEditor.Models;
+using AnimationEditor.Utilities;
 using AnimationEditor.ViewModels.StateObjects;
+using BumpKit;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -11,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Ink;
 
 namespace AnimationEditor.ViewModels
@@ -102,6 +105,14 @@ namespace AnimationEditor.ViewModels
             set { _DisplayName = value.TrimEnd('*'); NotifyPropertyChanged(); }
         }
 
+        private DelegateCommand _ExportToGif;
+        public DelegateCommand ExportToGif
+        {
+            get { return _ExportToGif; }
+            set { _ExportToGif = value; NotifyPropertyChanged(); }
+        }
+
+
         #region ZoomIn Command
 
         private DelegateCommand _ZoomIn;
@@ -161,12 +172,29 @@ namespace AnimationEditor.ViewModels
         }
         #endregion ZoomOut Command
 
+        public bool ExportToGif_CanExecute(object parameter)
+        {
+            if (!(parameter is InkCanvas))
+                return false;
+
+            return true;
+        }
+
+        public void ExportToGif_Execute(object parameter)
+        {
+            var canvas = parameter as InkCanvas;
+
+            ExportAnimation(canvas);
+        }
+
+
         //private System.Text.Json.JsonSerializerOptions JsonSerializerOptions { get; }
 
         public void InitializeCommands()
         {
             ZoomIn = new DelegateCommand("Zoom In", ZoomIn_CanExecute, ZoomIn_Execute);
             ZoomOut = new DelegateCommand("Zoom Out", ZoomOut_CanExecute, ZoomOut_Execute);
+            ExportToGif = new DelegateCommand(ExportToGif_CanExecute, ExportToGif_Execute);
         }
 
         public void InitializeDependentViewModels()
@@ -225,6 +253,13 @@ namespace AnimationEditor.ViewModels
             }
             Host.RemoveWorkspace(this);
         }
+
+        public void ExportAnimation(InkCanvas canvas)
+        {
+            Filepath = SelectExportFilepath();
+            SaveAsGif(Filepath, canvas);
+        }
+
         public void UpdateModelAndSaveWorkspace()
         {
             //Prompt for a save location if needed
@@ -253,6 +288,44 @@ namespace AnimationEditor.ViewModels
             WorkspaceHistoryViewModel.InitialState = WorkspaceHistoryViewModel.CurrentState;
         }
 
+        public void SaveAsGif(string filepath, InkCanvas canvas)
+        {
+
+            try
+            {
+                using (FileStream fs = new FileStream(filepath, FileMode.Create))
+                {
+                    GifEncoder gEnc = new GifEncoder(fs);
+
+                    //var bmpFrames = GetBmpFrames();
+                    //foreach (var frame in bmpFrames.Frames)
+                    //{
+                    var frameBitmaps = this.AnimationTimelineViewModel.RenderFrameBitmaps(canvas);
+
+                    foreach (var frame in frameBitmaps)
+                    {
+                        //StrokeCollection strokes = new StrokeCollection();
+                        //foreach (var layer in frame.Layers)
+                        //{
+                        //    strokes.Add(layer.StrokeCollection);
+                        //}
+                        //fs.Write(ImageUtilities.ImageToByteArray(frame), 0, 0);
+                        //using (MemoryStream m = new MemoryStream())
+                        //{
+                        //    strokes.Save(m);
+
+                        //    byte[] imageBytes = m.ToArray();
+
+                        gEnc.AddFrame(frame, 0, 0, new TimeSpan(100));
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK);
+            }
+        }
+
         /// <summary>
         /// Prompt the user to select a filepath for the Animation project workspace file. NOTE: This doesn't actually
         /// write anything to the disk. This method merely covers the portion of the Save As... workflow that is not
@@ -269,6 +342,30 @@ namespace AnimationEditor.ViewModels
                 AddExtension = true,
                 Filter = "Animation Workspace | *.anws",
                 DefaultExt = "anws",
+                FileName = Filename,
+                OverwritePrompt = true,
+                ValidateNames = true
+            };
+
+            saveFileDialog.FileOk += (sender, e) =>
+            {
+                filepath = (sender as SaveFileDialog).FileName;
+            };
+
+            var res = saveFileDialog.ShowDialog(App.Current.MainWindow);
+
+            return filepath;
+        }
+
+        public string SelectExportFilepath()
+        {
+            string filepath = String.Empty;
+
+            var saveFileDialog = new SaveFileDialog()
+            {
+                AddExtension = true,
+                Filter = "GIF with embedded ISF Metadata | *.gif",
+                DefaultExt = "gif",
                 FileName = Filename,
                 OverwritePrompt = true,
                 ValidateNames = true

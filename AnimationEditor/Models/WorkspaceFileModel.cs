@@ -1,6 +1,15 @@
-﻿using AnimationEditor.ViewModels;
+﻿using AnimationEditor.Utilities;
+using AnimationEditor.ViewModels;
+using BumpKit;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Text;
+using System.Windows;
+using System.Windows.Ink;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace AnimationEditor.Models
 {
@@ -21,7 +30,6 @@ namespace AnimationEditor.Models
             return System.Text.Json.JsonSerializer.Deserialize<WorkspaceFileModel>(File.ReadAllText(filepath), options);
         }
 
-        //public void SaveWorkspaceFile(string filepath, System.Text.Json.JsonSerializerOptions options)
         public void SaveWorkspaceFile(string filepath)
         {
             JsonSerializerOptions = new System.Text.Json.JsonSerializerOptions();

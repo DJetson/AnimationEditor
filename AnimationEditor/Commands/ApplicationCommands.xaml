@@ -4,6 +4,7 @@
     <Commands:CreateNewWorkspaceCommand x:Key="CreateNewWorkspace" />
     <Commands:CloseWorkspaceCommand x:Key="CloseWorkspace" />
     <Commands:SaveWorkspaceCommand x:Key="SaveWorkspace" />
+    <Commands:ExportToGifCommand x:Key="ExportToGif" />
     <Commands:OpenWorkspaceCommand x:Key="OpenWorkspace" />
     <Commands:ShowOnionSkinSettingsWindowCommand x:Key="ShowOnionSkinSettingsWindow" />
     <Commands:UndoCommand x:Key="Undo" DisplayName="Undo"/>

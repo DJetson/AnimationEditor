@@ -4,9 +4,15 @@ using AnimationEditor.ViewModels.StateObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Image = System.Windows.Controls.Image;
 
 namespace AnimationEditor.ViewModels
 {
@@ -82,7 +88,7 @@ namespace AnimationEditor.ViewModels
                 foreach (var item in strokes)
                 {
                     item.DrawingAttributes.IsHighlighter = true;
-                    item.DrawingAttributes.Color = Color.FromArgb(128, 0, 255, 0);
+                    item.DrawingAttributes.Color = System.Windows.Media.Color.FromArgb(128, 0, 255, 0);
                 }
                 return strokes;
             }
@@ -99,7 +105,7 @@ namespace AnimationEditor.ViewModels
                 foreach (var item in strokes)
                 {
                     item.DrawingAttributes.IsHighlighter = true;
-                    item.DrawingAttributes.Color = Color.FromArgb(128, 255, 0, 0);
+                    item.DrawingAttributes.Color = System.Windows.Media.Color.FromArgb(128, 255, 0, 0);
                 }
                 return strokes;
             }
@@ -284,6 +290,33 @@ namespace AnimationEditor.ViewModels
 
             PushUndoRecord(multiState);
         }
+
+        public List<System.Drawing.Image> RenderFrameBitmaps(InkCanvas canvas)
+        {
+            RenderTargetBitmap rtb = new RenderTargetBitmap((int)canvas.ActualWidth, (int)canvas.ActualHeight, 96, 96, new System.Windows.Media.PixelFormat());
+            List<System.Drawing.Image> frameImages = new List<System.Drawing.Image>();
+            foreach (var frame in Frames)
+            {
+                canvas.Strokes = frame.StrokeCollection;
+                rtb.Render(canvas);
+
+                var bitmap = new Bitmap(rtb.PixelWidth, rtb.PixelHeight, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+
+                var bitmapData = bitmap.LockBits(new Rectangle(System.Drawing.Point.Empty, bitmap.Size),
+                    ImageLockMode.WriteOnly, bitmap.PixelFormat);
+
+                rtb.CopyPixels(Int32Rect.Empty, bitmapData.Scan0,
+                    bitmapData.Stride * bitmapData.Height, bitmapData.Stride);
+
+                bitmap.UnlockBits(bitmapData);
+
+                System.Drawing.Image newImage = bitmap;
+                frameImages.Add(newImage);
+            }
+
+            return frameImages;
+        }
+
         #endregion DuplicateCurrentFrame Command
 
         #region DeleteCurrentFrame Command
