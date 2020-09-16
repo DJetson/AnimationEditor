@@ -13,7 +13,7 @@ namespace AnimationEditor.ViewModels.StateObjects
     {
         public StrokeCollection StrokeCollection;
         public ObservableCollection<LayerViewModel> Layers;
-
+        public int ActiveLayerIndex;
         public FrameState(FrameViewModel frame, string stateName = "") : base(frame, stateName)
         {
             Layers = new ObservableCollection<LayerViewModel>();
@@ -21,7 +21,7 @@ namespace AnimationEditor.ViewModels.StateObjects
             {
                 Layers.Add(new LayerViewModel(layer));
             }
-
+            ActiveLayerIndex = frame.Layers.IndexOf(frame.ActiveLayer);
             //StrokeCollection = new StrokeCollection(frame.StrokeCollection);
             //StrokeCollection.Clear();
             //foreach(var stroke in frame.StrokeCollection)

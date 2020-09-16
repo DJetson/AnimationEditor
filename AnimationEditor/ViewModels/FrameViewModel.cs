@@ -417,6 +417,7 @@ namespace AnimationEditor.ViewModels
                 Layers.Add(clonedLayer);
             }
             FlattenStrokesForPlayback();
+            ActiveLayer = Layers[Memento.ActiveLayerIndex];
         }
 
         public FrameViewModel Clone()
