@@ -72,5 +72,19 @@ namespace AnimationEditor.ViewModels
 
             CollectionAssert.AreEqual(new[] { 0, 1 }, timeline.Frames.Select(f => f.Order).ToArray());
         }
+
+        [TestMethod]
+        public void RemoveFrame_UpdatesFrameOrdinals()
+        {
+            var workspaceManager = new WorkspaceManagerViewModel();
+            var timeline = workspaceManager.SelectedWorkspace.AnimationTimelineViewModel;
+            timeline.AddBlankFrame.Execute(FrameNavigation.Previous);
+            timeline.AddBlankFrame.Execute(FrameNavigation.Next);
+
+            Assert.IsTrue(timeline.DeleteCurrentFrame.CanExecute(null));
+            timeline.DeleteCurrentFrame.Execute(null);
+
+            CollectionAssert.AreEqual(new[] { 0, 1 }, timeline.Frames.Select(f => f.Order).ToArray());
+        }
     }
 }
