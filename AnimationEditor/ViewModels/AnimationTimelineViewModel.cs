@@ -346,6 +346,8 @@ namespace AnimationEditor.ViewModels
             }
 
             Frames.Remove(frame);
+
+            UpdateFrameOrderIds();
         }
 
         public void DeleteCurrentFrame_Execute(object parameter)
