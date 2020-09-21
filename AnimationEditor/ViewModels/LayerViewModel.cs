@@ -72,6 +72,7 @@ namespace AnimationEditor.ViewModels
         {
             FrameViewModel = frame;
             LayerId = FrameViewModel.Layers.Count();
+            IsVisible = true;
             StrokeCollection = new StrokeCollection();
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
         }
