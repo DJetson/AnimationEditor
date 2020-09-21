@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace AnimationEditor.ViewModels
 {
@@ -59,6 +60,17 @@ namespace AnimationEditor.ViewModels
             timeline.AddBlankFrame.Execute(FrameNavigation.Next);
 
             Assert.AreEqual("Layer 0", timeline.SelectedFrame.ActiveLayer.DisplayName);
+        }
+
+        [TestMethod]
+        public void AddBlankFrame_Previous_UpdatesAllFrameOrders()
+        {
+            var workspaceManager = new WorkspaceManagerViewModel();
+            var timeline = workspaceManager.SelectedWorkspace.AnimationTimelineViewModel;
+
+            timeline.AddBlankFrame.Execute(FrameNavigation.Previous);
+
+            CollectionAssert.AreEqual(new[] { 0, 1 }, timeline.Frames.Select(f => f.Order).ToArray());
         }
     }
 }

@@ -478,6 +478,14 @@ namespace AnimationEditor.ViewModels
             SelectFrameWithoutUndoBuffer(Frames[navigateToFrameIndex]);
         }
 
+        public void UpdateFrameOrderIds()
+        {
+            foreach(var frame in Frames)
+            {
+                frame.Order = Frames.IndexOf(frame);
+            }
+        }
+
         public void AddFrameAtIndex(FrameViewModel frame, int index)
         {
             frame.Order = index;
@@ -493,6 +501,8 @@ namespace AnimationEditor.ViewModels
             {
                 Console.WriteLine($"WorkspaceViewModel.InsertFrame ERROR: Attempted to insert a frame at an invalid index = {index}");
             }
+
+            UpdateFrameOrderIds();
         }
 
         public IMemento SaveState()
