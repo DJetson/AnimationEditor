@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AnimationTimelineViewModelTest.cs" />
     <Compile Include="ViewModels\WorkspaceManagerViewModelTest.cs" />
   </ItemGroup>
   <ItemGroup>

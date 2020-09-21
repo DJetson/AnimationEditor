@@ -223,10 +223,9 @@ namespace AnimationEditor.ViewModels
             }
 
             AddFrameAtIndex(newFrame, insertAtIndex);
-            var firstLayer = new LayerViewModel(newFrame);
-            newFrame.AddNewLayerAtIndex(0, "Layer 0", false);
-
-            var layerState = firstLayer.SaveState() as LayerState;
+            //var firstLayer = new LayerViewModel(newFrame);
+            //newFrame.AddNewLayerAtIndex(0, "Layer 0", false);
+            var layerState = newFrame.SaveLayerStates();
             var frameState = newFrame.SaveState() as FrameState;
             SelectFrameWithoutUndoBuffer(newFrame);
             var timelineState = SaveState() as AnimationTimelineState;
