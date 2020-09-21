@@ -82,5 +82,19 @@ namespace AnimationEditor.ViewModels
 
             Assert.IsNotNull(workspaceManager.SelectedWorkspace.AnimationTimelineViewModel.SelectedFrame.ActiveLayer);
         }
+
+        [DeploymentItem("DeploymentItems/dot.anws")]
+        [TestMethod]
+        public void Open_MoveStroke_AddsUndoRecord()
+        {
+            var workspaceManager = new WorkspaceManagerViewModel();
+            new Commands.OpenWorkspaceCommand().OpenWorkspaceFile("dot.anws", workspaceManager);
+            var workspace = workspaceManager.SelectedWorkspace;
+            var stroke = workspace.AnimationTimelineViewModel.SelectedFrame.ActiveLayer.StrokeCollection[0];
+
+            stroke.Transform(new System.Windows.Media.TranslateTransform(offsetX: 1d, offsetY: 2d).Value, applyToStylusTip: false);
+
+            Assert.AreEqual(2, workspace.WorkspaceHistoryViewModel.UndoStack.Count);
+        }
     }
 }

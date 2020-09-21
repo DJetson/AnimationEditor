@@ -105,6 +105,10 @@ namespace AnimationEditor.ViewModels
             LayerId = model.LayerId;
             StrokeCollection = model.StrokeCollection;
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
+            foreach(var stroke in StrokeCollection)
+            {
+                stroke.StylusPointsChanged += Stroke_StylusPointsChanged;
+            }
         }
 
         public MultiState CreateUndoState(string title)
