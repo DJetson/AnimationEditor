@@ -45,18 +45,19 @@ namespace AnimationEditor.Commands
                 Multiselect = false
             };
 
-            openFileDialog.FileOk += (sender, e) =>
+            openFileDialog.FileOk += (______, _) =>
             {
-                var ofn = sender as OpenFileDialog;
-
-                var newModel = WorkspaceFileModel.OpenWorkspaceFile(ofn.FileName, JsonSerializerOptions);
-
-                var newViewModel = new WorkspaceViewModel(newModel);
-
-                Parameter.AddWorkspace(newViewModel);
+                OpenWorkspaceFile(openFileDialog.FileName, Parameter);
             };
 
             openFileDialog.ShowDialog(App.Current.MainWindow);
+        }
+
+        public void OpenWorkspaceFile(string fileName, IHasWorkspaceCollection workspaceManager)
+        {
+            var f = WorkspaceFileModel.OpenWorkspaceFile(fileName, JsonSerializerOptions);
+            var w = new WorkspaceViewModel(f);
+            workspaceManager.AddWorkspace(w);
         }
     }
 }

@@ -55,5 +55,74 @@ namespace AnimationEditor.ViewModels
 
             CollectionAssert.AreEqual(workspaces, workspaceManager.Workspaces);
         }
+
+        [DeploymentItem("DeploymentItems/dot.anws")]
+        [TestMethod]
+        public void Open_SelectsNewlyOpenedWorkspace()
+        {
+            var workspaceManager = new WorkspaceManagerViewModel();
+            Assert.AreEqual("Untitled*", workspaceManager.SelectedWorkspace.DisplayName, "initial workspace display name");
+
+            var openCommand = new Commands.OpenWorkspaceCommand();
+            Assert.IsTrue(openCommand.CanExecute(workspaceManager));
+
+            openCommand.OpenWorkspaceFile("dot.anws", workspaceManager);
+            Assert.AreEqual("dot", workspaceManager.SelectedWorkspace.DisplayName, "selected workspace display name");
+        }
+
+        [DeploymentItem("DeploymentItems/dot.anws")]
+        [TestMethod]
+        public void Open_SetsActiveLayer()
+        {
+            var workspaceManager = new WorkspaceManagerViewModel();
+            var openCommand = new Commands.OpenWorkspaceCommand();
+            Assert.IsTrue(openCommand.CanExecute(workspaceManager));
+
+            openCommand.OpenWorkspaceFile("dot.anws", workspaceManager);
+
+            Assert.IsNotNull(workspaceManager.SelectedWorkspace.AnimationTimelineViewModel.SelectedFrame.ActiveLayer);
+        }
+
+        [DeploymentItem("DeploymentItems/dot.anws")]
+        [TestMethod]
+        public void Open_MoveStroke_AddsUndoRecord()
+        {
+            var workspaceManager = new WorkspaceManagerViewModel();
+            new Commands.OpenWorkspaceCommand().OpenWorkspaceFile("dot.anws", workspaceManager);
+            var workspace = workspaceManager.SelectedWorkspace;
+            var stroke = workspace.AnimationTimelineViewModel.SelectedFrame.ActiveLayer.StrokeCollection[0];
+
+            stroke.Transform(new System.Windows.Media.TranslateTransform(offsetX: 1d, offsetY: 2d).Value, applyToStylusTip: false);
+
+            Assert.AreEqual(2, workspace.WorkspaceHistoryViewModel.UndoStack.Count);
+        }
+
+        [DeploymentItem("DeploymentItems/dot.anws")]
+        [TestMethod]
+        public void Open_MoveStroke_Undo_DoesNotCrash()
+        {
+            var workspaceManager = new WorkspaceManagerViewModel();
+            new Commands.OpenWorkspaceCommand().OpenWorkspaceFile("dot.anws", workspaceManager);
+            var workspace = workspaceManager.SelectedWorkspace;
+            var stroke = workspace.AnimationTimelineViewModel.SelectedFrame.ActiveLayer.StrokeCollection[0];
+            stroke.Transform(new System.Windows.Media.TranslateTransform(offsetX: 1d, offsetY: 2d).Value, applyToStylusTip: false);
+            var historyItem = workspace.WorkspaceHistoryViewModel.HistoricalStates.First();
+            Assert.IsTrue(workspace.WorkspaceHistoryViewModel.RevertToState.CanExecute(historyItem));
+
+            workspace.WorkspaceHistoryViewModel.RevertToState.Execute(historyItem);
+
+            // 😞 To reproduce this issue, I will have to replay some changes out of order.
+            // The order I (re)fixed the issues resulted in *this* issue being fixed implicitly.
+            // In other words, I'm not sure what Assert method to use here!
+            //
+            // Right now this test is written in such a way that *any* exception thrown will cause it to fail.
+            // The fact that no exceptions are thrown means it passes.
+            // I usually handle this by wrapping the call which results in an exception by itself in a try
+            // with the associated catch simply containing Assert.Fail.
+            // That is technically unnecessary as, again, the exception itself will cause the test to fail.
+            // But it does make explicit which exception arose originally,
+            // which gives room for other exceptions to arise, due to presumably different causes,
+            // and then we can update the test to catch those exceptions explicitly.
+        }
     }
 }
