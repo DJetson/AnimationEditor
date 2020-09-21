@@ -273,8 +273,7 @@ namespace AnimationEditor.ViewModels
             if (createFirstLayer)
                 Layers.Add(new LayerViewModel(this));
 
-            // TODO: Write a test that tells me what this line does.
-            ////ActiveLayer = Layers.FirstOrDefault();
+            ActiveLayer = Layers.FirstOrDefault();
 
             PopulateLayerIds();
 
