@@ -55,5 +55,19 @@ namespace AnimationEditor.ViewModels
 
             CollectionAssert.AreEqual(workspaces, workspaceManager.Workspaces);
         }
+
+        [DeploymentItem("DeploymentItems/dot.anws")]
+        [TestMethod]
+        public void Open_SelectsNewlyOpenedWorkspace()
+        {
+            var workspaceManager = new WorkspaceManagerViewModel();
+            Assert.AreEqual("Untitled*", workspaceManager.SelectedWorkspace.DisplayName, "initial workspace display name");
+
+            var openCommand = new Commands.OpenWorkspaceCommand();
+            Assert.IsTrue(openCommand.CanExecute(workspaceManager));
+
+            openCommand.OpenWorkspaceFile("dot.anws", workspaceManager);
+            Assert.AreEqual("dot", workspaceManager.SelectedWorkspace.DisplayName, "selected workspace display name");
+        }
     }
 }
