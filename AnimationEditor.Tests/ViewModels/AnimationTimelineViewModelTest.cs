@@ -49,5 +49,16 @@ namespace AnimationEditor.ViewModels
 
             Assert.IsTrue(timeline.SelectedFrame.ActiveLayer.IsVisible);
         }
+
+        [TestMethod]
+        public void AddBlankFrame_SetsLayerName()
+        {
+            var workspaceManager = new WorkspaceManagerViewModel();
+            var timeline = workspaceManager.SelectedWorkspace.AnimationTimelineViewModel;
+
+            timeline.AddBlankFrame.Execute(FrameNavigation.Next);
+
+            Assert.AreEqual("Layer 0", timeline.SelectedFrame.ActiveLayer.DisplayName);
+        }
     }
 }

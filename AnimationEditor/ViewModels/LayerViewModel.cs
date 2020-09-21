@@ -68,11 +68,19 @@ namespace AnimationEditor.ViewModels
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
         }
 
-        public LayerViewModel(FrameViewModel frame)
+        public LayerViewModel(FrameViewModel frame, string displayName = "")
         {
             FrameViewModel = frame;
             LayerId = FrameViewModel.Layers.Count();
             IsVisible = true;
+
+            if(String.IsNullOrWhiteSpace(displayName))
+            {
+                displayName = $"Layer {LayerId}";
+            }
+
+            DisplayName = displayName;
+
             StrokeCollection = new StrokeCollection();
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
         }
