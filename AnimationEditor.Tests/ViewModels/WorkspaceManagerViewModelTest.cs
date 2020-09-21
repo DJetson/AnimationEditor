@@ -69,5 +69,18 @@ namespace AnimationEditor.ViewModels
             openCommand.OpenWorkspaceFile("dot.anws", workspaceManager);
             Assert.AreEqual("dot", workspaceManager.SelectedWorkspace.DisplayName, "selected workspace display name");
         }
+
+        [DeploymentItem("DeploymentItems/dot.anws")]
+        [TestMethod]
+        public void Open_SetsActiveLayer()
+        {
+            var workspaceManager = new WorkspaceManagerViewModel();
+            var openCommand = new Commands.OpenWorkspaceCommand();
+            Assert.IsTrue(openCommand.CanExecute(workspaceManager));
+
+            openCommand.OpenWorkspaceFile("dot.anws", workspaceManager);
+
+            Assert.IsNotNull(workspaceManager.SelectedWorkspace.AnimationTimelineViewModel.SelectedFrame.ActiveLayer);
+        }
     }
 }
