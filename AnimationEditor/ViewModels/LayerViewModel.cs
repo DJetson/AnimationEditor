@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Windows.Input;
 
@@ -20,6 +21,14 @@ namespace AnimationEditor.ViewModels
             get => _StrokeCollection;
             set { Console.WriteLine($"Setting StrokeCollection [OldCount={_StrokeCollection.Count} New={value.Count}]"); _StrokeCollection = value; NotifyPropertyChanged(); }
         }
+
+        private StrokeCollection _SelectedStrokes = new StrokeCollection();
+        public StrokeCollection SelectedStrokes
+        {
+            get { return _SelectedStrokes; }
+            set { _SelectedStrokes = value; NotifyPropertyChanged(); }
+        }
+
 
         private bool _IsVisible;
         public bool IsVisible
@@ -42,6 +51,13 @@ namespace AnimationEditor.ViewModels
             set { _IsActive = value; NotifyPropertyChanged(); }
         }
 
+        private DelegateCommand _UpdateSelectedStrokes;
+        public DelegateCommand UpdateSelectedStrokes
+        {
+            get { return _UpdateSelectedStrokes; }
+            set { _UpdateSelectedStrokes = value; NotifyPropertyChanged(); }
+        }
+
 
         private FrameViewModel _FrameViewModel;
         public FrameViewModel FrameViewModel
@@ -50,8 +66,29 @@ namespace AnimationEditor.ViewModels
             set { _FrameViewModel = value; NotifyPropertyChanged(); }
         }
 
+        public void InitializeCommands()
+        {
+            UpdateSelectedStrokes = new DelegateCommand(UpdateSelectedStrokes_CanExecute, UpdateSelectedStrokes_Execute);
+        }
+
+        private bool UpdateSelectedStrokes_CanExecute(object parameter)
+        {
+            if (!(parameter is InkCanvas Parameter))
+                return false;
+
+            return true;
+        }
+
+        private void UpdateSelectedStrokes_Execute(object parameter)
+        {
+            var Parameter = parameter as InkCanvas;
+
+            SelectedStrokes = Parameter.GetSelectedStrokes();
+        }
+
         public LayerViewModel(LayerViewModel layer)
         {
+            InitializeCommands();
             FrameViewModel = layer.FrameViewModel;
             LayerId = layer.LayerId;
             DisplayName = layer.DisplayName;
@@ -70,11 +107,12 @@ namespace AnimationEditor.ViewModels
 
         public LayerViewModel(FrameViewModel frame, string displayName = "")
         {
+            InitializeCommands();
             FrameViewModel = frame;
             LayerId = FrameViewModel.Layers.Count();
             IsVisible = true;
 
-            if(String.IsNullOrWhiteSpace(displayName))
+            if (String.IsNullOrWhiteSpace(displayName))
             {
                 displayName = $"Layer {LayerId}";
             }
@@ -87,6 +125,7 @@ namespace AnimationEditor.ViewModels
 
         public LayerViewModel(FrameViewModel frame, StrokeCollection strokeCollection)
         {
+            InitializeCommands();
             FrameViewModel = frame;
             StrokeCollection = strokeCollection.Clone();
             foreach (var stroke in StrokeCollection)
@@ -99,13 +138,14 @@ namespace AnimationEditor.ViewModels
 
         public LayerViewModel(Models.LayerModel model, FrameViewModel frame)
         {
+            InitializeCommands();
             FrameViewModel = frame;
             DisplayName = model.DisplayName;
             IsVisible = model.IsVisible;
             LayerId = model.LayerId;
             StrokeCollection = model.StrokeCollection;
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
-            foreach(var stroke in StrokeCollection)
+            foreach (var stroke in StrokeCollection)
             {
                 stroke.StylusPointsChanged += Stroke_StylusPointsChanged;
             }
@@ -158,9 +198,22 @@ namespace AnimationEditor.ViewModels
             FrameViewModel.FlattenStrokesForPlayback();
         }
 
+        int _StrokeMultiSelectOpCounter = 0;
+
         private void Stroke_StylusPointsChanged(object sender, EventArgs e)
         {
-            PushUndoRecord(CreateUndoState($"Modified Content in Layer {LayerId} on Frame {FrameViewModel.Order}"));
+            if (_StrokeMultiSelectOpCounter == 0)
+                _StrokeMultiSelectOpCounter = SelectedStrokes.Count;
+
+            if (_StrokeMultiSelectOpCounter == 1)
+            {
+                PushUndoRecord(CreateUndoState($"Modified Content in Layer {LayerId} on Frame {FrameViewModel.Order}"));
+                _StrokeMultiSelectOpCounter = 0;
+            }
+            else
+            {
+                _StrokeMultiSelectOpCounter--;
+            }
         }
 
         private void EraserOperation_MouseUp(object sender, MouseButtonEventArgs e)
