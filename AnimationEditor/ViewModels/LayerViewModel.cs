@@ -66,6 +66,8 @@ namespace AnimationEditor.ViewModels
             set { _FrameViewModel = value; NotifyPropertyChanged(); }
         }
 
+        int _StrokeMultiSelectOpCounter = 0;
+
         public void InitializeCommands()
         {
             UpdateSelectedStrokes = new DelegateCommand(UpdateSelectedStrokes_CanExecute, UpdateSelectedStrokes_Execute);
@@ -197,8 +199,6 @@ namespace AnimationEditor.ViewModels
             }
             FrameViewModel.FlattenStrokesForPlayback();
         }
-
-        int _StrokeMultiSelectOpCounter = 0;
 
         private void Stroke_StylusPointsChanged(object sender, EventArgs e)
         {

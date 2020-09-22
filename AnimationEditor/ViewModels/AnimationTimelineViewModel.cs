@@ -49,13 +49,6 @@ namespace AnimationEditor.ViewModels
             {
                 _SelectedFrame = value;
                 NotifySelectedFrameAndDependents();
-
-                //if (_SelectedFrame != null && value != null)
-                //{
-                //    var state = SaveState() as AnimationTimelineState;
-                //    var multiState = new MultiState(null, "Navigate to Frame", state);
-                //    PushUndoRecord(multiState);
-                //}
             }
         }
 

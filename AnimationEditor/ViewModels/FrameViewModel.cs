@@ -81,21 +81,20 @@ namespace AnimationEditor.ViewModels
             set { _WorkspaceViewModel = value; NotifyPropertyChanged(); }
         }
 
-        public void AddNewLayer(bool createUndoState = true)
-        {
-            if (Layers == null)
-                Layers = new ObservableCollection<LayerViewModel>();
+        //public void AddNewLayer(bool createUndoState = true)
+        //{
+        //    if (Layers == null)
+        //        Layers = new ObservableCollection<LayerViewModel>();
 
-            var newLayer = new LayerViewModel(this);
-            Layers.Add(newLayer);
+        //    var newLayer = new LayerViewModel(this);
+        //    Layers.Add(newLayer);
 
-            PopulateLayerIds();
-            //ActiveLayerIndex = Layers.IndexOf(newLayer);
-            ActiveLayer = newLayer;
+        //    PopulateLayerIds();
+        //    ActiveLayer = newLayer;
 
-            if (createUndoState)
-                PushUndoRecord(CreateUndoState($"Added New Layer to Frame {Order}"));
-        }
+        //    if (createUndoState)
+        //        PushUndoRecord(CreateUndoState($"Added New Layer to Frame {Order}"));
+        //}
 
         public void InitializeCommands()
         {
@@ -117,20 +116,7 @@ namespace AnimationEditor.ViewModels
         private void InsertLayerBelow_Execute(object parameter)
         {
             var Parameter = parameter as LayerViewModel;
-
-            //var newLayer = new LayerViewModel(this);
-            //newLayer.LayerId = Layers.Count;
             AddNewLayerAtIndex(Layers.IndexOf(Parameter));
-            //Layers.Insert(Layers.IndexOf(Parameter), newLayer);
-
-            //PopulateLayerIds(0);
-
-            //var layerState = newLayer.SaveState() as LayerState;
-            //var frameState = SaveState() as FrameState;
-
-            //var multiState = new MultiState(null, $"Added Layer {newLayer.LayerId} to Frame {Order}", layerState, frameState);
-
-            //PushUndoRecord(multiState);
         }
 
         private bool InsertLayerAbove_CanExecute(object parameter)
@@ -148,23 +134,6 @@ namespace AnimationEditor.ViewModels
             var Parameter = parameter as LayerViewModel;
 
             AddNewLayerAtIndex(Layers.IndexOf(Parameter) + 1);
-
-            //var newLayer = new LayerViewModel(this);
-            //newLayer.LayerId = Layers.Count;
-
-            //if (Layers.IndexOf(Parameter) < Layers.Count - 1)
-            //    Layers.Insert(Layers.IndexOf(Parameter) + 1, newLayer);
-            //else
-            //    Layers.Add(newLayer);
-
-            //PopulateLayerIds();
-
-            //var layerState = newLayer.SaveState() as LayerState;
-            //var frameState = SaveState() as FrameState;
-
-            //var multiState = new MultiState(null, $"Added Layer {newLayer.LayerId} to Frame {Order}", layerState, frameState);
-
-            //PushUndoRecord(multiState);
         }
 
         private bool RemoveLayer_CanExecute(object parameter)
@@ -293,14 +262,14 @@ namespace AnimationEditor.ViewModels
             return layerStates;
         }
 
-        public FrameViewModel(FrameViewModel frame)
-        {
-            InitializeCommands();
-            WorkspaceViewModel = frame.WorkspaceViewModel;
-            Layers = new ObservableCollection<LayerViewModel>(frame.Layers.ToList().Select(e => new LayerViewModel(this, e.StrokeCollection)));
-            ActiveLayer = Layers[frame.Layers.IndexOf(frame.ActiveLayer)];
-            FlattenStrokesForPlayback();
-        }
+        //public FrameViewModel(FrameViewModel frame)
+        //{
+        //    InitializeCommands();
+        //    WorkspaceViewModel = frame.WorkspaceViewModel;
+        //    Layers = new ObservableCollection<LayerViewModel>(frame.Layers.ToList().Select(e => new LayerViewModel(this, e.StrokeCollection)));
+        //    ActiveLayer = Layers[frame.Layers.IndexOf(frame.ActiveLayer)];
+        //    FlattenStrokesForPlayback();
+        //}
 
         public void FlattenStrokesForPlayback()
         {
@@ -337,67 +306,6 @@ namespace AnimationEditor.ViewModels
             WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(nextState, raiseChangedFlag);
         }
 
-        private bool _IsErasing = false;
-
-        private void StrokeCollection_StrokesChanged(object sender, StrokeCollectionChangedEventArgs e)
-        {
-            foreach (var stroke in e.Added)
-            {
-                stroke.StylusPointsChanged += Stroke_StylusPointsChanged;
-            }
-            foreach (var stroke in e.Removed)
-            {
-                stroke.StylusPointsChanged -= Stroke_StylusPointsChanged;
-            }
-
-            if (EditorToolsViewModel.Instance.SelectedToolType == EditorToolType.Brush)
-            {
-                var state = SaveState() as FrameState;
-                var multiState = new MultiState(null, $"Added Content to Frame {Order}", state);
-                PushUndoRecord(multiState);
-            }
-            else if (EditorToolsViewModel.Instance.SelectedToolType == EditorToolType.Lasso && _IsErasing == false)
-            {
-                var state = SaveState() as FrameState;
-                var multiState = new MultiState(null, $"Deleted Content from Frame {Order}", state);
-                PushUndoRecord(multiState);
-            }
-            else if (EditorToolsViewModel.Instance.SelectedToolType == EditorToolType.Eraser && _IsErasing == false)
-            {
-                _IsErasing = true;
-                Mouse.AddMouseUpHandler(Mouse.PrimaryDevice.ActiveSource.RootVisual as DependencyObject, EraserOperation_MouseUp);
-            }
-        }
-
-        private void Stroke_StylusPointsChanged(object sender, EventArgs e)
-        {
-            var state = SaveState() as FrameState;
-            var multiState = new MultiState(null, $"Modified Frame {Order} Content", state);
-            PushUndoRecord(multiState);
-        }
-
-        private void EraserOperation_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Released && EditorToolsViewModel.Instance.SelectedToolType == BaseClasses.EditorToolType.Eraser)
-            {
-                _IsErasing = false;
-
-                var state = SaveState() as FrameState;
-                var multiState = new MultiState(null, $"Erased Content from Frame {Order}", state);
-                PushUndoRecord(multiState);
-                Mouse.RemoveMouseUpHandler(Mouse.PrimaryDevice.ActiveSource.RootVisual as DependencyObject, EraserOperation_MouseUp);
-            }
-            else if (e.LeftButton == MouseButtonState.Released && EditorToolsViewModel.Instance.SelectedToolType == BaseClasses.EditorToolType.Lasso)
-            {
-                _IsErasing = false;
-
-                var state = SaveState() as FrameState;
-                var multiState = new MultiState(null, $"Moved Frame {Order} Content", state);
-                PushUndoRecord(multiState);
-                Mouse.RemoveMouseUpHandler(Mouse.PrimaryDevice.ActiveSource.RootVisual as DependencyObject, EraserOperation_MouseUp);
-            }
-        }
-
         public IMemento SaveState()
         {
             var memento = new FrameState(this);
@@ -432,7 +340,6 @@ namespace AnimationEditor.ViewModels
             {
                 var newLayer = layer.Clone();
                 newLayer.FrameViewModel = newFrame;
-                //newLayer.LayerId = newFrame.Layers.Count;
                 newFrame.AddLayer(newLayer, false);
             }
 

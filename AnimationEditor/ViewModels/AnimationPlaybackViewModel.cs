@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
@@ -20,7 +21,6 @@ namespace AnimationEditor.ViewModels
     //      DelegateCommands defined directly on the ViewModels) and making a version of each, or a single 
     //      common ancestor that acknowledges playback states, and automatically returns a false from 
     //      CanExecute if the playback state is anything but Stop.
-
     public class AnimationPlaybackViewModel : ViewModelBase
     {
         private List<FrameViewModel> _Frames = null;
@@ -119,26 +119,17 @@ namespace AnimationEditor.ViewModels
             IsPlaybackActive = false;
         }
 
+        private int _CurrentFrameIndex;
+        public int CurrentFrameIndex
+        {
+            get { return _CurrentFrameIndex; }
+            set { _CurrentFrameIndex = value; NotifyPropertyChanged(); }
+        }
+
         private void DispatcherTimer_Elapsed(object sender, EventArgs e)
         {
-            var enumerator = _Frames.GetEnumerator();
-
-            while (enumerator.Current != _CurrentFrame)
-            {
-                if (enumerator.MoveNext() == false)
-                {
-                    throw new IndexOutOfRangeException("Error: Frame not found in Playback Frames collection.");
-                }
-            }
-
-            if (enumerator.MoveNext() == false)
-            {
-                CurrentFrame = _Frames.First();
-            }
-            else
-            {
-                CurrentFrame = enumerator.Current;
-            }
+            CurrentFrameIndex = (CurrentFrameIndex + 1) % _Frames.Count;
+            CurrentFrame = _Frames[CurrentFrameIndex];
         }
     }
 }
