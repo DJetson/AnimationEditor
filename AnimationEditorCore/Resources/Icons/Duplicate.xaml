@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<DrawingBrush x:Key="Duplicate" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 104,8L 208,8C 216.837,8 224,15.1634 224,24L 224,168C 224,176.837 216.837,184 208,184L 104,184C 95.1634,184 88,176.837 88,168L 88,24C 88,15.1634 95.1634,8 104,8 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="8" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" Brush="#FFFFFFFF"/>
+						</GeometryDrawing.Pen>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 112,24L 200,24C 204.418,24 208,27.5817 208,32L 208,160C 208,164.418 204.418,168 200,168L 112,168C 107.582,168 104,164.418 104,160L 104,32C 104,27.5817 107.582,24 112,24 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="1" MiterLimit="2.75" Brush="#FFFFFFFF"/>
+						</GeometryDrawing.Pen>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 48,72L 152,72C 160.837,72 168,79.1634 168,88L 168,232C 168,240.837 160.837,248 152,248L 48,248C 39.1635,248 32,240.837 32,232L 32,88C 32,79.1634 39.1635,72 48,72 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="8" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" Brush="#FFFFFFFF"/>
+						</GeometryDrawing.Pen>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 56,87.9998L 144,87.9998C 148.418,87.9998 152,91.5816 152,95.9998L 152,224C 152,228.418 148.418,232 144,232L 56,232C 51.5818,232 48.0001,228.418 48.0001,224L 48.0001,95.9998C 48.0001,91.5816 51.5818,87.9998 56,87.9998 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="1" MiterLimit="2.75" Brush="#FFFFFFFF"/>
+						</GeometryDrawing.Pen>
+					</GeometryDrawing>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+</ResourceDictionary>

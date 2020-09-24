@@ -1,0 +1,46 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:AnimationEditorCore.Resources">
+    <ResourceDictionary.MergedDictionaries>
+        <!--Main ToolBar Icons-->
+        <ResourceDictionary Source="./Icons/CloseIcon.xaml"/>
+        <ResourceDictionary Source="./Icons/Duplicate.xaml"/>
+        <ResourceDictionary Source="./Icons/NewFile.xaml"/>
+        <ResourceDictionary Source="./Icons/OpenFile.xaml"/>
+        <ResourceDictionary Source="./Icons/Paste.xaml"/>
+        <ResourceDictionary Source="./Icons/RedoIcon.xaml"/>
+        <ResourceDictionary Source="./Icons/SaveFile.xaml"/>
+        <ResourceDictionary Source="./Icons/UndoIcon.xaml"/>
+        <!--General Icons-->
+        <ResourceDictionary Source="./Icons/General/DeleteIcon.xaml"/>
+        <!--Editor Tools Panel Icons-->
+        <ResourceDictionary Source="./Icons/EditorTools/DrawIconLight.xaml"/>
+        <ResourceDictionary Source="./Icons/EditorTools/EraseIconLight.xaml"/>
+        <ResourceDictionary Source="./Icons/EditorTools/SelectIcon.xaml"/>
+        <ResourceDictionary Source="./Icons/EditorTools/ZoomIcon.xaml"/>
+        <!--Animation Timeline ToolBar Icons-->
+            <!--Animation Content ToolBar Icons-->
+            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AppendAfterLastFrame.xaml"/>
+            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/DuplicateToNext.xaml"/>
+            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/DuplicateToPrevious.xaml"/>
+            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/InsertBeforeFirstFrame.xaml"/>
+            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/InsertNewFrameNext.xaml"/>
+            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/InsertNewFramePrevious.xaml"/>
+            <!--Timeline Navigation ToolBar Icons-->
+            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/JumpToFirstFrame.xaml"/>
+            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/JumpToLastFrame.xaml"/>
+            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/NextFrame.xaml"/>
+            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PlayIcon.xaml"/>
+            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PreviousFrame.xaml"/>
+            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/StopIcon.xaml"/>
+        <!--End of Animation Timeline ToolBar Icons-->
+        <!--Layer Navigation Icons-->
+        <ResourceDictionary Source="./Icons/LayerNavigation/DuplicateLayerAbove.xaml"/>
+        <ResourceDictionary Source="./Icons/LayerNavigation/DuplicateLayerBelow.xaml"/>
+        <ResourceDictionary Source="./Icons/LayerNavigation/InsertLayerAbove.xaml"/>
+        <ResourceDictionary Source="./Icons/LayerNavigation/InsertLayerBelow.xaml"/>
+        <ResourceDictionary Source="./Icons/LayerNavigation/IsActiveIcon.xaml"/>
+        <ResourceDictionary Source="./Icons/LayerNavigation/IsVisibleIcon.xaml"/>
+        <ResourceDictionary Source="./Icons/LayerNavigation/IsNotVisibleIcon.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

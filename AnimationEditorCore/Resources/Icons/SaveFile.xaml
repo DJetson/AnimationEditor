@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<DrawingBrush x:Key="SaveFile" Stretch="UniformToFill">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FF230FD2" Geometry="F1 M 16,32L 80,32L 80,120L 192,120L 192,32L 208,32L 240,72L 240,240L 16,240L 16,32 Z "/>
+					<GeometryDrawing Brush="#FF230FD2" Geometry="F1 M 136,40L 176,40L 176,104L 136,104L 136,40 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+</ResourceDictionary>

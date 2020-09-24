@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<DrawingBrush x:Key="DuplicateToNext" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 23.9999,24L 47.9999,24L 47.9999,232L 23.9999,232L 23.9999,24 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 232,128L 64,23.9999L 64,232L 232,128 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 118.333,64L 88,64C 79.1634,64 72,71.1635 72,80L 72,130.133C 72,138.97 79.1634,146.133 88,146.133L 118.333,146.133C 127.17,146.133 134.333,138.97 134.333,130.133L 134.333,80C 134.333,71.1635 127.17,64 118.333,64 Z "/>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 119,71.4666L 87.3333,71.4666C 82.915,71.4666 79.3333,75.0483 79.3333,79.4666L 79.3333,130.667C 79.3333,135.085 82.915,138.667 87.3333,138.667L 119,138.667C 123.418,138.667 127,135.085 127,130.667L 127,79.4666C 127,75.0483 123.418,71.4666 119,71.4666 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 144,93.8667L 113.667,93.8667C 104.83,93.8667 97.6666,101.03 97.6666,109.867L 97.6666,160C 97.6666,168.837 104.83,176 113.667,176L 144,176C 152.837,176 160,168.837 160,160L 160,109.867C 160,101.03 152.837,93.8667 144,93.8667 Z "/>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 144.667,101.333L 113,101.333C 108.582,101.333 105,104.915 105,109.333L 105,160.533C 105,164.952 108.582,168.533 113,168.533L 144.667,168.533C 149.085,168.533 152.667,164.952 152.667,160.533L 152.667,109.333C 152.667,104.915 149.085,101.333 144.667,101.333 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+</ResourceDictionary>

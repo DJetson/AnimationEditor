@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<DrawingBrush x:Key="EraseIconLight" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FFFFAACB" Geometry="F1 M 57.79,245.148L 43.3774,230.752C 39.47,226.849 39.4699,220.52 43.3774,216.617L 86.4386,173.604C 90.346,169.701 96.6812,169.701 100.589,173.604L 115.001,188.001C 118.909,191.904 118.909,198.232 115.001,202.135L 71.94,245.148C 68.0326,249.051 61.6974,249.051 57.79,245.148 Z "/>
+					<GeometryDrawing Brush="#FFFFC7DD" Geometry="F1 M 27.2653,214.647L 10.8554,198.255C 6.94794,194.352 6.94793,188.024 10.8554,184.121L 53.9165,141.108C 57.824,137.205 64.1591,137.205 68.0666,141.108L 84.4765,157.499C 88.3839,161.403 88.3839,167.731 84.4765,171.634L 41.4153,214.647C 37.5079,218.55 31.1727,218.55 27.2653,214.647 Z "/>
+					<GeometryDrawing Brush="#FFFFBBD6" Geometry="F1 M 45.8333,233.203L 22.8803,210.276L 80.0916,153.128L 103.045,176.056L 45.8333,233.203 Z "/>
+					<GeometryDrawing Brush="#FFFFF37F" Geometry="F1 M 114.247,202.948L 95.135,183.857L 235.501,43.6521L 248,69.2471L 114.247,202.948 Z "/>
+					<GeometryDrawing Brush="#FFFFF9BD" Geometry="F1 M 72.4651,160.75L 53.3522,141.658L 187.153,7.99998L 212.679,20.7771L 72.4651,160.75 Z "/>
+					<GeometryDrawing Brush="#FFFFF7A8" Geometry="F1 M 95.1328,183.852L 72.2393,160.984L 212.673,20.7461L 235.581,43.5684L 95.1328,183.852 Z "/>
+					<GeometryDrawing Brush="#FFC6FFC6" Geometry="F1 M 66.6162,166.599L 47.4995,147.504L 68.6173,126.409L 87.734,145.505L 66.6162,166.599 Z "/>
+					<GeometryDrawing Brush="#FFA3FFA3" Geometry="F1 M 89.5175,189.503L 66.5865,166.598L 87.7042,145.504L 110.635,168.409L 89.5175,189.503 Z "/>
+					<GeometryDrawing Brush="#FF7BFF7B" Geometry="F1 M 108.578,208.549L 89.4783,189.471L 110.596,168.377L 129.695,187.455L 108.578,208.549 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+</ResourceDictionary>

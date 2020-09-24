@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<DrawingBrush x:Key="DeleteIcon" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 40,32L 216,32L 216,56L 40,56L 40,32 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 56,64L 200,64L 200,248L 56,248L 56,64 Z M 176,80L 160,80L 160,232L 176,232L 176,80 Z M 136,80L 120,80L 120,232L 136,232L 136,80 Z M 96,80L 80,80L 80,232L 96,232L 96,80 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 104,8L 152,8L 152,32L 136,32L 136,16L 120,16L 120,32L 104,32L 104,8 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+</ResourceDictionary>

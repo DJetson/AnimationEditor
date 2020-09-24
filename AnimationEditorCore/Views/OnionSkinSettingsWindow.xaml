@@ -1,0 +1,68 @@
+﻿<Window x:Class="AnimationEditorCore.Views.OnionSkinSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnimationEditorCore.Views"
+        xmlns:p="clr-namespace:AnimationEditorCore.Properties"
+        xmlns:SettingsViewModels="clr-namespace:AnimationEditorCore.ViewModels.Settings"
+        mc:Ignorable="d"
+        Height="199" Width="253" Title="{Binding DisplayName}">
+    <Window.DataContext>
+        <SettingsViewModels:OnionSkinSettingsViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}">
+                <Style.Setters>
+                    <Setter Property="Margin" Value="5,5,5,5"/>
+                    <Setter Property="Padding" Value="8,5,8,5"/>
+                </Style.Setters>
+            </Style>
+            <Style TargetType="{x:Type TextBox}">
+                <Style.Setters>
+                    <Setter Property="Margin" Value="5,0,5,5"/>
+                </Style.Setters>
+            </Style>
+            <Style TargetType="{x:Type TextBlock}">
+                <Style.Setters>
+                    <Setter Property="Margin" Value="5,0,5,0"/>
+                </Style.Setters>
+            </Style>
+            <Style TargetType="{x:Type CheckBox}">
+                <Style.Setters>
+                    <Setter Property="Margin" Value="0,3,0,5"/>
+                </Style.Setters>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Row="0" Header="{Binding DisplayName}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <CheckBox Grid.Row="0" Grid.ColumnSpan="2" Content="Onionskin preceding frames" IsChecked="{Binding IsShowPreviousOnionSkinsEnabled}" />
+                <CheckBox Grid.Row="1" Grid.ColumnSpan="2" Content="Onionskin succeeding frames" IsChecked="{Binding IsShowNextOnionSkinsEnabled}" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Number of preceding onionskins" HorizontalAlignment="Left"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding PreviousFrameSkinCount}" MinWidth="30" HorizontalAlignment="Left"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Number of succeeding onionskins" HorizontalAlignment="Left"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding NextFramesSkinCount}" MinWidth="30" HorizontalAlignment="Left"/>
+
+            </Grid>
+        </GroupBox>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Discard Changes" Command="{Binding DiscardChanges}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+            <Button Content="Accept Changes" Command="{Binding AcceptChanges}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+        </StackPanel>
+    </Grid>
+</Window>

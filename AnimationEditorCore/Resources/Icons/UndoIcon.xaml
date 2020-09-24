@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<DrawingBrush x:Key="UndoIcon" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FF978CF5" Geometry="F1 M 134.04,-1.52588e-005C 86.5907,-1.52588e-005 30.6313,57.3075 30.6313,128L 82.3359,128C 82.3358,96 113.359,42.6666 144.381,42.6666C 165.063,42.6666 196.086,46.4239 227.109,88.9794L 256,128L 245.547,90.3465C 235.529,55.8465 191.215,-1.52588e-005 134.04,-1.52588e-005 Z "/>
+					<GeometryDrawing Brush="#FF978CF5" Geometry="F1 M -6.86876e-006,126.535L 58.6477,230.246L 116.398,126L -6.86876e-006,126.535 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+</ResourceDictionary>

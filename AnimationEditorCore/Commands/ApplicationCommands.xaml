@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Commands="clr-namespace:AnimationEditorCore.Commands">
+    <Commands:CreateNewWorkspaceCommand x:Key="CreateNewWorkspace" />
+    <Commands:CloseWorkspaceCommand x:Key="CloseWorkspace" />
+    <Commands:SaveWorkspaceCommand x:Key="SaveWorkspace" />
+    <Commands:ExportToGifCommand x:Key="ExportToGif" />
+    <Commands:OpenWorkspaceCommand x:Key="OpenWorkspace" />
+    <Commands:ShowOnionSkinSettingsWindowCommand x:Key="ShowOnionSkinSettingsWindow" />
+    <Commands:UndoCommand x:Key="Undo" DisplayName="Undo"/>
+    <Commands:RedoCommand x:Key="Redo" DisplayName="Redo"/>
+    <Commands:SelectToolCommand x:Key="SelectTool" DisplayName="Select Tool"/>
+    <Commands:NavigateToFirstFrameCommand x:Key="NavigateToFirstFrame" DisplayName="Navigate To First Frame"/>
+    <Commands:NavigateToPreviousFrameCommand x:Key="NavigateToPreviousFrame" DisplayName="Navigate To Previous Frame"/>
+    <Commands:NavigateToNextFrameCommand x:Key="NavigateToNextFrame" DisplayName="Navigate To Next Frame"/>
+    <Commands:NavigateToLastFrameCommand x:Key="NavigateToLastFrame" DisplayName="Navigate To Last Frame"/>
+</ResourceDictionary>
