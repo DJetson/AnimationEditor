@@ -15,12 +15,7 @@
   <ItemGroup>
     <PackageReference Include="Bumpkit" Version="1.0.2" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="3.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.Windows.Interactivity">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
   </ItemGroup>
 
   <ItemGroup>
