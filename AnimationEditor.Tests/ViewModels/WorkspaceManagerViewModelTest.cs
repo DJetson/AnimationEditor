@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using System.Windows.Controls;
 
 namespace AnimationEditorCore.ViewModels
 {
@@ -90,7 +91,12 @@ namespace AnimationEditorCore.ViewModels
             var workspaceManager = new WorkspaceManagerViewModel();
             new Commands.OpenWorkspaceCommand().OpenWorkspaceFile("dot.anws", workspaceManager);
             var workspace = workspaceManager.SelectedWorkspace;
-            var stroke = workspace.AnimationTimelineViewModel.SelectedFrame.ActiveLayer.StrokeCollection[0];
+
+            LayerViewModel activeLayer = workspace.AnimationTimelineViewModel.SelectedFrame.ActiveLayer;
+
+            var stroke = activeLayer.StrokeCollection[0];
+
+            activeLayer.SelectedStrokes = activeLayer.StrokeCollection;
 
             stroke.Transform(new System.Windows.Media.TranslateTransform(offsetX: 1d, offsetY: 2d).Value, applyToStylusTip: false);
 

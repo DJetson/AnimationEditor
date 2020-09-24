@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:p="clr-namespace:AnimationEditorCore.Properties"
-                    xmlns:local="clr-namespace:AnimationEditorCore.Resources.Styles">
+                    xmlns:p="clr-namespace:AnimationEditorCore.Properties">
     <Style x:Key="OnionSkinInkCanvasStyle" TargetType="{x:Type InkCanvas}">
         <Style.Setters>
             <Setter Property="MaxHeight" Value="{Binding ActualHeight, ElementName=CanvasGrid}"/>
