@@ -21,4 +21,10 @@
     <ProjectReference Include="..\AnimationEditorCore\AnimationEditorCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="DeploymentItems\dot.anws">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
