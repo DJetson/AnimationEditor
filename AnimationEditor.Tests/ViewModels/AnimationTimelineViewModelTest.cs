@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
-namespace AnimationEditor.ViewModels
+namespace AnimationEditorCore.ViewModels
 {
     [TestClass]
     public class AnimationTimelineViewModelTest
