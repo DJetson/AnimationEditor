@@ -12,25 +12,12 @@ namespace AnimationEditorCore.Commands
     {
         public override bool CanExecute(object parameter)
         {
-            if (!(parameter is AnimationTimelineViewModel Parameter))
+            if (!(parameter is TimelineViewModel Parameter))
             {
                 return false;
             }
 
             if (Parameter.AnimationPlaybackViewModel.IsPlaybackActive)
-                return false;
-
-            if (Parameter?.Frames == null)
-            {
-                return false;
-            }
-
-            if (Parameter?.SelectedFrame == null)
-            {
-                return false;
-            }
-
-            if (Parameter.Frames.LastOrDefault() == Parameter.SelectedFrame)
             {
                 return false;
             }
@@ -40,9 +27,9 @@ namespace AnimationEditorCore.Commands
 
         public override void Execute(object parameter)
         {
-            var Parameter = parameter as AnimationTimelineViewModel;
+            var Parameter = parameter as TimelineViewModel;
 
-            Parameter.NavigateToFrame(FrameNavigation.End);
+            Parameter.SelectedFrameIndex = Parameter.FrameCount - 1;
         }
     }
 }

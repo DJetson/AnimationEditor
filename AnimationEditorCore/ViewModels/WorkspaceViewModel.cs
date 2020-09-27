@@ -78,12 +78,28 @@ namespace AnimationEditorCore.ViewModels
         //    set { _SelectedFrame = value; NotifyPropertyChanged(); }
         //}
 
-        private AnimationTimelineViewModel _AnimationTimelineViewModel;
-        public AnimationTimelineViewModel AnimationTimelineViewModel
+        private TimelineViewModel _TimelineViewModel;
+        public TimelineViewModel TimelineViewModel
         {
-            get => _AnimationTimelineViewModel;
-            set { _AnimationTimelineViewModel = value; NotifyPropertyChanged(); }
+            get => _TimelineViewModel;
+            set { _TimelineViewModel = value; NotifyPropertyChanged(); }
         }
+
+        //private AnimationPlaybackViewModel _AnimationPlaybackViewModel = new AnimationPlaybackViewModel();
+        //public AnimationPlaybackViewModel AnimationPlaybackViewModel
+        //{
+        //    get { return _AnimationPlaybackViewModel; }
+        //    set { _AnimationPlaybackViewModel = value; NotifyPropertyChanged(); }
+        //}
+
+
+        //private TimelineViewModel _TimelineViewModel;
+        //public TimelineViewModel TimelineViewModel
+        //{
+        //    get { return _TimelineViewModel; }
+        //    set { _TimelineViewModel = value; NotifyPropertyChanged(); }
+        //}
+
 
         private WorkspaceHistoryViewModel _WorkspaceHistoryViewModel;
         public WorkspaceHistoryViewModel WorkspaceHistoryViewModel
@@ -200,7 +216,8 @@ namespace AnimationEditorCore.ViewModels
         public void InitializeDependentViewModels()
         {
             WorkspaceHistoryViewModel = new WorkspaceHistoryViewModel(this);
-            AnimationTimelineViewModel = new AnimationTimelineViewModel(this);
+            //TimelineViewModel = new AnimationTimelineViewModel(this);
+            TimelineViewModel = new TimelineViewModel(this);
             EditorTools = EditorToolsViewModel.Instance;
         }
 
@@ -220,7 +237,7 @@ namespace AnimationEditorCore.ViewModels
 
             WorkspaceHistoryViewModel = new WorkspaceHistoryViewModel(this);
 
-            AnimationTimelineViewModel = new AnimationTimelineViewModel(model.Frames, this);
+            //TimelineViewModel = new AnimationTimelineViewModel(model.Frames, this);
             EditorTools = EditorToolsViewModel.Instance;
 
             Filepath = model.Filepath;
@@ -300,7 +317,7 @@ namespace AnimationEditorCore.ViewModels
                     //var bmpFrames = GetBmpFrames();
                     //foreach (var frame in bmpFrames.Frames)
                     //{
-                    var frameBitmaps = this.AnimationTimelineViewModel.RenderFrameBitmaps(canvas);
+                    var frameBitmaps = this.TimelineViewModel.RenderFrameBitmaps(canvas);
 
                     foreach (var frame in frameBitmaps)
                     {

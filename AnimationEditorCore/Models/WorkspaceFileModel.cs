@@ -47,10 +47,10 @@ namespace AnimationEditorCore.Models
             Frames.Clear();
 
             //Frames = new ObservableCollection<FrameViewModel>();
-            foreach (var item in workspaceViewModel.AnimationTimelineViewModel.Frames)
-            {
-                Frames.Add(new FrameModel(item));
-            }
+            //foreach (var item in workspaceViewModel.TimelineViewModel.Frames)
+            //{
+            //    Frames.Add(new FrameModel(item));
+            //}
 
             //TODO: These should eventually be coming from the workspace VM
             CanvasProperties = new CanvasPropertiesModel();

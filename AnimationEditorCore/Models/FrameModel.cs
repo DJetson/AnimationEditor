@@ -20,8 +20,8 @@ namespace AnimationEditorCore.Models
         public FrameModel(FrameViewModel frame)
         {
             Order = frame.Order;
-            Layers = new List<LayerModel>(frame.Layers.Select(e => new LayerModel(e)));
-            ActiveLayerIndex = frame.Layers.IndexOf(frame.ActiveLayer);
+            //Layers = new List<LayerModel>(frame.Layers.Select(e => new LayerModel(e)));
+            //ActiveLayerIndex = frame.Layers.IndexOf(frame.ActiveLayer);
         }
 
         public FrameModel(Stream stream, int order, List<LayerViewModel> layers, int activeLayerIndex)

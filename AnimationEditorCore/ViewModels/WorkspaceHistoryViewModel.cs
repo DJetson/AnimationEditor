@@ -47,7 +47,7 @@ namespace AnimationEditorCore.ViewModels
             if (!(parameter is WorkspaceHistoryItemViewModel Parameter))
                 return false;
 
-            if (WorkspaceViewModel.AnimationTimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive)
+            if (WorkspaceViewModel.TimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive)
                 return false;
 
             if (UndoStack?.Contains(Parameter.State) == false)
@@ -75,7 +75,7 @@ namespace AnimationEditorCore.ViewModels
             if (!(parameter is WorkspaceHistoryItemViewModel Parameter))
                 return false;
 
-            if (WorkspaceViewModel.AnimationTimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive)
+            if (WorkspaceViewModel.TimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive)
                 return false;
 
             if (RedoStack.Contains(Parameter.State) == false)

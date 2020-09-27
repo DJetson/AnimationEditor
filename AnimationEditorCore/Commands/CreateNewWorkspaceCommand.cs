@@ -20,7 +20,7 @@ namespace AnimationEditorCore.Commands
             if (Parameter?.SelectedWorkspace == null)
                 return true;
 
-            if (Parameter.SelectedWorkspace.AnimationTimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive)
+            if (Parameter.SelectedWorkspace.TimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive)
                 return false;
 
             return true;

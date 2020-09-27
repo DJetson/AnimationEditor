@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,20 +10,21 @@ namespace AnimationEditorCore.ViewModels.StateObjects
 {
     public class LayerState : UndoStateViewModel
     {
-        public StrokeCollection StrokeCollection;
         public int LayerId;
         public bool IsVisible;
-
+        public bool IsActive;
+        public ObservableCollection<FrameViewModel> Frames;
         public LayerState(LayerViewModel layer, string stateName = "") : base(layer, stateName)
         {
             DisplayName = layer.DisplayName;
             LayerId = layer.LayerId;
             IsVisible = layer.IsVisible;
-            StrokeCollection = new StrokeCollection(layer.StrokeCollection);
-            StrokeCollection.Clear();
-            foreach (var stroke in layer.StrokeCollection)
+            IsActive = layer.IsActive;
+            Frames = new ObservableCollection<FrameViewModel>();
+
+            foreach (var frame in layer.Frames)
             {
-                StrokeCollection.Add(stroke.Clone());
+                Frames.Add(frame.Clone());
             }
         }
 

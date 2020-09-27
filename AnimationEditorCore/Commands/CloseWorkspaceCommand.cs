@@ -18,7 +18,7 @@ namespace AnimationEditorCore.Commands
             if (!(parameter is WorkspaceViewModel Parameter))
                 return false;
 
-            if (Parameter.AnimationTimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive)
+            if (Parameter.TimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive)
                 return false;
 
             return true;

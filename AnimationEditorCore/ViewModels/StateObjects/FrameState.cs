@@ -11,23 +11,17 @@ namespace AnimationEditorCore.ViewModels.StateObjects
 {
     public class FrameState : UndoStateViewModel
     {
+        public int Order;
         public StrokeCollection StrokeCollection;
-        public ObservableCollection<LayerViewModel> Layers;
-        public int ActiveLayerIndex;
         public FrameState(FrameViewModel frame, string stateName = "") : base(frame, stateName)
         {
-            Layers = new ObservableCollection<LayerViewModel>();
-            foreach(var layer in frame.Layers)
+            Order = frame.Order;
+            StrokeCollection = new StrokeCollection(frame.StrokeCollection);
+            StrokeCollection.Clear();
+            foreach (var stroke in frame.StrokeCollection)
             {
-                Layers.Add(new LayerViewModel(layer));
+                StrokeCollection.Add(stroke.Clone());
             }
-            ActiveLayerIndex = frame.Layers.IndexOf(frame.ActiveLayer);
-            //StrokeCollection = new StrokeCollection(frame.StrokeCollection);
-            //StrokeCollection.Clear();
-            //foreach(var stroke in frame.StrokeCollection)
-            //{
-            //    StrokeCollection.Add(stroke.Clone());
-            //}
         }
 
         public override void LoadState()
