@@ -33,22 +33,22 @@
                             <ScaleTransform ScaleX="{Binding ZoomLevel}" ScaleY="{Binding ZoomLevel}"/>
                         </Border.LayoutTransform>
                         <Grid>
-                            <Views:AnimationPlaybackView MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}" MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" DataContext="{Binding AnimationTimelineViewModel.AnimationPlaybackViewModel}"/>
-                            <ItemsControl ItemsSource="{Binding TimelineViewModel.SelectedFrames}" Background="White">
-                                <ItemsControl.Resources>
-                                    <DataTemplate DataType="{x:Type ViewModels:FrameViewModel}">
-                                        <Views:LayerCanvasView DataContext="{Binding }"/>
-                                    </DataTemplate>
+                            <Views:AnimationPlaybackView MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}" MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" DataContext="{Binding TimelineViewModel.AnimationPlaybackViewModel}"/>
+                            <!--<ItemsControl ItemsSource="{Binding TimelineViewModel.SelectedFrames}" Background="White">
+                                <ItemsControl.Resources>-->
+                                    <!--<DataTemplate DataType="{x:Type ViewModels:FrameViewModel}">-->
+                                        <Views:LayerCanvasView DataContext="{Binding TimelineViewModel}"/>
+                                    <!--</DataTemplate>
                                 </ItemsControl.Resources>
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <Grid/>
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
-                            </ItemsControl>
+                            </ItemsControl>-->
                             <!--<Views:FrameCanvasView DataContext="{Binding AnimationTimelineViewModel}"/>-->
                             <Grid Grid.Row="0" IsHitTestVisible="False">
-                                <InkCanvas Grid.Row="0" Strokes="{Binding AnimationTimelineViewModel.PreviousFrameStrokes}">
+                                <InkCanvas Grid.Row="0" Strokes="{Binding TimelineViewModel.PreviousFrameStrokes}">
                                     <InkCanvas.CacheMode>
                                         <BitmapCache RenderAtScale="{Binding ZoomLevel}"/>
                                     </InkCanvas.CacheMode>
@@ -62,7 +62,7 @@
                                         </Style>
                                     </InkCanvas.Style>
                                 </InkCanvas>
-                                <InkCanvas Grid.Row="0" Strokes="{Binding AnimationTimelineViewModel.NextFrameStrokes}" >
+                                <InkCanvas Grid.Row="0" Strokes="{Binding TimelineViewModel.NextFrameStrokes}" >
                                     <InkCanvas.CacheMode>
                                         <BitmapCache RenderAtScale="{Binding ZoomLevel}"/>
                                     </InkCanvas.CacheMode>

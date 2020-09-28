@@ -19,6 +19,6 @@
         </Style>
     </UserControl.Style>
     <Grid>
-        <InkCanvas Grid.Row="0" EditingMode="None" Strokes="{Binding CurrentFrame.StrokeCollection}"/>
+        <InkCanvas Grid.Row="0" EditingMode="None" Strokes="{Binding CurrentFrame}"/>
     </Grid>
 </UserControl>

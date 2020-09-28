@@ -33,7 +33,7 @@
                 <Button Content="{StaticResource AppendAfterLastFrame}" Command="{Binding AddBlankFrame}" CommandParameter="End" />
             </ToolBar>
             <ToolBar>
-                <Button Content="+" Command="{Binding AddBlankLayer}"/>
+                <Button Style="{StaticResource {x:Type Button}}" Content="Add Layer" Command="{Binding AddBlankLayer}"/>
             </ToolBar>
             <ToolBar>
                 <TextBlock VerticalAlignment="Center" Text="FPS:" />

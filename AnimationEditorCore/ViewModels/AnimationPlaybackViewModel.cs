@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Ink;
 using System.Windows.Threading;
 
 namespace AnimationEditorCore.ViewModels
@@ -25,8 +26,8 @@ namespace AnimationEditorCore.ViewModels
     public class AnimationPlaybackViewModel : ViewModelBase
     {
 
-        private ObservableCollection<FrameViewModel> _Frames = null;
-        public ObservableCollection<FrameViewModel> Frames
+        private ObservableCollection<StrokeCollection> _Frames = null;
+        public ObservableCollection<StrokeCollection> Frames
         {
             get { return _Frames; }
             set { _Frames = value; NotifyPropertyChanged(); }
@@ -34,11 +35,11 @@ namespace AnimationEditorCore.ViewModels
 
         //private List<FrameViewModel> _Frames = null;
         private double _AnimationFps;
-        private FrameViewModel _OriginalFrame;
+        private int _OriginalIndex;
         private DispatcherTimer _PlaybackTimer;
 
-        private FrameViewModel _CurrentFrame;
-        public FrameViewModel CurrentFrame
+        private StrokeCollection _CurrentFrame;
+        public StrokeCollection CurrentFrame
         {
             get { return _CurrentFrame; }
             set { _CurrentFrame = value; NotifyPropertyChanged(); }
@@ -71,7 +72,7 @@ namespace AnimationEditorCore.ViewModels
             _PlaybackTimer.Tick += DispatcherTimer_Elapsed;
         }
 
-        public void StartPlayback(List<FrameViewModel> playbackFrames, double animationFps)
+        public void StartPlayback(List<StrokeCollection> playbackFrames, double animationFps)
         {
             if (IsPlaybackActive)
             {
@@ -80,9 +81,9 @@ namespace AnimationEditorCore.ViewModels
             }
             else
             {
-                _Frames = new ObservableCollection<FrameViewModel>(playbackFrames);
-                _OriginalFrame = playbackFrames.First();
-                CurrentFrame = _OriginalFrame;
+                _Frames = new ObservableCollection<StrokeCollection>(playbackFrames);
+                _OriginalIndex = 0;
+                CurrentFrame = _Frames[_OriginalIndex];
 
                 _AnimationFps = animationFps;
                 PlaybackFps = animationFps * _PlaybackFpsMultiplier;
@@ -122,8 +123,8 @@ namespace AnimationEditorCore.ViewModels
                 _PlaybackTimer.Stop();
             }
 
-            CurrentFrame = _OriginalFrame;
-            _OriginalFrame = null;
+            CurrentFrame = _Frames[_OriginalIndex];
+            _OriginalIndex = 0;
             _Frames.Clear();
             IsPlaybackActive = false;
         }
@@ -140,8 +141,8 @@ namespace AnimationEditorCore.ViewModels
             var lastFrame = CurrentFrame;
             CurrentFrameIndex = (CurrentFrameIndex + 1) % _Frames.Count;
             CurrentFrame = _Frames[CurrentFrameIndex];
-            CurrentFrame.IsCurrent = true;
-            lastFrame.IsCurrent = false;
+            //CurrentFrame.IsCurrent = true;
+            //lastFrame.IsCurrent = false;
             //lastFrame.NotifyPropertyChanged(nameof(FrameViewModel.IsFrameZIndexVisible));
             //CurrentFrame.NotifyPropertyChanged(nameof(FrameViewModel.IsFrameZIndexVisible));
         }
