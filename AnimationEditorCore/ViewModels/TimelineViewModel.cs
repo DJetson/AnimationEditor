@@ -292,14 +292,18 @@ namespace AnimationEditorCore.ViewModels
                 var newFrame = new FrameViewModel(layer, insertAtIndex);
 
                 layer.AddFrameAtIndex(newFrame, insertAtIndex);
+                FrameCount = Math.Max(layer.Frames.Count, FrameCount);
+
                 layer.SelectedFrameIndex = insertAtIndex;
 
                 undoStates.Add(newFrame.SaveState() as FrameState);
                 undoStates.Add(layer.SaveState() as LayerState);
             }
 
+            if (insertAtIndex <= SelectedFrameIndex)
+                SelectedFrameIndex++;
+
             SelectedFrameIndex = insertAtIndex;
-            FrameCount = GetFrameCountOfLongestLayer();
 
             PushUndoRecord(CreateUndoState("Add Frame", undoStates));
         }
