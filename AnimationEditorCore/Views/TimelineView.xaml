@@ -20,7 +20,27 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="{Binding CurrentIndexOutOfFrameCount}" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="SegoeUI" FontSize="14"/>
                 <Border Grid.Column="1" Width="{Binding ScrubberLength}" Padding="11,0,0,0">
-                    <Slider x:Name="FrameScrubber" Grid.Column="1" HorizontalAlignment="Stretch" IsSnapToTickEnabled="True" TickFrequency="1" TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="0" Interval="5" Orientation="Horizontal" Minimum="0" Maximum="{Binding LastFrameIndex}" Value="{Binding SelectedFrameIndex}"/>
+                    <Slider x:Name="FrameScrubber" 
+                            Grid.Column="1" HorizontalAlignment="Stretch" 
+                            IsSnapToTickEnabled="True" TickFrequency="1" 
+                            TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight" 
+                            AutoToolTipPrecision="0" Interval="5" 
+                            Orientation="Horizontal" 
+                            Minimum="0" Maximum="{Binding LastFrameIndex}" 
+                            Value="{Binding SelectedFrameIndex}">
+                        <Slider.Style>
+                            <Style TargetType="{x:Type Slider}">
+                                <Style.Setters>
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </Style.Setters>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding FrameCount}" Value="1">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Slider.Style>
+                    </Slider>
                 </Border>
             </Grid>
             <ListBox Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ItemsSource="{Binding Layers}" SelectedItem="{Binding ActiveLayer, Mode=TwoWay}">
