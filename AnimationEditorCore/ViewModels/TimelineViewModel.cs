@@ -41,7 +41,7 @@ namespace AnimationEditorCore.ViewModels
             {
                 _ActiveLayer = value;
                 NotifyPropertyChanged();
-                foreach(var layer in Layers)
+                foreach (var layer in Layers)
                 {
                     if (layer == ActiveLayer)
                         layer.IsActive = true;
@@ -58,7 +58,7 @@ namespace AnimationEditorCore.ViewModels
             set
             {
                 _SelectedFrameIndex = value;
-                NotifyPropertyChanged();
+                NotifyPropertiesChanged(nameof(SelectedFrameIndex), nameof(PreviousFrameStrokes), nameof(NextFrameStrokes));
                 UpdateSelectedFrames();
                 //foreach(var layer in Layers)
                 //{
@@ -78,6 +78,55 @@ namespace AnimationEditorCore.ViewModels
             set { _SelectedFrames = value; NotifyPropertyChanged(); }
         }
 
+        public StrokeCollection NextFrameStrokes
+        {
+            get
+            {
+                if (NextFrame == null)
+                    return new StrokeCollection();
+
+                var strokes = FlattenFrames(NextFrame.ToList()).Clone();
+                foreach (var item in strokes)
+                {
+                    item.DrawingAttributes.IsHighlighter = true;
+                    item.DrawingAttributes.Color = System.Windows.Media.Color.FromArgb(128, 0, 255, 0);
+                }
+                return strokes;
+            }
+        }
+
+        public StrokeCollection PreviousFrameStrokes
+        {
+            get
+            {
+                if (PreviousFrame == null)
+                    return new StrokeCollection();
+
+                var strokes = FlattenFrames(PreviousFrame.ToList()).Clone();
+                foreach (var item in strokes)
+                {
+                    item.DrawingAttributes.IsHighlighter = true;
+                    item.DrawingAttributes.Color = System.Windows.Media.Color.FromArgb(128, 255, 0, 0);
+                }
+                return strokes;
+            }
+        }
+
+        public StrokeCollection FlattenFrames(List<FrameViewModel> frames)
+        {
+            var strokes = new StrokeCollection();
+
+            foreach(var frame in frames)
+            {
+                strokes.Add(frame.StrokeCollection);
+            }
+
+            return strokes;
+        }
+
+        public ObservableCollection<FrameViewModel> NextFrame => new ObservableCollection<FrameViewModel>(GetAllLayerFramesAtIndex(SelectedFrameIndex + 1));
+        public ObservableCollection<FrameViewModel> PreviousFrame => new ObservableCollection<FrameViewModel>(GetAllLayerFramesAtIndex(SelectedFrameIndex - 1));
+
         public void UpdateSelectedFrames()
         {
             var selected = new List<FrameViewModel>();
@@ -91,6 +140,21 @@ namespace AnimationEditorCore.ViewModels
                 }
             }
             SelectedFrames = new ObservableCollection<FrameViewModel>(selected);
+        }
+
+        public List<FrameViewModel> GetAllLayerFramesAtIndex(int index)
+        {
+            var frames = new List<FrameViewModel>();
+
+            foreach (var layer in Layers)
+            {
+                foreach (var frame in layer.Frames)
+                {
+                    if (frame.Order == index)
+                        frames.Add(frame);
+                }
+            }
+            return frames;
         }
 
         private WorkspaceViewModel _WorkspaceViewModel;
@@ -474,16 +538,17 @@ namespace AnimationEditorCore.ViewModels
             return Layers.Where(e => e.IsVisible).ToList();
         }
 
-        public void FlattenStrokesForFrameAtIndex(int frameIndex)
+        public StrokeCollection FlattenStrokesForFrameAtIndex(int frameIndex)
         {
+            var flattenedStrokes = new StrokeCollection();
             if (FlattenedFrameStrokes.Count > frameIndex)
             {
                 foreach (var frame in Layers.SelectMany(e => e.Frames.Where(f => f.Order == frameIndex)))
                 {
-                    FlattenedFrameStrokes[frameIndex].Clear();
-                    FlattenedFrameStrokes[frameIndex].Add(frame.StrokeCollection);
+                    flattenedStrokes.Add(frame.StrokeCollection);
                 }
             }
+            return flattenedStrokes;
         }
 
         public void FlattenStrokesForPlayback()

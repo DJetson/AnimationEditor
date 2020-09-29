@@ -47,7 +47,8 @@
                                 </ItemsControl.ItemsPanel>
                             </ItemsControl>-->
                             <!--<Views:FrameCanvasView DataContext="{Binding AnimationTimelineViewModel}"/>-->
-                            <Grid Grid.Row="0" IsHitTestVisible="False">
+<!--Old Onionskin location-->
+                            <!--<Grid Grid.Row="0" IsHitTestVisible="False">
                                 <InkCanvas Grid.Row="0" Strokes="{Binding TimelineViewModel.PreviousFrameStrokes}">
                                     <InkCanvas.CacheMode>
                                         <BitmapCache RenderAtScale="{Binding ZoomLevel}"/>
@@ -76,7 +77,8 @@
                                         </Style>
                                     </InkCanvas.Style>
                                 </InkCanvas>
-                            </Grid>
+                            </Grid>-->
+<!--End old Onionskin-->
                         </Grid>
                     </Border>
                 </Grid>

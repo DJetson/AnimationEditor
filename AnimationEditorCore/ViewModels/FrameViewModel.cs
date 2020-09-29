@@ -409,7 +409,7 @@ namespace AnimationEditorCore.ViewModels
             {
                 stroke.StylusPointsChanged -= Stroke_StylusPointsChanged;
             }
-            LayerViewModel.TimelineViewModel.FlattenStrokesForFrameAtIndex(Order);
+            LayerViewModel.TimelineViewModel.FlattenStrokesForPlayback(); 
         }
 
         private void Stroke_StylusPointsChanged(object sender, EventArgs e)

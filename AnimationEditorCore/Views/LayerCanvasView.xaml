@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:p="clr-namespace:AnimationEditorCore.Properties"
              xmlns:local="clr-namespace:AnimationEditorCore.Views"
              xmlns:ViewModels="clr-namespace:AnimationEditorCore.ViewModels"
              mc:Ignorable="d" 
@@ -22,7 +23,7 @@
             </Style.Triggers>
         </Style>
     </UserControl.Style>
-    <Grid>
+    <Grid x:Name="CanvasGrid">
         <ItemsControl ItemsSource="{Binding SelectedFrames}" Background="White">
             <ItemsControl.Resources>
                 <DataTemplate DataType="{x:Type ViewModels:FrameViewModel}">
@@ -65,5 +66,37 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
+        <!--It might be better to have these onionskins defined someplace else, but I don't know yet. THey still aren't working-->
+        <Grid Grid.Row="0" IsHitTestVisible="False" Panel.ZIndex="20000">
+            <InkCanvas Grid.Row="0" Strokes="{Binding PreviousFrameStrokes}">
+                <InkCanvas.CacheMode>
+                    <BitmapCache RenderAtScale="{Binding TimelineViewModel.WorkspaceViewModel.ZoomLevel}"/>
+                </InkCanvas.CacheMode>
+                <InkCanvas.Style>
+                    <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource OnionSkinInkCanvasStyle}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsShowPreviousOnionSkinsEnabled, Source={x:Static p:Settings.Default}}" Value="False">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </InkCanvas.Style>
+            </InkCanvas>
+            <InkCanvas Grid.Row="0" Strokes="{Binding NextFrameStrokes}" Panel.ZIndex="20001">
+                <InkCanvas.CacheMode>
+                    <BitmapCache RenderAtScale="{Binding ZoomLevel}"/>
+                </InkCanvas.CacheMode>
+                <InkCanvas.Style>
+                    <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource OnionSkinInkCanvasStyle}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsShowNextOnionSkinsEnabled, Source={x:Static p:Settings.Default}}" Value="False">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </InkCanvas.Style>
+            </InkCanvas>
+        </Grid>
+        <!--End of Onionskin definition-->
     </Grid>
 </UserControl>
