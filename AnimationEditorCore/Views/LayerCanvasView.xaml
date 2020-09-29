@@ -24,7 +24,8 @@
         </Style>
     </UserControl.Style>
     <Grid x:Name="CanvasGrid">
-        <ItemsControl ItemsSource="{Binding SelectedFrames}" Background="White">
+        <local:LayeredFrameView FrameLayers="{Binding SelectedFrames}"/>
+        <!--<ItemsControl ItemsSource="{Binding SelectedFrames}" Background="White">
             <ItemsControl.Resources>
                 <DataTemplate DataType="{x:Type ViewModels:FrameViewModel}">
                     <InkCanvas x:Name="LayerCanvas" Strokes="{Binding StrokeCollection}" Background="{x:Null}" DefaultDrawingAttributes="{Binding DrawingAttributes, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}">
@@ -43,18 +44,6 @@
                                     <Setter Property="Panel.ZIndex" Value="{Binding LayerViewModel.EffectiveIndex}"/>
                                     <Setter Property="IsHitTestVisible" Value="{Binding LayerViewModel.IsAcceptingInput}"/>
                                 </Style.Setters>
-
-                                <!--<Setter Property="EditingMode" Value="None"/>-->
-                                <!--
-                            <Setter Property="IsHitTestVisible" Value="False"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding LayerViewModel.IsVisible}" Value="False">
-                            -->
-                                <!--<Setter Property="EditingMode" Value="None"/>-->
-                                <!--
-                            <Setter Property="IsHitTestVisible" Value="False"/>
-                        </DataTrigger>
-                    </Style.Triggers>-->
                             </Style>
                         </InkCanvas.Style>
                     </InkCanvas>
@@ -65,7 +54,7 @@
                     <Grid/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-        </ItemsControl>
+        </ItemsControl>-->
         <!--It might be better to have these onionskins defined someplace else, but I don't know yet. THey still aren't working-->
         <Grid Grid.Row="0" IsHitTestVisible="False" Background="Transparent" Panel.ZIndex="20000">
             <!--<InkCanvas Grid.Row="0" Strokes="{Binding PreviousFrameStrokes}">
