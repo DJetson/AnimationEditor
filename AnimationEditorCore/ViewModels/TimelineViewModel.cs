@@ -52,6 +52,11 @@ namespace AnimationEditorCore.ViewModels
             }
         }
 
+        public string CurrentIndexOutOfFrameCount
+        {
+            get => $"{SelectedFrameIndex}/{LastFrameIndex}";
+        }
+
         private int _SelectedFrameIndex = 0;
         public int SelectedFrameIndex
         {
@@ -59,7 +64,10 @@ namespace AnimationEditorCore.ViewModels
             set
             {
                 _SelectedFrameIndex = value;
-                NotifyPropertiesChanged(nameof(SelectedFrameIndex), nameof(PreviousFrameStrokes), nameof(NextFrameStrokes));
+                NotifyPropertiesChanged(nameof(SelectedFrameIndex), 
+                                        nameof(PreviousFrameStrokes), 
+                                        nameof(NextFrameStrokes),
+                                        nameof(CurrentIndexOutOfFrameCount));
                 UpdateSelectedFrames();
                 //foreach(var layer in Layers)
                 //{
@@ -482,7 +490,8 @@ namespace AnimationEditorCore.ViewModels
                 _FrameCount = value;
                 NotifyPropertiesChanged(nameof(FrameCount),
                                         nameof(LastFrameIndex),
-                                        nameof(ScrubberLength));
+                                        nameof(ScrubberLength),
+                                        nameof(CurrentIndexOutOfFrameCount));
             }
         }
 
