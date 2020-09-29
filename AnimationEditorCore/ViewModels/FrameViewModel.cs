@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Windows.Input;
 
@@ -287,6 +288,28 @@ namespace AnimationEditorCore.ViewModels
         //    }
         //}
 
+        private DelegateCommand _UpdateSelectedStrokes;
+        public DelegateCommand UpdateSelectedStrokes
+        {
+            get { return _UpdateSelectedStrokes; }
+            set { _UpdateSelectedStrokes = value; NotifyPropertyChanged(); }
+        }
+
+        private bool UpdateSelectedStrokes_CanExecute(object parameter)
+        {
+            if (!(parameter is InkCanvas Parameter))
+                return false;
+
+            return true;
+        }
+
+        private void UpdateSelectedStrokes_Execute(object parameter)
+        {
+            var Parameter = parameter as InkCanvas;
+
+            SelectedStrokes = Parameter.GetSelectedStrokes();
+        }
+
         public FrameViewModel(Models.FrameModel model, WorkspaceViewModel workspace)
         {
             WorkspaceViewModel = workspace;
@@ -294,8 +317,14 @@ namespace AnimationEditorCore.ViewModels
             //StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
             //Layers = new ObservableCollection<LayerViewModel>(model.Layers.Select(e => new LayerViewModel(e, this)));
             Order = model.Order;
+            InitializeCommands();
             //ActiveLayer = Layers[model.ActiveLayerIndex];
             //FlattenStrokesForPlayback();
+        }
+
+        public void InitializeCommands()
+        {
+            UpdateSelectedStrokes = new DelegateCommand(UpdateSelectedStrokes_CanExecute, UpdateSelectedStrokes_Execute);
         }
 
         public MultiState CreateUndoState(string title)
@@ -374,6 +403,7 @@ namespace AnimationEditorCore.ViewModels
 
         public FrameViewModel(LayerViewModel layer, int orderId)
         {
+            InitializeCommands();
             LayerViewModel = layer;
             Order = orderId;
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
