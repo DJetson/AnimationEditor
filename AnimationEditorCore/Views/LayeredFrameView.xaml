@@ -27,7 +27,13 @@
                                     <Setter Property="EditingMode" Value="{Binding EditingMode, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}"/>
                                     <Setter Property="Panel.ZIndex" Value="{Binding LayerViewModel.EffectiveIndex}"/>
                                     <Setter Property="IsHitTestVisible" Value="{Binding LayerViewModel.IsAcceptingInput}"/>
+                                    <Setter Property="Visibility" Value="Visible"/>
                                 </Style.Setters>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding LayerViewModel.IsVisible}" Value="False">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
                             </Style>
                         </InkCanvas.Style>
                     </InkCanvas>
