@@ -1,5 +1,6 @@
 ﻿using AnimationEditorCore.BaseClasses;
 using AnimationEditorCore.Interfaces;
+using AnimationEditorCore.Utilities;
 using AnimationEditorCore.ViewModels.StateObjects;
 using System;
 using System.Collections.Generic;
@@ -390,6 +391,7 @@ namespace AnimationEditorCore.ViewModels
             var newFrame = new FrameViewModel(newLayer, 0);
             newLayer.AddFrameAtIndex(newFrame, 0);
             AddLayerAtIndex(newLayer, 0);
+            FrameCount = GetFrameCountOfLongestLayer();
             SelectedFrameIndex = 0;
             ActiveLayer = newLayer;
             var undoStates = new List<UndoStateViewModel>();
@@ -428,6 +430,13 @@ namespace AnimationEditorCore.ViewModels
 
         public void AddLayerAtIndex(LayerViewModel layer, int index, bool createUndoState = true)
         {
+            if(String.IsNullOrWhiteSpace(layer.DisplayName))
+            {
+                layer.DisplayName = FileUtilities.GetUniqueNameForCollection(Layers.Select(e => e.DisplayName).ToList(), $"Layer {Layers?.Count ?? 0}");
+            }
+
+            //ForceUniqueLayerName(layer);
+
             if (index < 0)
             {
                 Layers.Insert(0, layer);
@@ -491,7 +500,8 @@ namespace AnimationEditorCore.ViewModels
         public int GetFrameCountOfLongestLayer(bool ExcludeHiddenLayers = false)
         {
             List<LayerViewModel> layers = null;
-
+            //int currentMax = Layers.SelectMany(e => e.Frames).Select(f => f.Order).Max();
+            //return currentMax;
             if (ExcludeHiddenLayers)
             {
                 layers = GetVisibleLayers();

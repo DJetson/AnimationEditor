@@ -23,5 +23,20 @@ namespace AnimationEditorCore.Utilities
 
             return result;
         }
+
+        public static string GetUniqueNameForCollection(List<string> items, string desiredName)
+        {
+            string tempName = desiredName;
+            int duplicateCount = 0;
+            string CopyString = "-Copy";
+            string result = tempName;
+            while (items.Contains(result))
+            {
+                duplicateCount++;
+                result = $"{tempName}{CopyString} {duplicateCount}";
+            }
+
+            return result;
+        }
     }
 }
