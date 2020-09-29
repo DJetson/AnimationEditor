@@ -34,7 +34,13 @@ namespace AnimationEditorCore.ViewModels
         public bool IsVisible
         {
             get { return _IsVisible; }
-            set { _IsVisible = value; NotifyPropertiesChanged(nameof(IsVisible), nameof(IsAcceptingInput)); }
+            set 
+            { 
+                _IsVisible = value; 
+                NotifyPropertiesChanged(nameof(IsVisible), nameof(IsAcceptingInput));
+                TimelineViewModel.NotifyPropertiesChanged(nameof(TimelineViewModel.PreviousFrameStrokes),
+                                                          nameof(TimelineViewModel.NextFrameStrokes));
+            }
         }
 
         private bool _IsActive;

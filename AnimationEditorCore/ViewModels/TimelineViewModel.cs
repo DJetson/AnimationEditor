@@ -94,7 +94,7 @@ namespace AnimationEditorCore.ViewModels
                 if (NextFrame == null)
                     return new StrokeCollection();
 
-                var strokes = FlattenFrames(NextFrame.ToList()).Clone();
+                var strokes = FlattenFrames(NextFrame.ToList(),true).Clone();
                 foreach (var item in strokes)
                 {
                     item.DrawingAttributes.IsHighlighter = true;
@@ -111,7 +111,7 @@ namespace AnimationEditorCore.ViewModels
                 if (PreviousFrame == null)
                     return new StrokeCollection();
 
-                var strokes = FlattenFrames(PreviousFrame.ToList()).Clone();
+                var strokes = FlattenFrames(PreviousFrame.ToList(),true).Clone();
                 foreach (var item in strokes)
                 {
                     item.DrawingAttributes.IsHighlighter = true;
@@ -121,11 +121,16 @@ namespace AnimationEditorCore.ViewModels
             }
         }
 
-        public StrokeCollection FlattenFrames(List<FrameViewModel> frames)
+        public StrokeCollection FlattenFrames(List<FrameViewModel> frames, bool ExcludeHiddenLayers = false)
         {
             var strokes = new StrokeCollection();
+            List<FrameViewModel> flattenFrames = frames;
+            if (ExcludeHiddenLayers)
+            {
+                flattenFrames = frames.Where(e => e.LayerViewModel.IsVisible).ToList();
+            }
 
-            foreach(var frame in frames)
+            foreach (var frame in flattenFrames)
             {
                 strokes.Add(frame.StrokeCollection);
             }
