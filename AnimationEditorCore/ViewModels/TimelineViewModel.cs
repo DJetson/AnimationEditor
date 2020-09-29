@@ -652,11 +652,11 @@ namespace AnimationEditorCore.ViewModels
             {
                 Layers.Add(layer.Clone());
             }
+            
+            FrameCount = GetFrameCountOfLongestLayer();
 
             ActiveLayer = Layers[Memento.Layers.IndexOf(Memento.ActiveLayer)];
             SelectedFrameIndex = Memento.SelectedFrameIndex;
-
-            FrameCount = GetFrameCountOfLongestLayer();
         }
     }
 }

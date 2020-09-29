@@ -67,8 +67,8 @@
             </ItemsControl.ItemsPanel>
         </ItemsControl>
         <!--It might be better to have these onionskins defined someplace else, but I don't know yet. THey still aren't working-->
-        <Grid Grid.Row="0" IsHitTestVisible="False" Panel.ZIndex="20000">
-            <InkCanvas Grid.Row="0" Strokes="{Binding PreviousFrameStrokes}">
+        <Grid Grid.Row="0" IsHitTestVisible="False" Background="Transparent" Panel.ZIndex="20000">
+            <!--<InkCanvas Grid.Row="0" Strokes="{Binding PreviousFrameStrokes}">
                 <InkCanvas.CacheMode>
                     <BitmapCache RenderAtScale="{Binding TimelineViewModel.WorkspaceViewModel.ZoomLevel}"/>
                 </InkCanvas.CacheMode>
@@ -81,8 +81,41 @@
                         </Style.Triggers>
                     </Style>
                 </InkCanvas.Style>
-            </InkCanvas>
-            <InkCanvas Grid.Row="0" Strokes="{Binding NextFrameStrokes}" Panel.ZIndex="20001">
+            </InkCanvas>-->
+            <local:OnionSkinView IsOnionSkinEnabled="{Binding IsShowPreviousOnionSkinsEnabled, Source={x:Static p:Settings.Default}}"
+                                 OnionSkinStrokes="{Binding PreviousFrameStrokes}" 
+                                 ZoomLevel="{Binding ZoomLevel}"
+                                 MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" 
+                                 MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}"/>
+            <local:OnionSkinView IsOnionSkinEnabled="{Binding IsShowNextOnionSkinsEnabled, Source={x:Static p:Settings.Default}}"
+                                 OnionSkinStrokes="{Binding NextFrameStrokes}" 
+                                 ZoomLevel="{Binding ZoomLevel}"
+                                 MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" 
+                                 MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}"/>
+            <!--<local:OnionSkinView.Style>
+                    <Style TargetType="{x:Type local:OnionSkinView}">
+                        <Style.Setters>
+                            <Setter Property="MaxHeight" Value="{Binding ActualHeight, ElementName=CanvasGrid}"/>
+                            <Setter Property="MaxWidth" Value="{Binding ActualWidth, ElementName=CanvasGrid}"/>
+                        </Style.Setters>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsShowPreviousOnionSkinsEnabled, Source={x:Static p:Settings.Default}}" Value="False">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding AnimationPlaybackViewModel.IsPlaybackActive}" Value="True">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </local:OnionSkinView.Style>-->
+
+
+            <!--<local:OnionSkinView DataContext="{Binding }" OnionSkinStrokes="{Binding NextFrameStrokes}" Panel.ZIndex="20001"
+                                 ZoomLevel="{Binding ZoomLevel}"
+                                 IsOnionSkinEnabled="{Binding IsShowNextOnionSkinsEnabled, Source={x:Static p:Settings.Default}}"
+                                 MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}"/>-->
+
+            <!--<InkCanvas Grid.Row="0" Strokes="{Binding NextFrameStrokes}" Panel.ZIndex="20001">
                 <InkCanvas.CacheMode>
                     <BitmapCache RenderAtScale="{Binding ZoomLevel}"/>
                 </InkCanvas.CacheMode>
@@ -95,7 +128,7 @@
                         </Style.Triggers>
                     </Style>
                 </InkCanvas.Style>
-            </InkCanvas>
+            </InkCanvas>-->
         </Grid>
         <!--End of Onionskin definition-->
     </Grid>
