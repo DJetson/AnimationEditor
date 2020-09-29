@@ -321,6 +321,69 @@ namespace AnimationEditorCore.ViewModels
             set { _AddBlankLayer = value; NotifyPropertyChanged(); }
         }
 
+        #region DuplicateCurrentFrame Command
+        private DelegateCommand _DuplicateCurrentFrame;
+        public DelegateCommand DuplicateCurrentFrame
+        {
+            get { return _DuplicateCurrentFrame; }
+            set { _DuplicateCurrentFrame = value; NotifyPropertyChanged(); }
+        }
+
+        public bool DuplicateCurrentFrame_CanExecute(object parameter)
+        {
+            if (AnimationPlaybackViewModel.IsPlaybackActive)
+                return false;
+
+            if (Enum.TryParse<FrameNavigation>(parameter.ToString(), out FrameNavigation Parameter) == false)
+                return false;
+
+            if (Parameter == FrameNavigation.Current || Parameter == FrameNavigation.Start || Parameter == FrameNavigation.End)
+                return false;
+
+            return true;
+        }
+
+        public void DuplicateCurrentFrame_Execute(object parameter)
+        {
+            var Parameter = (FrameNavigation)Enum.Parse(typeof(FrameNavigation), parameter.ToString());
+            
+            int insertAtIndex = SelectedFrameIndex;
+            var newFrames = SelectedFrames;
+
+            switch (Parameter)
+            {
+                case FrameNavigation.Previous:
+                    insertAtIndex = SelectedFrameIndex;
+                    break;
+                case FrameNavigation.Next:
+                    insertAtIndex = SelectedFrameIndex + 1;
+                    break;
+            }
+
+            var undoStates = new List<UndoStateViewModel>();
+
+            foreach (var layer in Layers)
+            {
+                var newFrame = SelectedFrames.Where(e => e.LayerViewModel == layer).FirstOrDefault().Clone();
+
+                layer.AddFrameAtIndex(newFrame, insertAtIndex);
+                FrameCount = Math.Max(layer.Frames.Count, FrameCount);
+
+                layer.SelectedFrameIndex = insertAtIndex;
+
+                undoStates.Add(newFrame.SaveState() as FrameState);
+                undoStates.Add(layer.SaveState() as LayerState);
+            }
+
+            if (insertAtIndex <= SelectedFrameIndex)
+                SelectedFrameIndex++;
+
+            SelectedFrameIndex = insertAtIndex;
+
+            PushUndoRecord(CreateUndoState("Duplicate Frame", undoStates));
+        }
+        #endregion DuplicateCurrentFrame Command
+
         #region DeleteCurrentFrame Command
         private DelegateCommand _DeleteCurrentFrame;
         public DelegateCommand DeleteCurrentFrame
@@ -400,6 +463,8 @@ namespace AnimationEditorCore.ViewModels
             AddBlankLayer = new DelegateCommand("Add Blank Layer", AddBlankLayer_CanExecute, AddBlankLayer_Execute);
             PlayAnimation = new DelegateCommand("Play Animation", PlayAnimation_CanExecute, PlayAnimation_Execute);
             StopAnimation = new DelegateCommand("Stop Animation", StopAnimation_CanExecute, StopAnimation_Execute);
+            DuplicateCurrentFrame = new DelegateCommand("Duplicate Frame", DuplicateCurrentFrame_CanExecute, DuplicateCurrentFrame_Execute);
+
         }
 
         public void InitializeTimeline()
