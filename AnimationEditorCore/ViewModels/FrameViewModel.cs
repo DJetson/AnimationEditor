@@ -308,6 +308,7 @@ namespace AnimationEditorCore.ViewModels
             var Parameter = parameter as InkCanvas;
 
             SelectedStrokes = Parameter.GetSelectedStrokes();
+            Console.WriteLine($"Selected {SelectedStrokes.Count} Strokes on Frame {Order}");
         }
 
         public FrameViewModel(Models.FrameModel model, WorkspaceViewModel workspace)
@@ -353,14 +354,23 @@ namespace AnimationEditorCore.ViewModels
             var Memento = (memento as FrameState);
 
             StrokeCollection.StrokesChanged -= StrokeCollection_StrokesChanged;
-            StrokeCollection = new StrokeCollection();
+            
+            //This should really be happening when a state is pushed rather than when its loaded
+            foreach(var stroke in Memento.StrokeCollection)
+            {
+                stroke.StylusPointsChanged -= Stroke_StylusPointsChanged;
+            }
 
+            StrokeCollection.Clear();
+            var loadedStrokes = new StrokeCollection();
             foreach(var stroke in Memento.StrokeCollection)
             {
                 var newStroke = stroke.Clone();
                 newStroke.StylusPointsChanged += Stroke_StylusPointsChanged;
-                StrokeCollection.Add(newStroke);
+                loadedStrokes.Add(newStroke);
             }
+            
+            StrokeCollection = new StrokeCollection(loadedStrokes);
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
 
             Order = Memento.Order;
@@ -375,9 +385,10 @@ namespace AnimationEditorCore.ViewModels
             foreach (var stroke in StrokeCollection)
             {
                 var newStroke = stroke.Clone();
-                newStroke.StylusPointsChanged += Stroke_StylusPointsChanged;
+                newStroke.StylusPointsChanged += newFrame.Stroke_StylusPointsChanged;
                 newFrame.StrokeCollection.Add(newStroke);
             }
+
 
             newFrame.StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
 
@@ -407,6 +418,39 @@ namespace AnimationEditorCore.ViewModels
             LayerViewModel = layer;
             Order = orderId;
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
+        }
+
+        public FrameViewModel(FrameViewModel originalFrame)
+        {
+            InitializeCommands();
+            LayerViewModel = originalFrame.LayerViewModel;
+            Order = originalFrame.Order;
+            DisplayName = originalFrame.DisplayName;
+            StrokeCollection = new StrokeCollection();
+            foreach(var stroke in originalFrame.StrokeCollection)
+            {
+                var newStroke = stroke.Clone();
+                newStroke.StylusPointsChanged += Stroke_StylusPointsChanged;
+                StrokeCollection.Add(newStroke);
+            }
+            StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
+        }
+
+        public static FrameViewModel DuplicateFrame(FrameViewModel original, int newOrder = -1, string newDisplayName = "")
+        {
+            var newFrame = new FrameViewModel(original);
+
+            if(newOrder != -1)
+            {
+                newFrame.Order = newOrder;
+            }
+
+            if(!(String.IsNullOrWhiteSpace(newDisplayName)))
+            {
+                newFrame.DisplayName = newDisplayName;
+            }
+
+            return newFrame;
         }
        
         private bool _IsErasing = false;

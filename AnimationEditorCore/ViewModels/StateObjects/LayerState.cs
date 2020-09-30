@@ -30,6 +30,7 @@ namespace AnimationEditorCore.ViewModels.StateObjects
 
         public override void LoadState()
         {
+            Console.WriteLine("Loading LayerState");
             LayerViewModel originator = Originator as LayerViewModel;
             originator.LoadState(this);
         }

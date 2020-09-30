@@ -27,6 +27,7 @@ namespace AnimationEditorCore.ViewModels.StateObjects
 
         public override void LoadState()
         {
+            Console.WriteLine("Loading TimelineState");
             TimelineViewModel originator = Originator as TimelineViewModel;
             originator.LoadState(this);
         }

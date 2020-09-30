@@ -365,6 +365,8 @@ namespace AnimationEditorCore.ViewModels
             var newLayer = new LayerViewModel(TimelineViewModel, LayerId);
             newLayer.DisplayName = DisplayName;
             newLayer.IsVisible = IsVisible;
+            newLayer.ArrangedZIndex = ArrangedZIndex;
+            newLayer.IsActive = IsActive;
 
             newLayer.Frames = new ObservableCollection<FrameViewModel>();
 
@@ -372,6 +374,8 @@ namespace AnimationEditorCore.ViewModels
             {
                 newLayer.Frames.Add(frame.Clone());
             }
+
+            newLayer.SelectedFrameIndex = SelectedFrameIndex;
 
             return newLayer;
         }

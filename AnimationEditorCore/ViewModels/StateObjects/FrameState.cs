@@ -16,8 +16,8 @@ namespace AnimationEditorCore.ViewModels.StateObjects
         public FrameState(FrameViewModel frame, string stateName = "") : base(frame, stateName)
         {
             Order = frame.Order;
-            StrokeCollection = new StrokeCollection(frame.StrokeCollection);
-            StrokeCollection.Clear();
+            StrokeCollection = new StrokeCollection();
+            //StrokeCollection.Clear();
             foreach (var stroke in frame.StrokeCollection)
             {
                 StrokeCollection.Add(stroke.Clone());
@@ -26,6 +26,7 @@ namespace AnimationEditorCore.ViewModels.StateObjects
 
         public override void LoadState()
         {
+            Console.WriteLine("Loading FrameState");
             FrameViewModel originator = Originator as FrameViewModel;
             originator.LoadState(this);
         }

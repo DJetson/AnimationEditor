@@ -64,8 +64,8 @@ namespace AnimationEditorCore.ViewModels
             set
             {
                 _SelectedFrameIndex = value;
-                NotifyPropertiesChanged(nameof(SelectedFrameIndex), 
-                                        nameof(PreviousFrameStrokes), 
+                NotifyPropertiesChanged(nameof(SelectedFrameIndex),
+                                        nameof(PreviousFrameStrokes),
                                         nameof(NextFrameStrokes),
                                         nameof(CurrentIndexOutOfFrameCount));
                 UpdateSelectedFrames();
@@ -94,7 +94,7 @@ namespace AnimationEditorCore.ViewModels
                 if (NextFrame == null)
                     return new StrokeCollection();
 
-                var strokes = FlattenFrames(NextFrame.ToList(),true).Clone();
+                var strokes = FlattenFrames(NextFrame.ToList(), true).Clone();
                 foreach (var item in strokes)
                 {
                     item.DrawingAttributes.IsHighlighter = true;
@@ -111,7 +111,7 @@ namespace AnimationEditorCore.ViewModels
                 if (PreviousFrame == null)
                     return new StrokeCollection();
 
-                var strokes = FlattenFrames(PreviousFrame.ToList(),true).Clone();
+                var strokes = FlattenFrames(PreviousFrame.ToList(), true).Clone();
                 foreach (var item in strokes)
                 {
                     item.DrawingAttributes.IsHighlighter = true;
@@ -310,6 +310,7 @@ namespace AnimationEditorCore.ViewModels
 
             SelectedFrameIndex = insertAtIndex;
 
+            undoStates.Add(SaveState() as TimelineState);
             PushUndoRecord(CreateUndoState("Add Frame", undoStates));
         }
 
@@ -346,9 +347,9 @@ namespace AnimationEditorCore.ViewModels
         public void DuplicateCurrentFrame_Execute(object parameter)
         {
             var Parameter = (FrameNavigation)Enum.Parse(typeof(FrameNavigation), parameter.ToString());
-            
+
             int insertAtIndex = SelectedFrameIndex;
-            var newFrames = SelectedFrames;
+            //var newFrames = SelectedFrames;
 
             switch (Parameter)
             {
@@ -362,17 +363,17 @@ namespace AnimationEditorCore.ViewModels
 
             var undoStates = new List<UndoStateViewModel>();
 
-            foreach (var layer in Layers)
+            foreach (var frame in SelectedFrames)
             {
-                var newFrame = SelectedFrames.Where(e => e.LayerViewModel == layer).FirstOrDefault().Clone();
+                var newFrame = FrameViewModel.DuplicateFrame(frame, insertAtIndex);
 
-                layer.AddFrameAtIndex(newFrame, insertAtIndex);
-                FrameCount = Math.Max(layer.Frames.Count, FrameCount);
+                newFrame.LayerViewModel.AddFrameAtIndex(newFrame, insertAtIndex);
+                FrameCount = Math.Max(newFrame.LayerViewModel.Frames.Count, FrameCount);
 
-                layer.SelectedFrameIndex = insertAtIndex;
+                newFrame.LayerViewModel.SelectedFrameIndex = insertAtIndex;
 
                 undoStates.Add(newFrame.SaveState() as FrameState);
-                undoStates.Add(layer.SaveState() as LayerState);
+                undoStates.Add(newFrame.LayerViewModel.SaveState() as LayerState);
             }
 
             if (insertAtIndex <= SelectedFrameIndex)
@@ -512,7 +513,7 @@ namespace AnimationEditorCore.ViewModels
 
         public void AddLayerAtIndex(LayerViewModel layer, int index, bool createUndoState = true)
         {
-            if(String.IsNullOrWhiteSpace(layer.DisplayName))
+            if (String.IsNullOrWhiteSpace(layer.DisplayName))
             {
                 layer.DisplayName = FileUtilities.GetUniqueNameForCollection(Layers.Select(e => e.DisplayName).ToList(), $"Layer {Layers?.Count ?? 0}");
             }
@@ -735,7 +736,7 @@ namespace AnimationEditorCore.ViewModels
             {
                 Layers.Add(layer.Clone());
             }
-            
+
             FrameCount = GetFrameCountOfLongestLayer();
 
             ActiveLayer = Layers[Memento.Layers.IndexOf(Memento.ActiveLayer)];
