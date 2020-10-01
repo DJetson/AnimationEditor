@@ -310,7 +310,7 @@ namespace AnimationEditorCore.ViewModels
 
             SelectedFrameIndex = insertAtIndex;
 
-            undoStates.Add(SaveState() as TimelineState);
+            //undoStates.Add(SaveState() as TimelineState);
             PushUndoRecord(CreateUndoState("Add Frame", undoStates));
         }
 
@@ -456,6 +456,30 @@ namespace AnimationEditorCore.ViewModels
             WorkspaceViewModel = workspace;
             InitializeTimeline();
             InitializeCommands();
+        }
+
+        public TimelineViewModel(TimelineViewModel originalTimeline)
+        {
+            InitializeCommands();
+            WorkspaceViewModel = originalTimeline.WorkspaceViewModel;
+
+            AnimationPlaybackViewModel = originalTimeline.AnimationPlaybackViewModel;
+            DisplayName = originalTimeline.DisplayName;
+            FrameCount = originalTimeline.FrameCount;
+            FramesPerSecond = originalTimeline.FramesPerSecond;
+            FrameWidth = originalTimeline.FrameWidth;
+
+            Layers = new ObservableCollection<LayerViewModel>();
+            foreach(var layer in originalTimeline.Layers)
+            {
+                var clonedLayer = layer.Clone();
+                clonedLayer.TimelineViewModel = this;
+                Layers.Add(clonedLayer);
+            }
+
+            SelectedFrameIndex = originalTimeline.SelectedFrameIndex;
+            ActiveLayer = Layers[originalTimeline.Layers.IndexOf(originalTimeline.ActiveLayer)];
+
         }
 
         public void InitializeCommands()
@@ -726,21 +750,56 @@ namespace AnimationEditorCore.ViewModels
             return memento;
         }
 
+        public void ClearLayers()
+        {
+            foreach (var layer in Layers)
+            {
+                layer.ClearFrames();
+            }
+
+            Layers.Clear();
+        }
+
+        public static void CopyToTimeline(TimelineViewModel original, TimelineViewModel destination)
+        {
+            destination.ClearLayers();
+
+            destination.WorkspaceViewModel = original.WorkspaceViewModel;
+
+            destination.AnimationPlaybackViewModel = original.AnimationPlaybackViewModel;
+            destination.DisplayName = original.DisplayName;
+            destination.FrameCount = original.FrameCount;
+            destination.FramesPerSecond = original.FramesPerSecond;
+            destination.FrameWidth = original.FrameWidth;
+
+            destination.Layers = new ObservableCollection<LayerViewModel>();
+            foreach (var layer in original.Layers)
+            {
+                var clonedLayer = layer.Clone();
+                clonedLayer.TimelineViewModel = destination;
+                destination.Layers.Add(clonedLayer);
+            }
+
+            destination.SelectedFrameIndex = original.SelectedFrameIndex;
+            destination.ActiveLayer = destination.Layers[original.Layers.IndexOf(original.ActiveLayer)];
+        }
+
         public void LoadState(IMemento state)
         {
             var Memento = (state as TimelineState);
-            ActiveLayer = null;
-            Layers = new ObservableCollection<LayerViewModel>();
+            //ActiveLayer = null;
+            //Layers = new ObservableCollection<LayerViewModel>();
 
-            foreach (var layer in Memento.Layers)
-            {
-                Layers.Add(layer.Clone());
-            }
+            //foreach (var layer in Memento.Layers)
+            //{
+            //    Layers.Add(layer.Clone());
+            //}
 
-            FrameCount = GetFrameCountOfLongestLayer();
+            //FrameCount = GetFrameCountOfLongestLayer();
 
-            ActiveLayer = Layers[Memento.Layers.IndexOf(Memento.ActiveLayer)];
-            SelectedFrameIndex = Memento.SelectedFrameIndex;
+            //ActiveLayer = Layers[Memento.Layers.IndexOf(Memento.ActiveLayer)];
+            //SelectedFrameIndex = Memento.SelectedFrameIndex;
+            CopyToTimeline(Memento.Timeline, this);
         }
     }
 }

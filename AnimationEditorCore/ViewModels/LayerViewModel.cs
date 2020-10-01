@@ -23,12 +23,12 @@ namespace AnimationEditorCore.ViewModels
             set { Console.WriteLine($"Setting StrokeCollection [OldCount={_StrokeCollection.Count} New={value.Count}]"); _StrokeCollection = value; NotifyPropertyChanged(); }
         }
 
-        private StrokeCollection _SelectedStrokes = new StrokeCollection();
-        public StrokeCollection SelectedStrokes
-        {
-            get { return _SelectedStrokes; }
-            set { _SelectedStrokes = value; NotifyPropertyChanged(); }
-        }
+        //private StrokeCollection _SelectedStrokes = new StrokeCollection();
+        //public StrokeCollection SelectedStrokes
+        //{
+        //    get { return _SelectedStrokes; }
+        //    set { _SelectedStrokes = value; NotifyPropertyChanged(); }
+        //}
 
         private bool _IsVisible = true;
         public bool IsVisible
@@ -83,18 +83,18 @@ namespace AnimationEditorCore.ViewModels
         }
 
 
-        private FrameViewModel _FrameViewModel;
-        public FrameViewModel FrameViewModel
-        {
-            get { return _FrameViewModel; }
-            set { _FrameViewModel = value; NotifyPropertyChanged(); }
-        }
+        //private FrameViewModel _FrameViewModel;
+        //public FrameViewModel FrameViewModel
+        //{
+        //    get { return _FrameViewModel; }
+        //    set { _FrameViewModel = value; NotifyPropertyChanged(); }
+        //}
 
         int _StrokeMultiSelectOpCounter = 0;
 
         public void InitializeCommands()
         {
-            UpdateSelectedStrokes = new DelegateCommand(UpdateSelectedStrokes_CanExecute, UpdateSelectedStrokes_Execute);
+            //UpdateSelectedStrokes = new DelegateCommand(UpdateSelectedStrokes_CanExecute, UpdateSelectedStrokes_Execute);
         }
 
         private bool UpdateSelectedStrokes_CanExecute(object parameter)
@@ -105,12 +105,12 @@ namespace AnimationEditorCore.ViewModels
             return true;
         }
 
-        private void UpdateSelectedStrokes_Execute(object parameter)
-        {
-            var Parameter = parameter as InkCanvas;
+        //private void UpdateSelectedStrokes_Execute(object parameter)
+        //{
+        //    var Parameter = parameter as InkCanvas;
 
-            SelectedStrokes = Parameter.GetSelectedStrokes();
-        }
+        //    SelectedStrokes = Parameter.GetSelectedStrokes();
+        //}
 
         #region Refactor
         private TimelineViewModel _TimelineViewModel;
@@ -133,6 +133,30 @@ namespace AnimationEditorCore.ViewModels
             InitializeCommands();
             LayerId = zIndex;
             DisplayName = displayName;
+        }
+
+        public LayerViewModel(LayerViewModel originalLayer)
+        {
+            InitializeCommands();
+            TimelineViewModel = originalLayer.TimelineViewModel;
+            LayerId = originalLayer.LayerId;
+            ArrangedZIndex = originalLayer.ArrangedZIndex;
+            IsVisible = originalLayer.IsVisible;
+            DisplayName = originalLayer.DisplayName;
+
+            Frames = new ObservableCollection<FrameViewModel>();
+
+            foreach(var frame in originalLayer.Frames)
+            {
+                var clonedFrame = frame.Clone();
+                clonedFrame.LayerViewModel = this;
+                Frames.Add(clonedFrame);
+            }
+
+            SelectedFrameIndex = originalLayer.SelectedFrameIndex;
+            SelectedFrame = Frames[SelectedFrameIndex];
+
+            IsActive = originalLayer.IsActive;
         }
 
         public void AddFrameAtIndex(FrameViewModel frame, int index)
@@ -241,7 +265,7 @@ namespace AnimationEditorCore.ViewModels
         public LayerViewModel(Models.LayerModel model, FrameViewModel frame)
         {
             InitializeCommands();
-            FrameViewModel = frame;
+            //FrameViewModel = frame;
             DisplayName = model.DisplayName;
             IsVisible = model.IsVisible;
             LayerId = model.LayerId;
@@ -253,18 +277,26 @@ namespace AnimationEditorCore.ViewModels
             //}
         }
 
-        public MultiState CreateUndoState(string title)
+        public MultiState CreateUndoState(string title, List<UndoStateViewModel> additionalStates = null)
         {
-            var parentState = FrameViewModel.SaveState() as FrameState;
             var state = SaveState() as LayerState;
-            var multiState = new MultiState(null, title, state, parentState);
+            if (additionalStates != null)
+            {
+                var allStates = new List<UndoStateViewModel>();
+                allStates.Add(state);
+                allStates.AddRange(additionalStates);
 
-            return multiState;
+                return new MultiState(null, title, allStates);
+            }
+            else
+            {
+                return new MultiState(null, title, state);
+            }
         }
 
         public void PushUndoRecord(UndoStateViewModel nextState, bool raiseChangedFlag = true)
         {
-            FrameViewModel.WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(nextState, raiseChangedFlag);
+            TimelineViewModel.WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(nextState, raiseChangedFlag);
         }
 
         private bool _IsErasing = false;
@@ -343,39 +375,76 @@ namespace AnimationEditorCore.ViewModels
             return memento;
         }
 
+        //Cleans up all of the delegate assignments in the Strokes and StrokeCollections 
+        //on each Frame in this layer
+        public void ClearFrames()
+        {
+            foreach (var frame in Frames)
+            {
+                frame.ClearStrokes();
+            }
+
+            Frames.Clear();
+        }
+
+        public static void CopyToLayer(LayerViewModel original, LayerViewModel destination)
+        {
+            destination.ClearFrames();
+
+            destination.TimelineViewModel = original.TimelineViewModel;
+            destination.LayerId = original.LayerId;
+            destination.ArrangedZIndex = original.ArrangedZIndex;
+            destination.IsVisible = original.IsVisible;
+            destination.DisplayName = original.DisplayName;
+
+            destination.Frames = new ObservableCollection<FrameViewModel>();
+
+            foreach (var frame in original.Frames)
+            {
+                var clonedFrame = frame.Clone();
+                clonedFrame.LayerViewModel = destination;
+                destination.Frames.Add(clonedFrame);
+            }
+
+            destination.SelectedFrameIndex = original.SelectedFrameIndex;
+            destination.SelectedFrame = destination.Frames[destination.SelectedFrameIndex];
+            destination.IsActive = original.IsActive;
+        }
+
         public void LoadState(IMemento memento)
         {
             var Memento = (memento as LayerState);
 
-            LayerId = Memento.LayerId;
-            DisplayName = Memento.DisplayName;
-            IsVisible = Memento.IsVisible;
-            IsActive = Memento.IsActive;
+            //LayerId = Memento.LayerId;
+            //DisplayName = Memento.DisplayName;
+            //IsVisible = Memento.IsVisible;
+            //IsActive = Memento.IsActive;
 
-            Frames = new ObservableCollection<FrameViewModel>();
+            //Frames = new ObservableCollection<FrameViewModel>();
 
-            foreach (var frame in Memento.Frames)
-            {
-                Frames.Add(frame.Clone());
-            }
+            //foreach (var frame in Memento.Frames)
+            //{
+            //    Frames.Add(frame.Clone());
+            //}
+            CopyToLayer(Memento.Layer, this);
         }
 
         public LayerViewModel Clone()
         {
-            var newLayer = new LayerViewModel(TimelineViewModel, LayerId);
-            newLayer.DisplayName = DisplayName;
-            newLayer.IsVisible = IsVisible;
-            newLayer.ArrangedZIndex = ArrangedZIndex;
-            newLayer.IsActive = IsActive;
+            var newLayer = new LayerViewModel(this);
+            //newLayer.DisplayName = DisplayName;
+            //newLayer.IsVisible = IsVisible;
+            //newLayer.ArrangedZIndex = ArrangedZIndex;
+            //newLayer.IsActive = IsActive;
 
-            newLayer.Frames = new ObservableCollection<FrameViewModel>();
+            //newLayer.Frames = new ObservableCollection<FrameViewModel>();
 
-            foreach (var frame in Frames)
-            {
-                newLayer.Frames.Add(frame.Clone());
-            }
+            //foreach (var frame in Frames)
+            //{
+            //    newLayer.Frames.Add(frame.Clone());
+            //}
 
-            newLayer.SelectedFrameIndex = SelectedFrameIndex;
+            //newLayer.SelectedFrameIndex = SelectedFrameIndex;
 
             return newLayer;
         }

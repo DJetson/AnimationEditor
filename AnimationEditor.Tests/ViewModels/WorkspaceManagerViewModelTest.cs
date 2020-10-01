@@ -94,9 +94,8 @@ namespace AnimationEditorCore.ViewModels
 
             LayerViewModel activeLayer = workspace.TimelineViewModel.ActiveLayer;
 
-            var stroke = activeLayer.StrokeCollection[0];
-
-            activeLayer.SelectedStrokes = activeLayer.StrokeCollection;
+            var stroke = activeLayer.SelectedFrame.StrokeCollection[0];
+            activeLayer.SelectedFrame.SelectedStrokes = activeLayer.SelectedFrame.StrokeCollection;
 
             stroke.Transform(new System.Windows.Media.TranslateTransform(offsetX: 1d, offsetY: 2d).Value, applyToStylusTip: false);
 

@@ -328,11 +328,23 @@ namespace AnimationEditorCore.ViewModels
             UpdateSelectedStrokes = new DelegateCommand(UpdateSelectedStrokes_CanExecute, UpdateSelectedStrokes_Execute);
         }
 
-        public MultiState CreateUndoState(string title)
+        public MultiState CreateUndoState(string title, List<UndoStateViewModel> additionalStates = null)
         {
+            //var parentState = LayerViewModel.SaveState() as LayerState;
+            //additionalStates.Add(parentState);
             var state = SaveState() as FrameState;
-            var multiState = new MultiState(null, title, state);
-            return multiState;
+            if (additionalStates != null)
+            {
+                var allStates = new List<UndoStateViewModel>();
+                allStates.Add(state);
+                allStates.AddRange(additionalStates);
+
+                return new MultiState(null, title, allStates);
+            }
+            else
+            {
+                return new MultiState(null, title, state);
+            }
         }
 
         public void PushUndoRecord(UndoStateViewModel nextState, bool raiseChangedFlag = true)
@@ -349,48 +361,79 @@ namespace AnimationEditorCore.ViewModels
             return memento;
         }
 
-        public void LoadState(IMemento memento)
+        public void ClearStrokes()
         {
-            var Memento = (memento as FrameState);
-
-            StrokeCollection.StrokesChanged -= StrokeCollection_StrokesChanged;
-            
-            //This should really be happening when a state is pushed rather than when its loaded
-            foreach(var stroke in Memento.StrokeCollection)
+            foreach (var stroke in StrokeCollection)
             {
                 stroke.StylusPointsChanged -= Stroke_StylusPointsChanged;
             }
 
+            StrokeCollection.StrokesChanged -= StrokeCollection_StrokesChanged;
             StrokeCollection.Clear();
-            var loadedStrokes = new StrokeCollection();
-            foreach(var stroke in Memento.StrokeCollection)
+        }
+
+        public static void CopyToFrame(FrameViewModel original, FrameViewModel destination)
+        {
+            destination.ClearStrokes();
+
+            destination.LayerViewModel = original.LayerViewModel;
+            destination.Order = original.Order;
+            destination.DisplayName = original.DisplayName;
+
+            foreach (var stroke in original.StrokeCollection)
             {
                 var newStroke = stroke.Clone();
-                newStroke.StylusPointsChanged += Stroke_StylusPointsChanged;
-                loadedStrokes.Add(newStroke);
+                newStroke.StylusPointsChanged += destination.Stroke_StylusPointsChanged;
+                destination.StrokeCollection.Add(newStroke);
             }
-            
-            StrokeCollection = new StrokeCollection(loadedStrokes);
-            StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
 
-            Order = Memento.Order;
+            destination.StrokeCollection.StrokesChanged += destination.StrokeCollection_StrokesChanged;
+        }
+
+        public void LoadState(IMemento memento)
+        {
+            var Memento = (memento as FrameState);
+
+            //StrokeCollection.StrokesChanged -= StrokeCollection_StrokesChanged;
+
+            ////This should really be happening when a state is pushed rather than when its loaded
+            //foreach(var stroke in Memento.StrokeCollection)
+            //{
+            //    stroke.StylusPointsChanged -= Stroke_StylusPointsChanged;
+            //}
+
+            //StrokeCollection.Clear();
+            //var loadedStrokes = new StrokeCollection();
+            //foreach(var stroke in Memento.StrokeCollection)
+            //{
+            //    var newStroke = stroke.Clone();
+            //    newStroke.StylusPointsChanged += Stroke_StylusPointsChanged;
+            //    loadedStrokes.Add(newStroke);
+            //}
+
+            //StrokeCollection = new StrokeCollection(loadedStrokes);
+            //StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
+
+            //Order = Memento.Order;
+            CopyToFrame(Memento.Frame, this);
         }
 
         public FrameViewModel Clone()
         {
-            var newFrame = new FrameViewModel(LayerViewModel, Order);
+            var newFrame = new FrameViewModel(this);
+            //var newFrame = new FrameViewModel(LayerViewModel, Order);
 
-            newFrame.StrokeCollection = StrokeCollection.Clone();
+            //newFrame.StrokeCollection = StrokeCollection.Clone();
 
-            foreach (var stroke in StrokeCollection)
-            {
-                var newStroke = stroke.Clone();
-                newStroke.StylusPointsChanged += newFrame.Stroke_StylusPointsChanged;
-                newFrame.StrokeCollection.Add(newStroke);
-            }
+            //foreach (var stroke in StrokeCollection)
+            //{
+            //    var newStroke = stroke.Clone();
+            //    newStroke.StylusPointsChanged += newFrame.Stroke_StylusPointsChanged;
+            //    newFrame.StrokeCollection.Add(newStroke);
+            //}
 
 
-            newFrame.StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
+            //newFrame.StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
 
             return newFrame;
         }
