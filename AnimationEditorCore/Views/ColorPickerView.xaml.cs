@@ -52,7 +52,7 @@ namespace AnimationEditorCore.Views
         {
             LastSelectedColor = lastColor;
             SelectedColor = currentColor;
-
+            
             InitializeComponent();
         }
 
@@ -60,9 +60,9 @@ namespace AnimationEditorCore.Views
         {
             var ColorValue = (int)e.NewValue;
 
-            int newColorR = 0;
-            int newColorG = 0;
-            int newColorB = 0;
+            int newColorR;
+            int newColorG;
+            int newColorB;
 
             if (ColorValue <= 768)
             {
