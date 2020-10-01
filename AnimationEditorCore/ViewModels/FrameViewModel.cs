@@ -311,16 +311,22 @@ namespace AnimationEditorCore.ViewModels
             Console.WriteLine($"Selected {SelectedStrokes.Count} Strokes on Frame {Order}");
         }
 
-        public FrameViewModel(Models.FrameModel model, WorkspaceViewModel workspace)
+        public FrameViewModel(Models.FrameModel model, LayerViewModel layer)
         {
-            WorkspaceViewModel = workspace;
-            //StrokeCollection = model.StrokeCollection;
-            //StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
-            //Layers = new ObservableCollection<LayerViewModel>(model.Layers.Select(e => new LayerViewModel(e, this)));
+            LayerViewModel = layer;
+            
+            StrokeCollection = model.StrokeCollection;
+
+            foreach(var stroke in StrokeCollection)
+            {
+                stroke.StylusPointsChanged += Stroke_StylusPointsChanged;
+            }
+
+            StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
+
             Order = model.Order;
             InitializeCommands();
-            //ActiveLayer = Layers[model.ActiveLayerIndex];
-            //FlattenStrokesForPlayback();
+
         }
 
         public void InitializeCommands()

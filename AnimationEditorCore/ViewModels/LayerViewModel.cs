@@ -262,19 +262,19 @@ namespace AnimationEditorCore.ViewModels
         //    StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
         //}
 
-        public LayerViewModel(Models.LayerModel model, FrameViewModel frame)
+        public LayerViewModel(Models.LayerModel model, TimelineViewModel timeline)
         {
             InitializeCommands();
-            //FrameViewModel = frame;
+            TimelineViewModel = timeline;
             DisplayName = model.DisplayName;
             IsVisible = model.IsVisible;
             LayerId = model.LayerId;
-            StrokeCollection = model.StrokeCollection;
-            //StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
-            //foreach (var stroke in StrokeCollection)
-            //{
-            //    stroke.StylusPointsChanged += Stroke_StylusPointsChanged;
-            //}
+            ArrangedZIndex = model.ArrangedZIndex;
+
+            Frames = new ObservableCollection<FrameViewModel>(model.Frames.Select(e => new FrameViewModel(e,this)));
+
+            SelectedFrameIndex = model.SelectedFrameIndex;
+            IsActive = model.IsActive;
         }
 
         public TimelineState CreateUndoState(string title, List<UndoStateViewModel> additionalStates = null)

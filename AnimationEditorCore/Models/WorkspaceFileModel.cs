@@ -21,7 +21,7 @@ namespace AnimationEditorCore.Models
 
         public AnimationPropertiesModel AnimationProperties { get; set; }
 
-        public List<FrameModel> Frames { get; set; } = new List<FrameModel>();
+        public List<LayerModel> Layers { get; set; } = new List<LayerModel>();
 
         private System.Text.Json.JsonSerializerOptions JsonSerializerOptions { get; set; }
 
@@ -44,13 +44,13 @@ namespace AnimationEditorCore.Models
         {
             Filepath = workspaceViewModel.Filepath;
 
-            Frames.Clear();
+            Layers.Clear();
 
             //Frames = new ObservableCollection<FrameViewModel>();
-            //foreach (var item in workspaceViewModel.TimelineViewModel.Frames)
-            //{
-            //    Frames.Add(new FrameModel(item));
-            //}
+            foreach (var item in workspaceViewModel.TimelineViewModel.Layers)
+            {
+                Layers.Add(new LayerModel(item));
+            }
 
             //TODO: These should eventually be coming from the workspace VM
             CanvasProperties = new CanvasPropertiesModel();

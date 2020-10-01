@@ -9,9 +9,8 @@ namespace AnimationEditorCore.Models
 {
     public class FrameModel
     {
-        public List<LayerModel> Layers { get; set; }
         public int Order { get; set; }
-        public int ActiveLayerIndex { get; set; }
+        public StrokeCollection StrokeCollection { get; set; }
 
         public FrameModel()
         {
@@ -20,15 +19,13 @@ namespace AnimationEditorCore.Models
         public FrameModel(FrameViewModel frame)
         {
             Order = frame.Order;
-            //Layers = new List<LayerModel>(frame.Layers.Select(e => new LayerModel(e)));
-            //ActiveLayerIndex = frame.Layers.IndexOf(frame.ActiveLayer);
+            StrokeCollection = new StrokeCollection(frame.StrokeCollection);
         }
 
-        public FrameModel(Stream stream, int order, List<LayerViewModel> layers, int activeLayerIndex)
+        public FrameModel(Stream stream, int order)
         {
             Order = order;
-            Layers = new List<LayerModel>(layers.Select(e => new LayerModel(stream, e.LayerId, e.IsVisible)));
-            ActiveLayerIndex = activeLayerIndex;
+            StrokeCollection = new StrokeCollection(stream);
         }
     }
 }

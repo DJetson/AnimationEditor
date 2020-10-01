@@ -1,5 +1,6 @@
 ﻿using AnimationEditorCore.BaseClasses;
 using AnimationEditorCore.Interfaces;
+using AnimationEditorCore.Models;
 using AnimationEditorCore.Utilities;
 using AnimationEditorCore.ViewModels.StateObjects;
 using System;
@@ -446,6 +447,23 @@ namespace AnimationEditorCore.ViewModels
         }
         #endregion DeleteCurrentFrame Command
 
+        public TimelineViewModel(List<LayerModel> layers, WorkspaceViewModel workspace)
+        {
+            WorkspaceViewModel = workspace;
+
+            InitializeCommands();
+
+            Layers = new ObservableCollection<LayerViewModel>();
+            foreach (var item in layers)
+            {
+                var newLayer = new LayerViewModel(item, this);
+                Layers.Add(newLayer);
+                FrameCount = Math.Max(FrameCount, newLayer.Frames.Count);
+            }
+
+            SelectedFrameIndex = Layers.FirstOrDefault().SelectedFrameIndex;
+            PushUndoRecord(CreateUndoState("Opened Workspace"));
+        }
 
         public TimelineViewModel(WorkspaceViewModel workspace)
         {
@@ -474,7 +492,11 @@ namespace AnimationEditorCore.ViewModels
             }
 
             SelectedFrameIndex = originalTimeline.SelectedFrameIndex;
-            ActiveLayer = Layers[originalTimeline.Layers.IndexOf(originalTimeline.ActiveLayer)];
+
+            if (originalTimeline.Layers.Where(e => e.IsActive).Count() == 0)
+                ActiveLayer = Layers[0];
+            else
+                ActiveLayer = Layers[originalTimeline.Layers.IndexOf(originalTimeline.Layers.Where(e => e.IsActive).FirstOrDefault())];
 
         }
 

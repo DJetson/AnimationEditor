@@ -237,7 +237,7 @@ namespace AnimationEditorCore.ViewModels
 
             WorkspaceHistoryViewModel = new WorkspaceHistoryViewModel(this);
 
-            //TimelineViewModel = new AnimationTimelineViewModel(model.Frames, this);
+            TimelineViewModel = new TimelineViewModel(model.Layers, this);
             EditorTools = EditorToolsViewModel.Instance;
 
             Filepath = model.Filepath;
