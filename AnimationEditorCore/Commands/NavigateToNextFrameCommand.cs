@@ -27,7 +27,7 @@ namespace AnimationEditorCore.Commands
         {
             var Parameter = parameter as TimelineViewModel;
 
-            Parameter.SelectedFrameIndex += 1;
+            Parameter.SelectedFrameIndex = Math.Min(Parameter.SelectedFrameIndex + 1, Parameter.LastFrameIndex);
         }
     }
 }
