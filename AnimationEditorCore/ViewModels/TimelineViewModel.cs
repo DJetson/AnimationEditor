@@ -147,9 +147,11 @@ namespace AnimationEditorCore.ViewModels
 
             foreach (var layer in Layers)
             {
+                layer.SelectedFrameIndex = SelectedFrameIndex;
+
                 foreach (var frame in layer.Frames)
                 {
-                    if (frame.Order == SelectedFrameIndex)
+                    if (frame.Order == layer.SelectedFrameIndex)
                         selected.Add(frame);
                 }
             }
@@ -432,19 +434,13 @@ namespace AnimationEditorCore.ViewModels
                     SelectedFrameIndex = 0;
                 }
             }
-            //var timelineState = SaveState() as AnimationTimelineState;
+            else
+            {
+                SelectedFrameIndex = Math.Max(SelectedFrameIndex - 1, 0);
+            }
 
-            //MultiState multiState = null;
 
-            //if (newFrame != null)
-            //{
-            //    var frameState = newFrame.SaveState() as FrameState;
-            //    multiState = new MultiState(this, DeleteCurrentFrame.DisplayName, frameState, timelineState);
-            //}
-            //else
-            //{
-            //    multiState = new MultiState(this, DeleteCurrentFrame.DisplayName, timelineState);
-            //}
+            PushUndoRecord(CreateUndoState("Delete Frame"/*, undoStates*/));
 
             //PushUndoRecord(multiState);
         }
@@ -489,6 +485,7 @@ namespace AnimationEditorCore.ViewModels
             PlayAnimation = new DelegateCommand("Play Animation", PlayAnimation_CanExecute, PlayAnimation_Execute);
             StopAnimation = new DelegateCommand("Stop Animation", StopAnimation_CanExecute, StopAnimation_Execute);
             DuplicateCurrentFrame = new DelegateCommand("Duplicate Frame", DuplicateCurrentFrame_CanExecute, DuplicateCurrentFrame_Execute);
+            DeleteCurrentFrame = new DelegateCommand("Deleted a Frame", DeleteCurrentFrame_CanExecute, DeleteCurrentFrame_Execute);
 
         }
 
