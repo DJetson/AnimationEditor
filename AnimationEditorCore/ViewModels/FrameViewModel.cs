@@ -328,23 +328,25 @@ namespace AnimationEditorCore.ViewModels
             UpdateSelectedStrokes = new DelegateCommand(UpdateSelectedStrokes_CanExecute, UpdateSelectedStrokes_Execute);
         }
 
-        public MultiState CreateUndoState(string title, List<UndoStateViewModel> additionalStates = null)
+        public TimelineState CreateUndoState(string title, List<UndoStateViewModel> additionalStates = null)
         {
             //var parentState = LayerViewModel.SaveState() as LayerState;
             //additionalStates.Add(parentState);
-            var state = SaveState() as FrameState;
-            if (additionalStates != null)
-            {
-                var allStates = new List<UndoStateViewModel>();
-                allStates.Add(state);
-                allStates.AddRange(additionalStates);
+            //var state = SaveState() as FrameState;
+            var state = LayerViewModel.TimelineViewModel.CreateUndoState(title);
+            //if (additionalStates != null)
+            //{
+            //    var allStates = new List<UndoStateViewModel>();
+            //    allStates.Add(state);
+            //    allStates.AddRange(additionalStates);
 
-                return new MultiState(null, title, allStates);
-            }
-            else
-            {
-                return new MultiState(null, title, state);
-            }
+            //    return new MultiState(null, title, allStates);
+            //}
+            //else
+            //{
+            //    return new MultiState(null, title, state);
+            //}
+            return state;
         }
 
         public void PushUndoRecord(UndoStateViewModel nextState, bool raiseChangedFlag = true)

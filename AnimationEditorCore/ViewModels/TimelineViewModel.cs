@@ -301,8 +301,8 @@ namespace AnimationEditorCore.ViewModels
 
                 layer.SelectedFrameIndex = insertAtIndex;
 
-                undoStates.Add(newFrame.SaveState() as FrameState);
-                undoStates.Add(layer.SaveState() as LayerState);
+                //undoStates.Add(newFrame.SaveState() as FrameState);
+                //undoStates.Add(layer.SaveState() as LayerState);
             }
 
             if (insertAtIndex <= SelectedFrameIndex)
@@ -311,7 +311,7 @@ namespace AnimationEditorCore.ViewModels
             SelectedFrameIndex = insertAtIndex;
 
             //undoStates.Add(SaveState() as TimelineState);
-            PushUndoRecord(CreateUndoState("Add Frame", undoStates));
+            PushUndoRecord(CreateUndoState("Add Frame"/*, undoStates*/));
         }
 
 
@@ -372,8 +372,8 @@ namespace AnimationEditorCore.ViewModels
 
                 newFrame.LayerViewModel.SelectedFrameIndex = insertAtIndex;
 
-                undoStates.Add(newFrame.SaveState() as FrameState);
-                undoStates.Add(newFrame.LayerViewModel.SaveState() as LayerState);
+                //undoStates.Add(newFrame.SaveState() as FrameState);
+                //undoStates.Add(newFrame.LayerViewModel.SaveState() as LayerState);
             }
 
             if (insertAtIndex <= SelectedFrameIndex)
@@ -470,7 +470,7 @@ namespace AnimationEditorCore.ViewModels
             FrameWidth = originalTimeline.FrameWidth;
 
             Layers = new ObservableCollection<LayerViewModel>();
-            foreach(var layer in originalTimeline.Layers)
+            foreach (var layer in originalTimeline.Layers)
             {
                 var clonedLayer = layer.Clone();
                 clonedLayer.TimelineViewModel = this;
@@ -525,14 +525,14 @@ namespace AnimationEditorCore.ViewModels
                 var newFrame = new FrameViewModel(newLayer, i);
                 newLayer.AddFrameAtIndex(newFrame, i);
 
-                undoStates.Add(newFrame.SaveState() as FrameState);
+                //undoStates.Add(newFrame.SaveState() as FrameState);
             }
             newLayer.SelectedFrameIndex = SelectedFrameIndex;
 
             AddLayerAtIndex(newLayer, newLayer.LayerId);
 
-            undoStates.Add(newLayer.SaveState() as LayerState);
-            PushUndoRecord(CreateUndoState("Added Layer", undoStates));
+            //undoStates.Add(newLayer.SaveState() as LayerState);
+            PushUndoRecord(CreateUndoState("Added Layer"/*, undoStates*/));
         }
 
         public void AddLayerAtIndex(LayerViewModel layer, int index, bool createUndoState = true)
@@ -719,22 +719,23 @@ namespace AnimationEditorCore.ViewModels
             return frameImages;
         }
 
-        public MultiState CreateUndoState(string title, List<UndoStateViewModel> additionalStates = null)
+        public TimelineState CreateUndoState(string title, List<UndoStateViewModel> additionalStates = null)
         {
-            var state = SaveState() as TimelineState;
+            return new TimelineState(this, title);
+            //var state = SaveState() as TimelineState;
 
-            if (additionalStates != null)
-            {
-                var allStates = new List<UndoStateViewModel>();
-                allStates.Add(state);
-                allStates.AddRange(additionalStates);
+            //if (additionalStates != null)
+            //{
+            //    var allStates = new List<UndoStateViewModel>();
+            //    allStates.Add(state);
+            //    allStates.AddRange(additionalStates);
 
-                return new MultiState(null, title, allStates);
-            }
-            else
-            {
-                return new MultiState(null, title, state);
-            }
+            //    return new MultiState(null, title, allStates);
+            //}
+            //else
+            //{
+            //    return new MultiState(null, title, state);
+            //}
         }
 
         public void PushUndoRecord(UndoStateViewModel nextState, bool raiseChangedFlag = true)
@@ -801,5 +802,7 @@ namespace AnimationEditorCore.ViewModels
             //SelectedFrameIndex = Memento.SelectedFrameIndex;
             CopyToTimeline(Memento.Timeline, this);
         }
+
+
     }
 }

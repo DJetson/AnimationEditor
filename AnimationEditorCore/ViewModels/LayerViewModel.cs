@@ -277,21 +277,25 @@ namespace AnimationEditorCore.ViewModels
             //}
         }
 
-        public MultiState CreateUndoState(string title, List<UndoStateViewModel> additionalStates = null)
+        public TimelineState CreateUndoState(string title, List<UndoStateViewModel> additionalStates = null)
         {
-            var state = SaveState() as LayerState;
-            if (additionalStates != null)
-            {
-                var allStates = new List<UndoStateViewModel>();
-                allStates.Add(state);
-                allStates.AddRange(additionalStates);
+            //var state = SaveState() as LayerState;
+            var state = TimelineViewModel.CreateUndoState(title);
 
-                return new MultiState(null, title, allStates);
-            }
-            else
-            {
-                return new MultiState(null, title, state);
-            }
+            return state;
+            //var state = SaveState() as LayerState;
+            //if (additionalStates != null)
+            //{
+            //    var allStates = new List<UndoStateViewModel>();
+            //    allStates.Add(state);
+            //    allStates.AddRange(additionalStates);
+
+            //    return new MultiState(null, title, allStates);
+            //}
+            //else
+            //{
+            //    return new MultiState(null, title, state);
+            //}
         }
 
         public void PushUndoRecord(UndoStateViewModel nextState, bool raiseChangedFlag = true)
