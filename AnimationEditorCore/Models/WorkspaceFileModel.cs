@@ -1,15 +1,6 @@
-﻿using AnimationEditorCore.Utilities;
-using AnimationEditorCore.ViewModels;
-using BumpKit;
-using System;
+﻿using AnimationEditorCore.ViewModels;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
-using System.Text;
-using System.Windows;
-using System.Windows.Ink;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace AnimationEditorCore.Models
 {
@@ -46,7 +37,6 @@ namespace AnimationEditorCore.Models
 
             Layers.Clear();
 
-            //Frames = new ObservableCollection<FrameViewModel>();
             foreach (var item in workspaceViewModel.TimelineViewModel.Layers)
             {
                 Layers.Add(new LayerModel(item));

@@ -1,8 +1,5 @@
-﻿using AnimationEditorCore.Interfaces;
-using AnimationEditorCore.ViewModels;
-using System.Collections.Generic;
+﻿using AnimationEditorCore.ViewModels;
 using System.IO;
-using System.Linq;
 using System.Windows.Ink;
 
 namespace AnimationEditorCore.Models

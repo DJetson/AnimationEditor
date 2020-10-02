@@ -5,12 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Ink;
-using System.Windows.Input;
 
 namespace AnimationEditorCore.ViewModels
 {
@@ -22,13 +18,6 @@ namespace AnimationEditorCore.ViewModels
             get => _StrokeCollection;
             set { Console.WriteLine($"Setting StrokeCollection [OldCount={_StrokeCollection.Count} New={value.Count}]"); _StrokeCollection = value; NotifyPropertyChanged(); }
         }
-
-        //private StrokeCollection _SelectedStrokes = new StrokeCollection();
-        //public StrokeCollection SelectedStrokes
-        //{
-        //    get { return _SelectedStrokes; }
-        //    set { _SelectedStrokes = value; NotifyPropertyChanged(); }
-        //}
 
         private bool _IsVisible = true;
         public bool IsVisible
@@ -74,27 +63,11 @@ namespace AnimationEditorCore.ViewModels
             get => LayerId + (IsActive ? 0 : 10000);
         }
 
-
         private DelegateCommand _UpdateSelectedStrokes;
         public DelegateCommand UpdateSelectedStrokes
         {
             get { return _UpdateSelectedStrokes; }
             set { _UpdateSelectedStrokes = value; NotifyPropertyChanged(); }
-        }
-
-
-        //private FrameViewModel _FrameViewModel;
-        //public FrameViewModel FrameViewModel
-        //{
-        //    get { return _FrameViewModel; }
-        //    set { _FrameViewModel = value; NotifyPropertyChanged(); }
-        //}
-
-        int _StrokeMultiSelectOpCounter = 0;
-
-        public void InitializeCommands()
-        {
-            //UpdateSelectedStrokes = new DelegateCommand(UpdateSelectedStrokes_CanExecute, UpdateSelectedStrokes_Execute);
         }
 
         private bool UpdateSelectedStrokes_CanExecute(object parameter)
@@ -105,14 +78,6 @@ namespace AnimationEditorCore.ViewModels
             return true;
         }
 
-        //private void UpdateSelectedStrokes_Execute(object parameter)
-        //{
-        //    var Parameter = parameter as InkCanvas;
-
-        //    SelectedStrokes = Parameter.GetSelectedStrokes();
-        //}
-
-        #region Refactor
         private TimelineViewModel _TimelineViewModel;
         public TimelineViewModel TimelineViewModel
         {
@@ -130,14 +95,12 @@ namespace AnimationEditorCore.ViewModels
         public LayerViewModel(TimelineViewModel timeline, int zIndex, string displayName ="")
         {
             TimelineViewModel = timeline;
-            InitializeCommands();
             LayerId = zIndex;
             DisplayName = displayName;
         }
 
         public LayerViewModel(LayerViewModel originalLayer)
         {
-            InitializeCommands();
             TimelineViewModel = originalLayer.TimelineViewModel;
             LayerId = originalLayer.LayerId;
             ArrangedZIndex = originalLayer.ArrangedZIndex;
@@ -200,71 +163,8 @@ namespace AnimationEditorCore.ViewModels
             set { _SelectedFrameIndex = value; NotifyPropertyChanged(); }
         }
 
-        //public FrameViewModel SelectedFrame
-        //{
-        //    get => Frames.Where(e => e.Order == SelectedFrameIndex).FirstOrDefault();
-        //}
-
-        //public int SelectedFrameIndex
-        //{
-        //    get => TimelineViewModel.SelectedFrameIndex;
-        //}
-
-        #endregion Refactor
-
-        //public LayerViewModel(LayerViewModel layer)
-        //{
-        //    InitializeCommands();
-        //    FrameViewModel = layer.FrameViewModel;
-        //    LayerId = layer.LayerId;
-        //    DisplayName = layer.DisplayName;
-        //    IsVisible = layer.IsVisible;
-        //    StrokeCollection = new StrokeCollection();
-        //    //StrokeCollection = layer.StrokeCollection.Clone();
-
-        //    foreach (var stroke in layer.StrokeCollection)
-        //    {
-        //        var newStroke = stroke.Clone();
-        //        newStroke.StylusPointsChanged += Stroke_StylusPointsChanged;
-        //        StrokeCollection.Add(newStroke);
-        //    }
-        //    StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
-        //}
-
-        //public LayerViewModel(FrameViewModel frame, string displayName = "")
-        //{
-        //    InitializeCommands();
-        //    FrameViewModel = frame;
-        //    LayerId = FrameViewModel.Layers.Count();
-        //    IsVisible = true;
-
-        //    if (String.IsNullOrWhiteSpace(displayName))
-        //    {
-        //        displayName = $"Layer {LayerId}";
-        //    }
-
-        //    DisplayName = displayName;
-
-        //    StrokeCollection = new StrokeCollection();
-        //    StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
-        //}
-
-        //public LayerViewModel(FrameViewModel frame, StrokeCollection strokeCollection)
-        //{
-        //    InitializeCommands();
-        //    FrameViewModel = frame;
-        //    StrokeCollection = strokeCollection.Clone();
-        //    foreach (var stroke in StrokeCollection)
-        //    {
-        //        stroke.StylusPointsChanged += Stroke_StylusPointsChanged;
-        //    }
-
-        //    StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
-        //}
-
         public LayerViewModel(Models.LayerModel model, TimelineViewModel timeline)
         {
-            InitializeCommands();
             TimelineViewModel = timeline;
             DisplayName = model.DisplayName;
             IsVisible = model.IsVisible;
@@ -279,96 +179,15 @@ namespace AnimationEditorCore.ViewModels
 
         public TimelineState CreateUndoState(string title, List<UndoStateViewModel> additionalStates = null)
         {
-            //var state = SaveState() as LayerState;
             var state = TimelineViewModel.CreateUndoState(title);
 
             return state;
-            //var state = SaveState() as LayerState;
-            //if (additionalStates != null)
-            //{
-            //    var allStates = new List<UndoStateViewModel>();
-            //    allStates.Add(state);
-            //    allStates.AddRange(additionalStates);
-
-            //    return new MultiState(null, title, allStates);
-            //}
-            //else
-            //{
-            //    return new MultiState(null, title, state);
-            //}
         }
 
         public void PushUndoRecord(UndoStateViewModel nextState, bool raiseChangedFlag = true)
         {
             TimelineViewModel.WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(nextState, raiseChangedFlag);
         }
-
-        private bool _IsErasing = false;
-
-        //private void StrokeCollection_StrokesChanged(object sender, StrokeCollectionChangedEventArgs e)
-        //{
-        //    if (EditorToolsViewModel.Instance.SelectedToolType == EditorToolType.Brush)
-        //    {
-        //        PushUndoRecord(CreateUndoState($"Added Content to Layer {LayerId} on Frame {FrameViewModel.Order}"));
-        //    }
-        //    else if (EditorToolsViewModel.Instance.SelectedToolType == EditorToolType.Lasso && _IsErasing == false)
-        //    {
-        //        //if (e.Added.Count > 0)
-        //        //    PushUndoRecord(CreateUndoState($"Pasted Content into Layer {LayerId} on Frame {FrameViewModel.Order}"));
-        //        //else 
-        //        if (e.Removed.Count > 0)
-        //            PushUndoRecord(CreateUndoState($"Deleted Content from Layer {LayerId} on Frame {FrameViewModel.Order}"));
-        //    }
-        //    else if (EditorToolsViewModel.Instance.SelectedToolType == EditorToolType.Eraser && _IsErasing == false)
-        //    {
-        //        _IsErasing = true;
-        //        Mouse.AddMouseUpHandler(Mouse.PrimaryDevice.ActiveSource.RootVisual as DependencyObject, EraserOperation_MouseUp);
-        //    }
-
-        //    foreach (var stroke in e.Added)
-        //    {
-        //        stroke.StylusPointsChanged += Stroke_StylusPointsChanged;
-        //    }
-        //    foreach (var stroke in e.Removed)
-        //    {
-        //        stroke.StylusPointsChanged -= Stroke_StylusPointsChanged;
-        //    }
-        //    FrameViewModel.FlattenStrokesForPlayback();
-        //}
-
-        //private void Stroke_StylusPointsChanged(object sender, EventArgs e)
-        //{
-        //    if (_StrokeMultiSelectOpCounter == 0)
-        //        _StrokeMultiSelectOpCounter = SelectedStrokes.Count;
-
-        //    if (_StrokeMultiSelectOpCounter == 1)
-        //    {
-        //        PushUndoRecord(CreateUndoState($"Modified Content in Layer {LayerId} on Frame {FrameViewModel.Order}"));
-        //        _StrokeMultiSelectOpCounter = 0;
-        //    }
-        //    else
-        //    {
-        //        _StrokeMultiSelectOpCounter--;
-        //    }
-        //}
-
-        //private void EraserOperation_MouseUp(object sender, MouseButtonEventArgs e)
-        //{
-        //    if (e.LeftButton == MouseButtonState.Released && EditorToolsViewModel.Instance.SelectedToolType == EditorToolType.Eraser)
-        //    {
-        //        _IsErasing = false;
-
-        //        PushUndoRecord(CreateUndoState($"Erased Content from Layer {LayerId} on Frame {FrameViewModel.Order}"));
-        //        Mouse.RemoveMouseUpHandler(Mouse.PrimaryDevice.ActiveSource.RootVisual as DependencyObject, EraserOperation_MouseUp);
-        //    }
-        //    else if (e.LeftButton == MouseButtonState.Released && EditorToolsViewModel.Instance.SelectedToolType == BaseClasses.EditorToolType.Lasso)
-        //    {
-        //        _IsErasing = false;
-
-        //        PushUndoRecord(CreateUndoState($"Moved Content From Layer {LayerId} on Frame {FrameViewModel.Order}"));
-        //        Mouse.RemoveMouseUpHandler(Mouse.PrimaryDevice.ActiveSource.RootVisual as DependencyObject, EraserOperation_MouseUp);
-        //    }
-        //}
 
         public IMemento SaveState()
         {
@@ -419,36 +238,12 @@ namespace AnimationEditorCore.ViewModels
         {
             var Memento = (memento as LayerState);
 
-            //LayerId = Memento.LayerId;
-            //DisplayName = Memento.DisplayName;
-            //IsVisible = Memento.IsVisible;
-            //IsActive = Memento.IsActive;
-
-            //Frames = new ObservableCollection<FrameViewModel>();
-
-            //foreach (var frame in Memento.Frames)
-            //{
-            //    Frames.Add(frame.Clone());
-            //}
             CopyToLayer(Memento.Layer, this);
         }
 
         public LayerViewModel Clone()
         {
             var newLayer = new LayerViewModel(this);
-            //newLayer.DisplayName = DisplayName;
-            //newLayer.IsVisible = IsVisible;
-            //newLayer.ArrangedZIndex = ArrangedZIndex;
-            //newLayer.IsActive = IsActive;
-
-            //newLayer.Frames = new ObservableCollection<FrameViewModel>();
-
-            //foreach (var frame in Frames)
-            //{
-            //    newLayer.Frames.Add(frame.Clone());
-            //}
-
-            //newLayer.SelectedFrameIndex = SelectedFrameIndex;
 
             return newLayer;
         }

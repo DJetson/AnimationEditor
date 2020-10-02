@@ -4,21 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Views="clr-namespace:AnimationEditorCore.Views"
-             xmlns:ViewModels="clr-namespace:AnimationEditorCore.ViewModels"
-             xmlns:p="clr-namespace:AnimationEditorCore.Properties"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
-            <!--<RowDefinition Height="Auto"/>-->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <!--<Views:LayerNavigationView DataContext="{Binding AnimationTimelineViewModel.SelectedFrame}"/>-->
         <Border Grid.Row="0" Grid.Column="1" BorderBrush="DarkGray" BorderThickness="1">
             <Border.InputBindings>
                 <MouseBinding Command="{Binding ZoomIn}" CommandParameter="{Binding EditorTools.SelectedToolType}" Gesture="{StaticResource MouseLeftClick}" />
@@ -34,51 +29,7 @@
                         </Border.LayoutTransform>
                         <Grid>
                             <Views:AnimationPlaybackView MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}" MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" DataContext="{Binding TimelineViewModel.AnimationPlaybackViewModel}"/>
-                            <!--<ItemsControl ItemsSource="{Binding TimelineViewModel.SelectedFrames}" Background="White">
-                                <ItemsControl.Resources>-->
-                                    <!--<DataTemplate DataType="{x:Type ViewModels:FrameViewModel}">-->
-                                        <Views:LayerCanvasView DataContext="{Binding TimelineViewModel}"/>
-                                    <!--</DataTemplate>
-                                </ItemsControl.Resources>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <Grid/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>-->
-                            <!--<Views:FrameCanvasView DataContext="{Binding AnimationTimelineViewModel}"/>-->
-<!--Old Onionskin location-->
-                            <!--<Grid Grid.Row="0" IsHitTestVisible="False">
-                                <InkCanvas Grid.Row="0" Strokes="{Binding TimelineViewModel.PreviousFrameStrokes}">
-                                    <InkCanvas.CacheMode>
-                                        <BitmapCache RenderAtScale="{Binding ZoomLevel}"/>
-                                    </InkCanvas.CacheMode>
-                                    <InkCanvas.Style>
-                                        <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource OnionSkinInkCanvasStyle}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsShowPreviousOnionSkinsEnabled, Source={x:Static p:Settings.Default}}" Value="False">
-                                                    <Setter Property="Visibility" Value="Hidden"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </InkCanvas.Style>
-                                </InkCanvas>
-                                <InkCanvas Grid.Row="0" Strokes="{Binding TimelineViewModel.NextFrameStrokes}" >
-                                    <InkCanvas.CacheMode>
-                                        <BitmapCache RenderAtScale="{Binding ZoomLevel}"/>
-                                    </InkCanvas.CacheMode>
-                                    <InkCanvas.Style>
-                                        <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource OnionSkinInkCanvasStyle}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsShowNextOnionSkinsEnabled, Source={x:Static p:Settings.Default}}" Value="False">
-                                                    <Setter Property="Visibility" Value="Hidden"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </InkCanvas.Style>
-                                </InkCanvas>
-                            </Grid>-->
-<!--End old Onionskin-->
+                            <Views:LayerCanvasView DataContext="{Binding TimelineViewModel}"/>
                         </Grid>
                     </Border>
                 </Grid>
@@ -92,6 +43,5 @@
             <Views:TimelineTools Grid.Row="0" DataContext="{Binding TimelineViewModel}"/>
             <Views:TimelineView Grid.Row="1" DataContext="{Binding TimelineViewModel}"/>
         </Grid>
-        <!--<Views:AnimationTimelineView Grid.Row="1" Grid.ColumnSpan="2" DataContext="{Binding AnimationTimelineViewModel}"/>-->
     </Grid>
 </UserControl>

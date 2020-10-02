@@ -1,12 +1,6 @@
 ﻿using AnimationEditorCore.BaseClasses;
 using AnimationEditorCore.Interfaces;
-using AnimationEditorCore.ViewModels.EditorTools;
 using AnimationEditorCore.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Windows.Media;
@@ -15,7 +9,6 @@ namespace AnimationEditorCore.ViewModels
 {
     public class EditorToolsViewModel : ViewModelBase
     {
-
         private DelegateCommand _ShowColorPickerWindow;
         public DelegateCommand ShowColorPickerWindow
         {

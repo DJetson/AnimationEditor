@@ -1,24 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AnimationEditorCore.Views
 {
-    /// <summary>
-    /// Interaction logic for ColorPickerView.xaml
-    /// </summary>
     public partial class ColorPickerView : Window
     {
         private static readonly DependencyProperty TriColorProperty = DependencyProperty.Register("TriColor", typeof(Color), typeof(ColorPickerView));
@@ -41,7 +28,6 @@ namespace AnimationEditorCore.Views
             get => (Color)GetValue(LastSelectedColorProperty);
             set { SetValue(LastSelectedColorProperty, (Color)value); }
         }
-
 
         public ColorPickerView()
         {
@@ -126,7 +112,6 @@ namespace AnimationEditorCore.Views
                 var gridActualHeight = Sender.ActualHeight;
 
                 var position = e.GetPosition(Sender);
-                //Console.WriteLine($"MousePosition:{position}");
 
                 var normalizedPosition = new Point((gridActualWidth - position.X) * (1 / gridActualWidth), (gridActualHeight - position.Y) * (1 / gridActualHeight));
 
@@ -141,19 +126,6 @@ namespace AnimationEditorCore.Views
 
                 Console.WriteLine($"SelectedColor:{SelectedColor}");
             }
-        }
-
-
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-        }
-
-        private void Grid_MouseEnter(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void Grid_MouseLeave(object sender, MouseEventArgs e)
-        {
         }
 
         private void OnOkClick(object sender, RoutedEventArgs e)

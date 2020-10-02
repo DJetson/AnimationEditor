@@ -3,11 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:AnimationEditorCore.Views"
-             xmlns:BaseClasses="clr-namespace:AnimationEditorCore.BaseClasses"
-             xmlns:Commands="clr-namespace:AnimationEditorCore.Commands"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <ToolBarTray Orientation="Vertical">
             <ToolBar>
@@ -71,8 +67,6 @@
                     </RadioButton.Style>
                     <Rectangle Stretch="UniformToFill" Fill="{StaticResource ZoomIcon}" />
                 </RadioButton>
-                
-
             </ToolBar>
         </ToolBarTray>
     </Grid>

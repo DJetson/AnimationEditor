@@ -3,12 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:p="clr-namespace:AnimationEditorCore.Properties"
-             xmlns:local="clr-namespace:AnimationEditorCore.Views"
-             xmlns:ViewModels="clr-namespace:AnimationEditorCore.ViewModels"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="{x:Null}">
+             xmlns:Views="clr-namespace:AnimationEditorCore.Views"
+             mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800" 
+             Background="{x:Null}">
     <UserControl.Style>
         <Style TargetType="{x:Type UserControl}">
             <Style.Setters>
@@ -24,101 +22,19 @@
         </Style>
     </UserControl.Style>
     <Grid x:Name="CanvasGrid">
-        <local:LayeredFrameView FrameLayers="{Binding SelectedFrames}"/>
-        <!--<ItemsControl ItemsSource="{Binding SelectedFrames}" Background="White">
-            <ItemsControl.Resources>
-                <DataTemplate DataType="{x:Type ViewModels:FrameViewModel}">
-                    <InkCanvas x:Name="LayerCanvas" Strokes="{Binding StrokeCollection}" Background="{x:Null}" DefaultDrawingAttributes="{Binding DrawingAttributes, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding UpdateSelectedStrokes}" CommandParameter="{Binding ElementName=LayerCanvas}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <InkCanvas.CacheMode>
-                            <BitmapCache RenderAtScale="{Binding FrameViewModel.WorkspaceViewModel.ZoomLevel}"/>
-                        </InkCanvas.CacheMode>
-                        <InkCanvas.Style>
-                            <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource EditableInkCanvasStyle}">
-                                <Style.Setters>
-                                    <Setter Property="EditingMode" Value="{Binding EditingMode, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}"/>
-                                    <Setter Property="Panel.ZIndex" Value="{Binding LayerViewModel.EffectiveIndex}"/>
-                                    <Setter Property="IsHitTestVisible" Value="{Binding LayerViewModel.IsAcceptingInput}"/>
-                                </Style.Setters>
-                            </Style>
-                        </InkCanvas.Style>
-                    </InkCanvas>
-                </DataTemplate>
-            </ItemsControl.Resources>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Grid/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>-->
+        <Views:LayeredFrameView FrameLayers="{Binding SelectedFrames}"/>
         <!--It might be better to have these onionskins defined someplace else, but I don't know yet. THey still aren't working-->
         <Grid Grid.Row="0" IsHitTestVisible="False" Background="Transparent" Panel.ZIndex="20000">
-            <!--<InkCanvas Grid.Row="0" Strokes="{Binding PreviousFrameStrokes}">
-                <InkCanvas.CacheMode>
-                    <BitmapCache RenderAtScale="{Binding TimelineViewModel.WorkspaceViewModel.ZoomLevel}"/>
-                </InkCanvas.CacheMode>
-                <InkCanvas.Style>
-                    <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource OnionSkinInkCanvasStyle}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsShowPreviousOnionSkinsEnabled, Source={x:Static p:Settings.Default}}" Value="False">
-                                <Setter Property="Visibility" Value="Hidden"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </InkCanvas.Style>
-            </InkCanvas>-->
-            <local:OnionSkinView IsOnionSkinEnabled="{Binding IsShowPreviousOnionSkinsEnabled, Source={x:Static p:Settings.Default}}"
+            <Views:OnionSkinView IsOnionSkinEnabled="{Binding IsShowPreviousOnionSkinsEnabled, Source={x:Static p:Settings.Default}}"
                                  OnionSkinStrokes="{Binding PreviousFrameStrokes}" 
                                  ZoomLevel="{Binding ZoomLevel}"
                                  MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" 
                                  MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}"/>
-            <local:OnionSkinView IsOnionSkinEnabled="{Binding IsShowNextOnionSkinsEnabled, Source={x:Static p:Settings.Default}}"
+            <Views:OnionSkinView IsOnionSkinEnabled="{Binding IsShowNextOnionSkinsEnabled, Source={x:Static p:Settings.Default}}"
                                  OnionSkinStrokes="{Binding NextFrameStrokes}" 
                                  ZoomLevel="{Binding ZoomLevel}"
                                  MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" 
                                  MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}"/>
-            <!--<local:OnionSkinView.Style>
-                    <Style TargetType="{x:Type local:OnionSkinView}">
-                        <Style.Setters>
-                            <Setter Property="MaxHeight" Value="{Binding ActualHeight, ElementName=CanvasGrid}"/>
-                            <Setter Property="MaxWidth" Value="{Binding ActualWidth, ElementName=CanvasGrid}"/>
-                        </Style.Setters>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsShowPreviousOnionSkinsEnabled, Source={x:Static p:Settings.Default}}" Value="False">
-                                <Setter Property="Visibility" Value="Hidden"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding AnimationPlaybackViewModel.IsPlaybackActive}" Value="True">
-                                <Setter Property="Visibility" Value="Hidden"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </local:OnionSkinView.Style>-->
-
-
-            <!--<local:OnionSkinView DataContext="{Binding }" OnionSkinStrokes="{Binding NextFrameStrokes}" Panel.ZIndex="20001"
-                                 ZoomLevel="{Binding ZoomLevel}"
-                                 IsOnionSkinEnabled="{Binding IsShowNextOnionSkinsEnabled, Source={x:Static p:Settings.Default}}"
-                                 MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}"/>-->
-
-            <!--<InkCanvas Grid.Row="0" Strokes="{Binding NextFrameStrokes}" Panel.ZIndex="20001">
-                <InkCanvas.CacheMode>
-                    <BitmapCache RenderAtScale="{Binding ZoomLevel}"/>
-                </InkCanvas.CacheMode>
-                <InkCanvas.Style>
-                    <Style TargetType="{x:Type InkCanvas}" BasedOn="{StaticResource OnionSkinInkCanvasStyle}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsShowNextOnionSkinsEnabled, Source={x:Static p:Settings.Default}}" Value="False">
-                                <Setter Property="Visibility" Value="Hidden"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </InkCanvas.Style>
-            </InkCanvas>-->
         </Grid>
-        <!--End of Onionskin definition-->
     </Grid>
 </UserControl>

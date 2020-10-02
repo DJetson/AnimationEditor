@@ -1,27 +1,19 @@
 ﻿using AnimationEditorCore.BaseClasses;
 using AnimationEditorCore.Interfaces;
 using AnimationEditorCore.Models;
-using AnimationEditorCore.Utilities;
-using AnimationEditorCore.ViewModels.StateObjects;
 using BumpKit;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Ink;
 
 namespace AnimationEditorCore.ViewModels
 {
     public class WorkspaceViewModel : ViewModelBase
     {
         private WorkspaceFileModel _WorkspaceModel;
-
         public static double MaxZoomLevel => 5.0f;
         public static double MinZoomLevel => 0.25f;
 
@@ -59,24 +51,10 @@ namespace AnimationEditorCore.ViewModels
         private Stack<IMemento> _RedoStack = new Stack<IMemento>();
         public Stack<IMemento> RedoStack => _RedoStack;
 
-        //private OnionSkinVisibility _OnionSkinVisibility = OnionSkinVisibility.NextFramesOnly;
-        //public OnionSkinVisibility OnionSkinVisibility
-        //{
-        //    get => _OnionSkinVisibility;
-        //    set { _OnionSkinVisibility = value; NotifyPropertyChanged(); }
-        //}
-
         public string Filename
         {
             get => Path.GetFileNameWithoutExtension(_DisplayName);
         }
-
-        //private FrameViewModel _SelectedFrame;
-        //public FrameViewModel SelectedFrame
-        //{
-        //    get => _SelectedFrame;
-        //    set { _SelectedFrame = value; NotifyPropertyChanged(); }
-        //}
 
         private TimelineViewModel _TimelineViewModel;
         public TimelineViewModel TimelineViewModel
@@ -84,22 +62,6 @@ namespace AnimationEditorCore.ViewModels
             get => _TimelineViewModel;
             set { _TimelineViewModel = value; NotifyPropertyChanged(); }
         }
-
-        //private AnimationPlaybackViewModel _AnimationPlaybackViewModel = new AnimationPlaybackViewModel();
-        //public AnimationPlaybackViewModel AnimationPlaybackViewModel
-        //{
-        //    get { return _AnimationPlaybackViewModel; }
-        //    set { _AnimationPlaybackViewModel = value; NotifyPropertyChanged(); }
-        //}
-
-
-        //private TimelineViewModel _TimelineViewModel;
-        //public TimelineViewModel TimelineViewModel
-        //{
-        //    get { return _TimelineViewModel; }
-        //    set { _TimelineViewModel = value; NotifyPropertyChanged(); }
-        //}
-
 
         private WorkspaceHistoryViewModel _WorkspaceHistoryViewModel;
         public WorkspaceHistoryViewModel WorkspaceHistoryViewModel
@@ -128,9 +90,7 @@ namespace AnimationEditorCore.ViewModels
             set { _ExportToGif = value; NotifyPropertyChanged(); }
         }
 
-
         #region ZoomIn Command
-
         private DelegateCommand _ZoomIn;
         public DelegateCommand ZoomIn
         {
@@ -203,9 +163,6 @@ namespace AnimationEditorCore.ViewModels
             ExportAnimation(canvas);
         }
 
-
-        //private System.Text.Json.JsonSerializerOptions JsonSerializerOptions { get; }
-
         public void InitializeCommands()
         {
             ZoomIn = new DelegateCommand("Zoom In", ZoomIn_CanExecute, ZoomIn_Execute);
@@ -216,7 +173,6 @@ namespace AnimationEditorCore.ViewModels
         public void InitializeDependentViewModels()
         {
             WorkspaceHistoryViewModel = new WorkspaceHistoryViewModel(this);
-            //TimelineViewModel = new AnimationTimelineViewModel(this);
             TimelineViewModel = new TimelineViewModel(this);
             EditorTools = EditorToolsViewModel.Instance;
         }
@@ -225,9 +181,6 @@ namespace AnimationEditorCore.ViewModels
         {
             InitializeDependentViewModels();
             InitializeCommands();
-
-            //JsonSerializerOptions = new System.Text.Json.JsonSerializerOptions();
-            //JsonSerializerOptions.Converters.Add(new Models.StrokeCollectionConverter());
         }
 
         public WorkspaceViewModel(WorkspaceFileModel model)
@@ -241,11 +194,7 @@ namespace AnimationEditorCore.ViewModels
             EditorTools = EditorToolsViewModel.Instance;
 
             Filepath = model.Filepath;
-            //DisplayName = Filename);
             DisplayName = Path.GetFileNameWithoutExtension(Filepath);
-            //NotifyPropertyChanged(nameof(Filename));
-            //JsonSerializerOptions = new System.Text.Json.JsonSerializerOptions();
-            //JsonSerializerOptions.Converters.Add(new Models.StrokeCollectionConverter());
         }
 
         public void Close()
@@ -266,7 +215,6 @@ namespace AnimationEditorCore.ViewModels
                 {
                     return;
                 }
-
             }
             Host.RemoveWorkspace(this);
         }
@@ -286,7 +234,6 @@ namespace AnimationEditorCore.ViewModels
                 DisplayName = Path.GetFileNameWithoutExtension(Filepath);
             }
 
-            //Update the backing model for this workspace before it is written to disk
             //NOTE: This might not be a good idea. I suspect that it would be really nice to have an actual workspace model 
             //      object for anything like API/Plugin/scripting support that gets planned in the future, but this will almost
             //      certainly add some easy to forget "state management" type garbage to the whole thing. I don't want to have to
@@ -299,40 +246,21 @@ namespace AnimationEditorCore.ViewModels
             _WorkspaceModel.SyncToViewModel(this);
 
             _WorkspaceModel.SaveWorkspaceFile(Filepath);
-            //_WorkspaceModel.SaveWorkspaceFile(Filepath, JsonSerializerOptions);
-            //HasUnsavedChanges = false;
 
             WorkspaceHistoryViewModel.InitialState = WorkspaceHistoryViewModel.CurrentState;
         }
 
         public void SaveAsGif(string filepath, InkCanvas canvas)
         {
-
             try
             {
                 using (FileStream fs = new FileStream(filepath, FileMode.Create))
                 {
                     GifEncoder gEnc = new GifEncoder(fs);
-
-                    //var bmpFrames = GetBmpFrames();
-                    //foreach (var frame in bmpFrames.Frames)
-                    //{
                     var frameBitmaps = this.TimelineViewModel.RenderFrameBitmaps(canvas);
 
                     foreach (var frame in frameBitmaps)
                     {
-                        //StrokeCollection strokes = new StrokeCollection();
-                        //foreach (var layer in frame.Layers)
-                        //{
-                        //    strokes.Add(layer.StrokeCollection);
-                        //}
-                        //fs.Write(ImageUtilities.ImageToByteArray(frame), 0, 0);
-                        //using (MemoryStream m = new MemoryStream())
-                        //{
-                        //    strokes.Save(m);
-
-                        //    byte[] imageBytes = m.ToArray();
-
                         gEnc.AddFrame(frame, 0, 0, new TimeSpan(100));
                     }
                 }
@@ -396,17 +324,6 @@ namespace AnimationEditorCore.ViewModels
             var res = saveFileDialog.ShowDialog(App.Current.MainWindow);
 
             return filepath;
-        }
-
-        //NOTE: MAY NOT BE A GOOD IDEA
-        private void SyncToModel(WorkspaceFileModel model)
-        {
-            //Assign all of and only the NECESSARY properties from the model object to populate a ViewModel with this 
-            //workspace.
-
-            _WorkspaceModel = model;
-            Filepath = _WorkspaceModel.Filepath;
-            DisplayName = Path.GetFileNameWithoutExtension(_WorkspaceModel.Filepath);
         }
     }
 }

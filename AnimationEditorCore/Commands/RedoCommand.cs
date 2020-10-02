@@ -1,17 +1,10 @@
 ﻿using AnimationEditorCore.BaseClasses;
 using AnimationEditorCore.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AnimationEditorCore.Commands
 {
     public class RedoCommand : RequeryBase
     {
-        //public override string DisplayName => "Redo";
-
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is WorkspaceViewModel Parameter))

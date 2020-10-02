@@ -3,11 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AnimationEditorCore.Views"
-        xmlns:p="clr-namespace:AnimationEditorCore.Properties"
         xmlns:SettingsViewModels="clr-namespace:AnimationEditorCore.ViewModels.Settings"
         mc:Ignorable="d"
-        Height="199" Width="253" Title="{Binding DisplayName}">
+        Height="200" Width="250" 
+        Title="{Binding DisplayName}">
     <Window.DataContext>
         <SettingsViewModels:OnionSkinSettingsViewModel />
     </Window.DataContext>
@@ -57,7 +56,6 @@
                 <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding PreviousFrameSkinCount}" MinWidth="30" HorizontalAlignment="Left"/>
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Number of succeeding onionskins" HorizontalAlignment="Left"/>
                 <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding NextFramesSkinCount}" MinWidth="30" HorizontalAlignment="Left"/>
-
             </Grid>
         </GroupBox>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">

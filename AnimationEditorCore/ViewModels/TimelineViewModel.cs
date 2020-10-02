@@ -9,8 +9,6 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Ink;
@@ -70,14 +68,6 @@ namespace AnimationEditorCore.ViewModels
                                       nameof(NextFrameStrokes),
                                       nameof(CurrentIndexOutOfFrameCount));
                 UpdateSelectedFrames();
-                //foreach(var layer in Layers)
-                //{
-                //    //SelectedFrameIndex = value;
-                //    //layer.NotifyPropertyChanged(nameof(LayerViewModel.SelectedFrameIndex));
-                //    //layer.NotifyPropertyChanged(nameof(LayerViewModel.SelectedFrame));
-                //    layer.SelectedFrameIndex = value;
-                //    layer.SelectedFrame = layer.Frames.Where(e => e.Order == SelectedFrameIndex).FirstOrDefault();
-                //}
             }
         }
 
@@ -201,7 +191,6 @@ namespace AnimationEditorCore.ViewModels
             //NOTE: Eventually this will be able to be set to the set of currently selected frames as well
             FlattenStrokesForPlayback();
             var playbackFrames = FlattenedFrameStrokes.ToList();
-            //playbackFrames.ForEach(e => e.FlattenStrokesForPlayback());
 
             //NOTE: I may have to eventually do some caching up top here. Rasterize all of the InkCanvases in the series
             //      and just flip through those instead of directly showing the InkCanvases. It will depend entirely on
@@ -261,8 +250,8 @@ namespace AnimationEditorCore.ViewModels
 
         public bool AddBlankFrame_CanExecute(object parameter)
         {
-            //if (AnimationPlaybackViewModel.IsPlaybackActive)
-            //    return false;
+            if (AnimationPlaybackViewModel.IsPlaybackActive)
+                return false;
 
             if (Enum.TryParse<FrameNavigation>(parameter.ToString(), out FrameNavigation Parameter) == false)
                 return false;
@@ -293,8 +282,6 @@ namespace AnimationEditorCore.ViewModels
                     break;
             }
 
-            var undoStates = new List<UndoStateViewModel>();
-
             foreach (var layer in Layers)
             {
                 var newFrame = new FrameViewModel(layer, insertAtIndex);
@@ -303,9 +290,6 @@ namespace AnimationEditorCore.ViewModels
                 FrameCount = Math.Max(layer.Frames.Count, FrameCount);
 
                 layer.SelectedFrameIndex = insertAtIndex;
-
-                //undoStates.Add(newFrame.SaveState() as FrameState);
-                //undoStates.Add(layer.SaveState() as LayerState);
             }
 
             if (insertAtIndex <= SelectedFrameIndex)
@@ -313,8 +297,7 @@ namespace AnimationEditorCore.ViewModels
 
             SelectedFrameIndex = insertAtIndex;
 
-            //undoStates.Add(SaveState() as TimelineState);
-            PushUndoRecord(CreateUndoState("Add Frame"/*, undoStates*/));
+            PushUndoRecord(CreateUndoState("Add Frame"));
         }
 
 
@@ -352,7 +335,6 @@ namespace AnimationEditorCore.ViewModels
             var Parameter = (FrameNavigation)Enum.Parse(typeof(FrameNavigation), parameter.ToString());
 
             int insertAtIndex = SelectedFrameIndex;
-            //var newFrames = SelectedFrames;
 
             switch (Parameter)
             {
@@ -364,8 +346,6 @@ namespace AnimationEditorCore.ViewModels
                     break;
             }
 
-            var undoStates = new List<UndoStateViewModel>();
-
             foreach (var frame in SelectedFrames)
             {
                 var newFrame = FrameViewModel.DuplicateFrame(frame, insertAtIndex);
@@ -374,9 +354,6 @@ namespace AnimationEditorCore.ViewModels
                 FrameCount = Math.Max(newFrame.LayerViewModel.Frames.Count, FrameCount);
 
                 newFrame.LayerViewModel.SelectedFrameIndex = insertAtIndex;
-
-                //undoStates.Add(newFrame.SaveState() as FrameState);
-                //undoStates.Add(newFrame.LayerViewModel.SaveState() as LayerState);
             }
 
             if (insertAtIndex <= SelectedFrameIndex)
@@ -384,7 +361,7 @@ namespace AnimationEditorCore.ViewModels
 
             SelectedFrameIndex = insertAtIndex;
 
-            PushUndoRecord(CreateUndoState("Duplicate Frame", undoStates));
+            PushUndoRecord(CreateUndoState("Duplicate Frame"));
         }
         #endregion DuplicateCurrentFrame Command
 
@@ -440,10 +417,7 @@ namespace AnimationEditorCore.ViewModels
                 SelectedFrameIndex = Math.Max(SelectedFrameIndex - 1, 0);
             }
 
-
-            PushUndoRecord(CreateUndoState("Delete Frame"/*, undoStates*/));
-
-            //PushUndoRecord(multiState);
+            PushUndoRecord(CreateUndoState("Delete Frame"));
         }
         #endregion DeleteCurrentFrame Command
 
@@ -497,7 +471,6 @@ namespace AnimationEditorCore.ViewModels
                 ActiveLayer = Layers[0];
             else
                 ActiveLayer = Layers[originalTimeline.Layers.IndexOf(originalTimeline.Layers.Where(e => e.IsActive).FirstOrDefault())];
-
         }
 
         public void InitializeCommands()
@@ -508,7 +481,6 @@ namespace AnimationEditorCore.ViewModels
             StopAnimation = new DelegateCommand("Stop Animation", StopAnimation_CanExecute, StopAnimation_Execute);
             DuplicateCurrentFrame = new DelegateCommand("Duplicate Frame", DuplicateCurrentFrame_CanExecute, DuplicateCurrentFrame_Execute);
             DeleteCurrentFrame = new DelegateCommand("Deleted a Frame", DeleteCurrentFrame_CanExecute, DeleteCurrentFrame_Execute);
-
         }
 
         public void InitializeTimeline()
@@ -529,6 +501,9 @@ namespace AnimationEditorCore.ViewModels
 
         private bool AddBlankLayer_CanExecute(object parameter)
         {
+            if (AnimationPlaybackViewModel.IsPlaybackActive)
+                return false;
+
             return true;
         }
 
@@ -537,21 +512,16 @@ namespace AnimationEditorCore.ViewModels
             var newLayer = new LayerViewModel(this, ActiveLayer.LayerId + 1, "");
             newLayer.Frames = new ObservableCollection<FrameViewModel>();
 
-            var undoStates = new List<UndoStateViewModel>();
-
             for (int i = 0; i < FrameCount; i++)
             {
                 var newFrame = new FrameViewModel(newLayer, i);
                 newLayer.AddFrameAtIndex(newFrame, i);
-
-                //undoStates.Add(newFrame.SaveState() as FrameState);
             }
             newLayer.SelectedFrameIndex = SelectedFrameIndex;
 
             AddLayerAtIndex(newLayer, newLayer.LayerId);
 
-            //undoStates.Add(newLayer.SaveState() as LayerState);
-            PushUndoRecord(CreateUndoState("Added Layer"/*, undoStates*/));
+            PushUndoRecord(CreateUndoState("Added Layer"));
         }
 
         public void AddLayerAtIndex(LayerViewModel layer, int index, bool createUndoState = true)
@@ -560,8 +530,6 @@ namespace AnimationEditorCore.ViewModels
             {
                 layer.DisplayName = FileUtilities.GetUniqueNameForCollection(Layers.Select(e => e.DisplayName).ToList(), $"Layer {Layers?.Count ?? 0}");
             }
-
-            //ForceUniqueLayerName(layer);
 
             if (index < 0)
             {
@@ -579,9 +547,6 @@ namespace AnimationEditorCore.ViewModels
             ActiveLayer = layer;
             UpdateLayerIds();
             UpdateSelectedFrames();
-            //TODO: Reimplement this after the rest of the refactor is stabilized
-            //if (createUndoState)
-            //PushUndoRecord(CreateUndoState($"Added New {newLayer.DisplayName} to Frame {Order}"));
         }
 
         public void UpdateLayerIds(int startIndex = 0)
@@ -623,12 +588,9 @@ namespace AnimationEditorCore.ViewModels
             set { _FrameWidth = value; NotifyPropertyChanged(nameof(FrameWidth), nameof(ScrubberLength)); }
         }
 
-
         public int GetFrameCountOfLongestLayer(bool ExcludeHiddenLayers = false)
         {
             List<LayerViewModel> layers = null;
-            //int currentMax = Layers.SelectMany(e => e.Frames).Select(f => f.Order).Max();
-            //return currentMax;
             if (ExcludeHiddenLayers)
             {
                 layers = GetVisibleLayers();
@@ -646,7 +608,6 @@ namespace AnimationEditorCore.ViewModels
 
             return currentMax;
         }
-
 
         public int GetLastFrameIndex(bool ExcludeHiddenLayers = true)
         {
@@ -690,9 +651,7 @@ namespace AnimationEditorCore.ViewModels
 
         public void FlattenStrokesForPlayback()
         {
-            //Create an appropriate number of stroke collections for each frame to be flattened
             FlattenedFrameStrokes = new List<StrokeCollection>();
-            //FlattenedFrameStrokes.ForEach(e => e = new StrokeCollection());
 
             //Iterate over all possible frame indexes in all layers up to the highest indexed frame in any layer
             for (int i = 0; i < FrameCount; i++)
@@ -741,20 +700,6 @@ namespace AnimationEditorCore.ViewModels
         public TimelineState CreateUndoState(string title, List<UndoStateViewModel> additionalStates = null)
         {
             return new TimelineState(this, title);
-            //var state = SaveState() as TimelineState;
-
-            //if (additionalStates != null)
-            //{
-            //    var allStates = new List<UndoStateViewModel>();
-            //    allStates.Add(state);
-            //    allStates.AddRange(additionalStates);
-
-            //    return new MultiState(null, title, allStates);
-            //}
-            //else
-            //{
-            //    return new MultiState(null, title, state);
-            //}
         }
 
         public void PushUndoRecord(UndoStateViewModel nextState, bool raiseChangedFlag = true)
@@ -807,21 +752,8 @@ namespace AnimationEditorCore.ViewModels
         public void LoadState(IMemento state)
         {
             var Memento = (state as TimelineState);
-            //ActiveLayer = null;
-            //Layers = new ObservableCollection<LayerViewModel>();
-
-            //foreach (var layer in Memento.Layers)
-            //{
-            //    Layers.Add(layer.Clone());
-            //}
-
-            //FrameCount = GetFrameCountOfLongestLayer();
-
-            //ActiveLayer = Layers[Memento.Layers.IndexOf(Memento.ActiveLayer)];
-            //SelectedFrameIndex = Memento.SelectedFrameIndex;
+      
             CopyToTimeline(Memento.Timeline, this);
         }
-
-
     }
 }

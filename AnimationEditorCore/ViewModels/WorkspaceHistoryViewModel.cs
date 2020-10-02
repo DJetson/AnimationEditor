@@ -1,12 +1,9 @@
 ﻿using AnimationEditorCore.BaseClasses;
 using AnimationEditorCore.Interfaces;
-using AnimationEditorCore.ViewModels.StateObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AnimationEditorCore.ViewModels
 {
@@ -134,7 +131,6 @@ namespace AnimationEditorCore.ViewModels
             WorkspaceViewModel = workspace;
 
             InitialState = initialState;
-
             InitializeCommands();
         }
 
@@ -151,7 +147,6 @@ namespace AnimationEditorCore.ViewModels
             SelectedItem = undoRange.Where(e => e.State == CurrentState).FirstOrDefault();
             SelectedItem.StateType = HistoryStateType.Current;
             var redoList = redoStack.ToList();
-            //redoList.Reverse();
             var redoRange = new List<WorkspaceHistoryItemViewModel>();
             foreach (UndoStateViewModel item in redoList)
             {
@@ -174,7 +169,6 @@ namespace AnimationEditorCore.ViewModels
             get { return _UndoStack; }
             set { _UndoStack = value; NotifyPropertyChanged(); }
         }
-
 
         private Stack<IMemento> _RedoStack = new Stack<IMemento>();
         public Stack<IMemento> RedoStack
@@ -211,26 +205,6 @@ namespace AnimationEditorCore.ViewModels
             WorkspaceViewModel.HasUnsavedChanges = raiseChangedFlag;
         }
 
-        public UndoStateViewModel GetLastStateChangeForType(Type type)
-        {
-            foreach (var item in UndoStack.ToList())
-            {
-                if (item.GetType() == type)
-                {
-                    return item as UndoStateViewModel;
-                }
-                else if (item is MultiState multiState)
-                {
-                    var state = (item as MultiState).GetStateOfType(type);
-                    if (state != null)
-                    {
-                        return state;
-                    }
-                }
-            }
-            return null;
-        }
-
         public void Undo()
         {
             var currentState = UndoStack.Pop() as UndoStateViewModel;
@@ -238,20 +212,7 @@ namespace AnimationEditorCore.ViewModels
             RedoStack.Push(currentState);
             CurrentState = UndoStack.Peek() as UndoStateViewModel;
 
-            if (currentState is MultiState multiState)
-            {
-                foreach (var item in multiState.States)
-                {
-                    GetLastStateChangeForType(item.GetType())?.LoadState();
-                }
-            }
-            else
-            {
-                CurrentState.LoadState();
-            }
-
-            //if(UndoStack.Count == 1)
-            //    WorkspaceViewModel.HasUnsavedChanges = false;
+            CurrentState.LoadState();
 
             PopulateHistory(UndoStack, RedoStack);
         }
@@ -271,10 +232,7 @@ namespace AnimationEditorCore.ViewModels
         {
             UndoStack.Push(RedoStack.Pop());
             CurrentState = UndoStack.Peek() as UndoStateViewModel;
-            CurrentState.LoadState();// Originator.LoadState(CurrentState);
-
-            //if (UndoStack.Count != 1)
-            //    WorkspaceViewModel.HasUnsavedChanges = true;
+            CurrentState.LoadState();
 
             PopulateHistory(UndoStack, RedoStack);
         }
@@ -288,10 +246,9 @@ namespace AnimationEditorCore.ViewModels
             {
                 UndoStack.Push(RedoStack.Pop());
                 CurrentState = UndoStack.Peek() as UndoStateViewModel;
-                CurrentState.LoadState();//.Originator.LoadState(CurrentState);
+                CurrentState.LoadState();
             }
-            //if (UndoStack.Count != 1)
-            //    WorkspaceViewModel.HasUnsavedChanges = true;
+          
             PopulateHistory(UndoStack, RedoStack);
         }
     }

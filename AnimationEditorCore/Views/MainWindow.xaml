@@ -3,11 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ViewModels="clr-namespace:AnimationEditorCore.ViewModels"
         xmlns:p="clr-namespace:AnimationEditorCore.Properties"
         xmlns:Views="clr-namespace:AnimationEditorCore.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" 
+        Height="450" Width="800">
     <Window.InputBindings>
         <KeyBinding Gesture="CTRL+ALT+Z" Command="{StaticResource Undo}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
         <KeyBinding Gesture="CTRL+SHIFT+Z" Command="{StaticResource Redo}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
@@ -19,7 +19,6 @@
         <KeyBinding Key="OemComma" Command="{StaticResource NavigateToPreviousFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
         <KeyBinding Key="OemPeriod" Command="{StaticResource NavigateToNextFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
         <KeyBinding Gesture="CTRL+OemPeriod" Command="{StaticResource NavigateToLastFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
-
     </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -28,7 +27,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
@@ -55,7 +53,6 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
-
         <ToolBarTray Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Background="WhiteSmoke">
             <ToolBarTray.Resources>
                 <Style x:Key="{x:Static ToolBar.ButtonStyleKey}" TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButtonStyle}">
@@ -70,20 +67,14 @@
                 <Button Content="{StaticResource SaveFile}" Command="{StaticResource SaveWorkspace}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
             </ToolBar>
             <ToolBar>
-                <!--<Button Command="Cut" Content="Cut" />-->
                 <Button Content="{StaticResource UndoIcon}" Command="{StaticResource Undo}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
                 <Button Content="{StaticResource RedoIcon}" Command="{StaticResource Redo}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
                 <Button Content="{StaticResource Duplicate}" Command="Copy" />
                 <Button Content="{StaticResource Paste}" Command="Paste" />
             </ToolBar>
         </ToolBarTray>
-
         <Views:EditorToolSettings Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" DataContext="{Binding EditorToolsManager}"/>
-
         <Views:EditorToolsView Grid.Column="0" Grid.Row="3" DataContext="{Binding EditorToolsManager}"/>
-
-
         <Views:WorkspaceManagerView Grid.Column="1" Grid.Row="3" DataContext="{Binding WorkspaceManager}"/>
-
     </Grid>
 </Window>
