@@ -65,10 +65,10 @@ namespace AnimationEditorCore.ViewModels
             set
             {
                 _SelectedFrameIndex = value;
-                NotifyPropertiesChanged(nameof(SelectedFrameIndex),
-                                        nameof(PreviousFrameStrokes),
-                                        nameof(NextFrameStrokes),
-                                        nameof(CurrentIndexOutOfFrameCount));
+                NotifyPropertyChanged(nameof(SelectedFrameIndex),
+                                      nameof(PreviousFrameStrokes),
+                                      nameof(NextFrameStrokes),
+                                      nameof(CurrentIndexOutOfFrameCount));
                 UpdateSelectedFrames();
                 //foreach(var layer in Layers)
                 //{
@@ -606,7 +606,7 @@ namespace AnimationEditorCore.ViewModels
             set
             {
                 _FrameCount = value;
-                NotifyPropertiesChanged(nameof(FrameCount),
+                NotifyPropertyChanged(nameof(FrameCount),
                                         nameof(LastFrameIndex),
                                         nameof(ScrubberLength),
                                         nameof(CurrentIndexOutOfFrameCount));
@@ -620,7 +620,7 @@ namespace AnimationEditorCore.ViewModels
         public double FrameWidth
         {
             get { return _FrameWidth; }
-            set { _FrameWidth = value; NotifyPropertiesChanged(nameof(FrameWidth), nameof(ScrubberLength)); }
+            set { _FrameWidth = value; NotifyPropertyChanged(nameof(FrameWidth), nameof(ScrubberLength)); }
         }
 
 

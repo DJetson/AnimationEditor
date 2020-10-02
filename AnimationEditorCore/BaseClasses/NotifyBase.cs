@@ -12,16 +12,22 @@ namespace AnimationEditorCore.BaseClasses
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void NotifyPropertyChanged([CallerMemberName]string property = "")
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        public void NotifyPropertiesChanged([CallerMemberName] string originatingProperty = "", params string[] dependentProperties)
+        public void NotifyPropertyChanged([CallerMemberName]string property = "", params string[] dependentProperties)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(originatingProperty));
-            foreach(var property in dependentProperties)
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+            foreach (var dependentProperty in dependentProperties)
             {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(dependentProperty));
             }
         }
+
+        //public void NotifyPropertiesChanged([CallerMemberName] string originatingProperty = "", params string[] dependentProperties)
+        //{
+        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(originatingProperty));
+        //    foreach(var property in dependentProperties)
+        //    {
+        //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        //    }
+        //}
     }
 }

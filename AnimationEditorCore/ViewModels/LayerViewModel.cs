@@ -37,9 +37,9 @@ namespace AnimationEditorCore.ViewModels
             set 
             { 
                 _IsVisible = value; 
-                NotifyPropertiesChanged(nameof(IsVisible), nameof(IsAcceptingInput));
-                TimelineViewModel.NotifyPropertiesChanged(nameof(TimelineViewModel.PreviousFrameStrokes),
-                                                          nameof(TimelineViewModel.NextFrameStrokes));
+                NotifyPropertyChanged(nameof(IsVisible), nameof(IsAcceptingInput));
+                TimelineViewModel.NotifyPropertyChanged(nameof(TimelineViewModel.PreviousFrameStrokes),
+                                                        nameof(TimelineViewModel.NextFrameStrokes));
             }
         }
 
@@ -47,7 +47,7 @@ namespace AnimationEditorCore.ViewModels
         public bool IsActive
         {
             get { return _IsActive; }
-            set { _IsActive = value; NotifyPropertiesChanged(nameof(IsActive), nameof(IsAcceptingInput)); }
+            set { _IsActive = value; NotifyPropertyChanged(nameof(IsActive), nameof(IsAcceptingInput)); }
         }
 
         public bool IsAcceptingInput
@@ -59,14 +59,14 @@ namespace AnimationEditorCore.ViewModels
         public int ArrangedZIndex
         {
             get { return _ArrangedZIndex; }
-            set { _ArrangedZIndex = value; NotifyPropertiesChanged(nameof(ArrangedZIndex), nameof(EffectiveZIndex)); }
+            set { _ArrangedZIndex = value; NotifyPropertyChanged(nameof(ArrangedZIndex), nameof(EffectiveZIndex)); }
         }
 
         private int _LayerId;
         public int LayerId
         {
             get => _LayerId;
-            set { _LayerId = value; NotifyPropertiesChanged(nameof(LayerId), nameof(EffectiveZIndex)); }
+            set { _LayerId = value; NotifyPropertyChanged(nameof(LayerId), nameof(EffectiveZIndex)); }
         }
 
         public int EffectiveZIndex
