@@ -178,72 +178,42 @@ namespace AnimationEditorCore.ViewModels
             set { _FramesPerSecond = value; NotifyPropertyChanged(); }
         }
 
-        public void AddBlankFrameToTimeline(FrameNavigation timelinePlacement)
+        public void AddBlankFrameToTimeline(int index)
         {
-            int insertAtIndex = ActiveLayer.Frames.Count;
-
-            switch (timelinePlacement)
-            {
-                case FrameNavigation.Start:
-                    insertAtIndex = 0;
-                    break;
-                case FrameNavigation.Previous:
-                    insertAtIndex = SelectedFrameIndex;
-                    break;
-                case FrameNavigation.Next:
-                    insertAtIndex = SelectedFrameIndex + 1;
-                    break;
-                case FrameNavigation.End:
-                    insertAtIndex = ActiveLayer.Frames.Count;
-                    break;
-            }
-
             foreach (var layer in Layers)
             {
-                var newFrame = new FrameViewModel(layer, insertAtIndex);
+                var newFrame = new FrameViewModel(layer, index);
 
-                layer.AddFrameAtIndex(newFrame, insertAtIndex);
+                layer.AddFrameAtIndex(newFrame, index);
                 FrameCount = Math.Max(layer.Frames.Count, FrameCount);
 
-                layer.SelectedFrameIndex = insertAtIndex;
+                layer.SelectedFrameIndex = index;
             }
 
-            if (insertAtIndex <= SelectedFrameIndex)
+            if (index <= SelectedFrameIndex)
                 SelectedFrameIndex++;
 
-            SelectedFrameIndex = insertAtIndex;
+            SelectedFrameIndex = index;
 
-            PushUndoRecord(CreateUndoState($"Add Frame to {Enum.GetName(typeof(FrameNavigation),timelinePlacement)}"));
+            PushUndoRecord(CreateUndoState($"Insert Frame {index}"));
         }
 
-        public void DuplicateCurrentFrameToTimeline(FrameNavigation timelinePlacement)
+        public void DuplicateCurrentFrameToTimeline(int index)
         {
-            int insertAtIndex = SelectedFrameIndex;
-
-            switch (timelinePlacement)
-            {
-                case FrameNavigation.Previous:
-                    insertAtIndex = SelectedFrameIndex;
-                    break;
-                case FrameNavigation.Next:
-                    insertAtIndex = SelectedFrameIndex + 1;
-                    break;
-            }
-
             foreach (var frame in SelectedFrames)
             {
-                var newFrame = FrameViewModel.DuplicateFrame(frame, insertAtIndex);
+                var newFrame = FrameViewModel.DuplicateFrame(frame, index);
 
-                newFrame.LayerViewModel.AddFrameAtIndex(newFrame, insertAtIndex);
+                newFrame.LayerViewModel.AddFrameAtIndex(newFrame, index);
                 FrameCount = Math.Max(newFrame.LayerViewModel.Frames.Count, FrameCount);
 
-                newFrame.LayerViewModel.SelectedFrameIndex = insertAtIndex;
+                newFrame.LayerViewModel.SelectedFrameIndex = index;
             }
 
-            if (insertAtIndex <= SelectedFrameIndex)
+            if (index <= SelectedFrameIndex)
                 SelectedFrameIndex++;
 
-            SelectedFrameIndex = insertAtIndex;
+            SelectedFrameIndex = index;
 
             PushUndoRecord(CreateUndoState("Duplicate Frame"));
         }

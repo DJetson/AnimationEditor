@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AnimationEditorCore.Commands.Timeline
 {
-    public class AddBlankFrameBeforeCurrentCommand : RequeryBase
+    public class AddBlankFrameBeforeCurrentCommand : TimelineCommandBase
     {
         public override bool CanExecute(object parameter)
         {
@@ -23,7 +23,11 @@ namespace AnimationEditorCore.Commands.Timeline
         {
             var Parameter = parameter as TimelineViewModel;
 
-            Parameter.DuplicateCurrentFrameToTimeline(FrameNavigation.Previous);
+            var frameCount = Parameter?.ActiveLayer?.Frames?.Count ?? 0;
+            var currentIndex = Parameter?.SelectedFrameIndex ?? 0;
+            var navigation = FrameNavigation.Previous;
+
+            Parameter.AddBlankFrameToTimeline(GetIndexForFrameNavigation(currentIndex, frameCount, navigation));
         }
     }
 }
