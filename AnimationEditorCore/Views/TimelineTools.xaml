@@ -27,16 +27,16 @@
                 <Button Content="{StaticResource JumpToLastFrame}" Command="{StaticResource NavigateToLastFrame}" CommandParameter="{Binding }"/>
             </ToolBar>
             <ToolBar>
-                <Button Content="{StaticResource DeleteIcon}" Command="{Binding DeleteCurrentFrame}" />
-                <Button Content="{StaticResource InsertBeforeFirstFrame}" Command="{Binding AddBlankFrame}" CommandParameter="Start"/>
-                <Button Content="{StaticResource InsertNewFramePrevious}" Command="{Binding AddBlankFrame}" CommandParameter="Previous" />
-                <Button Content="{StaticResource DuplicateToPrevious}" Command="{Binding DuplicateCurrentFrame}" CommandParameter="Previous" />
-                <Button Content="{StaticResource DuplicateToNext}" Command="{Binding DuplicateCurrentFrame}" CommandParameter="Next"/>
-                <Button Content="{StaticResource InsertNewFrameNext}" Command="{Binding AddBlankFrame}" CommandParameter="Next"/>
-                <Button Content="{StaticResource AppendAfterLastFrame}" Command="{Binding AddBlankFrame}" CommandParameter="End" />
+                <Button Content="{StaticResource DeleteIcon}" Command="{StaticResource DeleteCurrentFrame}" CommandParameter="{Binding }"/>
+                <Button Content="{StaticResource InsertBeforeFirstFrame}" Command="{StaticResource AddBlankFrameToStart}" CommandParameter="{Binding }"/>
+                <Button Content="{StaticResource InsertNewFramePrevious}" Command="{StaticResource AddBlankFrameBeforeCurrent}" CommandParameter="{Binding }" />
+                <Button Content="{StaticResource DuplicateToPrevious}" Command="{StaticResource InsertDuplicateFrameBeforeCurrent}" CommandParameter="{Binding }" />
+                <Button Content="{StaticResource DuplicateToNext}" Command="{StaticResource InsertDuplicateFrameAfterCurrent}" CommandParameter="{Binding }"/>
+                <Button Content="{StaticResource InsertNewFrameNext}" Command="{StaticResource AddBlankFrameAfterCurrent}" CommandParameter="{Binding }"/>
+                <Button Content="{StaticResource AppendAfterLastFrame}" Command="{StaticResource AddBlankFrameToEnd}" CommandParameter="{Binding }" />
             </ToolBar>
             <ToolBar>
-                <Button Content="{StaticResource InsertLayerBelow}" Command="{Binding AddBlankLayer}"/>
+                <Button Content="{StaticResource InsertLayerBelow}" Command="{StaticResource AddBlankLayer}" CommandParameter="{Binding }" />
             </ToolBar>
             <ToolBar>
                 <TextBlock VerticalAlignment="Center" Text="FPS:" />

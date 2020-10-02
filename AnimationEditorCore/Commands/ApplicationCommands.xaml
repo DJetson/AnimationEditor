@@ -2,6 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Commands="clr-namespace:AnimationEditorCore.Commands"
                     xmlns:TimelineCommands="clr-namespace:AnimationEditorCore.Commands.Timeline">
+    <TimelineCommands:DeleteCurrentFrameCommand x:Key="DeleteCurrentFrame" />
+    <TimelineCommands:AddBlankFrameToStartCommand x:Key="AddBlankFrameToStart" />
+    <TimelineCommands:AddBlankFrameBeforeCurrentCommand x:Key="AddBlankFrameBeforeCurrent" />
+    <TimelineCommands:InsertDuplicateFrameBeforeCurrentCommand x:Key="InsertDuplicateFrameBeforeCurrent" />
+    <TimelineCommands:InsertDuplicateFrameAfterCurrentCommand x:Key="InsertDuplicateFrameAfterCurrent" />
+    <TimelineCommands:AddBlankFrameAfterCurrentCommand x:Key="AddBlankFrameAfterCurrent" />
+    <TimelineCommands:AddBlankFrameToEndCommand x:Key="AddBlankFrameToEnd" />
+    <TimelineCommands:AddBlankLayerCommand x:Key="AddBlankLayer" />
     <TimelineCommands:TogglePlaybackCommand x:Key="TogglePlayback" />
     <TimelineCommands:StopPlaybackCommand x:Key="StopPlayback" />
     <Commands:CreateNewWorkspaceCommand x:Key="CreateNewWorkspace" />

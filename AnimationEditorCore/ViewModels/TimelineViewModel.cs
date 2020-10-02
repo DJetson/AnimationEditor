@@ -178,32 +178,11 @@ namespace AnimationEditorCore.ViewModels
             set { _FramesPerSecond = value; NotifyPropertyChanged(); }
         }
 
-        private DelegateCommand _AddBlankFrame;
-        public DelegateCommand AddBlankFrame
-        {
-            get { return _AddBlankFrame; }
-            set { _AddBlankFrame = value; NotifyPropertyChanged(); }
-        }
-
-        public bool AddBlankFrame_CanExecute(object parameter)
-        {
-            if (AnimationPlaybackViewModel.IsPlaybackActive)
-                return false;
-
-            if (Enum.TryParse<FrameNavigation>(parameter.ToString(), out FrameNavigation Parameter) == false)
-                return false;
-
-            if (Parameter == FrameNavigation.Current)
-                return false;
-
-            return true;
-        }
-
-        public void AddBlankFrame_Execute(object parameter)
+        public void AddBlankFrameToTimeline(FrameNavigation timelinePlacement)
         {
             int insertAtIndex = ActiveLayer.Frames.Count;
-            var Parameter = (FrameNavigation)Enum.Parse(typeof(FrameNavigation), parameter.ToString());
-            switch (Parameter)
+
+            switch (timelinePlacement)
             {
                 case FrameNavigation.Start:
                     insertAtIndex = 0;
@@ -234,46 +213,14 @@ namespace AnimationEditorCore.ViewModels
 
             SelectedFrameIndex = insertAtIndex;
 
-            PushUndoRecord(CreateUndoState("Add Frame"));
+            PushUndoRecord(CreateUndoState($"Add Frame to {Enum.GetName(typeof(FrameNavigation),timelinePlacement)}"));
         }
 
-
-        private DelegateCommand _AddBlankLayer;
-        public DelegateCommand AddBlankLayer
+        public void DuplicateCurrentFrameToTimeline(FrameNavigation timelinePlacement)
         {
-            get { return _AddBlankLayer; }
-            set { _AddBlankLayer = value; NotifyPropertyChanged(); }
-        }
-
-        #region DuplicateCurrentFrame Command
-        private DelegateCommand _DuplicateCurrentFrame;
-        public DelegateCommand DuplicateCurrentFrame
-        {
-            get { return _DuplicateCurrentFrame; }
-            set { _DuplicateCurrentFrame = value; NotifyPropertyChanged(); }
-        }
-
-        public bool DuplicateCurrentFrame_CanExecute(object parameter)
-        {
-            if (AnimationPlaybackViewModel.IsPlaybackActive)
-                return false;
-
-            if (Enum.TryParse<FrameNavigation>(parameter.ToString(), out FrameNavigation Parameter) == false)
-                return false;
-
-            if (Parameter == FrameNavigation.Current || Parameter == FrameNavigation.Start || Parameter == FrameNavigation.End)
-                return false;
-
-            return true;
-        }
-
-        public void DuplicateCurrentFrame_Execute(object parameter)
-        {
-            var Parameter = (FrameNavigation)Enum.Parse(typeof(FrameNavigation), parameter.ToString());
-
             int insertAtIndex = SelectedFrameIndex;
 
-            switch (Parameter)
+            switch (timelinePlacement)
             {
                 case FrameNavigation.Previous:
                     insertAtIndex = SelectedFrameIndex;
@@ -300,23 +247,6 @@ namespace AnimationEditorCore.ViewModels
 
             PushUndoRecord(CreateUndoState("Duplicate Frame"));
         }
-        #endregion DuplicateCurrentFrame Command
-
-        #region DeleteCurrentFrame Command
-        private DelegateCommand _DeleteCurrentFrame;
-        public DelegateCommand DeleteCurrentFrame
-        {
-            get { return _DeleteCurrentFrame; }
-            set { _DeleteCurrentFrame = value; NotifyPropertyChanged(); }
-        }
-
-        public bool DeleteCurrentFrame_CanExecute(object parameter)
-        {
-            if (AnimationPlaybackViewModel.IsPlaybackActive)
-                return false;
-
-            return true;
-        }
 
         public void RemoveFrame(int frameIndex)
         {
@@ -328,7 +258,7 @@ namespace AnimationEditorCore.ViewModels
             FrameCount = GetFrameCountOfLongestLayer();
         }
 
-        public void DeleteCurrentFrame_Execute(object parameter)
+        public void DeleteCurrentFrame()
         {
             int selectedFrameIndex = SelectedFrameIndex;
 
@@ -356,13 +286,12 @@ namespace AnimationEditorCore.ViewModels
 
             PushUndoRecord(CreateUndoState("Delete Frame"));
         }
-        #endregion DeleteCurrentFrame Command
 
         public TimelineViewModel(List<LayerModel> layers, WorkspaceViewModel workspace)
         {
             WorkspaceViewModel = workspace;
 
-            InitializeCommands();
+            //InitializeCommands();
 
             Layers = new ObservableCollection<LayerViewModel>();
             foreach (var item in layers)
@@ -380,12 +309,10 @@ namespace AnimationEditorCore.ViewModels
         {
             WorkspaceViewModel = workspace;
             InitializeTimeline();
-            InitializeCommands();
         }
 
         public TimelineViewModel(TimelineViewModel originalTimeline)
         {
-            InitializeCommands();
             WorkspaceViewModel = originalTimeline.WorkspaceViewModel;
 
             AnimationPlaybackViewModel = originalTimeline.AnimationPlaybackViewModel;
@@ -410,14 +337,6 @@ namespace AnimationEditorCore.ViewModels
                 ActiveLayer = Layers[originalTimeline.Layers.IndexOf(originalTimeline.Layers.Where(e => e.IsActive).FirstOrDefault())];
         }
 
-        public void InitializeCommands()
-        {
-            AddBlankFrame = new DelegateCommand("Add Blank Frame", AddBlankFrame_CanExecute, AddBlankFrame_Execute);
-            AddBlankLayer = new DelegateCommand("Add Blank Layer", AddBlankLayer_CanExecute, AddBlankLayer_Execute);
-            DuplicateCurrentFrame = new DelegateCommand("Duplicate Frame", DuplicateCurrentFrame_CanExecute, DuplicateCurrentFrame_Execute);
-            DeleteCurrentFrame = new DelegateCommand("Deleted a Frame", DeleteCurrentFrame_CanExecute, DeleteCurrentFrame_Execute);
-        }
-
         public void InitializeTimeline()
         {
             var newLayer = new LayerViewModel(this, 0);
@@ -434,15 +353,7 @@ namespace AnimationEditorCore.ViewModels
             PushUndoRecord(CreateUndoState("New Workspace", undoStates));
         }
 
-        private bool AddBlankLayer_CanExecute(object parameter)
-        {
-            if (AnimationPlaybackViewModel.IsPlaybackActive)
-                return false;
-
-            return true;
-        }
-
-        private void AddBlankLayer_Execute(object parameter)
+        public void AddBlankLayer()
         {
             var newLayer = new LayerViewModel(this, ActiveLayer.LayerId + 1, "");
             newLayer.Frames = new ObservableCollection<FrameViewModel>();

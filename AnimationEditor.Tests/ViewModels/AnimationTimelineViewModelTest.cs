@@ -12,9 +12,9 @@ namespace AnimationEditorCore.ViewModels
             var workspaceManager = new WorkspaceManagerViewModel();
             var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
             Assert.AreEqual(0, timeline.SelectedFrameIndex, "original: selected frame index");
-            Assert.IsTrue(timeline.AddBlankFrame.CanExecute(FrameNavigation.Next));
+            Assert.IsTrue(timeline.AnimationPlaybackViewModel.IsPlaybackActive);
 
-            timeline.AddBlankFrame.Execute(FrameNavigation.Next);
+            timeline.AddBlankFrameToTimeline(FrameNavigation.Next);
             Assert.AreEqual(1, timeline.SelectedFrameIndex, "after: selected frame index");
         }
 
@@ -24,7 +24,7 @@ namespace AnimationEditorCore.ViewModels
             var workspaceManager = new WorkspaceManagerViewModel();
             var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
 
-            timeline.AddBlankFrame.Execute(FrameNavigation.Next);
+            timeline.AddBlankFrameToTimeline(FrameNavigation.Next);
 
             Assert.AreEqual(1, timeline.SelectedFrames.Count);
         }
@@ -35,7 +35,7 @@ namespace AnimationEditorCore.ViewModels
             var workspaceManager = new WorkspaceManagerViewModel();
             var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
 
-            timeline.AddBlankFrame.Execute(FrameNavigation.Next);
+            timeline.AddBlankFrameToTimeline(FrameNavigation.Next);
 
             Assert.IsNotNull(timeline.ActiveLayer);
         }
@@ -46,7 +46,7 @@ namespace AnimationEditorCore.ViewModels
             var workspaceManager = new WorkspaceManagerViewModel();
             var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
 
-            timeline.AddBlankFrame.Execute(FrameNavigation.Next);
+            timeline.AddBlankFrameToTimeline(FrameNavigation.Next);
 
             Assert.IsTrue(timeline.ActiveLayer.IsVisible);
         }
@@ -57,7 +57,7 @@ namespace AnimationEditorCore.ViewModels
             var workspaceManager = new WorkspaceManagerViewModel();
             var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
 
-            timeline.AddBlankFrame.Execute(FrameNavigation.Next);
+            timeline.AddBlankFrameToTimeline(FrameNavigation.Next);
 
             Assert.AreEqual("Layer 0", timeline.ActiveLayer.DisplayName);
         }
@@ -68,7 +68,7 @@ namespace AnimationEditorCore.ViewModels
             var workspaceManager = new WorkspaceManagerViewModel();
             var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
 
-            timeline.AddBlankFrame.Execute(FrameNavigation.Previous);
+            timeline.AddBlankFrameToTimeline(FrameNavigation.Previous);
 
             foreach (var layer in timeline.Layers)
             {
@@ -81,11 +81,11 @@ namespace AnimationEditorCore.ViewModels
         {
             var workspaceManager = new WorkspaceManagerViewModel();
             var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
-            timeline.AddBlankFrame.Execute(FrameNavigation.Previous);
-            timeline.AddBlankFrame.Execute(FrameNavigation.Next);
+            timeline.AddBlankFrameToTimeline(FrameNavigation.Previous);
+            timeline.AddBlankFrameToTimeline(FrameNavigation.Next);
 
-            Assert.IsTrue(timeline.DeleteCurrentFrame.CanExecute(null));
-            timeline.DeleteCurrentFrame.Execute(null);
+            Assert.IsTrue(timeline.AnimationPlaybackViewModel.IsPlaybackActive);
+            timeline.DeleteCurrentFrame();
 
             foreach (var layer in timeline.Layers)
             {
