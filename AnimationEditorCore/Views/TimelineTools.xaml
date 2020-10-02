@@ -12,12 +12,17 @@
                         <Setter Property="Width" Value="25"/>
                     </Style.Setters>
                 </Style>
+                <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource ImageToggleButtonStyle}">
+                    <Style.Setters>
+                        <Setter Property="Width" Value="25"/>
+                    </Style.Setters>
+                </Style>
             </ToolBarTray.Resources>
             <ToolBar>
                 <Button Content="{StaticResource JumpToFirstFrame}" Command="{StaticResource NavigateToFirstFrame}" CommandParameter="{Binding }"/>
                 <Button Content="{StaticResource PreviousFrame}" Command="{StaticResource NavigateToPreviousFrame}" CommandParameter="{Binding }"/>
-                <Button Content="{StaticResource StopIcon}" Command="{Binding StopAnimation}" CommandParameter="{Binding }"/>
-                <Button Command="{Binding PlayAnimation}" CommandParameter="{Binding }" ToolTip="Start Playback" Content="{StaticResource PlayIcon}"/>
+                <Button Content="{StaticResource StopIcon}" Command="{StaticResource StopPlayback}" CommandParameter="{Binding }"/>
+                <ToggleButton Content="{StaticResource PlayIcon}" IsChecked="{Binding AnimationPlaybackViewModel.IsPlaybackActive, Mode=OneWay}" Command="{StaticResource TogglePlayback}" CommandParameter="{Binding }" />
                 <Button Content="{StaticResource NextFrame}" Command="{StaticResource NavigateToNextFrame}" CommandParameter="{Binding }"/>
                 <Button Content="{StaticResource JumpToLastFrame}" Command="{StaticResource NavigateToLastFrame}" CommandParameter="{Binding }"/>
             </ToolBar>

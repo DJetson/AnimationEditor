@@ -24,16 +24,19 @@
                             TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight" 
                             AutoToolTipPrecision="0" Interval="5" 
                             Orientation="Horizontal" 
-                            Minimum="0" Maximum="{Binding LastFrameIndex}" 
-                            Value="{Binding SelectedFrameIndex}">
+                            Minimum="0" Maximum="{Binding LastFrameIndex}">
                         <Slider.Style>
                             <Style TargetType="{x:Type Slider}">
                                 <Style.Setters>
                                     <Setter Property="Visibility" Value="Visible"/>
+                                    <Setter Property="Value" Value="{Binding SelectedFrameIndex}"/>
                                 </Style.Setters>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding FrameCount}" Value="1">
                                         <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding AnimationPlaybackViewModel.IsPlaybackActive}" Value="True">
+                                        <Setter Property="Value" Value="{Binding AnimationPlaybackViewModel.CurrentFrameIndex}"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

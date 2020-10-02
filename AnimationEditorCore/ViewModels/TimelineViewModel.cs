@@ -178,69 +178,6 @@ namespace AnimationEditorCore.ViewModels
             set { _FramesPerSecond = value; NotifyPropertyChanged(); }
         }
 
-        #region PlayAnimation Command
-        private DelegateCommand _PlayAnimation;
-        public DelegateCommand PlayAnimation
-        {
-            get { return _PlayAnimation; }
-            set { _PlayAnimation = value; NotifyPropertyChanged(); }
-        }
-
-        public void PlayAnimation_Execute(object parameter)
-        {
-            //NOTE: Eventually this will be able to be set to the set of currently selected frames as well
-            FlattenStrokesForPlayback();
-            var playbackFrames = FlattenedFrameStrokes.ToList();
-
-            //NOTE: I may have to eventually do some caching up top here. Rasterize all of the InkCanvases in the series
-            //      and just flip through those instead of directly showing the InkCanvases. It will depend entirely on
-            //      how well it performs in it's initial, most basic form.
-
-            if (!AnimationPlaybackViewModel.IsPlaybackActive)
-                AnimationPlaybackViewModel.StartPlayback(playbackFrames, FramesPerSecond);
-        }
-
-        public bool PlayAnimation_CanExecute(object parameter)
-        {
-            //TODO: Eventually I need to add the conditions to return false If we're currently 
-            //in a "modal" state with the ink canvas for any reason, return false. We don't 
-            //need an active Scale transform going all screwy because the user accidentally hits 
-            //the play button before they resolve the resize, causing the playback object to yank 
-            //the target frame right out from under them
-            if (AnimationPlaybackViewModel.IsPlaybackActive)
-            {
-                return false;
-            }
-
-            return true;
-        }
-        #endregion PlayAnimation Command
-
-        #region StopAnimation Command
-        private DelegateCommand _StopAnimation;
-        public DelegateCommand StopAnimation
-        {
-            get { return _StopAnimation; }
-            set { _StopAnimation = value; NotifyPropertyChanged(); }
-        }
-
-        public void StopAnimation_Execute(object parameter)
-        {
-            if (AnimationPlaybackViewModel.IsPlaybackActive)
-            {
-                AnimationPlaybackViewModel.StopPlayback();
-            }
-        }
-
-        public bool StopAnimation_CanExecute(object parameter)
-        {
-            if (AnimationPlaybackViewModel.IsPlaybackActive == false)
-                return false;
-
-            return true;
-        }
-        #endregion StopAnimation Command
-
         private DelegateCommand _AddBlankFrame;
         public DelegateCommand AddBlankFrame
         {
@@ -477,8 +414,6 @@ namespace AnimationEditorCore.ViewModels
         {
             AddBlankFrame = new DelegateCommand("Add Blank Frame", AddBlankFrame_CanExecute, AddBlankFrame_Execute);
             AddBlankLayer = new DelegateCommand("Add Blank Layer", AddBlankLayer_CanExecute, AddBlankLayer_Execute);
-            PlayAnimation = new DelegateCommand("Play Animation", PlayAnimation_CanExecute, PlayAnimation_Execute);
-            StopAnimation = new DelegateCommand("Stop Animation", StopAnimation_CanExecute, StopAnimation_Execute);
             DuplicateCurrentFrame = new DelegateCommand("Duplicate Frame", DuplicateCurrentFrame_CanExecute, DuplicateCurrentFrame_Execute);
             DeleteCurrentFrame = new DelegateCommand("Deleted a Frame", DeleteCurrentFrame_CanExecute, DeleteCurrentFrame_Execute);
         }
@@ -649,14 +584,22 @@ namespace AnimationEditorCore.ViewModels
             return flattenedStrokes;
         }
 
-        public void FlattenStrokesForPlayback()
+        public List<StrokeCollection> FlattenFrames(int startIndex = 0, int count = 0, bool excludeHiddenLayers = true)
         {
-            FlattenedFrameStrokes = new List<StrokeCollection>();
+            var flattenedFrameStrokes = new List<StrokeCollection>();
+
+            //if start index is outside the existing range of frame indices...
+            if (startIndex > LastFrameIndex)
+                throw new IndexOutOfRangeException($"Cannot Flatten Strokes. StartIndex:{startIndex} is not valid");
+
+            //if count is 0, set count to the total number of frames from startIndex to the last frame
+            if (count == 0)
+                count = FrameCount - startIndex;
 
             //Iterate over all possible frame indexes in all layers up to the highest indexed frame in any layer
-            for (int i = 0; i < FrameCount; i++)
+            for (int i = startIndex; i < count; i++)
             {
-                FlattenedFrameStrokes.Add(new StrokeCollection());
+                flattenedFrameStrokes.Add(new StrokeCollection());
                 //Iterate over all visible layers
                 foreach (var layer in GetVisibleLayers())
                 {
@@ -665,10 +608,12 @@ namespace AnimationEditorCore.ViewModels
                     {
                         //Add the strokes from the frame at the current index from the current layer to the
                         //flattened stroke collection
-                        FlattenedFrameStrokes[i].Add(layer.Frames[i].StrokeCollection);
+                        flattenedFrameStrokes[i].Add(layer.Frames[i].StrokeCollection);
                     }
                 }
             }
+
+            return flattenedFrameStrokes;
         }
 
         public List<System.Drawing.Image> RenderFrameBitmaps(InkCanvas canvas)
@@ -752,7 +697,7 @@ namespace AnimationEditorCore.ViewModels
         public void LoadState(IMemento state)
         {
             var Memento = (state as TimelineState);
-      
+
             CopyToTimeline(Memento.Timeline, this);
         }
     }

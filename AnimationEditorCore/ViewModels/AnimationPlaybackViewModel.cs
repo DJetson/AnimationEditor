@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Ink;
 using System.Windows.Threading;
 
@@ -53,17 +54,20 @@ namespace AnimationEditorCore.ViewModels
             _PlaybackTimer.Tick += DispatcherTimer_Elapsed;
         }
 
-        public void StartPlayback(List<StrokeCollection> playbackFrames, double animationFps)
+        public void StartPlayback(List<StrokeCollection> playbackFrames, double animationFps, int startFromIndex = 0)
         {
             if (IsPlaybackActive)
             {
-                Console.WriteLine("Playback has already Started. This, and any further calls to StartPlayback() on this instance are unnecessary and will have no effect while it remains in the Play state.");
+                Debug.WriteLine("Playback has already Started. This, and any further calls to StartPlayback() on this instance are unnecessary and will have no effect while it remains in the Play state.");
                 return;
             }
             else
             {
+                if (startFromIndex < 0 || startFromIndex >= playbackFrames.Count)
+                    startFromIndex = 0;
+
                 _Frames = new ObservableCollection<StrokeCollection>(playbackFrames);
-                _OriginalIndex = 0;
+                _OriginalIndex = startFromIndex;
                 CurrentFrame = _Frames[_OriginalIndex];
 
                 _AnimationFps = animationFps;
@@ -75,7 +79,7 @@ namespace AnimationEditorCore.ViewModels
             }
         }
 
-        public void StopPlayback()
+        public void StopPlayback(bool resetToOriginalIndex = true)
         {
             if (!IsPlaybackActive)
             {
@@ -86,7 +90,12 @@ namespace AnimationEditorCore.ViewModels
                 _PlaybackTimer.Stop();
             }
 
-            CurrentFrame = _Frames[_OriginalIndex];
+            if(resetToOriginalIndex)
+            {
+                CurrentFrameIndex = _OriginalIndex;
+            }
+
+            CurrentFrame = _Frames[CurrentFrameIndex];
             _OriginalIndex = 0;
             _Frames.Clear();
             IsPlaybackActive = false;
