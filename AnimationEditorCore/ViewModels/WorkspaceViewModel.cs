@@ -1,11 +1,13 @@
 ﻿using AnimationEditorCore.BaseClasses;
 using AnimationEditorCore.Interfaces;
 using AnimationEditorCore.Models;
+using AnimationEditorCore.Utilities;
 using BumpKit;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -257,7 +259,7 @@ namespace AnimationEditorCore.ViewModels
                 using (FileStream fs = new FileStream(filepath, FileMode.Create))
                 {
                     GifEncoder gEnc = new GifEncoder(fs);
-                    var frameBitmaps = this.TimelineViewModel.RenderFrameBitmaps(canvas);
+                    var frameBitmaps = AnimationUtilities.RenderFrameBitmaps(canvas, TimelineViewModel.Layers.ToList());
 
                     foreach (var frame in frameBitmaps)
                     {

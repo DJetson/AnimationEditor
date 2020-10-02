@@ -1,5 +1,7 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Utilities;
 using AnimationEditorCore.ViewModels;
+using System.Linq;
 
 namespace AnimationEditorCore.Commands.Timeline
 {
@@ -21,7 +23,7 @@ namespace AnimationEditorCore.Commands.Timeline
 
             if (!Parameter.AnimationPlaybackViewModel.IsPlaybackActive)
             {
-                var flattenedFrames = Parameter.FlattenFrames();
+                var flattenedFrames = AnimationUtilities.FlattenFrames(Parameter.Layers.ToList());
 
                 Parameter.AnimationPlaybackViewModel.StartPlayback(flattenedFrames, Parameter.FramesPerSecond, Parameter.SelectedFrameIndex);
             }
