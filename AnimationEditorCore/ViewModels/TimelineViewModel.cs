@@ -40,7 +40,7 @@ namespace AnimationEditorCore.ViewModels
             set
             {
                 _ActiveLayer = value;
-                NotifyPropertyChanged();
+                NotifyPropertyChanged(nameof(ActiveLayer), nameof(ActiveLayerIndex));
                 foreach (var layer in Layers)
                 {
                     if (layer == ActiveLayer)
@@ -49,6 +49,11 @@ namespace AnimationEditorCore.ViewModels
                         layer.IsActive = false;
                 }
             }
+        }
+
+        public int ActiveLayerIndex
+        {
+            get => Layers.IndexOf(ActiveLayer);
         }
 
         public string CurrentIndexOutOfFrameCount
@@ -261,14 +266,15 @@ namespace AnimationEditorCore.ViewModels
         {
             WorkspaceViewModel = workspace;
 
-            //InitializeCommands();
-
             Layers = new ObservableCollection<LayerViewModel>();
             foreach (var item in layers)
             {
                 var newLayer = new LayerViewModel(item, this);
                 Layers.Add(newLayer);
                 FrameCount = Math.Max(FrameCount, newLayer.Frames.Count);
+
+                if (newLayer.IsActive)
+                    ActiveLayer = newLayer;
             }
 
             SelectedFrameIndex = Layers.FirstOrDefault().SelectedFrameIndex;
@@ -279,6 +285,7 @@ namespace AnimationEditorCore.ViewModels
         {
             WorkspaceViewModel = workspace;
             InitializeTimeline();
+            PushUndoRecord(CreateUndoState("New Workspace"));
         }
 
         public TimelineViewModel(TimelineViewModel originalTimeline)
@@ -316,7 +323,6 @@ namespace AnimationEditorCore.ViewModels
             FrameCount = AnimationUtilities.GetFrameCount(Layers.ToList());
             SelectedFrameIndex = 0;
             ActiveLayer = newLayer;
-            PushUndoRecord(CreateUndoState("New Workspace"));
         }
 
         public void AddBlankLayer()
@@ -334,6 +340,43 @@ namespace AnimationEditorCore.ViewModels
             AddLayerAtIndex(newLayer, newLayer.LayerId);
 
             PushUndoRecord(CreateUndoState("Added Layer"));
+        }
+
+        public void DeleteLayerFromTimeline(int index)
+        {
+            //TODO: This should get a confirmation dialog that can optionally be skipped permanently (e.g. "Don't show this again" checkbox)
+            if (index < 0 || index >= Layers.Count)
+                throw new IndexOutOfRangeException($"No layer found at index:{index}.");
+            var toRemoveIndex = index;
+            var toRemove = Layers[toRemoveIndex];
+
+            Layers.Remove(toRemove);
+
+            if (Layers.Count == 0)
+            {
+                InitializeTimeline();
+            }
+            else
+            {
+                var newActiveIndex = Math.Max(toRemoveIndex - 1, 0);
+                ActiveLayer = Layers[newActiveIndex];
+            }
+
+            toRemove.ClearFrames();
+
+            PushUndoRecord(CreateUndoState("Deleted Layer"));
+        }
+
+        public void DuplicateActiveLayer()
+        {
+            var layerClone = ActiveLayer.Clone();
+            var duplicateLayerIndex = ActiveLayerIndex + 1;
+
+            layerClone.SelectedFrameIndex = SelectedFrameIndex;
+
+            AddLayerAtIndex(layerClone, layerClone.LayerId);
+
+            PushUndoRecord(CreateUndoState("Duplicate Layer"));
         }
 
         public void AddLayerAtIndex(LayerViewModel layer, int index, bool createUndoState = true)
@@ -359,6 +402,11 @@ namespace AnimationEditorCore.ViewModels
             ActiveLayer = layer;
             UpdateLayerIds();
             UpdateSelectedFrames();
+        }
+
+        public void RemoveLayerAtIndex(int index)
+        {
+
         }
 
         public void UpdateLayerIds(int startIndex = 0)

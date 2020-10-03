@@ -10,6 +10,8 @@
     <TimelineCommands:AddBlankFrameAfterCurrentCommand x:Key="AddBlankFrameAfterCurrent" />
     <TimelineCommands:AddBlankFrameToEndCommand x:Key="AddBlankFrameToEnd" />
     <TimelineCommands:AddBlankLayerCommand x:Key="AddBlankLayer" />
+    <TimelineCommands:DuplicateActiveLayerCommand x:Key="DuplicateActiveLayer" />
+    <TimelineCommands:DeleteActiveLayerCommand x:Key="DeleteActiveLayer" />
     <TimelineCommands:TogglePlaybackCommand x:Key="TogglePlayback" />
     <TimelineCommands:StopPlaybackCommand x:Key="StopPlayback" />
     <Commands:CreateNewWorkspaceCommand x:Key="CreateNewWorkspace" />

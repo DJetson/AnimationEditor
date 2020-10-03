@@ -105,7 +105,12 @@ namespace AnimationEditorCore.ViewModels
         public int CurrentFrameIndex
         {
             get { return _CurrentFrameIndex; }
-            set { _CurrentFrameIndex = value; NotifyPropertyChanged(); }
+            set { _CurrentFrameIndex = value; NotifyPropertyChanged(nameof(CurrentFrameIndex), nameof(CurrentIndexOutOfFrameCount)); }
+        }
+
+        public string CurrentIndexOutOfFrameCount
+        {
+            get => $"{CurrentFrameIndex}/{Frames.Count - 1}";
         }
 
         private void DispatcherTimer_Elapsed(object sender, EventArgs e)

@@ -36,7 +36,9 @@
                 <Button Content="{StaticResource AppendAfterLastFrame}" Command="{StaticResource AddBlankFrameToEnd}" CommandParameter="{Binding }" />
             </ToolBar>
             <ToolBar>
-                <Button Content="{StaticResource InsertLayerBelow}" Command="{StaticResource AddBlankLayer}" CommandParameter="{Binding }" />
+                <Button Content="{StaticResource AddBlankLayerIcon}" Command="{StaticResource AddBlankLayer}" CommandParameter="{Binding }" />
+                <Button Content="{StaticResource RemoveActiveLayer}" Command="{StaticResource DeleteActiveLayer}" CommandParameter="{Binding }" />
+                <Button Content="{StaticResource DuplicateLayerBelowAlt}" Command="{StaticResource DuplicateActiveLayer}" CommandParameter="{Binding }"/>
             </ToolBar>
             <ToolBar>
                 <TextBlock VerticalAlignment="Center" Text="FPS:" />

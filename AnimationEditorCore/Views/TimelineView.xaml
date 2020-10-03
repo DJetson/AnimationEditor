@@ -16,7 +16,20 @@
                     <ColumnDefinition SharedSizeGroup="LayerControlColumn" />
                     <ColumnDefinition SharedSizeGroup="FrameColumn"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding CurrentIndexOutOfFrameCount}" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="SegoeUI" FontSize="14"/>
+                <TextBlock HorizontalAlignment="Center" FontWeight="Bold" FontFamily="SegoeUI" FontSize="14">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Style.Setters>
+                                <Setter Property="Text" Value="{Binding CurrentIndexOutOfFrameCount}"/>
+                            </Style.Setters>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding AnimationPlaybackViewModel.IsPlaybackActive}" Value="True">
+                                    <Setter Property="Text" Value="{Binding AnimationPlaybackViewModel.CurrentIndexOutOfFrameCount}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
                 <Border Grid.Column="1" Width="{Binding ScrubberLength}" Padding="11,0,0,0">
                     <Slider x:Name="FrameScrubber" 
                             Grid.Column="1" HorizontalAlignment="Stretch" 
