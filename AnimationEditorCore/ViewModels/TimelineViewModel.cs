@@ -253,6 +253,22 @@ namespace AnimationEditorCore.ViewModels
             FrameCount = AnimationUtilities.GetFrameCount(Layers.ToList());
         }
 
+        public bool IsLayerIndexValid(int index)
+        {
+            if (Layers.Select(e => e.LayerId).Contains(index))
+                return true;
+
+            return false;
+        }
+
+        public void ActivateLayerAtIndex(int index)
+        {
+            if (index > Layers.Count - 1 || index < 0)
+                return;
+
+            ActiveLayer = Layers[index];
+        }
+
         public void DeleteCurrentFrame()
         {
             int selectedFrameIndex = SelectedFrameIndex;

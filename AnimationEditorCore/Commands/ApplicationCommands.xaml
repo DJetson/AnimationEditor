@@ -14,6 +14,8 @@
     <TimelineCommands:DeleteActiveLayerCommand x:Key="DeleteActiveLayer" />
     <TimelineCommands:TogglePlaybackCommand x:Key="TogglePlayback" />
     <TimelineCommands:StopPlaybackCommand x:Key="StopPlayback" />
+    <Commands:NavigateToLayerAboveCurrentCommand x:Key="NavigateToLayerAboveCurrent"/>
+    <Commands:NavigateToLayerBelowCurrentCommand x:Key="NavigateToLayerBelowCurrent"/>
     <Commands:CreateNewWorkspaceCommand x:Key="CreateNewWorkspace" />
     <Commands:CloseWorkspaceCommand x:Key="CloseWorkspace" />
     <Commands:SaveWorkspaceCommand x:Key="SaveWorkspace" />
