@@ -31,6 +31,9 @@ namespace AnimationEditorCore.Utilities
         {
             var selectedLayers = excludeHiddenLayers ? GetVisibleLayers(layers) : layers;
 
+            if (selectedLayers.Count == 0)
+                return 0;
+
             return selectedLayers.SelectMany(layer => layer.Frames).Select(frame => frame.Order).Max();
         }
 
@@ -47,6 +50,10 @@ namespace AnimationEditorCore.Utilities
             var selectedLayers = excludeHiddenLayers ? GetVisibleLayers(layers) : layers;
 
             var LastFrameIndex = GetLastFrameIndex(selectedLayers);
+            
+            if (LastFrameIndex == 0)
+                return null;
+
             var FrameCount = GetFrameCount(selectedLayers);
             //if start index is outside the existing range of frame indices...
             if (startIndex > LastFrameIndex)

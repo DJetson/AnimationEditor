@@ -63,6 +63,9 @@ namespace AnimationEditorCore.ViewModels
             }
             else
             {
+                if (playbackFrames == null || playbackFrames.Count < 2)
+                    return;
+
                 if (startFromIndex < 0 || startFromIndex >= playbackFrames.Count)
                     startFromIndex = 0;
 
@@ -90,7 +93,7 @@ namespace AnimationEditorCore.ViewModels
                 _PlaybackTimer.Stop();
             }
 
-            if(resetToOriginalIndex)
+            if (resetToOriginalIndex)
             {
                 CurrentFrameIndex = _OriginalIndex;
             }
