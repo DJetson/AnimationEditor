@@ -44,12 +44,14 @@ namespace AnimationEditorCore.Utilities
         public static List<StrokeCollection> GetAllSucceedingOnionSkins(List<LayerViewModel> layers, int currentIndex, int onionSkinCount = 1)
         {
             var nextOnionSkins = new List<StrokeCollection>();
+            double opacityFalloff = Properties.Settings.Default.NextFrameSkinOpacityFalloff;
+            double currentOpacity = 1;
 
             for (int i = 0; i < onionSkinCount; i++)
             {
+                currentOpacity *= opacityFalloff;
                 //Start at the frame after the current one
                 var onionSkinFrameIndex = currentIndex + 1 + i;
-
                 var nextFrame = GetAllLayerFramesAtIndex(layers, onionSkinFrameIndex);
 
                 if (nextFrame == null)
@@ -58,8 +60,8 @@ namespace AnimationEditorCore.Utilities
                 var strokes = FlattenFrames(nextFrame, true).Clone();
                 foreach (var item in strokes)
                 {
-                    item.DrawingAttributes.IsHighlighter = true;
-                    item.DrawingAttributes.Color = System.Windows.Media.Color.FromArgb(128, 0, 255, 0);
+                    item.DrawingAttributes.IsHighlighter = false;
+                    item.DrawingAttributes.Color = System.Windows.Media.Color.FromArgb((byte)(255 * currentOpacity), 0, 255, 0);
                 }
                 nextOnionSkins.Add(strokes);
             }
@@ -71,9 +73,13 @@ namespace AnimationEditorCore.Utilities
         public static List<StrokeCollection> GetAllPrecedingOnionSkins(List<LayerViewModel> layers, int currentIndex, int onionSkinCount = 1)
         {
             var previousOnionSkins = new List<StrokeCollection>();
+            double opacityFalloff = Properties.Settings.Default.PreviousFrameSkinOpacityFalloff;
+            double currentOpacity = 1;
 
             for (int i = 0; i < onionSkinCount; i++)
             {
+                currentOpacity *= opacityFalloff;
+
                 //Start at the frame before the current one
                 var onionSkinFrameIndex = currentIndex - 1 - i;
 
@@ -85,8 +91,8 @@ namespace AnimationEditorCore.Utilities
                 var strokes = FlattenFrames(previousFrame, true).Clone();
                 foreach (var item in strokes)
                 {
-                    item.DrawingAttributes.IsHighlighter = true;
-                    item.DrawingAttributes.Color = System.Windows.Media.Color.FromArgb(128, 255, 0, 0);
+                    item.DrawingAttributes.IsHighlighter = false;
+                    item.DrawingAttributes.Color = System.Windows.Media.Color.FromArgb((byte)(255 * currentOpacity), 255, 0, 0);
                 }
                 previousOnionSkins.Add(strokes);
             }

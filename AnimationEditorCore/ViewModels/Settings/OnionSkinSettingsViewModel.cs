@@ -98,12 +98,29 @@ namespace AnimationEditorCore.ViewModels.Settings
             set { _NextFramesSkinCount = value; NotifyPropertyChanged(); }
         }
 
+        private double _PreviousFrameSkinOpacityFalloff;
+        public double PreviousFrameSkinOpacityFalloff
+        {
+            get => _PreviousFrameSkinOpacityFalloff;
+            set { _PreviousFrameSkinOpacityFalloff = value; NotifyPropertyChanged(); }
+        }
+
+        private double _NextFrameSkinOpacityFalloff;
+        public double NextFrameSkinOpacityFalloff
+        {
+            get { return _NextFrameSkinOpacityFalloff; }
+            set { _NextFrameSkinOpacityFalloff = value; NotifyPropertyChanged(); }
+        }
+
+
         private void WriteToSettings()
         {
             Properties.Settings.Default.IsShowPreviousOnionSkinsEnabled = IsShowPreviousOnionSkinsEnabled;
             Properties.Settings.Default.IsShowNextOnionSkinsEnabled = IsShowNextOnionSkinsEnabled;
             Properties.Settings.Default.PreviousFrameSkinCount = PreviousFrameSkinCount;
             Properties.Settings.Default.NextFramesSkinCount = NextFramesSkinCount;
+            Properties.Settings.Default.PreviousFrameSkinOpacityFalloff = PreviousFrameSkinOpacityFalloff;
+            Properties.Settings.Default.NextFrameSkinOpacityFalloff = NextFrameSkinOpacityFalloff;
 
             Properties.Settings.Default.Save();
         }
@@ -114,6 +131,8 @@ namespace AnimationEditorCore.ViewModels.Settings
             IsShowNextOnionSkinsEnabled = Properties.Settings.Default.IsShowNextOnionSkinsEnabled;
             PreviousFrameSkinCount = Properties.Settings.Default.PreviousFrameSkinCount;
             NextFramesSkinCount = Properties.Settings.Default.NextFramesSkinCount;
+            PreviousFrameSkinOpacityFalloff = Properties.Settings.Default.PreviousFrameSkinOpacityFalloff;
+            NextFrameSkinOpacityFalloff = Properties.Settings.Default.NextFrameSkinOpacityFalloff;
         }
     }
 }

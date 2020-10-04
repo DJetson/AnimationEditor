@@ -70,5 +70,29 @@ namespace AnimationEditorCore.Properties {
                 this["NextFramesSkinCount"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
+        public double PreviousFrameSkinOpacityFalloff {
+            get {
+                return ((double)(this["PreviousFrameSkinOpacityFalloff"]));
+            }
+            set {
+                this["PreviousFrameSkinOpacityFalloff"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
+        public double NextFrameSkinOpacityFalloff {
+            get {
+                return ((double)(this["NextFrameSkinOpacityFalloff"]));
+            }
+            set {
+                this["NextFrameSkinOpacityFalloff"] = value;
+            }
+        }
     }
 }

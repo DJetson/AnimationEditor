@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:SettingsViewModels="clr-namespace:AnimationEditorCore.ViewModels.Settings"
         mc:Ignorable="d"
-        Height="200" Width="250" 
+        Height="252" Width="287" 
         Title="{Binding DisplayName}">
     <Window.DataContext>
         <SettingsViewModels:OnionSkinSettingsViewModel />
@@ -43,19 +43,45 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <CheckBox Grid.Row="0" Grid.ColumnSpan="2" Content="Onionskin preceding frames" IsChecked="{Binding IsShowPreviousOnionSkinsEnabled}" />
-                <CheckBox Grid.Row="1" Grid.ColumnSpan="2" Content="Onionskin succeeding frames" IsChecked="{Binding IsShowNextOnionSkinsEnabled}" />
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="Number of preceding onionskins" HorizontalAlignment="Left"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding PreviousFrameSkinCount}" MinWidth="30" HorizontalAlignment="Left"/>
-                <TextBlock Grid.Row="3" Grid.Column="0" Text="Number of succeeding onionskins" HorizontalAlignment="Left"/>
-                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding NextFramesSkinCount}" MinWidth="30" HorizontalAlignment="Left"/>
+                <GroupBox Grid.Row="0">
+                    <GroupBox.Header>
+                        <CheckBox Content="Onionskin preceding frames" IsChecked="{Binding IsShowPreviousOnionSkinsEnabled}" />
+                    </GroupBox.Header>
+                    <Grid IsEnabled="{Binding IsShowPreviousOnionSkinsEnabled}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Number of preceding onionskins" HorizontalAlignment="Left"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PreviousFrameSkinCount}" MinWidth="30" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Preceding onionskins opacity falloff" HorizontalAlignment="Left"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PreviousFrameSkinOpacityFalloff}" MinWidth="30" HorizontalAlignment="Left"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Grid.Row="1">
+                    <GroupBox.Header>
+                        <CheckBox Content="Onionskin succeeding frames" IsChecked="{Binding IsShowNextOnionSkinsEnabled}" />
+                    </GroupBox.Header>
+                    <Grid IsEnabled="{Binding IsShowNextOnionSkinsEnabled}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Number of succeeding onionskins" HorizontalAlignment="Left"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding NextFramesSkinCount}" MinWidth="30" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Succeeding onionskins opacity falloff" HorizontalAlignment="Left"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding NextFrameSkinOpacityFalloff}" MinWidth="30" HorizontalAlignment="Left"/>
+                    </Grid>
+                </GroupBox>
             </Grid>
         </GroupBox>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">

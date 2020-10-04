@@ -113,7 +113,7 @@ namespace AnimationEditorCore.ViewModels
 
         public string CurrentIndexOutOfFrameCount
         {
-            get => $"{CurrentFrameIndex}/{Frames.Count - 1}";
+            get => $"{CurrentFrameIndex}/{(Frames?.Count ?? 0) - 1}";
         }
 
         private void DispatcherTimer_Elapsed(object sender, EventArgs e)
