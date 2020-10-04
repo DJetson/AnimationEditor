@@ -81,6 +81,21 @@ namespace AnimationEditorCore.ViewModels
 
         }
 
+        public void RemoveStrokes(StrokeCollection strokes, bool createUndo = true)
+        {
+            if (createUndo == false)
+            { 
+                StrokeCollection.StrokesChanged -= StrokeCollection_StrokesChanged;
+            }
+
+            StrokeCollection.Remove(strokes);
+
+            if(createUndo == false)
+            {
+                StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
+            }
+        }
+
         public void InitializeCommands()
         {
             UpdateSelectedStrokes = new DelegateCommand(UpdateSelectedStrokes_CanExecute, UpdateSelectedStrokes_Execute);

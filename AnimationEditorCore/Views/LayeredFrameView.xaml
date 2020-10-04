@@ -11,6 +11,22 @@
             <ItemsControl.Resources>
                 <DataTemplate DataType="{x:Type ViewModels:FrameViewModel}">
                     <InkCanvas x:Name="LayerCanvas" Strokes="{Binding StrokeCollection}" Background="{x:Null}" DefaultDrawingAttributes="{Binding DrawingAttributes, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}">
+                        <InkCanvas.InputBindings>
+                            <KeyBinding Gesture="CTRL+SHIFT+Left" Command="{StaticResource CopySelectedContentsToPreviousFrame}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
+                            <KeyBinding Gesture="CTRL+SHIFT+Right" Command="{StaticResource CopySelectedContentsToNextFrame}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
+                            <KeyBinding Gesture="CTRL+ALT+Left" Command="{StaticResource MoveSelectedContentsToPreviousFrame}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
+                            <KeyBinding Gesture="CTRL+ALT+Right" Command="{StaticResource MoveSelectedContentsToNextFrame}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
+                            <KeyBinding Gesture="CTRL+Left" Command="{StaticResource InsertDuplicateFrameBeforeCurrent}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
+                            <KeyBinding Gesture="CTRL+Right" Command="{StaticResource InsertDuplicateFrameAfterCurrent}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
+                            <KeyBinding Key="Up" Command="{StaticResource NavigateToLayerAboveCurrent}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
+                            <KeyBinding Key="Down" Command="{StaticResource NavigateToLayerBelowCurrent}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
+                            <KeyBinding Gesture="CTRL+OemComma" Command="{StaticResource NavigateToFirstFrame}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
+                            <KeyBinding Gesture="SHIFT+Left" Command="{StaticResource NavigateToPreviousFrame}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
+                            <KeyBinding Gesture="SHIFT+Right" Command="{StaticResource NavigateToNextFrame}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
+                            <KeyBinding Gesture="CTRL+OemPeriod" Command="{StaticResource NavigateToLastFrame}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
+                            <KeyBinding Gesture="Space" Command="{StaticResource TogglePlayback}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
+                            <KeyBinding Gesture="CTRL+Space" Command="{StaticResource StopPlayback}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
+                        </InkCanvas.InputBindings>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction Command="{Binding UpdateSelectedStrokes}" CommandParameter="{Binding ElementName=LayerCanvas}"/>

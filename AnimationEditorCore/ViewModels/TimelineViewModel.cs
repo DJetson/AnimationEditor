@@ -102,7 +102,7 @@ namespace AnimationEditorCore.ViewModels
                 if (nextOnionSkins == null)
                     return new StrokeCollection();
                 else
-                { 
+                {
                     return nextOnionSkins;
                 }
 
@@ -203,7 +203,7 @@ namespace AnimationEditorCore.ViewModels
             set { _FramesPerSecond = value; NotifyPropertyChanged(); }
         }
 
-        public void AddBlankFrameToTimeline(int index)
+        public void AddBlankFrameToTimeline(int index, bool updateSelected = true, bool createUndo = true)
         {
             foreach (var layer in Layers)
             {
@@ -212,15 +212,20 @@ namespace AnimationEditorCore.ViewModels
                 layer.AddFrameAtIndex(newFrame, index);
                 FrameCount = Math.Max(layer.Frames.Count, FrameCount);
 
-                layer.SelectedFrameIndex = index;
+                if (updateSelected)
+                    layer.SelectedFrameIndex = index;
             }
 
-            if (index <= SelectedFrameIndex)
-                SelectedFrameIndex++;
+            if (updateSelected)
+            {
+                if (index <= SelectedFrameIndex)
+                    SelectedFrameIndex++;
 
-            SelectedFrameIndex = index;
+                SelectedFrameIndex = index;
+            }
 
-            PushUndoRecord(CreateUndoState($"Insert Frame {index}"));
+            if (createUndo)
+                PushUndoRecord(CreateUndoState($"Insert Frame {index}"));
         }
 
         public void DuplicateCurrentFrameToTimeline(int index)
@@ -261,12 +266,26 @@ namespace AnimationEditorCore.ViewModels
             return false;
         }
 
+        public FrameViewModel GetActiveFrameAtIndex(int index)
+        {
+            if (IsFrameIndexValid(index))
+                return ActiveLayer.Frames[index];
+            else
+                return null;
+        }
+
+        public bool IsFrameIndexValid(int index)
+        {
+            if (index >= 0 && index < FrameCount)
+                return true;
+
+            return false;
+        }
+
         public void ActivateLayerAtIndex(int index)
         {
-            if (index > Layers.Count - 1 || index < 0)
-                return;
-
-            ActiveLayer = Layers[index];
+            if (IsLayerIndexValid(index))
+                ActiveLayer = Layers[index];
         }
 
         public void DeleteCurrentFrame()

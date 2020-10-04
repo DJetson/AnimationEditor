@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Commands="clr-namespace:AnimationEditorCore.Commands"
-                    xmlns:TimelineCommands="clr-namespace:AnimationEditorCore.Commands.Timeline">
+                    xmlns:TimelineCommands="clr-namespace:AnimationEditorCore.Commands.Timeline"
+                    xmlns:FrameContentCommands="clr-namespace:AnimationEditorCore.Commands.Timeline.FrameContent">
     <TimelineCommands:DeleteCurrentFrameCommand x:Key="DeleteCurrentFrame" />
     <TimelineCommands:AddBlankFrameToStartCommand x:Key="AddBlankFrameToStart" />
     <TimelineCommands:AddBlankFrameBeforeCurrentCommand x:Key="AddBlankFrameBeforeCurrent" />
@@ -14,6 +15,10 @@
     <TimelineCommands:DeleteActiveLayerCommand x:Key="DeleteActiveLayer" />
     <TimelineCommands:TogglePlaybackCommand x:Key="TogglePlayback" />
     <TimelineCommands:StopPlaybackCommand x:Key="StopPlayback" />
+    <FrameContentCommands:CopySelectedContentsToPreviousFrameCommand x:Key="CopySelectedContentsToPreviousFrame" />
+    <FrameContentCommands:CopySelectedContentsToNextFrameCommand x:Key="CopySelectedContentsToNextFrame" />
+    <FrameContentCommands:MoveSelectedContentsToPreviousFrameCommand x:Key="MoveSelectedContentsToPreviousFrame" />
+    <FrameContentCommands:MoveSelectedContentsToNextFrameCommand x:Key="MoveSelectedContentsToNextFrame" />
     <Commands:NavigateToLayerAboveCurrentCommand x:Key="NavigateToLayerAboveCurrent"/>
     <Commands:NavigateToLayerBelowCurrentCommand x:Key="NavigateToLayerBelowCurrent"/>
     <Commands:CreateNewWorkspaceCommand x:Key="CreateNewWorkspace" />

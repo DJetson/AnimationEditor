@@ -15,16 +15,22 @@
         <KeyBinding Key="E" Command="{StaticResource SelectTool}" CommandParameter="Eraser"/>
         <KeyBinding Key="S" Command="{StaticResource SelectTool}" CommandParameter="Lasso"/>
         <KeyBinding Key="Z" Command="{StaticResource SelectTool}" CommandParameter="Zoom"/>
+        <!--<KeyBinding Key="Left" Command="{StaticResource NavigateToPreviousFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
+        <KeyBinding Key="Right" Command="{StaticResource NavigateToNextFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>-->
+        <KeyBinding Gesture="CTRL+SHIFT+Left" Command="{StaticResource CopySelectedContentsToPreviousFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
+        <KeyBinding Gesture="CTRL+SHIFT+Right" Command="{StaticResource CopySelectedContentsToNextFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
+        <KeyBinding Gesture="CTRL+ALT+Left" Command="{StaticResource MoveSelectedContentsToPreviousFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
+        <KeyBinding Gesture="CTRL+ALT+Right" Command="{StaticResource MoveSelectedContentsToNextFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
         <KeyBinding Gesture="CTRL+Left" Command="{StaticResource InsertDuplicateFrameBeforeCurrent}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
-        <KeyBinding Key="Left" Command="{StaticResource NavigateToPreviousFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
-        <KeyBinding Key="Right" Command="{StaticResource NavigateToNextFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
         <KeyBinding Gesture="CTRL+Right" Command="{StaticResource InsertDuplicateFrameAfterCurrent}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
         <KeyBinding Key="Up" Command="{StaticResource NavigateToLayerAboveCurrent}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
         <KeyBinding Key="Down" Command="{StaticResource NavigateToLayerBelowCurrent}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
         <KeyBinding Gesture="CTRL+OemComma" Command="{StaticResource NavigateToFirstFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
-        <KeyBinding Key="OemComma" Command="{StaticResource NavigateToPreviousFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
-        <KeyBinding Key="OemPeriod" Command="{StaticResource NavigateToNextFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
+        <KeyBinding Gesture="Left" Command="{StaticResource NavigateToPreviousFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
+        <KeyBinding Gesture="Right" Command="{StaticResource NavigateToNextFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
         <KeyBinding Gesture="CTRL+OemPeriod" Command="{StaticResource NavigateToLastFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
+        <KeyBinding Gesture="Space" Command="{StaticResource TogglePlayback}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
+        <KeyBinding Gesture="CTRL+Space" Command="{StaticResource StopPlayback}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
     </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
