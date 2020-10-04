@@ -50,7 +50,7 @@ namespace AnimationEditorCore.Utilities
             var selectedLayers = excludeHiddenLayers ? GetVisibleLayers(layers) : layers;
 
             var LastFrameIndex = GetLastFrameIndex(selectedLayers);
-            
+
             if (LastFrameIndex == 0)
                 return null;
 
@@ -104,7 +104,7 @@ namespace AnimationEditorCore.Utilities
         //    }
         //}
 
-        public static List<System.Drawing.Image> RenderFrameBitmaps(InkCanvas canvas, List<LayerViewModel> layers, int startIndex = 0, int count = 0, bool excludeHiddenLayers = true )
+        public static List<System.Drawing.Image> RenderFrameBitmaps(InkCanvas canvas, List<LayerViewModel> layers, int startIndex = 0, int count = 0, bool excludeHiddenLayers = true)
         {
             var selectedLayers = excludeHiddenLayers ? GetVisibleLayers(layers) : layers;
             var flattenedLayers = FlattenFrames(selectedLayers, startIndex, count, excludeHiddenLayers);
@@ -131,21 +131,6 @@ namespace AnimationEditorCore.Utilities
             }
 
             return frameImages;
-        }
-
-        public static List<FrameViewModel> GetAllLayerFramesAtIndex(List<LayerViewModel> layers, int index)
-        {
-            var frames = new List<FrameViewModel>();
-
-            foreach (var layer in layers)
-            {
-                foreach (var frame in layer.Frames)
-                {
-                    if (frame.Order == index)
-                        frames.Add(frame);
-                }
-            }
-            return frames;
         }
     }
 }

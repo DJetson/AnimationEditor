@@ -87,16 +87,25 @@ namespace AnimationEditorCore.ViewModels
         {
             get
             {
-                if (NextFrame == null)
-                    return new StrokeCollection();
+                var nextOnionSkins = new ObservableCollection<StrokeCollection>(OnionSkinUtilities.GetAllSucceedingOnionSkins(Layers.ToList(), SelectedFrameIndex, Properties.Settings.Default.NextFramesSkinCount));
 
-                var strokes = FlattenFrames(NextFrame.ToList(), true).Clone();
-                foreach (var item in strokes)
-                {
-                    item.DrawingAttributes.IsHighlighter = true;
-                    item.DrawingAttributes.Color = System.Windows.Media.Color.FromArgb(128, 0, 255, 0);
+                if (nextOnionSkins.Count == 0)
+                    return new StrokeCollection();
+                else
+                { 
+                    return nextOnionSkins[0];
                 }
-                return strokes;
+
+                //if (NextFrame == null)
+                //    return new StrokeCollection();
+
+                //var strokes = FlattenFrames(NextFrame.ToList(), true).Clone();
+                //foreach (var item in strokes)
+                //{
+                //    item.DrawingAttributes.IsHighlighter = true;
+                //    item.DrawingAttributes.Color = System.Windows.Media.Color.FromArgb(128, 0, 255, 0);
+                //}
+                //return strokes;
             }
         }
 
@@ -104,16 +113,24 @@ namespace AnimationEditorCore.ViewModels
         {
             get
             {
-                if (PreviousFrame == null)
-                    return new StrokeCollection();
+                var previousOnionSkins = new ObservableCollection<StrokeCollection>(OnionSkinUtilities.GetAllPrecedingOnionSkins(Layers.ToList(), SelectedFrameIndex, Properties.Settings.Default.PreviousFrameSkinCount));
 
-                var strokes = FlattenFrames(PreviousFrame.ToList(), true).Clone();
-                foreach (var item in strokes)
+                if (previousOnionSkins.Count == 0)
+                    return new StrokeCollection();
+                else
                 {
-                    item.DrawingAttributes.IsHighlighter = true;
-                    item.DrawingAttributes.Color = System.Windows.Media.Color.FromArgb(128, 255, 0, 0);
+                    return previousOnionSkins[0];
                 }
-                return strokes;
+                //if (PreviousFrame == null)
+                //    return new StrokeCollection();
+
+                //var strokes = FlattenFrames(PreviousFrame.ToList(), true).Clone();
+                //foreach (var item in strokes)
+                //{
+                //    item.DrawingAttributes.IsHighlighter = true;
+                //    item.DrawingAttributes.Color = System.Windows.Media.Color.FromArgb(128, 255, 0, 0);
+                //}
+                //return strokes;
             }
         }
 
@@ -134,8 +151,8 @@ namespace AnimationEditorCore.ViewModels
             return strokes;
         }
 
-        public ObservableCollection<FrameViewModel> NextFrame => new ObservableCollection<FrameViewModel>(AnimationUtilities.GetAllLayerFramesAtIndex(Layers.ToList(), SelectedFrameIndex + 1));
-        public ObservableCollection<FrameViewModel> PreviousFrame => new ObservableCollection<FrameViewModel>(AnimationUtilities.GetAllLayerFramesAtIndex(Layers.ToList(), SelectedFrameIndex - 1));
+        public ObservableCollection<FrameViewModel> NextFrame => new ObservableCollection<FrameViewModel>(OnionSkinUtilities.GetAllLayerFramesAtIndex(Layers.ToList(), SelectedFrameIndex + 1));
+        public ObservableCollection<FrameViewModel> PreviousFrame => new ObservableCollection<FrameViewModel>(OnionSkinUtilities.GetAllLayerFramesAtIndex(Layers.ToList(), SelectedFrameIndex - 1));
 
         public void UpdateSelectedFrames()
         {
