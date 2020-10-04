@@ -134,8 +134,8 @@ namespace AnimationEditorCore.ViewModels
             return strokes;
         }
 
-        public ObservableCollection<FrameViewModel> NextFrame => new ObservableCollection<FrameViewModel>(GetAllLayerFramesAtIndex(SelectedFrameIndex + 1));
-        public ObservableCollection<FrameViewModel> PreviousFrame => new ObservableCollection<FrameViewModel>(GetAllLayerFramesAtIndex(SelectedFrameIndex - 1));
+        public ObservableCollection<FrameViewModel> NextFrame => new ObservableCollection<FrameViewModel>(AnimationUtilities.GetAllLayerFramesAtIndex(Layers.ToList(), SelectedFrameIndex + 1));
+        public ObservableCollection<FrameViewModel> PreviousFrame => new ObservableCollection<FrameViewModel>(AnimationUtilities.GetAllLayerFramesAtIndex(Layers.ToList(), SelectedFrameIndex - 1));
 
         public void UpdateSelectedFrames()
         {
@@ -152,21 +152,6 @@ namespace AnimationEditorCore.ViewModels
                 }
             }
             SelectedFrames = new ObservableCollection<FrameViewModel>(selected);
-        }
-
-        public List<FrameViewModel> GetAllLayerFramesAtIndex(int index)
-        {
-            var frames = new List<FrameViewModel>();
-
-            foreach (var layer in Layers)
-            {
-                foreach (var frame in layer.Frames)
-                {
-                    if (frame.Order == index)
-                        frames.Add(frame);
-                }
-            }
-            return frames;
         }
 
         private WorkspaceViewModel _WorkspaceViewModel;
@@ -251,13 +236,9 @@ namespace AnimationEditorCore.ViewModels
                         continue;
                     }
 
-                    SelectedFrameIndex = 0;
                 }
             }
-            else
-            {
-                SelectedFrameIndex = Math.Max(SelectedFrameIndex - 1, 0);
-            }
+            SelectedFrameIndex = Math.Max(SelectedFrameIndex - 1, 0);
 
             PushUndoRecord(CreateUndoState("Delete Frame"));
         }
@@ -402,11 +383,6 @@ namespace AnimationEditorCore.ViewModels
             ActiveLayer = layer;
             UpdateLayerIds();
             UpdateSelectedFrames();
-        }
-
-        public void RemoveLayerAtIndex(int index)
-        {
-
         }
 
         public void UpdateLayerIds(int startIndex = 0)

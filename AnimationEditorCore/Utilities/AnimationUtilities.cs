@@ -133,5 +133,19 @@ namespace AnimationEditorCore.Utilities
             return frameImages;
         }
 
+        public static List<FrameViewModel> GetAllLayerFramesAtIndex(List<LayerViewModel> layers, int index)
+        {
+            var frames = new List<FrameViewModel>();
+
+            foreach (var layer in layers)
+            {
+                foreach (var frame in layer.Frames)
+                {
+                    if (frame.Order == index)
+                        frames.Add(frame);
+                }
+            }
+            return frames;
+        }
     }
 }
