@@ -25,6 +25,38 @@
         <Views:LayeredFrameView FrameLayers="{Binding SelectedFrames}"/>
         <!--It might be better to have these onionskins defined someplace else, but I don't know yet. THey still aren't working-->
         <Grid Grid.Row="0" IsHitTestVisible="False" Background="Transparent" Panel.ZIndex="20000">
+            <!--<ItemsControl ItemsSource="{Binding PreviousOnionSkins}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type StrokeCollection}">
+                        <Views:OnionSkinView IsOnionSkinEnabled="{Binding IsShowPreviousOnionSkinsEnabled, Source={x:Static p:Settings.Default}}"
+                                 OnionSkinStrokes="{Binding }" 
+                                 ZoomLevel="{Binding DataContext.ZoomLevel, ElementName=CanvasGrid}"
+                                 MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" 
+                                 MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+            <ItemsControl ItemsSource="{Binding NextOnionSkins}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type StrokeCollection}">
+                        <Views:OnionSkinView IsOnionSkinEnabled="{Binding IsShowNextOnionSkinsEnabled, Source={x:Static p:Settings.Default}}"
+                                 OnionSkinStrokes="{Binding }" 
+                                 ZoomLevel="{Binding DataContext.ZoomLevel, ElementName=CanvasGrid}"
+                                 MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" 
+                                 MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>-->
             <Views:OnionSkinView IsOnionSkinEnabled="{Binding IsShowPreviousOnionSkinsEnabled, Source={x:Static p:Settings.Default}}"
                                  OnionSkinStrokes="{Binding PreviousFrameStrokes}" 
                                  ZoomLevel="{Binding ZoomLevel}"

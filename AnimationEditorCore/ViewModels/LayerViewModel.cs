@@ -28,7 +28,9 @@ namespace AnimationEditorCore.ViewModels
                 _IsVisible = value; 
                 NotifyPropertyChanged(nameof(IsVisible), nameof(IsAcceptingInput));
                 TimelineViewModel.NotifyPropertyChanged(nameof(TimelineViewModel.PreviousFrameStrokes),
-                                                        nameof(TimelineViewModel.NextFrameStrokes));
+                                                        nameof(TimelineViewModel.PreviousOnionSkins),
+                                                        nameof(TimelineViewModel.NextFrameStrokes),
+                                                        nameof(TimelineViewModel.NextOnionSkins));
             }
         }
 

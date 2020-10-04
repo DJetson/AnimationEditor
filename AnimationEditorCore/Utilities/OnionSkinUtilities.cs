@@ -64,6 +64,7 @@ namespace AnimationEditorCore.Utilities
                 nextOnionSkins.Add(strokes);
             }
 
+
             return nextOnionSkins;
         }
 

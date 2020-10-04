@@ -70,7 +70,9 @@ namespace AnimationEditorCore.ViewModels
                 _SelectedFrameIndex = value;
                 NotifyPropertyChanged(nameof(SelectedFrameIndex),
                                       nameof(PreviousFrameStrokes),
+                                      nameof(PreviousOnionSkins),
                                       nameof(NextFrameStrokes),
+                                      nameof(NextOnionSkins),
                                       nameof(CurrentIndexOutOfFrameCount));
                 UpdateSelectedFrames();
             }
@@ -83,17 +85,25 @@ namespace AnimationEditorCore.ViewModels
             set { _SelectedFrames = value; NotifyPropertyChanged(); }
         }
 
+        public ObservableCollection<StrokeCollection> NextOnionSkins
+        {
+            get
+            {
+                return new ObservableCollection<StrokeCollection>(OnionSkinUtilities.GetAllSucceedingOnionSkins(Layers.ToList(), SelectedFrameIndex, Properties.Settings.Default.NextFramesSkinCount));
+            }
+        }
+
         public StrokeCollection NextFrameStrokes
         {
             get
             {
-                var nextOnionSkins = new ObservableCollection<StrokeCollection>(OnionSkinUtilities.GetAllSucceedingOnionSkins(Layers.ToList(), SelectedFrameIndex, Properties.Settings.Default.NextFramesSkinCount));
+                var nextOnionSkins = new StrokeCollection(OnionSkinUtilities.GetAllSucceedingOnionSkins(Layers.ToList(), SelectedFrameIndex, Properties.Settings.Default.NextFramesSkinCount).SelectMany(e => e));
 
-                if (nextOnionSkins.Count == 0)
+                if (nextOnionSkins == null)
                     return new StrokeCollection();
                 else
                 { 
-                    return nextOnionSkins[0];
+                    return nextOnionSkins;
                 }
 
                 //if (NextFrame == null)
@@ -109,17 +119,25 @@ namespace AnimationEditorCore.ViewModels
             }
         }
 
+        public ObservableCollection<StrokeCollection> PreviousOnionSkins
+        {
+            get
+            {
+                return new ObservableCollection<StrokeCollection>(OnionSkinUtilities.GetAllPrecedingOnionSkins(Layers.ToList(), SelectedFrameIndex, Properties.Settings.Default.PreviousFrameSkinCount));
+            }
+        }
+
         public StrokeCollection PreviousFrameStrokes
         {
             get
             {
-                var previousOnionSkins = new ObservableCollection<StrokeCollection>(OnionSkinUtilities.GetAllPrecedingOnionSkins(Layers.ToList(), SelectedFrameIndex, Properties.Settings.Default.PreviousFrameSkinCount));
+                var previousOnionSkins = new StrokeCollection(OnionSkinUtilities.GetAllPrecedingOnionSkins(Layers.ToList(), SelectedFrameIndex, Properties.Settings.Default.PreviousFrameSkinCount).SelectMany(e => e));
 
-                if (previousOnionSkins.Count == 0)
+                if (previousOnionSkins == null)
                     return new StrokeCollection();
                 else
                 {
-                    return previousOnionSkins[0];
+                    return previousOnionSkins;
                 }
                 //if (PreviousFrame == null)
                 //    return new StrokeCollection();
