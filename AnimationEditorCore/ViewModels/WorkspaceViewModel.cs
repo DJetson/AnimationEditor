@@ -260,10 +260,10 @@ namespace AnimationEditorCore.ViewModels
                 {
                     GifEncoder gEnc = new GifEncoder(fs);
                     var frameBitmaps = AnimationUtilities.RenderFrameBitmaps(canvas, TimelineViewModel.Layers.ToList());
-
+                    var frameInterval = new TimeSpan((long)(TimeSpan.TicksPerSecond * (1.0 / (TimelineViewModel.FramesPerSecond))));
                     foreach (var frame in frameBitmaps)
                     {
-                        gEnc.AddFrame(frame, 0, 0, new TimeSpan(100));
+                        gEnc.AddFrame(frame, 0, 0, frameInterval);
                     }
                 }
             }
