@@ -15,6 +15,9 @@
     <TimelineCommands:DeleteActiveLayerCommand x:Key="DeleteActiveLayer" />
     <TimelineCommands:TogglePlaybackCommand x:Key="TogglePlayback" />
     <TimelineCommands:StopPlaybackCommand x:Key="StopPlayback" />
+    <TimelineCommands:SelectPlaybackSpeedHalfCommand x:Key="SelectPlaybackSpeedHalf"/>
+    <TimelineCommands:SelectPlaybackSpeedNormalCommand x:Key="SelectPlaybackSpeedNormal"/>
+    <TimelineCommands:SelectPlaybackSpeedDoubleCommand x:Key="SelectPlaybackSpeedDouble"/>
     <FrameContentCommands:CopySelectedContentsToPreviousFrameCommand x:Key="CopySelectedContentsToPreviousFrame" />
     <FrameContentCommands:CopySelectedContentsToNextFrameCommand x:Key="CopySelectedContentsToNextFrame" />
     <FrameContentCommands:MoveSelectedContentsToPreviousFrameCommand x:Key="MoveSelectedContentsToPreviousFrame" />

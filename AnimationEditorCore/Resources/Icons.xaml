@@ -12,6 +12,8 @@
         <ResourceDictionary Source="./Icons/UndoIcon.xaml"/>
         <!--General Icons-->
         <ResourceDictionary Source="./Icons/General/DeleteIcon.xaml"/>
+        <ResourceDictionary Source="./Icons/General/PropertiesIcon.xaml"/>
+        <ResourceDictionary Source="./Icons/General/SettingsIcon.xaml"/>
         <!--Editor Tools Panel Icons-->
         <ResourceDictionary Source="./Icons/EditorTools/DrawIconLight.xaml"/>
         <ResourceDictionary Source="./Icons/EditorTools/EraseIconLight.xaml"/>
@@ -33,6 +35,9 @@
             <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/JumpToLastFrame.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/NextFrame.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PlayIcon.xaml"/>
+            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PlaybackSpeedHalf.xaml"/>
+            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PlaybackSpeedNormal.xaml"/>
+            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PlaybackSpeedDouble.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PreviousFrame.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/StopIcon.xaml"/>
         <!--End of Animation Timeline ToolBar Icons-->

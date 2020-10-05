@@ -17,6 +17,11 @@
                         <Setter Property="Width" Value="25"/>
                     </Style.Setters>
                 </Style>
+                <Style x:Key="{x:Static ToolBar.RadioButtonStyleKey}" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource ImageToggleButtonStyle}">
+                    <Style.Setters>
+                        <Setter Property="Width" Value="25"/>
+                    </Style.Setters>
+                </Style>
             </ToolBarTray.Resources>
             <ToolBar>
                 <Button Content="{StaticResource JumpToFirstFrame}" Command="{StaticResource NavigateToFirstFrame}" CommandParameter="{Binding }"/>
@@ -41,8 +46,11 @@
                 <Button Content="{StaticResource DuplicateLayerBelowAlt}" Command="{StaticResource DuplicateActiveLayer}" CommandParameter="{Binding }"/>
             </ToolBar>
             <ToolBar>
-                <TextBlock VerticalAlignment="Center" Text="FPS:" />
-                <TextBox Text="{Binding FramesPerSecond, UpdateSourceTrigger=PropertyChanged, Delay=750}" />
+                <RadioButton Content="{StaticResource PlaybackSpeedHalf}"   Command="{StaticResource SelectPlaybackSpeedHalf}" CommandParameter="{Binding }" GroupName="PlaybackSpeedGroup"/>
+                <RadioButton Content="{StaticResource PlaybackSpeedNormal}" Command="{StaticResource SelectPlaybackSpeedNormal}" CommandParameter="{Binding }" GroupName="PlaybackSpeedGroup"/>
+                <RadioButton Content="{StaticResource PlaybackSpeedDouble}" Command="{StaticResource SelectPlaybackSpeedDouble}" CommandParameter="{Binding }" GroupName="PlaybackSpeedGroup"/>
+                <TextBlock VerticalAlignment="Center" Text="{Binding FramesPerSecond, StringFormat={}Playback FPS: {0}}" />
+                <!--<TextBox Text="{Binding FramesPerSecond, UpdateSourceTrigger=PropertyChanged, Delay=750}" />-->
             </ToolBar>
         </ToolBarTray>
     </Grid>

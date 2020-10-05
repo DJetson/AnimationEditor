@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<DrawingBrush x:Key="PlaybackSpeedNormal" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+                    <GeometryDrawing Brush="#FFB0A5FF" Geometry="F1 M 128,128L 16,32L 16,224L 128,128 Z "/>
+                    <GeometryDrawing Brush="#FFB0A5FF" Geometry="F1 M 240,128L 128,32L 128,224L 240,128 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 184,128L 72,32.0001L 72,224L 184,128 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+</ResourceDictionary>
