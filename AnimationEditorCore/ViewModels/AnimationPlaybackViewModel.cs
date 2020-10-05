@@ -18,6 +18,11 @@ namespace AnimationEditorCore.ViewModels
         }
 
         private double _AnimationFps = 24;
+        public double AnimationFps
+        {
+            get => _AnimationFps;
+            set { _AnimationFps = value; NotifyPropertyChanged(nameof(AnimationFps), nameof(PlaybackFps)); }
+        }
         private int _OriginalIndex;
         private DispatcherTimer _PlaybackTimer;
 
@@ -27,6 +32,7 @@ namespace AnimationEditorCore.ViewModels
             get { return _CurrentFrame; }
             set { _CurrentFrame = value; NotifyPropertyChanged(); }
         }
+
 
         private PlaybackSpeed _SelectedPlaybackSpeed = PlaybackSpeed.Normal;
         public PlaybackSpeed SelectedPlaybackSpeed
@@ -42,18 +48,16 @@ namespace AnimationEditorCore.ViewModels
             set { _IsPlaybackActive = value; NotifyPropertyChanged(); }
         }
 
-        private double _PlaybackFps;
         public double PlaybackFps
         {
-            get { return _PlaybackFps; }
-            set { _PlaybackFps = value; NotifyPropertyChanged(); }
+            get { return _AnimationFps * PlaybackFpsMultiplier; }
         }
 
         private double _PlaybackFpsMultiplier = 1.0f;
         public double PlaybackFpsMultiplier
         {
             get { return _PlaybackFpsMultiplier; }
-            set { _PlaybackFpsMultiplier = value; NotifyPropertyChanged(); }
+            set { _PlaybackFpsMultiplier = value; NotifyPropertyChanged(nameof(PlaybackFpsMultiplier), nameof(PlaybackFps)); }
         }
 
         public AnimationPlaybackViewModel()
@@ -87,7 +91,7 @@ namespace AnimationEditorCore.ViewModels
             if (IsPlaybackActive == true)
             {
                 _PlaybackTimer.Stop();
-                _PlaybackTimer.Interval = new TimeSpan((int)(TimeSpan.TicksPerSecond * (1.0f / (PlaybackFps * PlaybackFpsMultiplier))));
+                _PlaybackTimer.Interval = new TimeSpan((int)(TimeSpan.TicksPerSecond * (1.0f / (PlaybackFps))));
                 _PlaybackTimer.Start();
             }
         }
@@ -112,8 +116,8 @@ namespace AnimationEditorCore.ViewModels
                 CurrentFrame = _Frames[_OriginalIndex];
 
                 _AnimationFps = animationFps;
-                PlaybackFps = animationFps * _PlaybackFpsMultiplier;
-                _PlaybackTimer.Interval = new TimeSpan((int)(TimeSpan.TicksPerSecond * (1.0 / (PlaybackFps * PlaybackFpsMultiplier))));
+
+                _PlaybackTimer.Interval = new TimeSpan((int)(TimeSpan.TicksPerSecond * (1.0 / (PlaybackFps))));
 
                 IsPlaybackActive = true;
                 _PlaybackTimer.Start();

@@ -28,6 +28,7 @@
             <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/InsertNewFrameNext.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/InsertNewFramePrevious.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AddBlankLayerIcon.xaml"/>
+            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AddDuplicateLayer.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/RemoveActiveLayer.xaml"/>
             <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/DuplicateLayerBelowAlt.xaml"/>
             <!--Timeline Navigation ToolBar Icons-->
