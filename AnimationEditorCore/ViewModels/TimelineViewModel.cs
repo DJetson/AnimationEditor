@@ -436,6 +436,10 @@ namespace AnimationEditorCore.ViewModels
             {
                 layer.DisplayName = FileUtilities.GetUniqueNameForCollection(Layers.Select(e => e.DisplayName).ToList(), $"Layer {Layers?.Count ?? 0}");
             }
+            else
+            {
+                layer.DisplayName = FileUtilities.GetUniqueNameForCollection(Layers.Select(e => e.DisplayName).ToList(), layer.DisplayName);
+            }
 
             if (index < 0)
             {
