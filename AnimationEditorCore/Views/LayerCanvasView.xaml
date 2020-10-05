@@ -61,12 +61,14 @@
                                  OnionSkinStrokes="{Binding PreviousFrameStrokes}" 
                                  ZoomLevel="{Binding ZoomLevel}"
                                  MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" 
-                                 MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}"/>
+                                 MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}"
+                                 Panel.ZIndex="0"/>
             <Views:OnionSkinView IsOnionSkinEnabled="{Binding IsShowNextOnionSkinsEnabled, Source={x:Static p:Settings.Default}}"
                                  OnionSkinStrokes="{Binding NextFrameStrokes}" 
                                  ZoomLevel="{Binding ZoomLevel}"
                                  MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" 
-                                 MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}"/>
+                                 MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}"
+                                 Panel.ZIndex="0"/>
         </Grid>
     </Grid>
 </UserControl>

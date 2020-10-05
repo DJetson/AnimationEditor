@@ -25,7 +25,7 @@ namespace AnimationEditorCore.Commands.Timeline
 
             var frameCount = Parameter?.ActiveLayer?.Frames?.Count ?? 0;
             var currentIndex = Parameter?.SelectedFrameIndex ?? 0;
-            var navigation = FrameNavigation.Next;
+            var navigation = FrameNavigation.Previous;
 
             Parameter.DuplicateCurrentFrameToTimeline(GetIndexForFrameNavigation(currentIndex, frameCount, navigation));
         }
