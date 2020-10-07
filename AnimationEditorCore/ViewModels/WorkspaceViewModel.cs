@@ -78,7 +78,7 @@ namespace AnimationEditorCore.ViewModels
             get => _HasUnsavedChanges;
             set { _HasUnsavedChanges = value; NotifyPropertyChanged(); NotifyPropertyChanged(nameof(DisplayName)); }
         }
-
+        
         public override string DisplayName
         {
             get => $"{_DisplayName}{(_HasUnsavedChanges ? "*" : "")}";
@@ -196,6 +196,7 @@ namespace AnimationEditorCore.ViewModels
             EditorTools = EditorToolsViewModel.Instance;
 
             Filepath = model.Filepath;
+            HasUnsavedChanges = false;
             DisplayName = Path.GetFileNameWithoutExtension(Filepath);
         }
 

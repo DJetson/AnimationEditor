@@ -94,8 +94,8 @@ namespace AnimationEditorCore.ViewModels
 
             LayerViewModel activeLayer = workspace.TimelineViewModel.ActiveLayer;
 
-            var stroke = activeLayer.SelectedFrame.StrokeCollection[0];
-            activeLayer.SelectedFrame.SelectedStrokes = activeLayer.SelectedFrame.StrokeCollection;
+            var stroke = activeLayer.Frames[activeLayer.SelectedFrameIndex].StrokeCollection[0];
+            activeLayer.Frames[activeLayer.SelectedFrameIndex].SelectedStrokes = activeLayer.Frames[activeLayer.SelectedFrameIndex].StrokeCollection;
 
             stroke.Transform(new System.Windows.Media.TranslateTransform(offsetX: 1d, offsetY: 2d).Value, applyToStylusTip: false);
 
@@ -109,7 +109,8 @@ namespace AnimationEditorCore.ViewModels
             var workspaceManager = new WorkspaceManagerViewModel();
             new Commands.OpenWorkspaceCommand().OpenWorkspaceFile("dot.anws", workspaceManager);
             var workspace = workspaceManager.SelectedWorkspace;
-            var stroke = workspace.TimelineViewModel.ActiveLayer.StrokeCollection[0];
+            var activeLayer = workspace.TimelineViewModel.ActiveLayer;
+            var stroke = activeLayer.Frames[activeLayer.SelectedFrameIndex].StrokeCollection[0];
             stroke.Transform(new System.Windows.Media.TranslateTransform(offsetX: 1d, offsetY: 2d).Value, applyToStylusTip: false);
             var historyItem = workspace.WorkspaceHistoryViewModel.HistoricalStates.First();
             Assert.IsTrue(workspace.WorkspaceHistoryViewModel.RevertToState.CanExecute(historyItem));
