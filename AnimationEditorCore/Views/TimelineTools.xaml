@@ -41,6 +41,11 @@
                 <Separator/>
                 <Button Content="{StaticResource DuplicateToPrevious}" Command="{StaticResource InsertDuplicateFrameBeforeCurrent}" CommandParameter="{Binding }" />
                 <Button Content="{StaticResource DuplicateToNext}" Command="{StaticResource InsertDuplicateFrameAfterCurrent}" CommandParameter="{Binding }"/>
+                <Separator/>
+                <Button Content="{StaticResource CopySelectedToPreviousFrame}" Command="{StaticResource CopySelectedContentsToPreviousFrame}" CommandParameter="{Binding }"/>
+                <Button Content="{StaticResource CopySelectedToNextFrame}" Command="{StaticResource CopySelectedContentsToNextFrame}" CommandParameter="{Binding }"/>
+                <Button Content="{StaticResource MoveSelectedToPreviousFrame}" Command="{StaticResource MoveSelectedContentsToPreviousFrame}" CommandParameter="{Binding }"/>
+                <Button Content="{StaticResource MoveSelectedToNextFrame}" Command="{StaticResource MoveSelectedContentsToNextFrame}" CommandParameter="{Binding }"/>
             </ToolBar>
             <ToolBar>
                 <Button Content="{StaticResource DeleteIcon}" Command="{StaticResource DeleteActiveLayer}" CommandParameter="{Binding }" />
