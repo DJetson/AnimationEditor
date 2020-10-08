@@ -567,6 +567,20 @@ namespace AnimationEditorCore.ViewModels
             SortedLayers.Refresh();
         }
 
+        //public void SwapLayers(int layerIndexOne, int layerIndexTwo)
+        //{
+        //    if(layerIndexOne >= 0 && layerIndexOne < Layers.Count 
+        //    && layerIndexTwo >= 0 && layerIndexTwo < Layers.Count
+        //    && layerIndexOne != layerIndexTwo)
+        //    {
+        //        var layerOne = Layers[layerIndexOne];
+        //        var layerTwo = Layers[layerIndexTwo];
+
+
+
+        //    }
+        //}
+
         public static void CopyToTimeline(TimelineViewModel original, TimelineViewModel destination)
         {
             destination.ClearLayers();

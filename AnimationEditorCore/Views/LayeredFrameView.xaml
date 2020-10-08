@@ -39,7 +39,7 @@
                             <Style TargetType="{x:Type InkCanvas}">
                                 <Style.Setters>
                                     <Setter Property="EditingMode" Value="{Binding EditingMode, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}"/>
-                                    <Setter Property="Panel.ZIndex" Value="{Binding LayerViewModel.EffectiveIndex}"/>
+                                    <Setter Property="Panel.ZIndex" Value="{Binding LayerViewModel.EffectiveZIndex}"/>
                                     <Setter Property="IsHitTestVisible" Value="{Binding LayerViewModel.IsAcceptingInput}"/>
                                     <Setter Property="Visibility" Value="Visible"/>
                                 </Style.Setters>

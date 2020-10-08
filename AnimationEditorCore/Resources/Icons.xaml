@@ -12,6 +12,7 @@
         <ResourceDictionary Source="./Icons/UndoIcon.xaml"/>
         <!--General Icons-->
         <ResourceDictionary Source="./Icons/General/DeleteIcon.xaml"/>
+        <ResourceDictionary Source="./Icons/General/DetailsIcon.xaml"/>
         <ResourceDictionary Source="./Icons/General/PropertiesIcon.xaml"/>
         <ResourceDictionary Source="./Icons/General/SettingsIcon.xaml"/>
         <!--Editor Tools Panel Icons-->
