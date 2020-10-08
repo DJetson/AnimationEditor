@@ -30,7 +30,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             var frame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);
 
             StrokeCollection copiedStrokes = new StrokeCollection(frame.SelectedStrokes.Select(e => e.Clone()));
-            
+
             frame.RemoveStrokes(frame.SelectedStrokes, false);
 
             if (!(Parameter.IsLayerIndexValid(Parameter.ActiveLayerIndex - 1)))
@@ -38,8 +38,10 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
                 //Create new layer to move selected contents to
                 Parameter.AddBlankLayerAtIndex(Parameter.ActiveLayerIndex);
             }
-
-            Parameter.ActiveLayer = Parameter.Layers[Parameter.ActiveLayerIndex];
+            else
+            {
+                Parameter.ActiveLayer = Parameter.Layers[Parameter.ActiveLayerIndex - 1];
+            }
             var copyToFrame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);
 
             copyToFrame.StrokeCollection.Add(copiedStrokes);
