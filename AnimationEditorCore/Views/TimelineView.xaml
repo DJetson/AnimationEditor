@@ -70,11 +70,11 @@
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="50"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding DisplayName}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="0" Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis" ToolTip="{Binding DisplayName}"  VerticalAlignment="Center" />
                                 <Rectangle Width="15" Height="15" Margin="15,0,5,0" Stretch="UniformToFill" Grid.Column="1">
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
