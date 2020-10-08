@@ -6,11 +6,13 @@ using AnimationEditorCore.ViewModels.StateObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Ink;
 using System.Windows.Media.Imaging;
 
@@ -24,6 +26,12 @@ namespace AnimationEditorCore.ViewModels
         {
             get { return _Layers; }
             set { _Layers = value; NotifyPropertyChanged(); }
+        }
+
+        private CollectionViewSource _SortedLayers = new CollectionViewSource();
+        public CollectionView SortedLayers
+        {
+            get => (CollectionView)_SortedLayers.View;
         }
 
         private AnimationPlaybackViewModel _AnimationPlaybackViewModel = new AnimationPlaybackViewModel();
@@ -318,6 +326,8 @@ namespace AnimationEditorCore.ViewModels
             WorkspaceViewModel = workspace;
 
             Layers = new ObservableCollection<LayerViewModel>();
+            InitializeLayerViewSource();
+
             foreach (var item in layers)
             {
                 var newLayer = new LayerViewModel(item, this);
@@ -329,13 +339,18 @@ namespace AnimationEditorCore.ViewModels
             }
 
             SelectedFrameIndex = Layers.FirstOrDefault().SelectedFrameIndex;
+
+
             PushUndoRecord(CreateUndoState("Opened Workspace"));
         }
 
         public TimelineViewModel(WorkspaceViewModel workspace)
         {
             WorkspaceViewModel = workspace;
+            
+            InitializeLayerViewSource();
             InitializeTimeline();
+
             PushUndoRecord(CreateUndoState("New Workspace"));
         }
 
@@ -350,6 +365,8 @@ namespace AnimationEditorCore.ViewModels
             FrameWidth = originalTimeline.FrameWidth;
 
             Layers = new ObservableCollection<LayerViewModel>();
+            InitializeLayerViewSource();
+
             foreach (var layer in originalTimeline.Layers)
             {
                 var clonedLayer = layer.Clone();
@@ -389,7 +406,7 @@ namespace AnimationEditorCore.ViewModels
             newLayer.SelectedFrameIndex = SelectedFrameIndex;
 
             AddLayerAtIndex(newLayer, newLayer.LayerId);
-
+            SortedLayers.Refresh();
             PushUndoRecord(CreateUndoState("Added Layer"));
         }
 
@@ -472,6 +489,14 @@ namespace AnimationEditorCore.ViewModels
             ActiveLayer = layer;
             UpdateLayerIds();
             UpdateSelectedFrames();
+            SortedLayers.Refresh();
+        }
+
+        public void InitializeLayerViewSource()
+        {
+            _SortedLayers.Source = Layers;
+            SortedLayers.SortDescriptions.Add(new System.ComponentModel.SortDescription("LayerId",ListSortDirection.Descending));
+            SortedLayers.Refresh();
         }
 
         public void UpdateLayerIds(int startIndex = 0)
@@ -539,12 +564,13 @@ namespace AnimationEditorCore.ViewModels
             }
 
             Layers.Clear();
+            SortedLayers.Refresh();
         }
 
         public static void CopyToTimeline(TimelineViewModel original, TimelineViewModel destination)
         {
             destination.ClearLayers();
-
+            destination.InitializeLayerViewSource();
             destination.WorkspaceViewModel = original.WorkspaceViewModel;
 
             destination.AnimationPlaybackViewModel = original.AnimationPlaybackViewModel;
