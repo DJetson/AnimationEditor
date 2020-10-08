@@ -393,6 +393,21 @@ namespace AnimationEditorCore.ViewModels
             PushUndoRecord(CreateUndoState("Added Layer"));
         }
 
+        public void AddBlankLayerAtIndex(int index)
+        {
+            var newLayer = new LayerViewModel(this, index,"");
+            newLayer.Frames = new ObservableCollection<FrameViewModel>();
+
+            for (int i = 0; i < FrameCount; i++)
+            {
+                var newFrame = new FrameViewModel(newLayer, i);
+                newLayer.AddFrameAtIndex(newFrame, i);
+            }
+            newLayer.SelectedFrameIndex = SelectedFrameIndex;
+
+            AddLayerAtIndex(newLayer, newLayer.LayerId);
+        }
+
         public void DeleteLayerFromTimeline(int index)
         {
             //TODO: This should get a confirmation dialog that can optionally be skipped permanently (e.g. "Don't show this again" checkbox)

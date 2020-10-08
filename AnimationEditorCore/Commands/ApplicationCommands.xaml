@@ -22,6 +22,10 @@
     <FrameContentCommands:CopySelectedContentsToNextFrameCommand x:Key="CopySelectedContentsToNextFrame" />
     <FrameContentCommands:MoveSelectedContentsToPreviousFrameCommand x:Key="MoveSelectedContentsToPreviousFrame" />
     <FrameContentCommands:MoveSelectedContentsToNextFrameCommand x:Key="MoveSelectedContentsToNextFrame" />
+    <FrameContentCommands:CopySelectedContentsToPreviousLayerCommand x:Key="CopySelectedContentsToPreviousLayer" />
+    <FrameContentCommands:CopySelectedContentsToNextLayerCommand x:Key="CopySelectedContentsToNextLayer" />
+    <FrameContentCommands:MoveSelectedContentsToPreviousLayerCommand x:Key="MoveSelectedContentsToPreviousLayer" />
+    <FrameContentCommands:MoveSelectedContentsToNextLayerCommand x:Key="MoveSelectedContentsToNextLayer" />
     <Commands:NavigateToLayerAboveCurrentCommand x:Key="NavigateToLayerAboveCurrent"/>
     <Commands:NavigateToLayerBelowCurrentCommand x:Key="NavigateToLayerBelowCurrent"/>
     <Commands:CreateNewWorkspaceCommand x:Key="CreateNewWorkspace" />

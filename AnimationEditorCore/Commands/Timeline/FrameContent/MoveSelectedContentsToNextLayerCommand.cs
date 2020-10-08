@@ -8,7 +8,7 @@ using System.Windows.Ink;
 
 namespace AnimationEditorCore.Commands.Timeline.FrameContent
 {
-    public class CopySelectedContentsToNextFrameCommand : RequeryBase
+    public class MoveSelectedContentsToNextLayerCommand : RequeryBase
     {
         public override bool CanExecute(object parameter)
         {
@@ -25,22 +25,26 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
         {
             var Parameter = parameter as TimelineViewModel;
 
-            var frame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);
+            //var targetLayer = Parameter.GetLayerAtIndex(Parameter.ActiveLayerIndex + 1);
 
-            if (!(Parameter.IsFrameIndexValid(Parameter.SelectedFrameIndex + 1)))
+            if (!(Parameter.IsLayerIndexValid(Parameter.ActiveLayerIndex + 1)))
             {
-                Parameter.AddBlankFrameToTimeline(Parameter.SelectedFrameIndex + 1, false, false);
+                //Create new layer to move selected contents to
+                Parameter.AddBlankLayerAtIndex(Parameter.ActiveLayerIndex + 1);
             }
 
-            var copyToFrame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex + 1);
+            var frame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);
 
             StrokeCollection copiedStrokes = new StrokeCollection(frame.SelectedStrokes.Select(e => e.Clone()));
+            
+            frame.RemoveStrokes(frame.SelectedStrokes, false);
+
+            Parameter.ActiveLayer = Parameter.Layers[Parameter.ActiveLayerIndex + 1];
+            var copyToFrame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);
 
             copyToFrame.StrokeCollection.Add(copiedStrokes);
-            Parameter.SelectedFrameIndex = Parameter.SelectedFrameIndex + 1;
 
-            Parameter.PushUndoRecord(Parameter.CreateUndoState("Copy To Frame"));
-
+            Parameter.PushUndoRecord(Parameter.CreateUndoState("Copy To Layer"));
         }
     }
 }

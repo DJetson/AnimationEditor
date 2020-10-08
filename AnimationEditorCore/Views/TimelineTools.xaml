@@ -46,6 +46,11 @@
                 <Button Content="{StaticResource CopySelectedToNextFrame}" Command="{StaticResource CopySelectedContentsToNextFrame}" CommandParameter="{Binding }"/>
                 <Button Content="{StaticResource MoveSelectedToPreviousFrame}" Command="{StaticResource MoveSelectedContentsToPreviousFrame}" CommandParameter="{Binding }"/>
                 <Button Content="{StaticResource MoveSelectedToNextFrame}" Command="{StaticResource MoveSelectedContentsToNextFrame}" CommandParameter="{Binding }"/>
+                <Separator/>
+                <Button Content="{StaticResource CopySelectedToPreviousLayer}" Command="{StaticResource CopySelectedContentsToPreviousLayer}" CommandParameter="{Binding }"/>
+                <Button Content="{StaticResource CopySelectedToNextLayer}" Command="{StaticResource CopySelectedContentsToNextLayer}" CommandParameter="{Binding }"/>
+                <Button Content="{StaticResource MoveSelectedToPreviousLayer}" Command="{StaticResource MoveSelectedContentsToPreviousLayer}" CommandParameter="{Binding }"/>
+                <Button Content="{StaticResource MoveSelectedToNextLayer}" Command="{StaticResource MoveSelectedContentsToNextLayer}" CommandParameter="{Binding }"/>
             </ToolBar>
             <ToolBar>
                 <Button Content="{StaticResource DeleteIcon}" Command="{StaticResource DeleteActiveLayer}" CommandParameter="{Binding }" />
