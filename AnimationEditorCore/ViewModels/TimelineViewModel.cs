@@ -570,7 +570,6 @@ namespace AnimationEditorCore.ViewModels
         public static void CopyToTimeline(TimelineViewModel original, TimelineViewModel destination)
         {
             destination.ClearLayers();
-            destination.InitializeLayerViewSource();
             destination.WorkspaceViewModel = original.WorkspaceViewModel;
 
             destination.AnimationPlaybackViewModel = original.AnimationPlaybackViewModel;
@@ -580,6 +579,7 @@ namespace AnimationEditorCore.ViewModels
             destination.FrameWidth = original.FrameWidth;
 
             destination.Layers = new ObservableCollection<LayerViewModel>();
+
             foreach (var layer in original.Layers)
             {
                 var clonedLayer = layer.Clone();
@@ -587,8 +587,10 @@ namespace AnimationEditorCore.ViewModels
                 destination.Layers.Add(clonedLayer);
             }
 
+            destination.InitializeLayerViewSource();
             destination.SelectedFrameIndex = original.SelectedFrameIndex;
             destination.ActiveLayer = destination.Layers[original.Layers.IndexOf(original.ActiveLayer)];
+            destination.NotifyPropertyChanged(nameof(SortedLayers));
         }
 
         public void LoadState(IMemento state)

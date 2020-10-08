@@ -32,10 +32,10 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
 
             if (!(Parameter.IsFrameIndexValid(Parameter.SelectedFrameIndex - 1)))
             {
-                Parameter.AddBlankFrameToTimeline(Parameter.SelectedFrameIndex + 1, false, false);
+                Parameter.AddBlankFrameToTimeline(Parameter.SelectedFrameIndex, false, false);
             }
 
-            var copyToFrame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex - 1);
+            var copyToFrame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);
 
             StrokeCollection copiedStrokes = new StrokeCollection(frame.SelectedStrokes.Select(e => e.Clone()));
 
@@ -43,7 +43,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
 
             copyToFrame.StrokeCollection.Add(copiedStrokes);
 
-            Parameter.PushUndoRecord(Parameter.CreateUndoState("Copy To Frame"));
+            Parameter.PushUndoRecord(Parameter.CreateUndoState("Move Strokes To Previous Frame"));
         }
     }
 }

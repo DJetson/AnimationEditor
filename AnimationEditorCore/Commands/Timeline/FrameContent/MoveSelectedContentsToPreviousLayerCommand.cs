@@ -44,7 +44,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
 
             copyToFrame.StrokeCollection.Add(copiedStrokes);
 
-            Parameter.PushUndoRecord(Parameter.CreateUndoState("Copy To Layer"));
+            Parameter.PushUndoRecord(Parameter.CreateUndoState("Move Strokes To Previous Layer"));
         }
     }
 }

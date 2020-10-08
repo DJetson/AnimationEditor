@@ -26,6 +26,9 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             var Parameter = parameter as TimelineViewModel;
 
             //var targetLayer = Parameter.GetLayerAtIndex(Parameter.ActiveLayerIndex + 1);
+            var frame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);
+
+            StrokeCollection copiedStrokes = new StrokeCollection(frame.SelectedStrokes.Select(e => e.Clone()));
 
             if (!(Parameter.IsLayerIndexValid(Parameter.ActiveLayerIndex + 1)))
             {
@@ -33,16 +36,13 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
                 Parameter.AddBlankLayerAtIndex(Parameter.ActiveLayerIndex + 1);
             }
 
-            var frame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);
-
-            StrokeCollection copiedStrokes = new StrokeCollection(frame.SelectedStrokes.Select(e => e.Clone()));
-
-            Parameter.ActiveLayer = Parameter.Layers[Parameter.ActiveLayerIndex + 1];
+            
+            //Parameter.ActiveLayer = Parameter.Layers[Parameter.ActiveLayerIndex + 1];
             var copyToFrame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);
 
             copyToFrame.StrokeCollection.Add(copiedStrokes);
 
-            Parameter.PushUndoRecord(Parameter.CreateUndoState("Copy To Layer"));
+            Parameter.PushUndoRecord(Parameter.CreateUndoState("Copy Strokes To Next Layer"));
         }
     }
 }
