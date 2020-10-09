@@ -79,6 +79,7 @@
                 <Button Content="{StaticResource NewFile}" Command="{StaticResource CreateNewWorkspace}" CommandParameter="{Binding WorkspaceManager}"/>
                 <Button Content="{StaticResource OpenFile}" Command="{StaticResource OpenWorkspace}" CommandParameter="{Binding WorkspaceManager}"/>
                 <Button Content="{StaticResource SaveFile}" Command="{StaticResource SaveWorkspace}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
+                <Button Content="{StaticResource ExportFile}" Command="{Binding WorkspaceManager.SelectedWorkspace.ExportToGif}" CommandParameter="{Binding ElementName=renderCanvas}"/>
             </ToolBar>
             <ToolBar>
                 <Button Content="{StaticResource UndoIcon}" Command="{StaticResource Undo}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>

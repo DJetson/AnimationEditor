@@ -11,6 +11,7 @@
         <ResourceDictionary Source="./Icons/SaveFile.xaml"/>
         <ResourceDictionary Source="./Icons/UndoIcon.xaml"/>
         <!--General Icons-->
+        <ResourceDictionary Source="./Icons/General/ExportFile.xaml"/>
         <ResourceDictionary Source="./Icons/General/DeleteIcon.xaml"/>
         <ResourceDictionary Source="./Icons/General/DetailsIcon.xaml"/>
         <ResourceDictionary Source="./Icons/General/PropertiesIcon.xaml"/>
