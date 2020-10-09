@@ -9,22 +9,21 @@ using System.Windows;
 
 namespace AnimationEditorCore.Commands
 {
-    public class OpenLayerPropertiesCommand : RequeryBase
+    public class OpenAnimationPropertiesWindowCommand : RequeryBase
     {
         public override bool CanExecute(object parameter)
         {
-            if (!(parameter is LayerViewModel Parameter))
+            if (!(parameter is TimelineViewModel Parameter))
                 return false;
 
             return true;
         }
 
-
         public override void Execute(object parameter)
         {
-            var Parameter = parameter as LayerViewModel;
+            var Parameter = parameter as TimelineViewModel;
 
-            var layerProperties = new LayerPropertiesView() { Owner = Application.Current.MainWindow, DataContext = new LayerPropertiesViewModel(Parameter) };
+            var layerProperties = new AnimationPropertiesWindow() { Owner = Application.Current.MainWindow, DataContext = new AnimationPropertiesViewModel(Parameter) };
             layerProperties.ShowDialog();
         }
     }

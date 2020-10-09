@@ -192,7 +192,13 @@ namespace AnimationEditorCore.ViewModels
 
             WorkspaceHistoryViewModel = new WorkspaceHistoryViewModel(this);
 
-            TimelineViewModel = new TimelineViewModel(model.Layers, this);
+            TimelineViewModel = new TimelineViewModel(model.Layers, this)
+            {
+                FramesPerSecond = _WorkspaceModel.AnimationProperties.FramesPerSecond,
+                CanvasWidth = _WorkspaceModel.CanvasProperties.Width,
+                CanvasHeight = _WorkspaceModel.CanvasProperties.Height
+            };
+
             EditorTools = EditorToolsViewModel.Instance;
 
             Filepath = model.Filepath;

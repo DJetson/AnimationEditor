@@ -64,6 +64,8 @@
                 <RadioButton Content="{StaticResource PlaybackSpeedDouble}" Command="{StaticResource SelectPlaybackSpeedDouble}" CommandParameter="{Binding }" GroupName="PlaybackSpeedGroup"/>
                 <Separator/>
                 <TextBlock VerticalAlignment="Center" Text="{Binding AnimationPlaybackViewModel.PlaybackFps, StringFormat={}Playback FPS: {0}}" />
+                <Separator/>
+                <Button Content="{StaticResource SettingsIcon}" Command="{StaticResource OpenAnimationPropertiesWindow}" CommandParameter="{Binding }"/>
             </ToolBar>
         </ToolBarTray>
     </Grid>

@@ -43,8 +43,8 @@ namespace AnimationEditorCore.Models
             }
 
             //TODO: These should eventually be coming from the workspace VM
-            CanvasProperties = new CanvasPropertiesModel();
-            AnimationProperties = new AnimationPropertiesModel();
+            CanvasProperties = new CanvasPropertiesModel() { Height = workspaceViewModel.TimelineViewModel.CanvasHeight, Width = workspaceViewModel.TimelineViewModel.CanvasWidth };
+            AnimationProperties = new AnimationPropertiesModel() { FramesPerSecond = workspaceViewModel.TimelineViewModel.FramesPerSecond };
         }
     }
 }

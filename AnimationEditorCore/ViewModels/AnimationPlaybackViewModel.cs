@@ -17,7 +17,7 @@ namespace AnimationEditorCore.ViewModels
             set { _Frames = value; NotifyPropertyChanged(); }
         }
 
-        private double _AnimationFps = 24;
+        private double _AnimationFps;
         public double AnimationFps
         {
             get => _AnimationFps;
@@ -60,8 +60,17 @@ namespace AnimationEditorCore.ViewModels
             set { _PlaybackFpsMultiplier = value; NotifyPropertyChanged(nameof(PlaybackFpsMultiplier), nameof(PlaybackFps)); }
         }
 
-        public AnimationPlaybackViewModel()
+        private TimelineViewModel _TimelineViewModel;
+        public TimelineViewModel TimelineViewModel
         {
+            get { return _TimelineViewModel; }
+            set { _TimelineViewModel = value; NotifyPropertyChanged(); }
+        }
+
+        public AnimationPlaybackViewModel(TimelineViewModel timeline)
+        {
+            TimelineViewModel = timeline;
+            AnimationFps = timeline.FramesPerSecond;
             _PlaybackTimer = new DispatcherTimer(DispatcherPriority.Render);
             _PlaybackTimer.Tick += DispatcherTimer_Elapsed;
         }

@@ -27,6 +27,7 @@
     <FrameContentCommands:MoveSelectedContentsToPreviousLayerCommand x:Key="MoveSelectedContentsToPreviousLayer" />
     <FrameContentCommands:MoveSelectedContentsToNextLayerCommand x:Key="MoveSelectedContentsToNextLayer" />
     <Commands:OpenLayerPropertiesCommand x:Key="OpenLayerProperties"/>
+    <Commands:OpenAnimationPropertiesWindowCommand x:Key="OpenAnimationPropertiesWindow"/>
     <Commands:NavigateToLayerAboveCurrentCommand x:Key="NavigateToLayerAboveCurrent"/>
     <Commands:NavigateToLayerBelowCurrentCommand x:Key="NavigateToLayerBelowCurrent"/>
     <Commands:CreateNewWorkspaceCommand x:Key="CreateNewWorkspace" />

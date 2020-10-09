@@ -33,7 +33,7 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <InkCanvas.CacheMode>
-                            <BitmapCache RenderAtScale="{Binding FrameViewModel.WorkspaceViewModel.ZoomLevel}"/>
+                            <BitmapCache RenderAtScale="{Binding LayerViewModel.TimelineViewModel.WorkspaceViewModel.ZoomLevel}"/>
                         </InkCanvas.CacheMode>
                         <InkCanvas.Style>
                             <Style TargetType="{x:Type InkCanvas}">

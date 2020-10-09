@@ -21,16 +21,18 @@
                 <MouseBinding Command="{Binding ZoomOut}" CommandParameter="{Binding EditorTools.SelectedToolType}" Gesture="{StaticResource MouseLeftClick+Alt}" />
                 <MouseBinding Command="{Binding ZoomOut}" CommandParameter="{Binding EditorTools.SelectedToolType}" Gesture="{StaticResource MouseLeftDoubleClick+Alt}" />
             </Border.InputBindings>
-            <ScrollViewer HorizontalScrollBarVisibility="Visible" Background="Transparent" Focusable="False">
-                <Grid x:Name="CanvasGrid" Background="LightGray">
-                    <Border BorderBrush="DarkGray" BorderThickness="1" >
-                        <Border.LayoutTransform>
-                            <ScaleTransform ScaleX="{Binding ZoomLevel}" ScaleY="{Binding ZoomLevel}"/>
-                        </Border.LayoutTransform>
-                        <Grid>
-                            <Views:AnimationPlaybackView MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}" MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" DataContext="{Binding TimelineViewModel.AnimationPlaybackViewModel}"/>
-                            <Views:LayerCanvasView DataContext="{Binding TimelineViewModel}"/>
-                        </Grid>
+            <ScrollViewer HorizontalScrollBarVisibility="Visible" Background="LightGray" Focusable="False">
+                <Grid  Background="LightGray" >
+                    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Border x:Name="CanvasGrid" Width="{Binding TimelineViewModel.CanvasWidth}" Height="{Binding TimelineViewModel.CanvasHeight}">
+                            <Border.LayoutTransform>
+                                <ScaleTransform ScaleX="{Binding ZoomLevel}" ScaleY="{Binding ZoomLevel}"/>
+                            </Border.LayoutTransform>
+                            <Grid>
+                                <Views:AnimationPlaybackView MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}" MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" DataContext="{Binding TimelineViewModel.AnimationPlaybackViewModel}"/>
+                                <Views:LayerCanvasView DataContext="{Binding TimelineViewModel}"/>
+                            </Grid>
+                        </Border>
                     </Border>
                 </Grid>
             </ScrollViewer>

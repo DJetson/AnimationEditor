@@ -34,7 +34,7 @@ namespace AnimationEditorCore.ViewModels
             get => (CollectionView)_SortedLayers.View;
         }
 
-        private AnimationPlaybackViewModel _AnimationPlaybackViewModel = new AnimationPlaybackViewModel();
+        private AnimationPlaybackViewModel _AnimationPlaybackViewModel;
         public AnimationPlaybackViewModel AnimationPlaybackViewModel
         {
             get { return _AnimationPlaybackViewModel; }
@@ -208,7 +208,29 @@ namespace AnimationEditorCore.ViewModels
         public double FramesPerSecond
         {
             get { return _FramesPerSecond; }
-            set { _FramesPerSecond = value; NotifyPropertyChanged(); }
+            set 
+            { 
+                _FramesPerSecond = value; 
+                NotifyPropertyChanged(); 
+                if(AnimationPlaybackViewModel != null)
+                {
+                    AnimationPlaybackViewModel.AnimationFps = value;
+                }
+            }
+        }
+
+        private double _CanvasWidth = 700;
+        public double CanvasWidth
+        {
+            get { return _CanvasWidth; }
+            set { _CanvasWidth = value; NotifyPropertyChanged(); }
+        }
+
+        private double _CanvasHeight = 380;
+        public double CanvasHeight
+        {
+            get { return _CanvasHeight; }
+            set { _CanvasHeight = value; NotifyPropertyChanged(); }
         }
 
         public void AddBlankFrameToTimeline(int index, bool updateSelected = true, bool createUndo = true)
@@ -324,6 +346,7 @@ namespace AnimationEditorCore.ViewModels
         public TimelineViewModel(List<LayerModel> layers, WorkspaceViewModel workspace)
         {
             WorkspaceViewModel = workspace;
+            AnimationPlaybackViewModel = new AnimationPlaybackViewModel(this);
 
             Layers = new ObservableCollection<LayerViewModel>();
             InitializeLayerViewSource();
@@ -340,14 +363,14 @@ namespace AnimationEditorCore.ViewModels
 
             SelectedFrameIndex = Layers.FirstOrDefault().SelectedFrameIndex;
 
-
             PushUndoRecord(CreateUndoState("Opened Workspace"));
         }
 
         public TimelineViewModel(WorkspaceViewModel workspace)
         {
             WorkspaceViewModel = workspace;
-            
+            AnimationPlaybackViewModel = new AnimationPlaybackViewModel(this);
+
             InitializeLayerViewSource();
             InitializeTimeline();
 
