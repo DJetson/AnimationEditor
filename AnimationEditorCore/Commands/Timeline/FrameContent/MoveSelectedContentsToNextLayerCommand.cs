@@ -37,7 +37,10 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
                 //Create new layer to move selected contents to
                 Parameter.AddBlankLayerAtIndex(Parameter.ActiveLayerIndex + 1);
             }
-
+            else
+            {
+                Parameter.ActiveLayer = Parameter.Layers[Parameter.ActiveLayerIndex + 1];
+            }
             //Parameter.ActiveLayer = Parameter.Layers[Parameter.ActiveLayerIndex + 1];
             var copyToFrame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);
 
