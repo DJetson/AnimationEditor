@@ -55,8 +55,11 @@
             <ToolBar>
                 <Button Content="{StaticResource DeleteIcon}" Command="{StaticResource DeleteActiveLayer}" CommandParameter="{Binding }" />
                 <Separator/>
-                <Button Content="{StaticResource AddBlankLayerIcon}" Command="{StaticResource AddBlankLayer}" CommandParameter="{Binding }" />
-                <Button Content="{StaticResource AddDuplicateLayer}" Command="{StaticResource DuplicateActiveLayer}" CommandParameter="{Binding }"/>
+                <Button Content="{StaticResource AddBlankLayerAbove}" Command="{StaticResource AddBlankLayerAboveCurrent}" CommandParameter="{Binding }" />
+                <Button Content="{StaticResource AddBlankLayerBelow}" Command="{StaticResource AddBlankLayerBelowCurrent}" CommandParameter="{Binding }" />
+                <Separator/>
+                <Button Content="{StaticResource AddDuplicateLayerAbove}" Command="{StaticResource AddDuplicateLayerAboveCurrent}" CommandParameter="{Binding }"/>
+                <Button Content="{StaticResource AddDuplicateLayerBelow}" Command="{StaticResource AddDuplicateLayerBelowCurrent}" CommandParameter="{Binding }"/>
             </ToolBar>
             <ToolBar>
                 <RadioButton Content="{StaticResource PlaybackSpeedHalf}"   Command="{StaticResource SelectPlaybackSpeedHalf}" CommandParameter="{Binding }" GroupName="PlaybackSpeedGroup"/>

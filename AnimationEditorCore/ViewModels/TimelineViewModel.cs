@@ -18,7 +18,6 @@ using System.Windows.Media.Imaging;
 
 namespace AnimationEditorCore.ViewModels
 {
-    public enum FrameNavigation { Start, Previous, Current, Next, End };
     public class TimelineViewModel : ViewModelBase, IMementoOriginator
     {
         private ObservableCollection<LayerViewModel> _Layers = new ObservableCollection<LayerViewModel>();
@@ -208,11 +207,11 @@ namespace AnimationEditorCore.ViewModels
         public double FramesPerSecond
         {
             get { return _FramesPerSecond; }
-            set 
-            { 
-                _FramesPerSecond = value; 
-                NotifyPropertyChanged(); 
-                if(AnimationPlaybackViewModel != null)
+            set
+            {
+                _FramesPerSecond = value;
+                NotifyPropertyChanged();
+                if (AnimationPlaybackViewModel != null)
                 {
                     AnimationPlaybackViewModel.AnimationFps = value;
                 }
@@ -416,9 +415,14 @@ namespace AnimationEditorCore.ViewModels
             ActiveLayer = newLayer;
         }
 
-        public void AddBlankLayer()
+        public void AddBlankLayer(LayerNavigation direction)
         {
-            var newLayer = new LayerViewModel(this, ActiveLayer.LayerId + 1, "");
+            var insertAtIndex = ActiveLayerIndex;
+
+            if (direction == LayerNavigation.Above)
+                insertAtIndex += 1;
+
+            var newLayer = new LayerViewModel(this, insertAtIndex, "");
             newLayer.Frames = new ObservableCollection<FrameViewModel>();
 
             for (int i = 0; i < FrameCount; i++)
@@ -435,7 +439,7 @@ namespace AnimationEditorCore.ViewModels
 
         public void AddBlankLayerAtIndex(int index)
         {
-            var newLayer = new LayerViewModel(this, index,"");
+            var newLayer = new LayerViewModel(this, index, "");
             newLayer.Frames = new ObservableCollection<FrameViewModel>();
 
             for (int i = 0; i < FrameCount; i++)
@@ -473,10 +477,13 @@ namespace AnimationEditorCore.ViewModels
             PushUndoRecord(CreateUndoState("Deleted Layer"));
         }
 
-        public void DuplicateActiveLayer()
+        public void DuplicateActiveLayer(LayerNavigation direction)
         {
             var layerClone = ActiveLayer.Clone();
-            var duplicateLayerIndex = ActiveLayerIndex + 1;
+            var duplicateLayerIndex = ActiveLayerIndex;
+
+            if (direction == LayerNavigation.Above)
+                duplicateLayerIndex += 1;
 
             layerClone.SelectedFrameIndex = SelectedFrameIndex;
 
@@ -518,7 +525,7 @@ namespace AnimationEditorCore.ViewModels
         public void InitializeLayerViewSource()
         {
             _SortedLayers.Source = Layers;
-            SortedLayers.SortDescriptions.Add(new System.ComponentModel.SortDescription("LayerId",ListSortDirection.Descending));
+            SortedLayers.SortDescriptions.Add(new System.ComponentModel.SortDescription("LayerId", ListSortDirection.Descending));
             SortedLayers.Refresh();
         }
 

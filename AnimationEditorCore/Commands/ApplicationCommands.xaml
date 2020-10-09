@@ -10,8 +10,10 @@
     <TimelineCommands:InsertDuplicateFrameAfterCurrentCommand x:Key="InsertDuplicateFrameAfterCurrent" />
     <TimelineCommands:AddBlankFrameAfterCurrentCommand x:Key="AddBlankFrameAfterCurrent" />
     <TimelineCommands:AddBlankFrameToEndCommand x:Key="AddBlankFrameToEnd" />
-    <TimelineCommands:AddBlankLayerCommand x:Key="AddBlankLayer" />
-    <TimelineCommands:DuplicateActiveLayerCommand x:Key="DuplicateActiveLayer" />
+    <TimelineCommands:AddBlankLayerAboveCurrentCommand x:Key="AddBlankLayerAboveCurrent" />
+    <TimelineCommands:AddBlankLayerBelowCurrentCommand x:Key="AddBlankLayerBelowCurrent" />
+    <TimelineCommands:AddDuplicateLayerAboveCurrentCommand x:Key="AddDuplicateLayerAboveCurrent" />
+    <TimelineCommands:AddDuplicateLayerBelowCurrentCommand x:Key="AddDuplicateLayerBelowCurrent" />
     <TimelineCommands:DeleteActiveLayerCommand x:Key="DeleteActiveLayer" />
     <TimelineCommands:TogglePlaybackCommand x:Key="TogglePlayback" />
     <TimelineCommands:StopPlaybackCommand x:Key="StopPlayback" />

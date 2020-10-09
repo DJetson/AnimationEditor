@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AnimationEditorCore.Commands.Timeline
 {
-    public class AddBlankLayerCommand : RequeryBase
+    public class AddBlankLayerAboveCurrentCommand : RequeryBase
     {
         public override bool CanExecute(object parameter)
         {
@@ -23,7 +23,7 @@ namespace AnimationEditorCore.Commands.Timeline
         {
             var Parameter = parameter as TimelineViewModel;
 
-            Parameter.AddBlankLayer();
+            Parameter.AddBlankLayer(LayerNavigation.Above);
         }
     }
 }

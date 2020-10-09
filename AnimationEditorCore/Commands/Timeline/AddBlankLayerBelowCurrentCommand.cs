@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AnimationEditorCore.Commands.Timeline
 {
-    public class DuplicateActiveLayerCommand : RequeryBase
+    public class AddBlankLayerBelowCurrentCommand : RequeryBase
     {
         public override bool CanExecute(object parameter)
         {
@@ -16,9 +16,6 @@ namespace AnimationEditorCore.Commands.Timeline
             if (Parameter.AnimationPlaybackViewModel.IsPlaybackActive)
                 return false;
 
-            if (Parameter.ActiveLayer == null)
-                return false;
-
             return true;
         }
 
@@ -26,7 +23,7 @@ namespace AnimationEditorCore.Commands.Timeline
         {
             var Parameter = parameter as TimelineViewModel;
 
-            Parameter.DuplicateActiveLayer();
+            Parameter.AddBlankLayer(LayerNavigation.Below);
         }
     }
 }
