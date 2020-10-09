@@ -1,5 +1,6 @@
 ﻿using AnimationEditorCore.BaseClasses;
 using AnimationEditorCore.ViewModels;
+using AnimationEditorCore.ViewModels.StateObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,14 +30,17 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             var Parameter = parameter as TimelineViewModel;
 
             var frame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);
-
+            FrameViewModel copyToFrame = null;
             if (!(Parameter.IsFrameIndexValid(Parameter.SelectedFrameIndex - 1)))
             {
                 Parameter.AddBlankFrameToTimeline(Parameter.SelectedFrameIndex, true, false);
+                copyToFrame = Parameter.ActiveLayer.Frames[Parameter.SelectedFrameIndex];
             }
-
-            var copyToFrame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);
-
+            else
+            {
+                copyToFrame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex - 1);
+                Parameter.SelectedFrameIndex = Parameter.SelectedFrameIndex - 1;
+            }
             StrokeCollection copiedStrokes = new StrokeCollection(frame.SelectedStrokes.Select(e => e.Clone()));
 
             frame.RemoveStrokes(frame.SelectedStrokes, false);

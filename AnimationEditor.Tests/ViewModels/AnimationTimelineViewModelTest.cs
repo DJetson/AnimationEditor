@@ -91,5 +91,51 @@ namespace AnimationEditorCore.ViewModels
                 CollectionAssert.AreEqual(new[] { 0, 1 }, layer.Frames.Select(f => f.Order).ToArray());
             }
         }
+
+        [TestMethod]
+        [DeploymentItem("DeploymentItems/dot.anws")]
+        public void MoveSelectedStrokesToNextFrame_UpdatesSelectedFrame()
+        {
+            var workspaceManager = new WorkspaceManagerViewModel();
+
+            var openCommand = new Commands.OpenWorkspaceCommand();
+            Assert.IsTrue(openCommand.CanExecute(workspaceManager));
+           
+            openCommand.OpenWorkspaceFile("dot.anws", workspaceManager);
+            Assert.AreEqual("dot", workspaceManager.SelectedWorkspace.DisplayName, "selected workspace display name");
+
+            var moveSelectedStrokes = new Commands.Timeline.FrameContent.MoveSelectedContentsToNextFrameCommand();
+
+            var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
+            var selectedFrame = timeline.ActiveLayer.Frames[timeline.ActiveLayer.SelectedFrameIndex];
+            selectedFrame.SelectedStrokes = selectedFrame.StrokeCollection;
+            Assert.IsTrue(moveSelectedStrokes.CanExecute(workspaceManager.SelectedWorkspace.TimelineViewModel));
+
+            moveSelectedStrokes.Execute(timeline);
+            Assert.AreEqual(1, timeline.SelectedFrameIndex);
+        }
+
+        [TestMethod]
+        [DeploymentItem("DeploymentItems/dot.anws")]
+        public void MoveSelectedStrokesToPreviousFrame_CreatesNewFrameAndUpdatesSelectedFrame()
+        {
+            var workspaceManager = new WorkspaceManagerViewModel();
+
+            var openCommand = new Commands.OpenWorkspaceCommand();
+            Assert.IsTrue(openCommand.CanExecute(workspaceManager));
+
+            openCommand.OpenWorkspaceFile("dot.anws", workspaceManager);
+            Assert.AreEqual("dot", workspaceManager.SelectedWorkspace.DisplayName, "selected workspace display name");
+
+            var moveSelectedStrokes = new Commands.Timeline.FrameContent.MoveSelectedContentsToPreviousFrameCommand();
+
+            var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
+            var selectedFrame = timeline.ActiveLayer.Frames[timeline.ActiveLayer.SelectedFrameIndex];
+            selectedFrame.SelectedStrokes = selectedFrame.StrokeCollection;
+            Assert.IsTrue(moveSelectedStrokes.CanExecute(workspaceManager.SelectedWorkspace.TimelineViewModel));
+
+            moveSelectedStrokes.Execute(timeline);
+            Assert.AreEqual(0, timeline.SelectedFrameIndex);
+        }
     }
 }
