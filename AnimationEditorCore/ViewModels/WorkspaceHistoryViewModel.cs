@@ -202,7 +202,11 @@ namespace AnimationEditorCore.ViewModels
 
             PopulateHistory(UndoStack, RedoStack);
 
-            WorkspaceViewModel.HasUnsavedChanges = raiseChangedFlag;
+            if (raiseChangedFlag)
+            {
+                WorkspaceViewModel.HasUnsavedChanges = raiseChangedFlag;
+                WorkspaceViewModel.WriteToTempFile();
+            }
         }
 
         public void Undo()
@@ -215,6 +219,8 @@ namespace AnimationEditorCore.ViewModels
             CurrentState.LoadState();
 
             PopulateHistory(UndoStack, RedoStack);
+
+            WorkspaceViewModel.WriteToTempFile();
         }
 
         public void UndoToState(IMemento state)
@@ -235,6 +241,7 @@ namespace AnimationEditorCore.ViewModels
             CurrentState.LoadState();
 
             PopulateHistory(UndoStack, RedoStack);
+            WorkspaceViewModel.WriteToTempFile();
         }
 
         public void RedoToState(IMemento state)
@@ -248,7 +255,7 @@ namespace AnimationEditorCore.ViewModels
                 CurrentState = UndoStack.Peek() as UndoStateViewModel;
                 CurrentState.LoadState();
             }
-          
+
             PopulateHistory(UndoStack, RedoStack);
         }
     }

@@ -28,6 +28,11 @@ namespace AnimationEditorCore.Models
 
             Filepath = filepath;
 
+            if(!Directory.Exists(Path.GetDirectoryName(filepath)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(filepath));
+            }
+
             File.WriteAllText(filepath, System.Text.Json.JsonSerializer.Serialize(this, JsonSerializerOptions));
         }
 

@@ -40,6 +40,14 @@ namespace AnimationEditorCore.ViewModels
             set { _EditorTools = value; NotifyPropertyChanged(); }
         }
 
+        private bool _IsRecoveredFile = false;
+        public bool IsRecoveredFile
+        {
+            get { return _IsRecoveredFile; }
+            set { _IsRecoveredFile = value; NotifyPropertyChanged(nameof(IsRecoveredFile), nameof(DisplayName)); }
+        }
+
+
         private string _Filepath;
         public string Filepath
         {
@@ -78,11 +86,11 @@ namespace AnimationEditorCore.ViewModels
             get => _HasUnsavedChanges;
             set { _HasUnsavedChanges = value; NotifyPropertyChanged(); NotifyPropertyChanged(nameof(DisplayName)); }
         }
-        
+
         public override string DisplayName
         {
-            get => $"{_DisplayName}{(_HasUnsavedChanges ? "*" : "")}";
-            set { _DisplayName = value.TrimEnd('*'); NotifyPropertyChanged(); }
+            get => $"{_DisplayName}{(IsRecoveredFile ? "(recovered)" : "")}{(_HasUnsavedChanges ? "*" : "")}";
+            set { _DisplayName = value.Replace("(recovered)", "").TrimEnd('*'); NotifyPropertyChanged(); }
         }
 
         private DelegateCommand _ExportToGif;
@@ -91,6 +99,8 @@ namespace AnimationEditorCore.ViewModels
             get { return _ExportToGif; }
             set { _ExportToGif = value; NotifyPropertyChanged(); }
         }
+
+        private string _TempFilePath = String.Empty;
 
         #region ZoomIn Command
         private DelegateCommand _ZoomIn;
@@ -181,14 +191,19 @@ namespace AnimationEditorCore.ViewModels
 
         public WorkspaceViewModel()
         {
+            _TempFilePath = GetTemporaryFile();
             InitializeDependentViewModels();
             InitializeCommands();
         }
 
         public WorkspaceViewModel(WorkspaceFileModel model)
         {
+            Filepath = model.Filepath;
+            _TempFilePath = GetTemporaryFile();
+
             InitializeCommands();
             _WorkspaceModel = model;
+
 
             WorkspaceHistoryViewModel = new WorkspaceHistoryViewModel(this);
 
@@ -201,12 +216,11 @@ namespace AnimationEditorCore.ViewModels
 
             EditorTools = EditorToolsViewModel.Instance;
 
-            Filepath = model.Filepath;
             HasUnsavedChanges = false;
             DisplayName = Path.GetFileNameWithoutExtension(Filepath);
         }
 
-        public void Close()
+        public bool Close()
         {
             if (HasUnsavedChanges)
             {
@@ -218,26 +232,54 @@ namespace AnimationEditorCore.ViewModels
                 }
                 else if (mbResult == MessageBoxResult.No)
                 {
-                    Host.RemoveWorkspace(this);
+                    //Host.RemoveWorkspace(this);
+                    DeleteTempFile();
                 }
                 else
                 {
-                    return;
+                    return false;
                 }
             }
+
             Host.RemoveWorkspace(this);
+            return true;
+        }
+
+        public void WriteToTempFile()
+        {
+            //Prompt for a save location if needed
+            if (String.IsNullOrWhiteSpace(_TempFilePath))
+            {
+                _TempFilePath = GetTemporaryFile();
+            }
+
+            //NOTE: This might not be a good idea. I suspect that it would be really nice to have an actual workspace model 
+            //      object for anything like API/Plugin/scripting support that gets planned in the future, but this will almost
+            //      certainly add some easy to forget "state management" type garbage to the whole thing. I don't want to have to
+            //      worry about Models and ViewModels constantly needing to be synced up manually, or worry about what might happen
+            //      if those become critical steps and then someone forgets to do them. So maybe it'd just be easier to do what I
+            //      always do and skip the Model layer altogether. But I'm going to keep it there for now and just tread carefully.
+            //      For now the idea is to keep any sort of File I/O stuff in the model objects and to write any public API stuff against
+            //      the models so that I or others could write companion apps in the future which leverage the existing workspace files.
+            _WorkspaceModel = _WorkspaceModel ?? new WorkspaceFileModel();
+            _WorkspaceModel.SyncToViewModel(this);
+
+            _WorkspaceModel.SaveWorkspaceFile(_TempFilePath);
+
+            //WorkspaceHistoryViewModel.InitialState = WorkspaceHistoryViewModel.CurrentState;
         }
 
         public void ExportAnimation(InkCanvas canvas)
         {
-            Filepath = SelectExportFilepath();
-            SaveAsGif(Filepath, canvas);
+            var filepath = SelectExportFilepath();
+            if ((!String.IsNullOrWhiteSpace(filepath)))
+                SaveAsGif(filepath, canvas);
         }
 
         public void UpdateModelAndSaveWorkspace()
         {
             //Prompt for a save location if needed
-            if (String.IsNullOrWhiteSpace(Filepath))
+            if (String.IsNullOrWhiteSpace(Filepath) || IsRecoveredFile)
             {
                 Filepath = SelectDestinationFilepath();
                 DisplayName = Path.GetFileNameWithoutExtension(Filepath);
@@ -255,8 +297,9 @@ namespace AnimationEditorCore.ViewModels
             _WorkspaceModel.SyncToViewModel(this);
 
             _WorkspaceModel.SaveWorkspaceFile(Filepath);
-
             WorkspaceHistoryViewModel.InitialState = WorkspaceHistoryViewModel.CurrentState;
+            IsRecoveredFile = false;
+            DeleteTempFile();
         }
 
         public void SaveAsGif(string filepath, InkCanvas canvas)
@@ -334,5 +377,29 @@ namespace AnimationEditorCore.ViewModels
 
             return filepath;
         }
+
+        public string GetTemporaryFile()
+        {
+            if (IsRecoveredFile)
+            {
+                return Filepath;
+            }
+
+            string tmpFilePathRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AnimationEditor", "Recovered");
+            string tmpFileName = String.Empty;
+            if (String.IsNullOrEmpty(Filepath))
+                tmpFileName = Path.GetFileName(Path.GetTempFileName());
+            else
+                tmpFileName = Path.GetFileName(Filepath);
+
+            return Path.Combine(tmpFilePathRoot, $"{Path.GetFileNameWithoutExtension(tmpFileName)}.atmp");
+        }
+
+        private void DeleteTempFile()
+        {
+            File.Delete(_TempFilePath);
+            _TempFilePath = String.Empty;
+        }
+
     }
 }

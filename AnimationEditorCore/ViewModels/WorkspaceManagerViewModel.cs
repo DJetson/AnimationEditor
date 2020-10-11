@@ -1,7 +1,11 @@
 ﻿using AnimationEditorCore.Interfaces;
+using AnimationEditorCore.Models;
 using AnimationEditorCore.Utilities;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Windows.Documents;
 
 namespace AnimationEditorCore.ViewModels
 {
@@ -64,6 +68,27 @@ namespace AnimationEditorCore.ViewModels
         {
             if (Workspaces.Contains(workspace))
                 Workspaces.Remove(workspace);
+        }
+
+        public void DeleteRecoveryFiles(List<string> filepaths)
+        {
+            foreach(var filepath in filepaths)
+            {
+                File.Delete(filepath);
+            }
+        }
+
+        public void OpenRecoveredWorkspaces(List<string> filepaths)
+        {
+            System.Text.Json.JsonSerializerOptions JsonSerializerOptions = new System.Text.Json.JsonSerializerOptions();
+            JsonSerializerOptions.Converters.Add(new StrokeCollectionConverter());
+
+            foreach (var filepath in filepaths)
+            {
+                var f = WorkspaceFileModel.OpenWorkspaceFile(filepath, JsonSerializerOptions);
+                var w = new WorkspaceViewModel(f) { IsRecoveredFile = true, HasUnsavedChanges = true };
+                AddWorkspace(w);
+            }
         }
     }
 }

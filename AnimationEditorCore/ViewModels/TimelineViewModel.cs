@@ -362,7 +362,7 @@ namespace AnimationEditorCore.ViewModels
 
             SelectedFrameIndex = Layers.FirstOrDefault().SelectedFrameIndex;
 
-            PushUndoRecord(CreateUndoState("Opened Workspace"));
+            PushUndoRecord(CreateUndoState("Opened Workspace"), false);
         }
 
         public TimelineViewModel(WorkspaceViewModel workspace)
@@ -373,7 +373,7 @@ namespace AnimationEditorCore.ViewModels
             InitializeLayerViewSource();
             InitializeTimeline();
 
-            PushUndoRecord(CreateUndoState("New Workspace"));
+            PushUndoRecord(CreateUndoState("New Workspace"), false);
         }
 
         public TimelineViewModel(TimelineViewModel originalTimeline)

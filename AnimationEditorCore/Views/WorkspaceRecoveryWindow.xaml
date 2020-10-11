@@ -1,0 +1,92 @@
+﻿<Window x:Class="AnimationEditorCore.Views.WorkspaceRecoveryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnimationEditorCore.Views"
+        xmlns:ViewModels="clr-namespace:AnimationEditorCore.ViewModels"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="WorkspaceRecoveryWindow" Height="300" Width="500">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" TextWrapping="Wrap" Text="The Animation Editor closed unexpectedly and the following files had unsaved changes which can be recovered from temporary backups"/>
+        <ListView Grid.Row="1" ItemsSource="{Binding WorkspaceFileItems}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn>
+                        <GridViewColumn.Header>
+                            <CheckBox x:Name="HeaderCheckBox" IsChecked="True" IsThreeState="True" Click="HeaderCheckBox_Clicked" />
+                        </GridViewColumn.Header>
+                        <GridViewColumn.CellTemplate>
+                            <ItemContainerTemplate DataType="{x:Type ViewModels:WorkspaceFileListItemViewModel}">
+                                <CheckBox IsChecked="{Binding IsSelected}" Checked="FileItemCheckBox_Checked" Unchecked="FileItemCheckBox_Checked"/>
+                            </ItemContainerTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="File" Width="350">
+                        <GridViewColumn.CellTemplate>
+                            <ItemContainerTemplate DataType="{x:Type ViewModels:WorkspaceFileListItemViewModel}">
+                                <TextBlock Text="{Binding Filepath}" TextTrimming="CharacterEllipsis" ToolTip="{Binding Filepath}"/>
+                            </ItemContainerTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Last Modified" DisplayMemberBinding="{Binding LastModifiedDate}"/>
+                    <!--<GridViewColumn Header="Created" DisplayMemberBinding="{Binding CreatedDate}"/>-->
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBlock Grid.Row="2" Text="What would you like to do?"/>
+        <RadioButton Grid.Row="3" IsChecked="{Binding IsRecoverSelectedChecked}" Content="Recover Selected (Recover Selected, Delete Unselected Backups)" GroupName="ResponseSelectionGroup">
+            <RadioButton.Style>
+                <Style TargetType="{x:Type RadioButton}">
+                    <Style.Setters>
+                        <Setter Property="IsChecked" Value="True"/>
+                    </Style.Setters>
+                    <!--<Style.Triggers>
+                        <DataTrigger Binding="{Binding IsRecoverSelectedChecked}" Value="True">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                    </Style.Triggers>-->
+                </Style>
+            </RadioButton.Style>
+        </RadioButton>
+        <RadioButton Grid.Row="4" IsChecked="{Binding IsKeepBackupsChecked}" Content="Later (Don't Recover, Keep All Backups)" GroupName="ResponseSelectionGroup">
+            <!--<RadioButton.Style>
+                <Style TargetType="{x:Type RadioButton}">
+                    <Style.Setters>
+                        <Setter Property="IsChecked" Value="False"/>
+                    </Style.Setters>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsKeepBackupsChecked}" Value="{x:Null}">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </RadioButton.Style>-->
+        </RadioButton>
+        <RadioButton Grid.Row="5" IsChecked="{Binding IsDeleteBackupsChecked}" Content="Delete Backups (Don't Recover, Delete All Backups)" GroupName="ResponseSelectionGroup">
+            <!--<RadioButton.Style>
+                <Style TargetType="{x:Type RadioButton}">
+                    <Style.Setters>
+                        <Setter Property="IsChecked" Value="False"/>
+                    </Style.Setters>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsDeleteBackupsChecked}" Value="False">
+                            <Setter Property="IsChecked" Value="True"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </RadioButton.Style>-->
+        </RadioButton>
+        <Button Grid.Row="6" Width="80" HorizontalAlignment="Right" Content="OK" Command="{Binding CloseWorkspaceRecoveryWindow}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+    </Grid>
+</Window>
