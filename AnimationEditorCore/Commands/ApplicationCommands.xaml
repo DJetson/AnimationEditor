@@ -28,6 +28,9 @@
     <FrameContentCommands:CopySelectedContentsToNextLayerCommand x:Key="CopySelectedContentsToNextLayer" />
     <FrameContentCommands:MoveSelectedContentsToPreviousLayerCommand x:Key="MoveSelectedContentsToPreviousLayer" />
     <FrameContentCommands:MoveSelectedContentsToNextLayerCommand x:Key="MoveSelectedContentsToNextLayer" />
+    <FrameContentCommands:CopySelectedStrokesToClipboardCommand x:Key="CopySelectedStrokesToClipboard" />
+    <FrameContentCommands:CutSelectedStrokesToClipboardCommand x:Key="CutSelectedStrokesToClipboard" />
+    <FrameContentCommands:PasteStrokesFromClipboardCommand x:Key="PasteStrokesFromClipboard" />
     <Commands:OpenLayerPropertiesCommand x:Key="OpenLayerProperties"/>
     <Commands:OpenAnimationPropertiesWindowCommand x:Key="OpenAnimationPropertiesWindow"/>
     <Commands:NavigateToLayerAboveCurrentCommand x:Key="NavigateToLayerAboveCurrent"/>

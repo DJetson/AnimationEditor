@@ -26,6 +26,9 @@
                             <KeyBinding Gesture="CTRL+OemPeriod" Command="{StaticResource NavigateToLastFrame}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
                             <KeyBinding Gesture="Space" Command="{StaticResource TogglePlayback}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
                             <KeyBinding Gesture="CTRL+Space" Command="{StaticResource StopPlayback}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
+                            <KeyBinding Gesture="CTRL+C" Command="{StaticResource CopySelectedStrokesToClipboard}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
+                            <KeyBinding Gesture="CTRL+X" Command="{StaticResource CutSelectedStrokesToClipboard}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
+                            <KeyBinding Gesture="CTRL+V" Command="{StaticResource PasteStrokesFromClipboard}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
                         </InkCanvas.InputBindings>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">

@@ -4,6 +4,7 @@
         <!--Main ToolBar Icons-->
         <ResourceDictionary Source="./Icons/CloseIcon.xaml"/>
         <ResourceDictionary Source="./Icons/Duplicate.xaml"/>
+        <ResourceDictionary Source="./Icons/CutIcon.xaml"/>
         <ResourceDictionary Source="./Icons/NewFile.xaml"/>
         <ResourceDictionary Source="./Icons/OpenFile.xaml"/>
         <ResourceDictionary Source="./Icons/Paste.xaml"/>
