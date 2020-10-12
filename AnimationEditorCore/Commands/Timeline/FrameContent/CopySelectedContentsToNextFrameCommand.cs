@@ -38,6 +38,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
 
             copyToFrame.StrokeCollection.Add(copiedStrokes);
             Parameter.SelectedFrameIndex = Parameter.SelectedFrameIndex + 1;
+            copyToFrame.SelectedStrokes.Add(copiedStrokes);
 
             Parameter.PushUndoRecord(Parameter.CreateUndoState("Copy Strokes To Next Frame"));
 

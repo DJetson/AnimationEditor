@@ -46,6 +46,8 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             frame.RemoveStrokes(frame.SelectedStrokes, false);
 
             copyToFrame.StrokeCollection.Add(copiedStrokes);
+            //Reselect the copied Strokes
+            copyToFrame.SelectedStrokes.Add(copiedStrokes);
 
             Parameter.PushUndoRecord(Parameter.CreateUndoState("Move Strokes To Previous Frame"));
         }

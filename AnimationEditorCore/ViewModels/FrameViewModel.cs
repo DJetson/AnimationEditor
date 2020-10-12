@@ -59,21 +59,66 @@ namespace AnimationEditorCore.ViewModels
         {
             var Parameter = parameter as InkCanvas;
 
-            SelectedStrokes = Parameter.GetSelectedStrokes();
+            SelectedStrokes.StrokesChanged -= SelectedStrokes_StrokesChanged;
+            SelectedStrokes.Clear();
+            SelectedStrokes.Add(Parameter.GetSelectedStrokes());
+            SelectedStrokes.StrokesChanged += SelectedStrokes_StrokesChanged;
+
             Console.WriteLine($"Selected {SelectedStrokes.Count} Strokes on Frame {Order}");
+        }
+
+        private DelegateCommand _LoadedInkCanvas;
+        public DelegateCommand LoadedInkCanvas
+        {
+            get { return _LoadedInkCanvas; }
+            set { _LoadedInkCanvas = value; NotifyPropertyChanged(); }
+        }
+
+        private bool LoadedInkCanvas_CanExecute(object parameter)
+        {
+            if (!(parameter is InkCanvas Parameter))
+                return false;
+
+            return true;
+        }
+
+        private void LoadedInkCanvas_Execute(object parameter)
+        {
+            var Parameter = parameter as InkCanvas;
+
+            InkCanvas = Parameter;
+
+            if(SelectedStrokes.Count > 0)
+            {
+                InkCanvas.Select(SelectedStrokes);
+            }
+
+            if(_DeferredSelectionStrokes != null)
+            {
+                InkCanvas.Select(_DeferredSelectionStrokes);
+                _DeferredSelectionStrokes = null;
+            }
+        }
+
+        private InkCanvas _InkCanvas;
+        public InkCanvas InkCanvas
+        {
+            get { return _InkCanvas; }
+            set { _InkCanvas = value; NotifyPropertyChanged(); }
         }
 
         public FrameViewModel(Models.FrameModel model, LayerViewModel layer)
         {
             LayerViewModel = layer;
-            
+
             StrokeCollection = model.StrokeCollection;
 
-            foreach(var stroke in StrokeCollection)
+            foreach (var stroke in StrokeCollection)
             {
                 stroke.StylusPointsChanged += Stroke_StylusPointsChanged;
             }
 
+            SelectedStrokes.StrokesChanged += SelectedStrokes_StrokesChanged;
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
 
             Order = model.Order;
@@ -81,16 +126,37 @@ namespace AnimationEditorCore.ViewModels
 
         }
 
+        private StrokeCollection _DeferredSelectionStrokes;
+
+        private void SelectedStrokes_StrokesChanged(object sender, StrokeCollectionChangedEventArgs e)
+        {
+            if (e.Added.Count > 0)
+            {
+                if (InkCanvas != null)
+                    InkCanvas.Select(e.Added);
+                else
+                {
+                    _DeferredSelectionStrokes = _DeferredSelectionStrokes ?? new StrokeCollection();
+                    _DeferredSelectionStrokes.Add(e.Added);
+                }
+            }
+            if(e.Removed.Count > 0)
+            {
+
+            }
+
+        }
+
         public void RemoveStrokes(StrokeCollection strokes, bool createUndo = true)
         {
             if (createUndo == false)
-            { 
+            {
                 StrokeCollection.StrokesChanged -= StrokeCollection_StrokesChanged;
             }
 
             StrokeCollection.Remove(strokes);
 
-            if(createUndo == false)
+            if (createUndo == false)
             {
                 StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
             }
@@ -99,12 +165,13 @@ namespace AnimationEditorCore.ViewModels
         public void InitializeCommands()
         {
             UpdateSelectedStrokes = new DelegateCommand(UpdateSelectedStrokes_CanExecute, UpdateSelectedStrokes_Execute);
+            LoadedInkCanvas = new DelegateCommand(LoadedInkCanvas_CanExecute, LoadedInkCanvas_Execute);
         }
 
         public TimelineState CreateUndoState(string title, List<UndoStateViewModel> additionalStates = null)
         {
             var state = LayerViewModel.TimelineViewModel.CreateUndoState(title);
-     
+
             return state;
         }
 
@@ -149,6 +216,7 @@ namespace AnimationEditorCore.ViewModels
             }
 
             destination.StrokeCollection.StrokesChanged += destination.StrokeCollection_StrokesChanged;
+            destination.SelectedStrokes.StrokesChanged += destination.SelectedStrokes_StrokesChanged;
         }
 
         public void LoadState(IMemento memento)
@@ -171,9 +239,9 @@ namespace AnimationEditorCore.ViewModels
             get { return _LayerViewModel; }
             set { _LayerViewModel = value; NotifyPropertyChanged(); }
         }
-        
+
         int _StrokeMultiSelectOpCounter = 0;
-        
+
         private StrokeCollection _SelectedStrokes = new StrokeCollection();
         public StrokeCollection SelectedStrokes
         {
@@ -187,6 +255,7 @@ namespace AnimationEditorCore.ViewModels
             LayerViewModel = layer;
             Order = orderId;
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
+            SelectedStrokes.StrokesChanged += SelectedStrokes_StrokesChanged;
         }
 
         public FrameViewModel(FrameViewModel originalFrame)
@@ -196,32 +265,33 @@ namespace AnimationEditorCore.ViewModels
             Order = originalFrame.Order;
             DisplayName = originalFrame.DisplayName;
             StrokeCollection = new StrokeCollection();
-            foreach(var stroke in originalFrame.StrokeCollection)
+            foreach (var stroke in originalFrame.StrokeCollection)
             {
                 var newStroke = stroke.Clone();
                 newStroke.StylusPointsChanged += Stroke_StylusPointsChanged;
                 StrokeCollection.Add(newStroke);
             }
             StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
+            SelectedStrokes.StrokesChanged += SelectedStrokes_StrokesChanged;
         }
 
         public static FrameViewModel DuplicateFrame(FrameViewModel original, int newOrder = -1, string newDisplayName = "")
         {
             var newFrame = new FrameViewModel(original);
 
-            if(newOrder != -1)
+            if (newOrder != -1)
             {
                 newFrame.Order = newOrder;
             }
 
-            if(!(String.IsNullOrWhiteSpace(newDisplayName)))
+            if (!(String.IsNullOrWhiteSpace(newDisplayName)))
             {
                 newFrame.DisplayName = newDisplayName;
             }
 
             return newFrame;
         }
-       
+
         private bool _IsErasing = false;
 
         private void StrokeCollection_StrokesChanged(object sender, StrokeCollectionChangedEventArgs e)

@@ -46,7 +46,8 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             StrokeCollection copiedStrokes = new StrokeCollection(frame.SelectedStrokes.Select(e => e.Clone()));
 
             copyToFrame.StrokeCollection.Add(copiedStrokes);
-            
+            copyToFrame.SelectedStrokes.Add(copiedStrokes);
+
             Parameter.PushUndoRecord(Parameter.CreateUndoState("Copy Strokes To Previous Frame"));
         }
     }

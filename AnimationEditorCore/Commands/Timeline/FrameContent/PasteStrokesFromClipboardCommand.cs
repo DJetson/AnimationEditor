@@ -29,7 +29,13 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
         {
             var Parameter = parameter as TimelineViewModel;
 
-            Parameter.ActiveLayer.Frames[Parameter.SelectedFrameIndex].StrokeCollection.Add(InternalClipboard.GetData());
+            var copiedStrokes = InternalClipboard.GetData();
+            var copyToFrame = Parameter.ActiveLayer.Frames[Parameter.SelectedFrameIndex];
+
+            copyToFrame.StrokeCollection.Add(copiedStrokes);
+
+            //Reselect the copied Strokes
+            copyToFrame.SelectedStrokes.Add(copiedStrokes);
 
             Parameter.PushUndoRecord(Parameter.CreateUndoState("Paste Into Frame"));
         }

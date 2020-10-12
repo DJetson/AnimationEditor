@@ -31,6 +31,9 @@
                             <KeyBinding Gesture="CTRL+V" Command="{StaticResource PasteStrokesFromClipboard}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
                         </InkCanvas.InputBindings>
                         <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Loaded">
+                                <i:InvokeCommandAction Command="{Binding LoadedInkCanvas}" CommandParameter="{Binding ElementName=LayerCanvas}"/>
+                            </i:EventTrigger>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction Command="{Binding UpdateSelectedStrokes}" CommandParameter="{Binding ElementName=LayerCanvas}"/>
                             </i:EventTrigger>
