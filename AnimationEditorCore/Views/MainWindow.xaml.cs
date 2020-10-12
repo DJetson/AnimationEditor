@@ -23,7 +23,7 @@ namespace AnimationEditorCore.Views
             foreach (var workspace in dc.WorkspaceManager.Workspaces.ToList())
             {
                 dc.WorkspaceManager.SelectedWorkspace = workspace;
-                
+
                 if (workspace.Close() == false)
                     e.Cancel = true;
             }
@@ -37,7 +37,8 @@ namespace AnimationEditorCore.Views
             if (!(Sender.DataContext is MainWindowViewModel dc))
                 return;
 
-            dc.WorkspaceManager.CreateNewWorkspace();
+            if (dc.WorkspaceManager.Workspaces.Count == 0)
+                dc.WorkspaceManager.CreateNewWorkspace();
         }
     }
 }
