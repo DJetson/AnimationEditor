@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace AnimationEditorCore.ViewModels
 {
@@ -100,6 +101,90 @@ namespace AnimationEditorCore.ViewModels
             set { _ExportToGif = value; NotifyPropertyChanged(); }
         }
 
+        private bool _IsMouseLeftButtonDown = false;
+        private Point _MouseMoveStartPosition = default(Point);
+        private double _StartingZoomLevel = 0;
+
+        private DelegateCommand _RequestBeginZoom;
+        public DelegateCommand RequestBeginZoom
+        {
+            get { return _RequestBeginZoom; }
+            set { _RequestBeginZoom = value; NotifyPropertyChanged(); }
+        }
+
+        public bool RequestBeginZoom_CanExecute(object parameter)
+        {
+            if (EditorTools.SelectedToolType != EditorToolType.Zoom)
+                return false;
+
+            if (!(parameter is IInputElement))
+                return false;
+
+            return true;
+        }
+
+        public void RequestBeginZoom_Execute(object parameter)
+        {
+            _MouseMoveStartPosition = Mouse.GetPosition(parameter as IInputElement);
+            _IsMouseLeftButtonDown = true;
+            _StartingZoomLevel = ZoomLevel;
+        }
+
+        private DelegateCommand _RequestZoom;
+        public DelegateCommand RequestZoom
+        {
+            get { return _RequestZoom; }
+            set { _RequestZoom = value; NotifyPropertyChanged(); }
+        }
+
+        public bool RequestZoom_CanExecute(object parameter)
+        {
+            if (EditorTools.SelectedToolType != EditorToolType.Zoom)
+                return false;
+
+            if (!_IsMouseLeftButtonDown)
+                return false;
+
+            if (!(parameter is IInputElement))
+                return false;
+
+            return true;
+        }
+
+        public void RequestZoom_Execute(object parameter)
+        {
+            var mouseDelta = Mouse.GetPosition(parameter as IInputElement) - _MouseMoveStartPosition;
+
+            var newZoomLevel = _StartingZoomLevel + (mouseDelta.X / 300);
+            if (newZoomLevel > 0.5f && newZoomLevel < 6.0f)
+                ZoomLevel = newZoomLevel;
+        }
+
+        private DelegateCommand _RequestEndZoom;
+        public DelegateCommand RequestEndZoom
+        {
+            get { return _RequestEndZoom; }
+            set { _RequestEndZoom = value; NotifyPropertyChanged(); }
+        }
+
+        public bool RequestEndZoom_CanExecute(object parameter)
+        {
+            if (!_IsMouseLeftButtonDown)
+                return false;
+
+            if (!(parameter is IInputElement))
+                return false;
+
+            return true;
+        }
+
+        public void RequestEndZoom_Execute(object parameter)
+        {
+            _MouseMoveStartPosition = default(Point);
+            _IsMouseLeftButtonDown = false;
+            _StartingZoomLevel = 0;
+        }
+
         private string _TempFilePath = String.Empty;
 
         #region ZoomIn Command
@@ -177,6 +262,9 @@ namespace AnimationEditorCore.ViewModels
 
         public void InitializeCommands()
         {
+            RequestBeginZoom = new DelegateCommand(RequestBeginZoom_CanExecute, RequestBeginZoom_Execute);
+            RequestZoom = new DelegateCommand(RequestZoom_CanExecute, RequestZoom_Execute);
+            RequestEndZoom = new DelegateCommand(RequestEndZoom_CanExecute, RequestEndZoom_Execute);
             ZoomIn = new DelegateCommand("Zoom In", ZoomIn_CanExecute, ZoomIn_Execute);
             ZoomOut = new DelegateCommand("Zoom Out", ZoomOut_CanExecute, ZoomOut_Execute);
             ExportToGif = new DelegateCommand(ExportToGif_CanExecute, ExportToGif_Execute);
