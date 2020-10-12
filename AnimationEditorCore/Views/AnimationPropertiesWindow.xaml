@@ -37,28 +37,52 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <GroupBox Grid.Row="0" Header="Animation Properties">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Canvas Width" HorizontalAlignment="Left"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CanvasWidth}" MinWidth="30" HorizontalAlignment="Left"/>
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="Canvas Height" HorizontalAlignment="Left"/>
-                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CanvasHeight}" MinWidth="30" HorizontalAlignment="Left"/>
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="FPS" HorizontalAlignment="Left"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding FramesPerSecond}" MinWidth="30" HorizontalAlignment="Left"/>
-            </Grid>
-        </GroupBox>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Canvas Width" HorizontalAlignment="Left"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CanvasWidth}" MinWidth="30" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Canvas Height" HorizontalAlignment="Left"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CanvasHeight}" MinWidth="30" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="FPS" HorizontalAlignment="Left"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding FramesPerSecond}" MinWidth="30" HorizontalAlignment="Left"/>
+        </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Discard Changes" Command="{Binding DiscardChanges}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
-            <Button Content="Accept Changes" Command="{Binding AcceptChanges}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+            <Button Command="{Binding DiscardChanges}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Style.Setters>
+                            <Setter Property="Content" Value="Discard Changes"/>
+                        </Style.Setters>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsDisplayForNewWorkspaceEnabled}" Value="True">
+                                <Setter Property="Content" Value="Cancel"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Command="{Binding AcceptChanges}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Style.Setters>
+                            <Setter Property="Content" Value="Accept Changes"/>
+                        </Style.Setters>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsDisplayForNewWorkspaceEnabled}" Value="True">
+                                <Setter Property="Content" Value="Create New Workspace"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

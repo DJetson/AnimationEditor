@@ -7,7 +7,7 @@ namespace AnimationEditorCore.Interfaces
     {
         ObservableCollection<WorkspaceViewModel> Workspaces { get; set; }
         WorkspaceViewModel SelectedWorkspace { get; set; }
-        WorkspaceViewModel CreateNewWorkspace();
+        WorkspaceViewModel CreateNewWorkspace(bool promptForAnimationProperties = true);
         void AddWorkspace(WorkspaceViewModel workspace);
         void RemoveWorkspace(WorkspaceViewModel workspace);
     }

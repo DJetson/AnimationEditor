@@ -12,7 +12,7 @@ namespace AnimationEditorCore.ViewModels
         {
             var workspaceManager = new WorkspaceManagerViewModel();
             var displayNames = workspaceManager.Workspaces.Select(w => w.DisplayName).ToArray();
-            var workspace = workspaceManager.CreateNewWorkspace();
+            var workspace = workspaceManager.CreateNewWorkspace(false);
             CollectionAssert.DoesNotContain(displayNames, workspace.DisplayName);
         }
 

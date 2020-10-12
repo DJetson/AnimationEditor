@@ -29,6 +29,13 @@ namespace AnimationEditorCore.ViewModels.Settings
             set { _FramesPerSecond = value; NotifyPropertyChanged(); }
         }
 
+        private bool _IsDisplayForNewWorkspaceEnabled = false;
+        public bool IsDisplayForNewWorkspaceEnabled
+        {
+            get { return _IsDisplayForNewWorkspaceEnabled; }
+            set { _IsDisplayForNewWorkspaceEnabled = value; NotifyPropertyChanged(); }
+        }
+
         private TimelineViewModel _Source = null;
 
         public AnimationPropertiesViewModel()
@@ -82,10 +89,12 @@ namespace AnimationEditorCore.ViewModels.Settings
             if (UpdateFramesPerSecond())
                 HasChanged = true;
 
-            if (HasChanged)
+            if (HasChanged && !IsDisplayForNewWorkspaceEnabled)
             {
                 _Source.PushUndoRecord(_Source.CreateUndoState($"Modified Animation Properties"));
             }
+
+            Parameter.DialogResult = true;
 
             Parameter.Close();
         }
@@ -169,6 +178,8 @@ namespace AnimationEditorCore.ViewModels.Settings
         private void DiscardChanges_Execute(object parameter)
         {
             var Parameter = parameter as Window;
+
+            Parameter.DialogResult = false;
 
             Parameter.Close();
         }

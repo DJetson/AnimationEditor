@@ -1,6 +1,8 @@
 ﻿using AnimationEditorCore.Interfaces;
 using AnimationEditorCore.Models;
 using AnimationEditorCore.Utilities;
+using AnimationEditorCore.ViewModels.Settings;
+using AnimationEditorCore.Views;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -28,27 +30,44 @@ namespace AnimationEditorCore.ViewModels
         public WorkspaceManagerViewModel()
         {
             InitializeDependentViewModels();
-            SelectedWorkspace = Workspaces.LastOrDefault();
+            //SelectedWorkspace = Workspaces.LastOrDefault();
+            //CreateNewWorkspace(true, false);
         }
 
         private void InitializeDependentViewModels()
         {
             Workspaces = new ObservableCollection<WorkspaceViewModel>();
-            var newWorkspace = new WorkspaceViewModel()
-            {
-                DisplayName = FileUtilities.GetUniquePlaceholderName(this),
-                HasUnsavedChanges = true,
-                Host = this
-            };
+            //var newWorkspace = new WorkspaceViewModel()
+            //{
+            //    DisplayName = FileUtilities.GetUniquePlaceholderName(this),
+            //    HasUnsavedChanges = true,
+            //    Host = this
+            //};
 
-            Workspaces.Add(newWorkspace);
+            //Workspaces.Add(newWorkspace);
         }
 
-        public WorkspaceViewModel CreateNewWorkspace()
+        public WorkspaceViewModel CreateNewWorkspace(bool promptForAnimationProperties = true)
         {
             var newWorkspace = new WorkspaceViewModel() { DisplayName = FileUtilities.GetUniquePlaceholderName(this), HasUnsavedChanges = true, Host = this };
-            Workspaces.Add(newWorkspace);
 
+            if (promptForAnimationProperties)
+            {
+                var layerProperties = new AnimationPropertiesWindow()
+                {
+                    Owner = System.Windows.Application.Current.MainWindow,
+                    DataContext = new AnimationPropertiesViewModel(newWorkspace.TimelineViewModel)
+                    {
+                        IsDisplayForNewWorkspaceEnabled = true
+                    }
+                };
+                layerProperties.ShowDialog();
+
+                if (layerProperties.DialogResult == false)
+                    return null;
+            }
+
+            Workspaces.Add(newWorkspace);
             SelectedWorkspace = newWorkspace;
 
             return newWorkspace;
@@ -72,7 +91,7 @@ namespace AnimationEditorCore.ViewModels
 
         public void DeleteRecoveryFiles(List<string> filepaths)
         {
-            foreach(var filepath in filepaths)
+            foreach (var filepath in filepaths)
             {
                 File.Delete(filepath);
             }

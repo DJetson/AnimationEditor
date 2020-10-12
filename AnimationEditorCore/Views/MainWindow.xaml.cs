@@ -28,5 +28,16 @@ namespace AnimationEditorCore.Views
                     e.Cancel = true;
             }
         }
+
+        private void Window_ContentRendered(object sender, System.EventArgs e)
+        {
+            if (!(sender is Window Sender))
+                return;
+
+            if (!(Sender.DataContext is MainWindowViewModel dc))
+                return;
+
+            dc.WorkspaceManager.CreateNewWorkspace();
+        }
     }
 }
