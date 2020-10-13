@@ -117,12 +117,136 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CopySelectedContentsToNextFrameDescription" xml:space="preserve">
+    <value>Place a copy of the selected strokes into the frame that comes next in the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Copy Strokes To Next Frame button</comment>
+  </data>
+  <data name="CopySelectedContentsToNextFrameToolTip" xml:space="preserve">
+    <value>Copy Strokes To Next Frame</value>
+    <comment>The tooltip text for a button that triggers the CopySelectedContentsToNextFrameCommand</comment>
+  </data>
+  <data name="CopySelectedContentsToNextFrameUndoStateTitle" xml:space="preserve">
+    <value>Copy Strokes To Next Frame</value>
+    <comment>The title of the Undo Record created by the CopySelectedContentsToNextFrameCommand</comment>
+  </data>
+  <data name="CopySelectedContentsToNextLayerDescription" xml:space="preserve">
+    <value>Place a copy of the selected strokes into the layer above the current one in the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Copy Strokes To Next Layer button</comment>
+  </data>
+  <data name="CopySelectedContentsToNextLayerToolTip" xml:space="preserve">
+    <value>Copy Strokes to the Layer Above</value>
+    <comment>The tooltip text for a button that triggers the CopySelectedContentsToNextLayerCommand</comment>
+  </data>
+  <data name="CopySelectedContentsToNextLayerUndoStateTitle" xml:space="preserve">
+    <value>Copy Strokes To Next Layer</value>
+    <comment>The title of the Undo Record created by the CopySelectedContentsToNextLayerCommand</comment>
+  </data>
+  <data name="CopySelectedContentsToPreviousFrameDescription" xml:space="preserve">
+    <value>Place a copy of the selected strokes into the frame that comes before the current one in the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Copy Strokes To Previous Frame button</comment>
+  </data>
+  <data name="CopySelectedContentsToPreviousFrameToolTip" xml:space="preserve">
+    <value>Copy Strokes To Previous Frame</value>
+    <comment>The tooltip text for a button that triggers the CopySelectedContentsToPreviousFrameCommand</comment>
+  </data>
+  <data name="CopySelectedContentsToPreviousFrameUndoStateTitle" xml:space="preserve">
+    <value>Copy Strokes To Previous Frame</value>
+    <comment>The title of the Undo Record created by the CopySelectedContentsToPreviousFrameCommand</comment>
+  </data>
+  <data name="CopySelectedContentsToPreviousLayerDescription" xml:space="preserve">
+    <value>Place a copy of the selected strokes into the layer below the current one in the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Copy Strokes To Previous Layer button</comment>
+  </data>
+  <data name="CopySelectedContentsToPreviousLayerToolTip" xml:space="preserve">
+    <value>Copy Strokes to the Layer Below</value>
+    <comment>The tooltip text for a button that triggers the CopySelectedContentsToPreviousLayerCommand</comment>
+  </data>
+  <data name="CopySelectedContentsToPreviousLayerUndoStateTitle" xml:space="preserve">
+    <value>Copy Strokes To Previous Layer</value>
+    <comment>The title of the Undo Record created by the CopySelectedContentsToPreviousLayerCommand</comment>
+  </data>
+  <data name="CopySelectedStrokesToClipboardDescription" xml:space="preserve">
+    <value>Copies the selected strokes into the clipboard</value>
+    <comment>Status bar message that is displayed when the moust is over the Copy button</comment>
+  </data>
+  <data name="CopySelectedStrokesToClipboardToolTip" xml:space="preserve">
+    <value>Copy Selected Strokes</value>
+    <comment>The tooltip text for a button that triggers the CopySelectedStrokesToClipboardCommand</comment>
+  </data>
+  <data name="CutSelectedStrokesToClipboardDescription" xml:space="preserve">
+    <value>Cuts the selected strokes into the clipboard</value>
+    <comment>Status bar message that is displayed when the moust is over the Cut button</comment>
+  </data>
+  <data name="CutSelectedStrokesToClipboardToolTip" xml:space="preserve">
+    <value>Cut Selected Strokes</value>
+    <comment>The tooltip text for a button that triggers the CutSelectedStrokesToClipboardCommand</comment>
+  </data>
   <data name="MainWindowViewModelDisplayName" xml:space="preserve">
     <value>Animation Editor</value>
     <comment>This gets assigned to the DisplayName property of the MainWindowViewModel class</comment>
   </data>
+  <data name="MoveSelectedContentsToNextFrameDescription" xml:space="preserve">
+    <value>Move the selected strokes into the frame that comes next in the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Move Strokes to Next Frame button</comment>
+  </data>
+  <data name="MoveSelectedContentsToNextFrameToolTip" xml:space="preserve">
+    <value>Move Strokes To Next Frame</value>
+    <comment>The tooltip text for a button that triggers the MoveSelectedContentsToNextFrameCommand</comment>
+  </data>
+  <data name="MoveSelectedContentsToNextFrameUndoStateTitle" xml:space="preserve">
+    <value>Move Strokes To Next Frame</value>
+    <comment>The title of the Undo Record created by the MoveSelectedContentsToNextFrameCommand</comment>
+  </data>
+  <data name="MoveSelectedContentsToNextLayerDescription" xml:space="preserve">
+    <value>Move the selected strokes into the layer above the current one in the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Move Strokes To Next Layer button</comment>
+  </data>
+  <data name="MoveSelectedContentsToNextLayerToolTip" xml:space="preserve">
+    <value>Move Strokes to the Layer Above</value>
+    <comment>The tooltip text for a button that triggers the MoveSelectedContentsToNextLayerCommand</comment>
+  </data>
+  <data name="MoveSelectedContentsToNextLayerUndoStateTitle" xml:space="preserve">
+    <value>Move Strokes To Next Layer</value>
+    <comment>The title of the Undo Record created by the MoveSelectedContentsToNextLayerCommand</comment>
+  </data>
+  <data name="MoveSelectedContentsToPreviousFrameDescription" xml:space="preserve">
+    <value>Move the selected strokes into the frame that comes before the current one in the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Move Strokes To Previous Frame button</comment>
+  </data>
+  <data name="MoveSelectedContentsToPreviousFrameToolTip" xml:space="preserve">
+    <value>Move Strokes To Previous Frame</value>
+    <comment>The tooltip text for a button that triggers the MoveSelectedContentsToPreviousFrameCommand</comment>
+  </data>
+  <data name="MoveSelectedContentsToPreviousFrameUndoStateTitle" xml:space="preserve">
+    <value>Move Strokes To Previous Frame</value>
+    <comment>The title of the Undo Record created by the MoveSelectedContentsToPreviousFrameCommand</comment>
+  </data>
+  <data name="MoveSelectedContentsToPreviousLayerDescription" xml:space="preserve">
+    <value>Move the selected strokes into the layer below the current one in the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Move Strokes To Previous Layer button</comment>
+  </data>
+  <data name="MoveSelectedContentsToPreviousLayerToolTip" xml:space="preserve">
+    <value>Move Strokes to the Layer Below</value>
+    <comment>The tooltip text for a button that triggers the MoveSelectedContentsToPreviousLayerCommand</comment>
+  </data>
+  <data name="MoveSelectedContentsToPreviousLayerUndoStateTitle" xml:space="preserve">
+    <value>Move Strokes To Previous Layer</value>
+    <comment>The title of the Undo Record created by the MoveSelectedContentsToPreviousLayerCommand</comment>
+  </data>
   <data name="OnionSkinSettingsViewModelDisplayName" xml:space="preserve">
     <value>Onionskin Settings</value>
     <comment>This gets assigned to the DisplayName property of the OnionSkinSettingsViewModel class</comment>
+  </data>
+  <data name="PasteStrokesFromClipboardDescription" xml:space="preserve">
+    <value>Pastes the strokes from the clipboard into the current frame</value>
+    <comment>Status bar message that is displayed when the mouse is over the Paste button</comment>
+  </data>
+  <data name="PasteStrokesFromClipboardToolTip" xml:space="preserve">
+    <value>Paste Into Frame</value>
+    <comment>The tooltip text for a button that triggers the PasteStrokesFromClipboardCommand</comment>
+  </data>
+  <data name="PasteStrokesFromClipboardUndoStateTitle" xml:space="preserve">
+    <value>Paste Into Frame</value>
+    <comment>The title of the Undo Record created by the PasteStrokesFromClipboardCommand</comment>
   </data>
 </root>

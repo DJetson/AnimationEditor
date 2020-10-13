@@ -1,4 +1,5 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.Utilities;
 using AnimationEditorCore.ViewModels;
 using System;
@@ -11,6 +12,8 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
 {
     public class CutSelectedStrokesToClipboardCommand : RequeryBase
     {
+        public override string Description => Resources.CutSelectedStrokesToClipboardDescription;
+        public override string ToolTip => Resources.CutSelectedStrokesToClipboardToolTip;
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is TimelineViewModel Parameter))

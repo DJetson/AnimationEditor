@@ -5,11 +5,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Ink;
 using System.Linq;
+using AnimationEditorCore.Properties;
 
 namespace AnimationEditorCore.Commands.Timeline.FrameContent
 {
     public class CopySelectedContentsToNextLayerCommand : RequeryBase
     {
+        public override string ToolTip => Resources.CopySelectedContentsToNextLayerUndoStateTitle;
+        public override string Description => Resources.CopySelectedContentsToNextLayerDescription;
+        public override string UndoStateTitle => Resources.CopySelectedContentsToNextLayerUndoStateTitle;
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is TimelineViewModel Parameter))
@@ -44,7 +48,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             copyToFrame.StrokeCollection.Add(copiedStrokes);
             copyToFrame.SelectedStrokes.Add(copiedStrokes);
 
-            Parameter.PushUndoRecord(Parameter.CreateUndoState("Copy Strokes To Next Layer"));
+            Parameter.PushUndoRecord(Parameter.CreateUndoState(UndoStateTitle));
         }
     }
 }

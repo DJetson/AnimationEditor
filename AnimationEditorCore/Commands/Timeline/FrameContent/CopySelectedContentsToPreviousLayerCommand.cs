@@ -1,4 +1,5 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,9 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
 {
     public class CopySelectedContentsToPreviousLayerCommand : RequeryBase
     {
+        public override string ToolTip => Resources.CopySelectedContentsToPreviousLayerToolTip;
+        public override string Description => Resources.CopySelectedContentsToPreviousLayerDescription;
+        public override string UndoStateTitle => Resources.CopySelectedContentsToPreviousLayerUndoStateTitle;
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is TimelineViewModel Parameter))
@@ -45,7 +49,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             copyToFrame.StrokeCollection.Add(copiedStrokes);
             copyToFrame.SelectedStrokes.Add(copiedStrokes);
 
-            Parameter.PushUndoRecord(Parameter.CreateUndoState("Copy Strokes To Previous Layer"));
+            Parameter.PushUndoRecord(Parameter.CreateUndoState(UndoStateTitle));
         }
     }
 }

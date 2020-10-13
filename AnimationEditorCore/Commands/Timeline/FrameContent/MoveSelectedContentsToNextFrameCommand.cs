@@ -1,4 +1,5 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,10 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
 {
     public class MoveSelectedContentsToNextFrameCommand : RequeryBase
     {
+        public override string Description => Resources.MoveSelectedContentsToNextFrameDescription;
+        public override string ToolTip => Resources.MoveSelectedContentsToNextFrameToolTip;
+        public override string UndoStateTitle => Resources.MoveSelectedContentsToNextFrameUndoStateTitle;
+
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is TimelineViewModel Parameter))
@@ -47,7 +52,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             //Reselect the copied Strokes
             copyToFrame.SelectedStrokes.Add(copiedStrokes);
 
-            Parameter.PushUndoRecord(Parameter.CreateUndoState("Move Strokes To Next Frame"));
+            Parameter.PushUndoRecord(Parameter.CreateUndoState(UndoStateTitle));
         }
     }
 }

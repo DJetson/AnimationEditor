@@ -1,4 +1,5 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.Utilities;
 using AnimationEditorCore.ViewModels;
 using System;
@@ -11,6 +12,9 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
 {
     public class PasteStrokesFromClipboardCommand : RequeryBase
     {
+        public override string Description => Resources.PasteStrokesFromClipboardDescription;
+        public override string ToolTip => Resources.PasteStrokesFromClipboardToolTip;
+        public override string UndoStateTitle => Resources.PasteStrokesFromClipboardUndoStateTitle;
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is TimelineViewModel Parameter))
@@ -37,7 +41,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             //Reselect the copied Strokes
             copyToFrame.SelectedStrokes.Add(copiedStrokes);
 
-            Parameter.PushUndoRecord(Parameter.CreateUndoState("Paste Into Frame"));
+            Parameter.PushUndoRecord(Parameter.CreateUndoState(UndoStateTitle));
         }
     }
 }

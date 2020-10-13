@@ -22,7 +22,7 @@ namespace AnimationEditorCore.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace AnimationEditorCore.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AnimationEditorCore.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace AnimationEditorCore.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,20 +61,299 @@ namespace AnimationEditorCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Place a copy of the selected strokes into the frame that comes next in the timeline.
+        /// </summary>
+        public static string CopySelectedContentsToNextFrameDescription {
+            get {
+                return ResourceManager.GetString("CopySelectedContentsToNextFrameDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Strokes To Next Frame.
+        /// </summary>
+        public static string CopySelectedContentsToNextFrameToolTip {
+            get {
+                return ResourceManager.GetString("CopySelectedContentsToNextFrameToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Strokes To Next Frame.
+        /// </summary>
+        public static string CopySelectedContentsToNextFrameUndoStateTitle {
+            get {
+                return ResourceManager.GetString("CopySelectedContentsToNextFrameUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Place a copy of the selected strokes into the layer above the current one in the timeline.
+        /// </summary>
+        public static string CopySelectedContentsToNextLayerDescription {
+            get {
+                return ResourceManager.GetString("CopySelectedContentsToNextLayerDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Strokes to the Layer Above.
+        /// </summary>
+        public static string CopySelectedContentsToNextLayerToolTip {
+            get {
+                return ResourceManager.GetString("CopySelectedContentsToNextLayerToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Strokes To Next Layer.
+        /// </summary>
+        public static string CopySelectedContentsToNextLayerUndoStateTitle {
+            get {
+                return ResourceManager.GetString("CopySelectedContentsToNextLayerUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Place a copy of the selected strokes into the frame that comes before the current one in the timeline.
+        /// </summary>
+        public static string CopySelectedContentsToPreviousFrameDescription {
+            get {
+                return ResourceManager.GetString("CopySelectedContentsToPreviousFrameDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Strokes To Previous Frame.
+        /// </summary>
+        public static string CopySelectedContentsToPreviousFrameToolTip {
+            get {
+                return ResourceManager.GetString("CopySelectedContentsToPreviousFrameToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Strokes To Previous Frame.
+        /// </summary>
+        public static string CopySelectedContentsToPreviousFrameUndoStateTitle {
+            get {
+                return ResourceManager.GetString("CopySelectedContentsToPreviousFrameUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Place a copy of the selected strokes into the layer below the current one in the timeline.
+        /// </summary>
+        public static string CopySelectedContentsToPreviousLayerDescription {
+            get {
+                return ResourceManager.GetString("CopySelectedContentsToPreviousLayerDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Strokes to the Layer Below.
+        /// </summary>
+        public static string CopySelectedContentsToPreviousLayerToolTip {
+            get {
+                return ResourceManager.GetString("CopySelectedContentsToPreviousLayerToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Strokes To Previous Layer.
+        /// </summary>
+        public static string CopySelectedContentsToPreviousLayerUndoStateTitle {
+            get {
+                return ResourceManager.GetString("CopySelectedContentsToPreviousLayerUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copies the selected strokes into the clipboard.
+        /// </summary>
+        public static string CopySelectedStrokesToClipboardDescription {
+            get {
+                return ResourceManager.GetString("CopySelectedStrokesToClipboardDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Selected Strokes.
+        /// </summary>
+        public static string CopySelectedStrokesToClipboardToolTip {
+            get {
+                return ResourceManager.GetString("CopySelectedStrokesToClipboardToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cuts the selected strokes into the clipboard.
+        /// </summary>
+        public static string CutSelectedStrokesToClipboardDescription {
+            get {
+                return ResourceManager.GetString("CutSelectedStrokesToClipboardDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cut Selected Strokes.
+        /// </summary>
+        public static string CutSelectedStrokesToClipboardToolTip {
+            get {
+                return ResourceManager.GetString("CutSelectedStrokesToClipboardToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Animation Editor.
         /// </summary>
-        internal static string MainWindowViewModelDisplayName {
+        public static string MainWindowViewModelDisplayName {
             get {
                 return ResourceManager.GetString("MainWindowViewModelDisplayName", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move the selected strokes into the frame that comes next in the timeline.
+        /// </summary>
+        public static string MoveSelectedContentsToNextFrameDescription {
+            get {
+                return ResourceManager.GetString("MoveSelectedContentsToNextFrameDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Strokes To Next Frame.
+        /// </summary>
+        public static string MoveSelectedContentsToNextFrameToolTip {
+            get {
+                return ResourceManager.GetString("MoveSelectedContentsToNextFrameToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Strokes To Next Frame.
+        /// </summary>
+        public static string MoveSelectedContentsToNextFrameUndoStateTitle {
+            get {
+                return ResourceManager.GetString("MoveSelectedContentsToNextFrameUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move the selected strokes into the layer above the current one in the timeline.
+        /// </summary>
+        public static string MoveSelectedContentsToNextLayerDescription {
+            get {
+                return ResourceManager.GetString("MoveSelectedContentsToNextLayerDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Strokes to the Layer Above.
+        /// </summary>
+        public static string MoveSelectedContentsToNextLayerToolTip {
+            get {
+                return ResourceManager.GetString("MoveSelectedContentsToNextLayerToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Strokes To Next Layer.
+        /// </summary>
+        public static string MoveSelectedContentsToNextLayerUndoStateTitle {
+            get {
+                return ResourceManager.GetString("MoveSelectedContentsToNextLayerUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move the selected strokes into the frame that comes before the current one in the timeline.
+        /// </summary>
+        public static string MoveSelectedContentsToPreviousFrameDescription {
+            get {
+                return ResourceManager.GetString("MoveSelectedContentsToPreviousFrameDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Strokes To Previous Frame.
+        /// </summary>
+        public static string MoveSelectedContentsToPreviousFrameToolTip {
+            get {
+                return ResourceManager.GetString("MoveSelectedContentsToPreviousFrameToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Strokes To Previous Frame.
+        /// </summary>
+        public static string MoveSelectedContentsToPreviousFrameUndoStateTitle {
+            get {
+                return ResourceManager.GetString("MoveSelectedContentsToPreviousFrameUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move the selected strokes into the layer below the current one in the timeline.
+        /// </summary>
+        public static string MoveSelectedContentsToPreviousLayerDescription {
+            get {
+                return ResourceManager.GetString("MoveSelectedContentsToPreviousLayerDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Strokes to the Layer Below.
+        /// </summary>
+        public static string MoveSelectedContentsToPreviousLayerToolTip {
+            get {
+                return ResourceManager.GetString("MoveSelectedContentsToPreviousLayerToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Strokes To Previous Layer.
+        /// </summary>
+        public static string MoveSelectedContentsToPreviousLayerUndoStateTitle {
+            get {
+                return ResourceManager.GetString("MoveSelectedContentsToPreviousLayerUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Onionskin Settings.
         /// </summary>
-        internal static string OnionSkinSettingsViewModelDisplayName {
+        public static string OnionSkinSettingsViewModelDisplayName {
             get {
                 return ResourceManager.GetString("OnionSkinSettingsViewModelDisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pastes the strokes from the clipboard into the current frame.
+        /// </summary>
+        public static string PasteStrokesFromClipboardDescription {
+            get {
+                return ResourceManager.GetString("PasteStrokesFromClipboardDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paste Into Frame.
+        /// </summary>
+        public static string PasteStrokesFromClipboardToolTip {
+            get {
+                return ResourceManager.GetString("PasteStrokesFromClipboardToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paste Into Frame.
+        /// </summary>
+        public static string PasteStrokesFromClipboardUndoStateTitle {
+            get {
+                return ResourceManager.GetString("PasteStrokesFromClipboardUndoStateTitle", resourceCulture);
             }
         }
     }

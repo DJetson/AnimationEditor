@@ -6,6 +6,22 @@ namespace AnimationEditorCore.BaseClasses
 {
     public abstract class RequeryBase : ViewModelBase, ICommand
     {
+        public virtual string UndoStateTitle
+        {
+            get;
+        }
+
+        public virtual string Description
+        {
+            get;
+        }
+
+        public virtual string ToolTip
+        {
+            get;
+        }
+
+
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }

@@ -1,7 +1,9 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Ink;
@@ -10,6 +12,10 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
 {
     public class CopySelectedContentsToNextFrameCommand : RequeryBase
     {
+        public override string ToolTip => Resources.CopySelectedContentsToNextFrameToolTip;
+        public override string Description => Resources.CopySelectedContentsToNextFrameDescription;
+        public override string UndoStateTitle => Resources.CopySelectedContentsToNextFrameUndoStateTitle;
+
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is TimelineViewModel Parameter))
@@ -40,7 +46,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             Parameter.SelectedFrameIndex = Parameter.SelectedFrameIndex + 1;
             copyToFrame.SelectedStrokes.Add(copiedStrokes);
 
-            Parameter.PushUndoRecord(Parameter.CreateUndoState("Copy Strokes To Next Frame"));
+            Parameter.PushUndoRecord(Parameter.CreateUndoState(UndoStateTitle));
 
         }
     }

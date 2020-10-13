@@ -1,4 +1,5 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.Utilities;
 using AnimationEditorCore.ViewModels;
 using System;
@@ -12,6 +13,9 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
 {
     public class CopySelectedStrokesToClipboardCommand : RequeryBase
     {
+        public override string Description => Resources.CopySelectedStrokesToClipboardDescription;
+        public override string ToolTip => Resources.CopySelectedStrokesToClipboardToolTip;
+
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is TimelineViewModel Parameter))
