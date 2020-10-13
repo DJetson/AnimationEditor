@@ -61,6 +61,222 @@ namespace AnimationEditorCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adds a blank frame immediately following the current one in the timeline.
+        /// </summary>
+        public static string AddBlankFrameAfterCurrentDescription {
+            get {
+                return ResourceManager.GetString("AddBlankFrameAfterCurrentDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Blank Frame After Current.
+        /// </summary>
+        public static string AddBlankFrameAfterCurrentToolTip {
+            get {
+                return ResourceManager.GetString("AddBlankFrameAfterCurrentToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Blank Frame After Current.
+        /// </summary>
+        public static string AddBlankFrameAfterCurrentUndoStateTitle {
+            get {
+                return ResourceManager.GetString("AddBlankFrameAfterCurrentUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adds a blank frame immediately before the current one in the timeline.
+        /// </summary>
+        public static string AddBlankFrameBeforeCurrentDescription {
+            get {
+                return ResourceManager.GetString("AddBlankFrameBeforeCurrentDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Blank Frame Before Current.
+        /// </summary>
+        public static string AddBlankFrameBeforeCurrentToolTip {
+            get {
+                return ResourceManager.GetString("AddBlankFrameBeforeCurrentToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Blank Frame Before Current.
+        /// </summary>
+        public static string AddBlankFrameBeforeCurrentUndoStateTitle {
+            get {
+                return ResourceManager.GetString("AddBlankFrameBeforeCurrentUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adds a blank frame to the end of the timeline.
+        /// </summary>
+        public static string AddBlankFrameToEndDescription {
+            get {
+                return ResourceManager.GetString("AddBlankFrameToEndDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Blank Frame to End.
+        /// </summary>
+        public static string AddBlankFrameToEndToolTip {
+            get {
+                return ResourceManager.GetString("AddBlankFrameToEndToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Blank Frame To End.
+        /// </summary>
+        public static string AddBlankFrameToEndUndoStateTitle {
+            get {
+                return ResourceManager.GetString("AddBlankFrameToEndUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adds a blank frame to the start of the timeline.
+        /// </summary>
+        public static string AddBlankFrameToStartDescription {
+            get {
+                return ResourceManager.GetString("AddBlankFrameToStartDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Blank Frame to Start.
+        /// </summary>
+        public static string AddBlankFrameToStartToolTip {
+            get {
+                return ResourceManager.GetString("AddBlankFrameToStartToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Blank Frame To Start.
+        /// </summary>
+        public static string AddBlankFrameToStartUndoStateTitle {
+            get {
+                return ResourceManager.GetString("AddBlankFrameToStartUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adds a blank layer above the current layer in the timeline.
+        /// </summary>
+        public static string AddBlankLayerAboveCurrentDescription {
+            get {
+                return ResourceManager.GetString("AddBlankLayerAboveCurrentDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Blank Layer Above Current.
+        /// </summary>
+        public static string AddBlankLayerAboveCurrentToolTip {
+            get {
+                return ResourceManager.GetString("AddBlankLayerAboveCurrentToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Blank Layer Above Current.
+        /// </summary>
+        public static string AddBlankLayerAboveCurrentUndoStateTitle {
+            get {
+                return ResourceManager.GetString("AddBlankLayerAboveCurrentUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adds a blank layer below the current layer in the timeline.
+        /// </summary>
+        public static string AddBlankLayerBelowCurrentDescription {
+            get {
+                return ResourceManager.GetString("AddBlankLayerBelowCurrentDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Blank Layer Below Current.
+        /// </summary>
+        public static string AddBlankLayerBelowCurrentToolTip {
+            get {
+                return ResourceManager.GetString("AddBlankLayerBelowCurrentToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Blank Layer Below Current.
+        /// </summary>
+        public static string AddBlankLayerBelowCurrentUndoStateTitle {
+            get {
+                return ResourceManager.GetString("AddBlankLayerBelowCurrentUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicates the current layer and inserts it above the current layer in the timeline.
+        /// </summary>
+        public static string AddDuplicateLayerAboveCurrentDescription {
+            get {
+                return ResourceManager.GetString("AddDuplicateLayerAboveCurrentDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Duplicate Layer Above Current.
+        /// </summary>
+        public static string AddDuplicateLayerAboveCurrentToolTip {
+            get {
+                return ResourceManager.GetString("AddDuplicateLayerAboveCurrentToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Duplicate Layer Above Current.
+        /// </summary>
+        public static string AddDuplicateLayerAboveCurrentUndoStateTitle {
+            get {
+                return ResourceManager.GetString("AddDuplicateLayerAboveCurrentUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicates the current layer and inserts it below the current layer in the timeline.
+        /// </summary>
+        public static string AddDuplicateLayerBelowCurrentDescription {
+            get {
+                return ResourceManager.GetString("AddDuplicateLayerBelowCurrentDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Duplicate Layer Below Current.
+        /// </summary>
+        public static string AddDuplicateLayerBelowCurrentToolTip {
+            get {
+                return ResourceManager.GetString("AddDuplicateLayerBelowCurrentToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Duplicate Layer Below Current.
+        /// </summary>
+        public static string AddDuplicateLayerBelowCurrentUndoStateTitle {
+            get {
+                return ResourceManager.GetString("AddDuplicateLayerBelowCurrentUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Place a copy of the selected strokes into the frame that comes next in the timeline.
         /// </summary>
         public static string CopySelectedContentsToNextFrameDescription {
@@ -201,6 +417,114 @@ namespace AnimationEditorCore.Properties {
         public static string CutSelectedStrokesToClipboardToolTip {
             get {
                 return ResourceManager.GetString("CutSelectedStrokesToClipboardToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deletes the current layer and all of its contents from the timeline.
+        /// </summary>
+        public static string DeleteActiveLayerDescription {
+            get {
+                return ResourceManager.GetString("DeleteActiveLayerDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Active Layer.
+        /// </summary>
+        public static string DeleteActiveLayerToolTip {
+            get {
+                return ResourceManager.GetString("DeleteActiveLayerToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Active Layer.
+        /// </summary>
+        public static string DeleteActiveLayerUndoStateTitle {
+            get {
+                return ResourceManager.GetString("DeleteActiveLayerUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deletes the current frame and all of its contents from the timeline.
+        /// </summary>
+        public static string DeleteCurrentFrameDescription {
+            get {
+                return ResourceManager.GetString("DeleteCurrentFrameDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Current Frame.
+        /// </summary>
+        public static string DeleteCurrentFrameToolTip {
+            get {
+                return ResourceManager.GetString("DeleteCurrentFrameToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Current Frame.
+        /// </summary>
+        public static string DeleteCurrentFrameUndoStateTitle {
+            get {
+                return ResourceManager.GetString("DeleteCurrentFrameUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicates the current frame and inserts it immediately after the current frame in the timeline.
+        /// </summary>
+        public static string InsertDuplicateFrameAfterCurrentDescription {
+            get {
+                return ResourceManager.GetString("InsertDuplicateFrameAfterCurrentDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert Duplicate Frame After Current.
+        /// </summary>
+        public static string InsertDuplicateFrameAfterCurrentToolTip {
+            get {
+                return ResourceManager.GetString("InsertDuplicateFrameAfterCurrentToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert Duplicate Frame After Current.
+        /// </summary>
+        public static string InsertDuplicateFrameAfterCurrentUndoStateTitle {
+            get {
+                return ResourceManager.GetString("InsertDuplicateFrameAfterCurrentUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicates the current frame and inserts it immediately before the current frame in the timeline.
+        /// </summary>
+        public static string InsertDuplicateFrameBeforeCurrentDescription {
+            get {
+                return ResourceManager.GetString("InsertDuplicateFrameBeforeCurrentDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert Duplicate Frame Before Current.
+        /// </summary>
+        public static string InsertDuplicateFrameBeforeCurrentToolTip {
+            get {
+                return ResourceManager.GetString("InsertDuplicateFrameBeforeCurrentToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert Duplicate Frame Before Current.
+        /// </summary>
+        public static string InsertDuplicateFrameBeforeCurrentUndoStateTitle {
+            get {
+                return ResourceManager.GetString("InsertDuplicateFrameBeforeCurrentUndoStateTitle", resourceCulture);
             }
         }
         
@@ -354,6 +678,96 @@ namespace AnimationEditorCore.Properties {
         public static string PasteStrokesFromClipboardUndoStateTitle {
             get {
                 return ResourceManager.GetString("PasteStrokesFromClipboardUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Increases animation playback to twice its normal speed .
+        /// </summary>
+        public static string SelectPlaybackSpeedDoubleDescription {
+            get {
+                return ResourceManager.GetString("SelectPlaybackSpeedDoubleDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2x Speed.
+        /// </summary>
+        public static string SelectPlaybackSpeedDoubleToolTip {
+            get {
+                return ResourceManager.GetString("SelectPlaybackSpeedDoubleToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slows animation playback to one half its normal speed .
+        /// </summary>
+        public static string SelectPlaybackSpeedHalfDescription {
+            get {
+                return ResourceManager.GetString("SelectPlaybackSpeedHalfDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1/2x Speed.
+        /// </summary>
+        public static string SelectPlaybackSpeedHalfToolTip {
+            get {
+                return ResourceManager.GetString("SelectPlaybackSpeedHalfToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets animation playback to normal speed .
+        /// </summary>
+        public static string SelectPlaybackSpeedNormalDescription {
+            get {
+                return ResourceManager.GetString("SelectPlaybackSpeedNormalDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normal Speed.
+        /// </summary>
+        public static string SelectPlaybackSpeedNormalToolTip {
+            get {
+                return ResourceManager.GetString("SelectPlaybackSpeedNormalToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stops animation playback.
+        /// </summary>
+        public static string StopPlaybackDescription {
+            get {
+                return ResourceManager.GetString("StopPlaybackDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop.
+        /// </summary>
+        public static string StopPlaybackToolTip {
+            get {
+                return ResourceManager.GetString("StopPlaybackToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play/Pause animation playback.
+        /// </summary>
+        public static string TogglePlaybackDescription {
+            get {
+                return ResourceManager.GetString("TogglePlaybackDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play/Pause.
+        /// </summary>
+        public static string TogglePlaybackToolTip {
+            get {
+                return ResourceManager.GetString("TogglePlaybackToolTip", resourceCulture);
             }
         }
     }

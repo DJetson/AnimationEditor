@@ -117,6 +117,102 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddBlankFrameAfterCurrentDescription" xml:space="preserve">
+    <value>Adds a blank frame immediately following the current one in the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Add Blank Frame After Current button</comment>
+  </data>
+  <data name="AddBlankFrameAfterCurrentToolTip" xml:space="preserve">
+    <value>Add Blank Frame After Current</value>
+    <comment>The tooltip text for a button that triggers the AddBlankFrameAfterCurrentCommand</comment>
+  </data>
+  <data name="AddBlankFrameAfterCurrentUndoStateTitle" xml:space="preserve">
+    <value>Add Blank Frame After Current</value>
+    <comment>The title of the Undo Record created by the AddBlankFrameAfterCurrentCommand</comment>
+  </data>
+  <data name="AddBlankFrameBeforeCurrentDescription" xml:space="preserve">
+    <value>Adds a blank frame immediately before the current one in the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Add Blank Frame Before Current button</comment>
+  </data>
+  <data name="AddBlankFrameBeforeCurrentToolTip" xml:space="preserve">
+    <value>Add Blank Frame Before Current</value>
+    <comment>The tooltip text for a button that triggers the AddBlankFrameBeforeCurrentCommand</comment>
+  </data>
+  <data name="AddBlankFrameBeforeCurrentUndoStateTitle" xml:space="preserve">
+    <value>Add Blank Frame Before Current</value>
+    <comment>The title of the Undo Record created by the AddBlankFrameBeforeCurrentCommand</comment>
+  </data>
+  <data name="AddBlankFrameToEndDescription" xml:space="preserve">
+    <value>Adds a blank frame to the end of the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Add Blank Frame to End button</comment>
+  </data>
+  <data name="AddBlankFrameToEndToolTip" xml:space="preserve">
+    <value>Add Blank Frame to End</value>
+    <comment>The tooltip text for a button that triggers the AddBlankFrameToEndCommand</comment>
+  </data>
+  <data name="AddBlankFrameToEndUndoStateTitle" xml:space="preserve">
+    <value>Add Blank Frame To End</value>
+    <comment>The title of the Undo Record created by the AddBlankFrameToEndCommand</comment>
+  </data>
+  <data name="AddBlankFrameToStartDescription" xml:space="preserve">
+    <value>Adds a blank frame to the start of the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Add Blank Frame to Start button</comment>
+  </data>
+  <data name="AddBlankFrameToStartToolTip" xml:space="preserve">
+    <value>Add Blank Frame to Start</value>
+    <comment>The tooltip text for a button that triggers the AddBlankFrameToStartCommand</comment>
+  </data>
+  <data name="AddBlankFrameToStartUndoStateTitle" xml:space="preserve">
+    <value>Add Blank Frame To Start</value>
+    <comment>The title of the Undo Record created by the AddBlankFrameToStartCommand</comment>
+  </data>
+  <data name="AddBlankLayerAboveCurrentDescription" xml:space="preserve">
+    <value>Adds a blank layer above the current layer in the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Add Blank Layer Above Current button</comment>
+  </data>
+  <data name="AddBlankLayerAboveCurrentToolTip" xml:space="preserve">
+    <value>Add Blank Layer Above Current</value>
+    <comment>The tooltip text for a button that triggers the AddBlankLayerAboveCurrentCommand</comment>
+  </data>
+  <data name="AddBlankLayerAboveCurrentUndoStateTitle" xml:space="preserve">
+    <value>Add Blank Layer Above Current</value>
+    <comment>The title of the Undo Record created by the AddBlankLayerAboveCurrentCommand</comment>
+  </data>
+  <data name="AddBlankLayerBelowCurrentDescription" xml:space="preserve">
+    <value>Adds a blank layer below the current layer in the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Add Blank Layer Below Current button</comment>
+  </data>
+  <data name="AddBlankLayerBelowCurrentToolTip" xml:space="preserve">
+    <value>Add Blank Layer Below Current</value>
+    <comment>The tooltip text for a button that triggers the AddBlankLayerBelowCurrentCommand</comment>
+  </data>
+  <data name="AddBlankLayerBelowCurrentUndoStateTitle" xml:space="preserve">
+    <value>Add Blank Layer Below Current</value>
+    <comment>The title of the Undo Record created by the AddBlankLayerBelowCurrentCommand</comment>
+  </data>
+  <data name="AddDuplicateLayerAboveCurrentDescription" xml:space="preserve">
+    <value>Duplicates the current layer and inserts it above the current layer in the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Add Duplicate Layer Above Current button</comment>
+  </data>
+  <data name="AddDuplicateLayerAboveCurrentToolTip" xml:space="preserve">
+    <value>Add Duplicate Layer Above Current</value>
+    <comment>The tooltip text for a button that triggers the AddDuplicateLayerAboveCurrentCommand</comment>
+  </data>
+  <data name="AddDuplicateLayerAboveCurrentUndoStateTitle" xml:space="preserve">
+    <value>Add Duplicate Layer Above Current</value>
+    <comment>The title of the Undo Record created by the AddDuplicateLayerAboveCurrentCommand</comment>
+  </data>
+  <data name="AddDuplicateLayerBelowCurrentDescription" xml:space="preserve">
+    <value>Duplicates the current layer and inserts it below the current layer in the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Add Duplicate Layer Below Current button</comment>
+  </data>
+  <data name="AddDuplicateLayerBelowCurrentToolTip" xml:space="preserve">
+    <value>Add Duplicate Layer Below Current</value>
+    <comment>The tooltip text for a button that triggers the AddDuplicateLayerBelowCurrentCommand</comment>
+  </data>
+  <data name="AddDuplicateLayerBelowCurrentUndoStateTitle" xml:space="preserve">
+    <value>Add Duplicate Layer Below Current</value>
+    <comment>The title of the Undo Record created by the AddDuplicateLayerBelowCurrentCommand</comment>
+  </data>
   <data name="CopySelectedContentsToNextFrameDescription" xml:space="preserve">
     <value>Place a copy of the selected strokes into the frame that comes next in the timeline</value>
     <comment>Status bar message that is displayed when the mouse is over the Copy Strokes To Next Frame button</comment>
@@ -167,7 +263,7 @@
   </data>
   <data name="CopySelectedStrokesToClipboardDescription" xml:space="preserve">
     <value>Copies the selected strokes into the clipboard</value>
-    <comment>Status bar message that is displayed when the moust is over the Copy button</comment>
+    <comment>Status bar message that is displayed when the mouse is over the Copy button</comment>
   </data>
   <data name="CopySelectedStrokesToClipboardToolTip" xml:space="preserve">
     <value>Copy Selected Strokes</value>
@@ -175,11 +271,59 @@
   </data>
   <data name="CutSelectedStrokesToClipboardDescription" xml:space="preserve">
     <value>Cuts the selected strokes into the clipboard</value>
-    <comment>Status bar message that is displayed when the moust is over the Cut button</comment>
+    <comment>Status bar message that is displayed when the mouse is over the Cut button</comment>
   </data>
   <data name="CutSelectedStrokesToClipboardToolTip" xml:space="preserve">
     <value>Cut Selected Strokes</value>
     <comment>The tooltip text for a button that triggers the CutSelectedStrokesToClipboardCommand</comment>
+  </data>
+  <data name="DeleteActiveLayerDescription" xml:space="preserve">
+    <value>Deletes the current layer and all of its contents from the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Delete Active Layer button</comment>
+  </data>
+  <data name="DeleteActiveLayerToolTip" xml:space="preserve">
+    <value>Delete Active Layer</value>
+    <comment>The tooltip text for a button that triggers the DeleteActiveLayerCommand</comment>
+  </data>
+  <data name="DeleteActiveLayerUndoStateTitle" xml:space="preserve">
+    <value>Delete Active Layer</value>
+    <comment>The title of the Undo Record created by the DeleteActiveLayerCommand</comment>
+  </data>
+  <data name="DeleteCurrentFrameDescription" xml:space="preserve">
+    <value>Deletes the current frame and all of its contents from the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Delete Current Frame button</comment>
+  </data>
+  <data name="DeleteCurrentFrameToolTip" xml:space="preserve">
+    <value>Delete Current Frame</value>
+    <comment>The tooltip text for a button that triggers the DeleteCurrentFrameCommand</comment>
+  </data>
+  <data name="DeleteCurrentFrameUndoStateTitle" xml:space="preserve">
+    <value>Delete Current Frame</value>
+    <comment>The title of the Undo Record created by the DeleteCurrentFrameCommand</comment>
+  </data>
+  <data name="InsertDuplicateFrameAfterCurrentDescription" xml:space="preserve">
+    <value>Duplicates the current frame and inserts it immediately after the current frame in the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Insert Duplicate Frame After Current button</comment>
+  </data>
+  <data name="InsertDuplicateFrameAfterCurrentToolTip" xml:space="preserve">
+    <value>Insert Duplicate Frame After Current</value>
+    <comment>The tooltip text for a button that triggers the InsertDuplicateFrameAfterCurrentCommand</comment>
+  </data>
+  <data name="InsertDuplicateFrameAfterCurrentUndoStateTitle" xml:space="preserve">
+    <value>Insert Duplicate Frame After Current</value>
+    <comment>The title of the Undo Record created by the InsertDuplicateFrameAfterCurrentCommand</comment>
+  </data>
+  <data name="InsertDuplicateFrameBeforeCurrentDescription" xml:space="preserve">
+    <value>Duplicates the current frame and inserts it immediately before the current frame in the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Insert Duplicate Frame Before Current button</comment>
+  </data>
+  <data name="InsertDuplicateFrameBeforeCurrentToolTip" xml:space="preserve">
+    <value>Insert Duplicate Frame Before Current</value>
+    <comment>The tooltip text for a button that triggers the InsertDuplicateFrameBeforeCurrentCommand</comment>
+  </data>
+  <data name="InsertDuplicateFrameBeforeCurrentUndoStateTitle" xml:space="preserve">
+    <value>Insert Duplicate Frame Before Current</value>
+    <comment>The title of the Undo Record created by the InsertDuplicateFrameBeforeCurrentCommand</comment>
   </data>
   <data name="MainWindowViewModelDisplayName" xml:space="preserve">
     <value>Animation Editor</value>
@@ -248,5 +392,45 @@
   <data name="PasteStrokesFromClipboardUndoStateTitle" xml:space="preserve">
     <value>Paste Into Frame</value>
     <comment>The title of the Undo Record created by the PasteStrokesFromClipboardCommand</comment>
+  </data>
+  <data name="SelectPlaybackSpeedDoubleDescription" xml:space="preserve">
+    <value>Increases animation playback to twice its normal speed </value>
+    <comment>Status bar message that is displayed when the mouse is over the Select Playback Speed Double button</comment>
+  </data>
+  <data name="SelectPlaybackSpeedDoubleToolTip" xml:space="preserve">
+    <value>2x Speed</value>
+    <comment>The tooltip text for a button that triggers the SelectPlaybackSpeedDoubleCommand</comment>
+  </data>
+  <data name="SelectPlaybackSpeedHalfDescription" xml:space="preserve">
+    <value>Slows animation playback to one half its normal speed </value>
+    <comment>Status bar message that is displayed when the mouse is over the Select Playback Speed Half button</comment>
+  </data>
+  <data name="SelectPlaybackSpeedHalfToolTip" xml:space="preserve">
+    <value>1/2x Speed</value>
+    <comment>The tooltip text for a button that triggers the SelectPlaybackSpeedHalfCommand</comment>
+  </data>
+  <data name="SelectPlaybackSpeedNormalDescription" xml:space="preserve">
+    <value>Sets animation playback to normal speed </value>
+    <comment>Status bar message that is displayed when the mouse is over the Select Playback Speed Normal button</comment>
+  </data>
+  <data name="SelectPlaybackSpeedNormalToolTip" xml:space="preserve">
+    <value>Normal Speed</value>
+    <comment>The tooltip text for a button that triggers the SelectPlaybackSpeedNormalCommand</comment>
+  </data>
+  <data name="StopPlaybackDescription" xml:space="preserve">
+    <value>Stops animation playback</value>
+    <comment>Status bar message that is displayed when the mouse is over the Stop Playback button</comment>
+  </data>
+  <data name="StopPlaybackToolTip" xml:space="preserve">
+    <value>Stop</value>
+    <comment>The tooltip text for a button that triggers the StopPlaybackCommand</comment>
+  </data>
+  <data name="TogglePlaybackDescription" xml:space="preserve">
+    <value>Play/Pause animation playback</value>
+    <comment>Status bar message that is displayed when the mouse is over the Toggle Playback button</comment>
+  </data>
+  <data name="TogglePlaybackToolTip" xml:space="preserve">
+    <value>Play/Pause</value>
+    <comment>The tooltip text for a button that triggers the TogglePlaybackCommand</comment>
   </data>
 </root>

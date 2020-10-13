@@ -1,4 +1,5 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace AnimationEditorCore.Commands.Timeline
 {
     public class StopPlaybackCommand : RequeryBase
     {
+        public override string Description => Resources.StopPlaybackDescription;
+        public override string ToolTip => Resources.StopPlaybackToolTip;
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is TimelineViewModel Parameter))

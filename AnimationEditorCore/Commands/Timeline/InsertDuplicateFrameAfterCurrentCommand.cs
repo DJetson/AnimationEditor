@@ -1,4 +1,5 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,9 @@ namespace AnimationEditorCore.Commands.Timeline
 {
     public class InsertDuplicateFrameAfterCurrentCommand : TimelineCommandBase
     {
+        public override string Description => Resources.InsertDuplicateFrameAfterCurrentDescription;
+        public override string ToolTip => Resources.InsertDuplicateFrameAfterCurrentToolTip;
+        public override string UndoStateTitle => Resources.InsertDuplicateFrameAfterCurrentUndoStateTitle;
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is TimelineViewModel Parameter))

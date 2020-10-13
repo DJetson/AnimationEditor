@@ -1,4 +1,5 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,9 @@ namespace AnimationEditorCore.Commands.Timeline
 {
     public class AddBlankLayerBelowCurrentCommand : RequeryBase
     {
+        public override string Description => Resources.AddBlankLayerBelowCurrentDescription;
+        public override string ToolTip => Resources.AddBlankLayerBelowCurrentToolTip;
+        public override string UndoStateTitle => Resources.AddBlankLayerBelowCurrentUndoStateTitle;
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is TimelineViewModel Parameter))

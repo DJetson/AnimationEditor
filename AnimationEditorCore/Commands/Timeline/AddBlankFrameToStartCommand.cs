@@ -1,4 +1,5 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,9 @@ namespace AnimationEditorCore.Commands.Timeline
 {
     public class AddBlankFrameToStartCommand : TimelineCommandBase
     {
+        public override string Description => Resources.AddBlankFrameToStartDescription;
+        public override string ToolTip => Resources.AddBlankFrameToStartToolTip;
+        public override string UndoStateTitle => Resources.AddBlankFrameToStartUndoStateTitle; 
         public override bool CanExecute(object parameter)
         {
 

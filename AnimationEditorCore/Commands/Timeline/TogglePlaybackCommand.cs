@@ -1,4 +1,5 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.Utilities;
 using AnimationEditorCore.ViewModels;
 using System.Linq;
@@ -7,6 +8,8 @@ namespace AnimationEditorCore.Commands.Timeline
 {
     public class TogglePlaybackCommand : RequeryBase
     {
+        public override string Description => Resources.TogglePlaybackDescription;
+        public override string ToolTip => Resources.TogglePlaybackToolTip;
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is TimelineViewModel Parameter))

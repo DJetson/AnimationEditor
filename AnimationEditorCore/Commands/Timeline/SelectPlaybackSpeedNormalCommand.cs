@@ -1,4 +1,5 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,8 @@ namespace AnimationEditorCore.Commands.Timeline
 {
     public class SelectPlaybackSpeedNormalCommand : RequeryBase
     {
+        public override string Description => Resources.SelectPlaybackSpeedNormalDescription;
+        public override string ToolTip => Resources.SelectPlaybackSpeedNormalToolTip;
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is TimelineViewModel Parameter))

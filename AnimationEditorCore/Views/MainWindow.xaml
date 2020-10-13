@@ -96,6 +96,7 @@
                     <Style x:Key="{x:Static ToolBar.ButtonStyleKey}" TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButtonStyle}">
                         <Style.Setters>
                             <Setter Property="Width" Value="25"/>
+                            <Setter Property="ToolTip" Value="{Binding Command.ToolTip, RelativeSource={RelativeSource Self}}"/>
                         </Style.Setters>
                     </Style>
                 </ToolBarTray.Resources>
@@ -109,9 +110,9 @@
                     <Button Content="{StaticResource UndoIcon}" Command="{StaticResource Undo}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
                     <Button Content="{StaticResource RedoIcon}" Command="{StaticResource Redo}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace}"/>
                     <Separator/>
-                    <Button Content="{StaticResource CutIcon}" Command="{StaticResource CutSelectedStrokesToClipboard}" ToolTip="{Binding ToolTip, Source={StaticResource CutSelectedStrokesToClipboard}}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
-                    <Button Content="{StaticResource Duplicate}" Command="{StaticResource CopySelectedStrokesToClipboard}" ToolTip="{Binding ToolTip, Source={StaticResource CopySelectedStrokesToClipboard}}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
-                    <Button Content="{StaticResource Paste}" Command="{StaticResource PasteStrokesFromClipboard}" ToolTip="{Binding ToolTip, Source={StaticResource PasteStrokesFromClipboard}}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
+                    <Button Content="{StaticResource CutIcon}" Command="{StaticResource CutSelectedStrokesToClipboard}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
+                    <Button Content="{StaticResource Duplicate}" Command="{StaticResource CopySelectedStrokesToClipboard}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
+                    <Button Content="{StaticResource Paste}" Command="{StaticResource PasteStrokesFromClipboard}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
                 </ToolBar>
             </ToolBarTray>
 
