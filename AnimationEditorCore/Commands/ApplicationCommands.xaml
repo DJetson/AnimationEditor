@@ -44,6 +44,8 @@
     <Commands:UndoCommand x:Key="Undo" DisplayName="Undo"/>
     <Commands:RedoCommand x:Key="Redo" DisplayName="Redo"/>
     <Commands:SelectToolCommand x:Key="SelectTool" DisplayName="Select Tool"/>
+    <Commands:SetStatusBarMessageCommand x:Key="SetStatusBarMessage"/>
+    <Commands:ClearStatusBarMessageCommand x:Key="ClearStatusBarMessage"/>
     <Commands:NavigateToFirstFrameCommand x:Key="NavigateToFirstFrame" DisplayName="Navigate To First Frame"/>
     <Commands:NavigateToPreviousFrameCommand x:Key="NavigateToPreviousFrame" DisplayName="Navigate To Previous Frame"/>
     <Commands:NavigateToNextFrameCommand x:Key="NavigateToNextFrame" DisplayName="Navigate To Next Frame"/>

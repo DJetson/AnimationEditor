@@ -3,8 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:p="clr-namespace:AnimationEditorCore.Properties"
         xmlns:Views="clr-namespace:AnimationEditorCore.Views"
+        xmlns:Utilities="clr-namespace:AnimationEditorCore.Utilities"
         mc:Ignorable="d"
         Title="Animation Editor"
         WindowState="Maximized"
@@ -33,20 +35,17 @@
         <KeyBinding Gesture="CTRL+OemPeriod" Command="{StaticResource NavigateToLastFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
         <KeyBinding Gesture="Space" Command="{StaticResource TogglePlayback}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
         <KeyBinding Gesture="CTRL+Space" Command="{StaticResource StopPlayback}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
-        <KeyBinding Gesture="CTRL+C" Command="{StaticResource CopySelectedStrokesToClipboard}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.LayerViewModel.TimelineViewModel}"/>
-        <KeyBinding Gesture="CTRL+X" Command="{StaticResource CutSelectedStrokesToClipboard}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.LayerViewModel.TimelineViewModel}"/>
-        <KeyBinding Gesture="CTRL+V" Command="{StaticResource PasteStrokesFromClipboard}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.LayerViewModel.TimelineViewModel}"/>
+        <KeyBinding Gesture="CTRL+C" Command="{StaticResource CopySelectedStrokesToClipboard}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
+        <KeyBinding Gesture="CTRL+X" Command="{StaticResource CutSelectedStrokesToClipboard}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
+        <KeyBinding Gesture="CTRL+V" Command="{StaticResource PasteStrokesFromClipboard}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
     </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!--Menus and Toolbars-->
             <RowDefinition Height="3*"/>
-            <!--Workspace Manager View-->
             <RowDefinition Height="5"/>
-            <!--GridSplitter-->
             <RowDefinition Height="*" MinHeight="120"/>
-            <!--Timeline-->
+            <RowDefinition Height="25" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -138,5 +137,8 @@
         <!--Workspace History GridSplitter-->
         <GridSplitter Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="1" Focusable="False" Grid.Row="1" Grid.RowSpan="3" HorizontalAlignment="Stretch" Grid.Column="2" Width="5" VerticalAlignment="Stretch"/>
         <Views:WorkspaceHistoryView Grid.Column="3" Grid.Row="1" Grid.RowSpan="3"  DataContext="{Binding WorkspaceManager.SelectedWorkspace.WorkspaceHistoryViewModel}" />
+        <StatusBar Grid.Row="4" Grid.ColumnSpan="4" Background="LightGray" >
+            <StatusBarItem Content="{Binding CurrentMessage, Source={x:Static Utilities:StatusBarMessaging.Instance}}"/>
+        </StatusBar>
     </Grid>
 </Window>
