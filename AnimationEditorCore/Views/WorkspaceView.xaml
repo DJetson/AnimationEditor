@@ -7,15 +7,7 @@
              xmlns:Views="clr-namespace:AnimationEditorCore.Views"
              mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Border x:Name="ZoomableFrame" Grid.Row="0" Grid.Column="1" BorderBrush="DarkGray" BorderThickness="1" >
+        <Border x:Name="ZoomableFrame"  BorderBrush="DarkGray" BorderThickness="1" >
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonDown">
                     <i:InvokeCommandAction Command="{Binding RequestBeginZoom}" CommandParameter="{Binding ElementName=ZoomableFrame}"/>
@@ -49,13 +41,16 @@
                 </Grid>
             </ScrollViewer>
         </Border>
-        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+        <!--<GridSplitter Grid.Row="1" ResizeDirection="Rows" Height="5" Grid.ColumnSpan="2" />-->
+        <!--<Grid Grid.Row="1" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Views:TimelineTools Grid.Row="0" DataContext="{Binding TimelineViewModel}"/>
             <Views:TimelineView Grid.Row="1" DataContext="{Binding TimelineViewModel}"/>
-        </Grid>
+        </Grid>-->
+        <!--<GridSplitter Grid.Column="1" ResizeDirection="Columns" Width="5" Grid.RowSpan="3"/>-->
+        <!--<Views:WorkspaceHistoryView Grid.Column="2" Grid.RowSpan="3" HorizontalAlignment="Stretch" DataContext="{Binding WorkspaceHistoryViewModel}" />-->
     </Grid>
 </UserControl>

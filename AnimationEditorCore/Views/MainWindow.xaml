@@ -33,24 +33,35 @@
         <KeyBinding Gesture="CTRL+OemPeriod" Command="{StaticResource NavigateToLastFrame}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
         <KeyBinding Gesture="Space" Command="{StaticResource TogglePlayback}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
         <KeyBinding Gesture="CTRL+Space" Command="{StaticResource StopPlayback}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
-        <KeyBinding Gesture="CTRL+C" Command="{StaticResource CopySelectedStrokesToClipboard}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
-        <KeyBinding Gesture="CTRL+X" Command="{StaticResource CutSelectedStrokesToClipboard}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
-        <KeyBinding Gesture="CTRL+V" Command="{StaticResource PasteStrokesFromClipboard}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>
+        <KeyBinding Gesture="CTRL+C" Command="{StaticResource CopySelectedStrokesToClipboard}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.LayerViewModel.TimelineViewModel}"/>
+        <KeyBinding Gesture="CTRL+X" Command="{StaticResource CutSelectedStrokesToClipboard}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.LayerViewModel.TimelineViewModel}"/>
+        <KeyBinding Gesture="CTRL+V" Command="{StaticResource PasteStrokesFromClipboard}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.LayerViewModel.TimelineViewModel}"/>
     </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/> <!--Menus and Toolbars-->
+            <RowDefinition Height="3*"/> <!--Workspace Manager View-->
+            <RowDefinition Height="5"/> <!--GridSplitter-->
+            <RowDefinition Height="*" MinHeight="120"/> <!--Timeline-->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/> <!--Editor Tools-->
+            <ColumnDefinition Width="4*"/> <!--Workspace Manager View-->
+            <ColumnDefinition Width="5"/> <!--GridSplitter-->
+            <ColumnDefinition Width="*" MinWidth="200"/> <!--Workspace History View-->
         </Grid.ColumnDefinitions>
-        <InkCanvas x:Name="renderCanvas" Grid.ColumnSpan="3" Grid.RowSpan="4" Grid.Column="0" Grid.Row="0"/>
-        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+        <!--This is the Animation Playback View. It hides behind everything else and then when playback is 
+            activated, the stuff in front of it is hidden.-->
+        <InkCanvas x:Name="renderCanvas" Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" Grid.ColumnSpan="4"/>
+
+        <Grid Grid.ColumnSpan="4">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+        <!--File Menu-->
+        <Menu Grid.Row="0" HorizontalAlignment="Stretch">
             <MenuItem Header="File">
                 <MenuItem Header="New" Command="{StaticResource CreateNewWorkspace}" CommandParameter="{Binding WorkspaceManager}"/>
                 <MenuItem Header="Open" Command="{StaticResource OpenWorkspace}" CommandParameter="{Binding WorkspaceManager}"/>
@@ -70,7 +81,9 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
-        <ToolBarTray Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Background="WhiteSmoke">
+
+        <!--Application Toolbar-->
+        <ToolBarTray Grid.Row="1" Background="WhiteSmoke">
             <ToolBarTray.Resources>
                 <Style x:Key="{x:Static ToolBar.ButtonStyleKey}" TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButtonStyle}">
                     <Style.Setters>
@@ -93,8 +106,28 @@
                 <Button Content="{StaticResource Paste}" Command="{StaticResource PasteStrokesFromClipboard}" CommandParameter="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
             </ToolBar>
         </ToolBarTray>
-        <Views:EditorToolSettings Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" DataContext="{Binding EditorToolsManager}"/>
-        <Views:EditorToolsView Grid.Column="0" Grid.Row="3" DataContext="{Binding EditorToolsManager}"/>
-        <Views:WorkspaceManagerView Grid.Column="1" Grid.Row="3" DataContext="{Binding WorkspaceManager}"/>
+        
+        <Views:EditorToolSettings Grid.Row="2" DataContext="{Binding EditorToolsManager}"/>
+        </Grid>
+
+        <Views:EditorToolsView Grid.Column="0" Grid.Row="1" Grid.RowSpan="3" DataContext="{Binding EditorToolsManager}"/>
+        
+        <Views:WorkspaceManagerView Grid.Column="1" Grid.Row="1" DataContext="{Binding WorkspaceManager}"/>
+
+        <!--Timeline GridSplitter-->
+        <GridSplitter Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="1" Grid.Row="2" Focusable="False" VerticalAlignment="Stretch" Grid.Column="1" Height="5" HorizontalAlignment="Stretch" ResizeBehavior="PreviousAndNext" ResizeDirection="Rows"/>
+
+        <!--Timeline-->
+        <Grid Grid.Row="3" Grid.Column="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Views:TimelineTools Grid.Row="0" DataContext="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
+            <Views:TimelineView Grid.Row="1"  DataContext="{Binding WorkspaceManager.SelectedWorkspace.TimelineViewModel}"/>
+        </Grid>
+        <!--Workspace History GridSplitter-->
+        <GridSplitter Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="1" Focusable="False" Grid.Row="1" Grid.RowSpan="3" HorizontalAlignment="Stretch" Grid.Column="2" Width="5" VerticalAlignment="Stretch"/>
+        <Views:WorkspaceHistoryView Grid.Column="3" Grid.Row="1" Grid.RowSpan="3"  DataContext="{Binding WorkspaceManager.SelectedWorkspace.WorkspaceHistoryViewModel}" />
     </Grid>
 </Window>

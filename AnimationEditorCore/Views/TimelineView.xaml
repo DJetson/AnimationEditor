@@ -30,8 +30,8 @@
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
-                <Border Grid.Column="1" Width="{Binding ScrubberLength}" Padding="11,0,0,0">
-                    <Slider x:Name="FrameScrubber" 
+                <Border Grid.Column="1" Width="{Binding ScrubberLength}" Padding="11,0,0,0" Margin="20,0,0,0" Focusable="False">
+                    <Slider x:Name="FrameScrubber" Focusable="False"
                             Grid.Column="1" HorizontalAlignment="Stretch" 
                             IsSnapToTickEnabled="True" TickFrequency="1" 
                             TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight" 
@@ -58,6 +58,44 @@
                 </Border>
             </Grid>
             <ListBox Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding SortedLayers}" SelectedItem="{Binding ActiveLayer, Mode=TwoWay}">
+                <ListBox.Resources>
+                    <Style TargetType="{x:Type ScrollViewer}">
+                        <Setter Property="OverridesDefaultStyle" Value="True"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <ScrollContentPresenter Grid.Column="1"/>
+
+                                        <ScrollBar Name="PART_VerticalScrollBar"
+                        Value="{TemplateBinding VerticalOffset}"
+                        Maximum="{TemplateBinding ScrollableHeight}"
+                        ViewportSize="{TemplateBinding ViewportHeight}"
+                        Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                                        <ScrollBar Name="PART_HorizontalScrollBar"
+                        Orientation="Horizontal"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Value="{TemplateBinding HorizontalOffset}"
+                        Maximum="{TemplateBinding ScrollableWidth}"
+                        ViewportSize="{TemplateBinding ViewportWidth}"
+                        Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.Resources>
                 <ListBox.ItemTemplate>
                     <ItemContainerTemplate>
                         <Grid>
@@ -108,7 +146,7 @@
                                 </ToggleButton>
                                 <Button Margin="0,0,15,0" Background="Transparent" Width="25" Height="25" Padding="2" Grid.Column="3" Style="{StaticResource ImageButtonStyle}" Content="{StaticResource DetailsIcon}" Command="{StaticResource OpenLayerProperties}" CommandParameter="{Binding }"/>
                             </Grid>
-                            <ListBox x:Name="TimelineListBox" IsHitTestVisible="False" Grid.Column="1" ItemsSource="{Binding Frames}" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                            <ListBox x:Name="TimelineListBox" Margin="0,0,16,0" IsHitTestVisible="False" Grid.Column="1" ItemsSource="{Binding Frames}" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                                 <ListBox.Style>
                                     <Style TargetType="{x:Type ListBox}">
                                         <Style.Setters>

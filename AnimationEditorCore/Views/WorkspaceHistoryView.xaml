@@ -20,7 +20,10 @@
             </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type ViewModels:WorkspaceHistoryItemViewModel}">
-                    <Button Content="{Binding State.DisplayName}">
+                    <Button>
+                        <Button.Content>
+                            <TextBlock Text="{Binding State.DisplayName}" TextTrimming="WordEllipsis"/>
+                        </Button.Content>
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Style.Setters>
