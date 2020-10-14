@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnimationEditorCore.Commands.BaseClasses;
+using System;
 
 namespace AnimationEditorCore.BaseClasses
 {

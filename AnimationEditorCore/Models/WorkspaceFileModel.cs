@@ -23,6 +23,9 @@ namespace AnimationEditorCore.Models
 
         public void SaveWorkspaceFile(string filepath)
         {
+            if (filepath == null)
+                return;
+
             JsonSerializerOptions = new System.Text.Json.JsonSerializerOptions();
             JsonSerializerOptions.Converters.Add(new Models.StrokeCollectionConverter());
 

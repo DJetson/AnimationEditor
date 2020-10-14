@@ -2,25 +2,30 @@
 using System;
 using System.Windows.Input;
 
-namespace AnimationEditorCore.BaseClasses
+namespace AnimationEditorCore.Commands.BaseClasses
 {
     public abstract class RequeryBase : ViewModelBase, ICommand
     {
+        protected string _UndoStateTitle;
         public virtual string UndoStateTitle
         {
-            get;
+            get { return _UndoStateTitle; }
+            set { _UndoStateTitle = value; NotifyPropertyChanged(); }
         }
 
+        protected string _Description;
         public virtual string Description
         {
-            get;
+            get { return _Description; }
+            set { _Description = value; NotifyPropertyChanged(); }
         }
 
+        protected string _ToolTip;
         public virtual string ToolTip
         {
-            get;
+            get { return _ToolTip; }
+            set { _ToolTip = value; NotifyPropertyChanged(); }
         }
-
 
         public event EventHandler CanExecuteChanged
         {

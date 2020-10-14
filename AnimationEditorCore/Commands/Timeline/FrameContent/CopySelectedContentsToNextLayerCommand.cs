@@ -1,11 +1,11 @@
-﻿using AnimationEditorCore.BaseClasses;
-using AnimationEditorCore.ViewModels;
+﻿using AnimationEditorCore.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Ink;
 using System.Linq;
 using AnimationEditorCore.Properties;
+using AnimationEditorCore.Commands.BaseClasses;
 
 namespace AnimationEditorCore.Commands.Timeline.FrameContent
 {

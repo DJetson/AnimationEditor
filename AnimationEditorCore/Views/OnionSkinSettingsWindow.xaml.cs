@@ -2,9 +2,9 @@
 
 namespace AnimationEditorCore.Views
 {
-    public partial class OnionSkinSettingsWindow : Window
+    public partial class OnionskinSettingsWindow : Window
     {
-        public OnionSkinSettingsWindow()
+        public OnionskinSettingsWindow()
         {
             InitializeComponent();
         }

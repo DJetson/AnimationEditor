@@ -819,18 +819,18 @@ namespace AnimationEditorCore.Properties {
         /// <summary>
         ///   Looks up a localized string similar to View or modify the animation properties.
         /// </summary>
-        public static string OpenAnimationPropertiesWindowDescription {
+        public static string OpenAnimationPropertiesDescription {
             get {
-                return ResourceManager.GetString("OpenAnimationPropertiesWindowDescription", resourceCulture);
+                return ResourceManager.GetString("OpenAnimationPropertiesDescription", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Open Animation Properties.
         /// </summary>
-        public static string OpenAnimationPropertiesWindowToolTip {
+        public static string OpenAnimationPropertiesToolTip {
             get {
-                return ResourceManager.GetString("OpenAnimationPropertiesWindowToolTip", resourceCulture);
+                return ResourceManager.GetString("OpenAnimationPropertiesToolTip", resourceCulture);
             }
         }
         
@@ -849,6 +849,24 @@ namespace AnimationEditorCore.Properties {
         public static string OpenLayerPropertiesToolTip {
             get {
                 return ResourceManager.GetString("OpenLayerPropertiesToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View or modify the onionskin settings .
+        /// </summary>
+        public static string OpenOnionskinSettingsDescription {
+            get {
+                return ResourceManager.GetString("OpenOnionskinSettingsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Onionskin Settings.
+        /// </summary>
+        public static string OpenOnionskinSettingsToolTip {
+            get {
+                return ResourceManager.GetString("OpenOnionskinSettingsToolTip", resourceCulture);
             }
         }
         
@@ -984,24 +1002,6 @@ namespace AnimationEditorCore.Properties {
         public static string SelectPlaybackSpeedNormalToolTip {
             get {
                 return ResourceManager.GetString("SelectPlaybackSpeedNormalToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to View or modify the onionskin settings .
-        /// </summary>
-        public static string ShowOnionSkinSettingsWindowDescription {
-            get {
-                return ResourceManager.GetString("ShowOnionSkinSettingsWindowDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show Onionskin Settings.
-        /// </summary>
-        public static string ShowOnionSkinSettingsWindowToolTip {
-            get {
-                return ResourceManager.GetString("ShowOnionSkinSettingsWindowToolTip", resourceCulture);
             }
         }
         

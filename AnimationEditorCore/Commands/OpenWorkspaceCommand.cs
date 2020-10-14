@@ -1,4 +1,4 @@
-﻿using AnimationEditorCore.BaseClasses;
+﻿using AnimationEditorCore.Commands.BaseClasses;
 using AnimationEditorCore.Interfaces;
 using AnimationEditorCore.Models;
 using AnimationEditorCore.Properties;

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AnimationEditorCore.Commands.Timeline
+namespace AnimationEditorCore.Commands.BaseClasses
 {
     public abstract class TimelineCommandBase : RequeryBase
     {

@@ -453,13 +453,13 @@
     <value>Onionskin Settings</value>
     <comment>This gets assigned to the DisplayName property of the OnionSkinSettingsViewModel class</comment>
   </data>
-  <data name="OpenAnimationPropertiesWindowDescription" xml:space="preserve">
+  <data name="OpenAnimationPropertiesDescription" xml:space="preserve">
     <value>View or modify the animation properties</value>
-    <comment>Status bar message that is displayed when the mouse is over the Open Animation Properties Window button</comment>
+    <comment>Status bar message that is displayed when the mouse is over the Open Animation Properties button</comment>
   </data>
-  <data name="OpenAnimationPropertiesWindowToolTip" xml:space="preserve">
+  <data name="OpenAnimationPropertiesToolTip" xml:space="preserve">
     <value>Open Animation Properties</value>
-    <comment>The tooltip text for a button that triggers the OpenAnimationPropertiesWindowCommand</comment>
+    <comment>The tooltip text for a button that triggers the OpenAnimationPropertiesCommand</comment>
   </data>
   <data name="OpenLayerPropertiesDescription" xml:space="preserve">
     <value>View or modify layer properties</value>
@@ -468,6 +468,14 @@
   <data name="OpenLayerPropertiesToolTip" xml:space="preserve">
     <value>Open Layer Properties</value>
     <comment>The tooltip text for a button that triggers the OpenLayerPropertiesCommand</comment>
+  </data>
+  <data name="OpenOnionskinSettingsDescription" xml:space="preserve">
+    <value>View or modify the onionskin settings </value>
+    <comment>Status bar message that is displayed when the mouse is over the Open Onionskin Settings button</comment>
+  </data>
+  <data name="OpenOnionskinSettingsToolTip" xml:space="preserve">
+    <value>Show Onionskin Settings</value>
+    <comment>The tooltip text for a button that triggers the OpenOnionskinSettingsCommand</comment>
   </data>
   <data name="OpenWorkspaceDescription" xml:space="preserve">
     <value>Open an existing animation workspace</value>
@@ -528,14 +536,6 @@
   <data name="SelectPlaybackSpeedNormalToolTip" xml:space="preserve">
     <value>Normal Speed</value>
     <comment>The tooltip text for a button that triggers the SelectPlaybackSpeedNormalCommand</comment>
-  </data>
-  <data name="ShowOnionSkinSettingsWindowDescription" xml:space="preserve">
-    <value>View or modify the onionskin settings </value>
-    <comment>Status bar message that is displayed when the mouse is over the Show Onion Skin Settings Window button</comment>
-  </data>
-  <data name="ShowOnionSkinSettingsWindowToolTip" xml:space="preserve">
-    <value>Show Onionskin Settings</value>
-    <comment>The tooltip text for a button that triggers the ShowOnionSkinSettingsWindowCommand</comment>
   </data>
   <data name="StopPlaybackDescription" xml:space="preserve">
     <value>Stops animation playback</value>

@@ -82,7 +82,7 @@
                 </MenuItem>
                 <MenuItem Header="View">
                     <MenuItem Header="Onionskin">
-                        <MenuItem Header="Onionskin Settings..." Command="{StaticResource ShowOnionSkinSettingsWindow}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+                        <MenuItem Header="Onionskin Settings..." Command="{StaticResource OpenOnionskinSettings}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
                         <MenuItem Header="Show Onionskins on Preceding Frames" IsCheckable="True" IsChecked="{Binding IsShowPreviousOnionSkinsEnabled, Source={x:Static p:Settings.Default}}"/>
                         <MenuItem Header="Show Onionskins on Succeeding Frames" IsCheckable="True" IsChecked="{Binding IsShowNextOnionSkinsEnabled, Source={x:Static p:Settings.Default}}"/>
                     </MenuItem>
