@@ -1,4 +1,5 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Commands;
 using AnimationEditorCore.Properties;
 using System.Windows;
 

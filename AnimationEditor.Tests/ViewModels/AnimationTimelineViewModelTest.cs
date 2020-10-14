@@ -10,6 +10,7 @@ namespace AnimationEditorCore.ViewModels
         public void AddBlankFrame_SelectsNewFrame()
         {
             var workspaceManager = new WorkspaceManagerViewModel();
+            workspaceManager.CreateNewWorkspace(false);
             var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
             Assert.AreEqual(0, timeline.SelectedFrameIndex, "original: selected frame index");
             //Assert.IsTrue(timeline.AnimationPlaybackViewModel.IsPlaybackActive);
@@ -22,6 +23,7 @@ namespace AnimationEditorCore.ViewModels
         public void AddBlankFrame_AddsExactlyOneLayer()
         {
             var workspaceManager = new WorkspaceManagerViewModel();
+            workspaceManager.CreateNewWorkspace(false);
             var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
 
             timeline.AddBlankFrameToTimeline(timeline.SelectedFrameIndex + 1);
@@ -33,6 +35,7 @@ namespace AnimationEditorCore.ViewModels
         public void AddBlankFrame_ActivatesLayerInNewFrame()
         {
             var workspaceManager = new WorkspaceManagerViewModel();
+            workspaceManager.CreateNewWorkspace(false);
             var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
 
             timeline.AddBlankFrameToTimeline(timeline.SelectedFrameIndex + 1);
@@ -44,6 +47,7 @@ namespace AnimationEditorCore.ViewModels
         public void AddBlankFrame_MakesLayerInNewFrameVisible()
         {
             var workspaceManager = new WorkspaceManagerViewModel();
+            workspaceManager.CreateNewWorkspace(false);
             var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
 
             timeline.AddBlankFrameToTimeline(timeline.SelectedFrameIndex + 1);
@@ -55,6 +59,7 @@ namespace AnimationEditorCore.ViewModels
         public void AddBlankFrame_SetsLayerName()
         {
             var workspaceManager = new WorkspaceManagerViewModel();
+            workspaceManager.CreateNewWorkspace(false);
             var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
 
             timeline.AddBlankFrameToTimeline(timeline.SelectedFrameIndex + 1);
@@ -66,6 +71,7 @@ namespace AnimationEditorCore.ViewModels
         public void AddBlankFrame_Previous_UpdatesAllFrameOrders()
         {
             var workspaceManager = new WorkspaceManagerViewModel();
+            workspaceManager.CreateNewWorkspace(false);
             var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
             timeline.AddBlankFrameToTimeline(timeline.SelectedFrameIndex);
 
@@ -79,6 +85,7 @@ namespace AnimationEditorCore.ViewModels
         public void RemoveFrame_UpdatesFrameOrdinals()
         {
             var workspaceManager = new WorkspaceManagerViewModel();
+            workspaceManager.CreateNewWorkspace(false);
             var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
             timeline.AddBlankFrameToTimeline(timeline.SelectedFrameIndex);
             timeline.AddBlankFrameToTimeline(timeline.SelectedFrameIndex + 1);
@@ -98,7 +105,7 @@ namespace AnimationEditorCore.ViewModels
         {
             var workspaceManager = new WorkspaceManagerViewModel();
 
-            var openCommand = new Commands.OpenWorkspaceCommand();
+            var openCommand = new Commands.Workspace.OpenWorkspaceCommand();
             Assert.IsTrue(openCommand.CanExecute(workspaceManager));
            
             openCommand.OpenWorkspaceFile("dot.anws", workspaceManager);
@@ -121,7 +128,7 @@ namespace AnimationEditorCore.ViewModels
         {
             var workspaceManager = new WorkspaceManagerViewModel();
 
-            var openCommand = new Commands.OpenWorkspaceCommand();
+            var openCommand = new Commands.Workspace.OpenWorkspaceCommand();
             Assert.IsTrue(openCommand.CanExecute(workspaceManager));
 
             openCommand.OpenWorkspaceFile("dot.anws", workspaceManager);

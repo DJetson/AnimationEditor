@@ -1,4 +1,5 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

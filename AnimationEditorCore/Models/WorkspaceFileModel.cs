@@ -1,4 +1,5 @@
 ﻿using AnimationEditorCore.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -23,7 +24,7 @@ namespace AnimationEditorCore.Models
 
         public void SaveWorkspaceFile(string filepath)
         {
-            if (filepath == null)
+            if (String.IsNullOrWhiteSpace(filepath))
                 return;
 
             JsonSerializerOptions = new System.Text.Json.JsonSerializerOptions();

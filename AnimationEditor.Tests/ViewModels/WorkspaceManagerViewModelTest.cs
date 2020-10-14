@@ -33,6 +33,7 @@ namespace AnimationEditorCore.ViewModels
         public void AddExistingWorkspace_DoesNotChangeWorkspaces()
         {
             var workspaceManager = new WorkspaceManagerViewModel();
+            workspaceManager.CreateNewWorkspace(false);
             var workspaces = workspaceManager.Workspaces.ToArray();
             var workspace = workspaces.First();
 
@@ -62,9 +63,10 @@ namespace AnimationEditorCore.ViewModels
         public void Open_SelectsNewlyOpenedWorkspace()
         {
             var workspaceManager = new WorkspaceManagerViewModel();
+            workspaceManager.CreateNewWorkspace(false);
             Assert.AreEqual("Untitled*", workspaceManager.SelectedWorkspace.DisplayName, "initial workspace display name");
 
-            var openCommand = new Commands.OpenWorkspaceCommand();
+            var openCommand = new Commands.Workspace.OpenWorkspaceCommand();
             Assert.IsTrue(openCommand.CanExecute(workspaceManager));
 
             openCommand.OpenWorkspaceFile("dot.anws", workspaceManager);
@@ -76,7 +78,7 @@ namespace AnimationEditorCore.ViewModels
         public void Open_SetsActiveLayer()
         {
             var workspaceManager = new WorkspaceManagerViewModel();
-            var openCommand = new Commands.OpenWorkspaceCommand();
+            var openCommand = new Commands.Workspace.OpenWorkspaceCommand();
             Assert.IsTrue(openCommand.CanExecute(workspaceManager));
 
             openCommand.OpenWorkspaceFile("dot.anws", workspaceManager);
@@ -89,7 +91,7 @@ namespace AnimationEditorCore.ViewModels
         public void Open_MoveStroke_AddsUndoRecord()
         {
             var workspaceManager = new WorkspaceManagerViewModel();
-            new Commands.OpenWorkspaceCommand().OpenWorkspaceFile("dot.anws", workspaceManager);
+            new Commands.Workspace.OpenWorkspaceCommand().OpenWorkspaceFile("dot.anws", workspaceManager);
             var workspace = workspaceManager.SelectedWorkspace;
 
             LayerViewModel activeLayer = workspace.TimelineViewModel.ActiveLayer;
@@ -107,7 +109,7 @@ namespace AnimationEditorCore.ViewModels
         public void Open_MoveStroke_Undo_DoesNotCrash()
         {
             var workspaceManager = new WorkspaceManagerViewModel();
-            new Commands.OpenWorkspaceCommand().OpenWorkspaceFile("dot.anws", workspaceManager);
+            new Commands.Workspace.OpenWorkspaceCommand().OpenWorkspaceFile("dot.anws", workspaceManager);
             var workspace = workspaceManager.SelectedWorkspace;
             var activeLayer = workspace.TimelineViewModel.ActiveLayer;
             var stroke = activeLayer.Frames[activeLayer.SelectedFrameIndex].StrokeCollection[0];
