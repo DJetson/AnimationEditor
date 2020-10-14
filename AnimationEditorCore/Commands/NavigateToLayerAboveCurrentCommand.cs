@@ -1,4 +1,5 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,8 @@ namespace AnimationEditorCore.Commands
 {
     public class NavigateToLayerAboveCurrentCommand : RequeryBase
     {
+        public override string Description => Resources.NavigateToLayerAboveDescription;
+        public override string ToolTip => Resources.NavigateToLayerAboveToolTip;
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is TimelineViewModel Parameter))

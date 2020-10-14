@@ -1,4 +1,5 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.ViewModels;
 using AnimationEditorCore.ViewModels.Settings;
 using AnimationEditorCore.Views;
@@ -11,6 +12,8 @@ namespace AnimationEditorCore.Commands
 {
     public class OpenAnimationPropertiesWindowCommand : RequeryBase
     {
+        public override string Description => Resources.OpenAnimationPropertiesWindowDescription;
+        public override string ToolTip => Resources.OpenAnimationPropertiesWindowToolTip;
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is TimelineViewModel Parameter))

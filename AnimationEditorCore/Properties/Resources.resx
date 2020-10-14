@@ -213,12 +213,20 @@
     <value>Add Duplicate Layer Below Current</value>
     <comment>The title of the Undo Record created by the AddDuplicateLayerBelowCurrentCommand</comment>
   </data>
+  <data name="CloseWorkspaceDescription" xml:space="preserve">
+    <value>Closes the workspace tab</value>
+    <comment>Status bar message that is displayed when the mouse is over the Close Workspace button</comment>
+  </data>
+  <data name="CloseWorkspaceToolTip" xml:space="preserve">
+    <value>Close Workspace</value>
+    <comment>The tooltip text for a button that triggers the CloseWorkspaceCommand</comment>
+  </data>
   <data name="CopySelectedContentsToNextFrameDescription" xml:space="preserve">
     <value>Place a copy of the selected strokes into the frame that comes next in the timeline</value>
     <comment>Status bar message that is displayed when the mouse is over the Copy Strokes To Next Frame button</comment>
   </data>
   <data name="CopySelectedContentsToNextFrameToolTip" xml:space="preserve">
-    <value>Copy Strokes To Next Frame</value>
+    <value>Copy Strokes to Next Frame</value>
     <comment>The tooltip text for a button that triggers the CopySelectedContentsToNextFrameCommand</comment>
   </data>
   <data name="CopySelectedContentsToNextFrameUndoStateTitle" xml:space="preserve">
@@ -242,7 +250,7 @@
     <comment>Status bar message that is displayed when the mouse is over the Copy Strokes To Previous Frame button</comment>
   </data>
   <data name="CopySelectedContentsToPreviousFrameToolTip" xml:space="preserve">
-    <value>Copy Strokes To Previous Frame</value>
+    <value>Copy Strokes to Previous Frame</value>
     <comment>The tooltip text for a button that triggers the CopySelectedContentsToPreviousFrameCommand</comment>
   </data>
   <data name="CopySelectedContentsToPreviousFrameUndoStateTitle" xml:space="preserve">
@@ -268,6 +276,14 @@
   <data name="CopySelectedStrokesToClipboardToolTip" xml:space="preserve">
     <value>Copy Selected Strokes</value>
     <comment>The tooltip text for a button that triggers the CopySelectedStrokesToClipboardCommand</comment>
+  </data>
+  <data name="CreateNewWorkspaceDescription" xml:space="preserve">
+    <value>Creates a new workspace tab</value>
+    <comment>Status bar message that is displayed when the mouse is over the Create New Workspace button</comment>
+  </data>
+  <data name="CreateNewWorkspaceToolTip" xml:space="preserve">
+    <value>Create New Workspace</value>
+    <comment>The tooltip text for a button that triggers the CreateNewWorkspaceCommand</comment>
   </data>
   <data name="CutSelectedStrokesToClipboardDescription" xml:space="preserve">
     <value>Cuts the selected strokes into the clipboard</value>
@@ -300,6 +316,14 @@
   <data name="DeleteCurrentFrameUndoStateTitle" xml:space="preserve">
     <value>Delete Current Frame</value>
     <comment>The title of the Undo Record created by the DeleteCurrentFrameCommand</comment>
+  </data>
+  <data name="ExportToGifDescription" xml:space="preserve">
+    <value>Exports the current workspace to a GIF animation</value>
+    <comment>Status bar message that is displayed when the mouse is over the Export To Gif button</comment>
+  </data>
+  <data name="ExportToGifToolTip" xml:space="preserve">
+    <value>Export to GIF</value>
+    <comment>The tooltip text for a button that triggers the ExportToGifCommand</comment>
   </data>
   <data name="InsertDuplicateFrameAfterCurrentDescription" xml:space="preserve">
     <value>Duplicates the current frame and inserts it immediately after the current frame in the timeline</value>
@@ -334,7 +358,7 @@
     <comment>Status bar message that is displayed when the mouse is over the Move Strokes to Next Frame button</comment>
   </data>
   <data name="MoveSelectedContentsToNextFrameToolTip" xml:space="preserve">
-    <value>Move Strokes To Next Frame</value>
+    <value>Move Strokes to Next Frame</value>
     <comment>The tooltip text for a button that triggers the MoveSelectedContentsToNextFrameCommand</comment>
   </data>
   <data name="MoveSelectedContentsToNextFrameUndoStateTitle" xml:space="preserve">
@@ -358,7 +382,7 @@
     <comment>Status bar message that is displayed when the mouse is over the Move Strokes To Previous Frame button</comment>
   </data>
   <data name="MoveSelectedContentsToPreviousFrameToolTip" xml:space="preserve">
-    <value>Move Strokes To Previous Frame</value>
+    <value>Move Strokes to Previous Frame</value>
     <comment>The tooltip text for a button that triggers the MoveSelectedContentsToPreviousFrameCommand</comment>
   </data>
   <data name="MoveSelectedContentsToPreviousFrameUndoStateTitle" xml:space="preserve">
@@ -377,9 +401,81 @@
     <value>Move Strokes To Previous Layer</value>
     <comment>The title of the Undo Record created by the MoveSelectedContentsToPreviousLayerCommand</comment>
   </data>
+  <data name="NavigateToFirstFrameDescription" xml:space="preserve">
+    <value>Sets the timeline scrubber to the first frame in the animation</value>
+    <comment>Status bar message that is displayed when the mouse is over the Navigate To First Frame button</comment>
+  </data>
+  <data name="NavigateToFirstFrameToolTip" xml:space="preserve">
+    <value>Navigate to First Frame</value>
+    <comment>The tooltip text for a button that triggers the NavigateToFirstFrameCommand</comment>
+  </data>
+  <data name="NavigateToLastFrameDescription" xml:space="preserve">
+    <value>Sets the timeline scrubber to the last frame in the animation</value>
+    <comment>Status bar message that is displayed when the mouse is over the Navigate To Last Frame button</comment>
+  </data>
+  <data name="NavigateToLastFrameToolTip" xml:space="preserve">
+    <value>Navigate to Last Frame</value>
+    <comment>The tooltip text for a button that triggers the NavigateToLastFrameCommand</comment>
+  </data>
+  <data name="NavigateToLayerAboveDescription" xml:space="preserve">
+    <value>Changes the active layer to the one above the current layer</value>
+    <comment>Status bar message that is displayed when the mouse is over the Navigate To Layer Above button</comment>
+  </data>
+  <data name="NavigateToLayerAboveToolTip" xml:space="preserve">
+    <value>Navigate to Layer Above</value>
+    <comment>The tooltip text for a button that triggers the NavigateToLayerAboveCommand</comment>
+  </data>
+  <data name="NavigateToLayerBelowDescription" xml:space="preserve">
+    <value>Changes the active layer to the one below the current layer</value>
+    <comment>Status bar message that is displayed when the mouse is over the Navigate To Layer Below button</comment>
+  </data>
+  <data name="NavigateToLayerBelowToolTip" xml:space="preserve">
+    <value>Navigate to Layer Below</value>
+    <comment>The tooltip text for a button that triggers the NavigateToLayerBelowCommand</comment>
+  </data>
+  <data name="NavigateToNextFrameDescription" xml:space="preserve">
+    <value>Sets the timeline scrubber to the frame immediately following the current one</value>
+    <comment>Status bar message that is displayed when the mouse is over the Navigate To Next Frame button</comment>
+  </data>
+  <data name="NavigateToNextFrameToolTip" xml:space="preserve">
+    <value>Navigate to Next Frame</value>
+    <comment>The tooltip text for a button that triggers the NavigateToNextFrameCommand</comment>
+  </data>
+  <data name="NavigateToPreviousFrameDescription" xml:space="preserve">
+    <value>Sets the timeline scrubber to the frame immediately preceding the current one</value>
+    <comment>Status bar message that is displayed when the mouse is over the Navigate To Previous Frame button</comment>
+  </data>
+  <data name="NavigateToPreviousFrameToolTip" xml:space="preserve">
+    <value>Navigate to Previous Frame</value>
+    <comment>The tooltip text for a button that triggers the NavigateToPreviousFrameCommand</comment>
+  </data>
   <data name="OnionSkinSettingsViewModelDisplayName" xml:space="preserve">
     <value>Onionskin Settings</value>
     <comment>This gets assigned to the DisplayName property of the OnionSkinSettingsViewModel class</comment>
+  </data>
+  <data name="OpenAnimationPropertiesWindowDescription" xml:space="preserve">
+    <value>View or modify the animation properties</value>
+    <comment>Status bar message that is displayed when the mouse is over the Open Animation Properties Window button</comment>
+  </data>
+  <data name="OpenAnimationPropertiesWindowToolTip" xml:space="preserve">
+    <value>Open Animation Properties</value>
+    <comment>The tooltip text for a button that triggers the OpenAnimationPropertiesWindowCommand</comment>
+  </data>
+  <data name="OpenLayerPropertiesDescription" xml:space="preserve">
+    <value>View or modify layer properties</value>
+    <comment>Status bar message that is displayed when the mouse is over the Open Layer Properties button</comment>
+  </data>
+  <data name="OpenLayerPropertiesToolTip" xml:space="preserve">
+    <value>Open Layer Properties</value>
+    <comment>The tooltip text for a button that triggers the OpenLayerPropertiesCommand</comment>
+  </data>
+  <data name="OpenWorkspaceDescription" xml:space="preserve">
+    <value>Open an existing animation workspace</value>
+    <comment>Status bar message that is displayed when the mouse is over the Open Workspace button</comment>
+  </data>
+  <data name="OpenWorkspaceToolTip" xml:space="preserve">
+    <value>Open Workspace</value>
+    <comment>The tooltip text for a button that triggers the OpenWorkspaceCommand</comment>
   </data>
   <data name="PasteStrokesFromClipboardDescription" xml:space="preserve">
     <value>Pastes the strokes from the clipboard into the current frame</value>
@@ -392,6 +488,22 @@
   <data name="PasteStrokesFromClipboardUndoStateTitle" xml:space="preserve">
     <value>Paste Into Frame</value>
     <comment>The title of the Undo Record created by the PasteStrokesFromClipboardCommand</comment>
+  </data>
+  <data name="RedoDescription" xml:space="preserve">
+    <value>Redo the last action that was previously undone</value>
+    <comment>Status bar message that is displayed when the mouse is over the Redo button</comment>
+  </data>
+  <data name="RedoToolTip" xml:space="preserve">
+    <value>Redo</value>
+    <comment>The tooltip text for a button that triggers the RedoCommand</comment>
+  </data>
+  <data name="SaveWorkspaceDescription" xml:space="preserve">
+    <value>Save the current active workspace</value>
+    <comment>Status bar message that is displayed when the mouse is over the Save Workspace button</comment>
+  </data>
+  <data name="SaveWorkspaceToolTip" xml:space="preserve">
+    <value>Save Workspace</value>
+    <comment>The tooltip text for a button that triggers the SaveWorkspaceCommand</comment>
   </data>
   <data name="SelectPlaybackSpeedDoubleDescription" xml:space="preserve">
     <value>Increases animation playback to twice its normal speed </value>
@@ -417,6 +529,14 @@
     <value>Normal Speed</value>
     <comment>The tooltip text for a button that triggers the SelectPlaybackSpeedNormalCommand</comment>
   </data>
+  <data name="ShowOnionSkinSettingsWindowDescription" xml:space="preserve">
+    <value>View or modify the onionskin settings </value>
+    <comment>Status bar message that is displayed when the mouse is over the Show Onion Skin Settings Window button</comment>
+  </data>
+  <data name="ShowOnionSkinSettingsWindowToolTip" xml:space="preserve">
+    <value>Show Onionskin Settings</value>
+    <comment>The tooltip text for a button that triggers the ShowOnionSkinSettingsWindowCommand</comment>
+  </data>
   <data name="StopPlaybackDescription" xml:space="preserve">
     <value>Stops animation playback</value>
     <comment>Status bar message that is displayed when the mouse is over the Stop Playback button</comment>
@@ -432,5 +552,13 @@
   <data name="TogglePlaybackToolTip" xml:space="preserve">
     <value>Play/Pause</value>
     <comment>The tooltip text for a button that triggers the TogglePlaybackCommand</comment>
+  </data>
+  <data name="UndoDescription" xml:space="preserve">
+    <value>Undo the last action</value>
+    <comment>Status bar message that is displayed when the mouse is over the Undo button</comment>
+  </data>
+  <data name="UndoToolTip" xml:space="preserve">
+    <value>Undo</value>
+    <comment>The tooltip text for a button that triggers the UndoCommand</comment>
   </data>
 </root>

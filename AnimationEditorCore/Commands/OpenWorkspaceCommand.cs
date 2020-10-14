@@ -1,6 +1,7 @@
 ﻿using AnimationEditorCore.BaseClasses;
 using AnimationEditorCore.Interfaces;
 using AnimationEditorCore.Models;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.ViewModels;
 using Microsoft.Win32;
 
@@ -8,6 +9,8 @@ namespace AnimationEditorCore.Commands
 {
     public class OpenWorkspaceCommand : RequeryBase
     {
+        public override string Description => Resources.OpenWorkspaceDescription;
+        public override string ToolTip => Resources.OpenWorkspaceToolTip;
         public override string DisplayName => "Open Workspace";
 
         public OpenWorkspaceCommand()

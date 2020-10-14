@@ -1,10 +1,13 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.ViewModels;
 
 namespace AnimationEditorCore.Commands
 {
     public class RedoCommand : RequeryBase
     {
+        public override string Description => Resources.RedoDescription;
+        public override string ToolTip => Resources.RedoToolTip;
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is WorkspaceViewModel Parameter))

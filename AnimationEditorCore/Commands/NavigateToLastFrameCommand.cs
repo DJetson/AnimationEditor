@@ -1,10 +1,13 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.ViewModels;
 
 namespace AnimationEditorCore.Commands
 {
     public class NavigateToLastFrameCommand : RequeryBase
     {
+        public override string Description => Resources.NavigateToLastFrameDescription;
+        public override string ToolTip => Resources.NavigateToLastFrameToolTip;
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is TimelineViewModel Parameter))

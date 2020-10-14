@@ -1,4 +1,5 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.ViewModels;
 using System;
 
@@ -6,6 +7,8 @@ namespace AnimationEditorCore.Commands
 {
     public class NavigateToPreviousFrameCommand : RequeryBase
     {
+        public override string Description => Resources.NavigateToPreviousFrameDescription;
+        public override string ToolTip => Resources.NavigateToPreviousFrameToolTip;
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is TimelineViewModel Parameter))

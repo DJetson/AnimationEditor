@@ -1,10 +1,13 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.ViewModels;
 
 namespace AnimationEditorCore.Commands
 {
     public class ExportToGifCommand : RequeryBase
     {
+        public override string Description => Resources.ExportToGifDescription;
+        public override string ToolTip => Resources.ExportToGifToolTip; 
         public override string DisplayName => "Save Workspace";
 
         public override bool CanExecute(object parameter)

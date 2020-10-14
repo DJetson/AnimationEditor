@@ -1,10 +1,13 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.ViewModels;
 
 namespace AnimationEditorCore.Commands
 {
     public class UndoCommand : RequeryBase
     {
+        public override string Description => Resources.UndoDescription;
+        public override string ToolTip => Resources.UndoToolTip;
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is WorkspaceViewModel Parameter))

@@ -277,6 +277,24 @@ namespace AnimationEditorCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Closes the workspace tab.
+        /// </summary>
+        public static string CloseWorkspaceDescription {
+            get {
+                return ResourceManager.GetString("CloseWorkspaceDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close Workspace.
+        /// </summary>
+        public static string CloseWorkspaceToolTip {
+            get {
+                return ResourceManager.GetString("CloseWorkspaceToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Place a copy of the selected strokes into the frame that comes next in the timeline.
         /// </summary>
         public static string CopySelectedContentsToNextFrameDescription {
@@ -286,7 +304,7 @@ namespace AnimationEditorCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copy Strokes To Next Frame.
+        ///   Looks up a localized string similar to Copy Strokes to Next Frame.
         /// </summary>
         public static string CopySelectedContentsToNextFrameToolTip {
             get {
@@ -340,7 +358,7 @@ namespace AnimationEditorCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copy Strokes To Previous Frame.
+        ///   Looks up a localized string similar to Copy Strokes to Previous Frame.
         /// </summary>
         public static string CopySelectedContentsToPreviousFrameToolTip {
             get {
@@ -399,6 +417,24 @@ namespace AnimationEditorCore.Properties {
         public static string CopySelectedStrokesToClipboardToolTip {
             get {
                 return ResourceManager.GetString("CopySelectedStrokesToClipboardToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creates a new workspace tab.
+        /// </summary>
+        public static string CreateNewWorkspaceDescription {
+            get {
+                return ResourceManager.GetString("CreateNewWorkspaceDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Workspace.
+        /// </summary>
+        public static string CreateNewWorkspaceToolTip {
+            get {
+                return ResourceManager.GetString("CreateNewWorkspaceToolTip", resourceCulture);
             }
         }
         
@@ -475,6 +511,24 @@ namespace AnimationEditorCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exports the current workspace to a GIF animation.
+        /// </summary>
+        public static string ExportToGifDescription {
+            get {
+                return ResourceManager.GetString("ExportToGifDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export to GIF.
+        /// </summary>
+        public static string ExportToGifToolTip {
+            get {
+                return ResourceManager.GetString("ExportToGifToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duplicates the current frame and inserts it immediately after the current frame in the timeline.
         /// </summary>
         public static string InsertDuplicateFrameAfterCurrentDescription {
@@ -547,7 +601,7 @@ namespace AnimationEditorCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move Strokes To Next Frame.
+        ///   Looks up a localized string similar to Move Strokes to Next Frame.
         /// </summary>
         public static string MoveSelectedContentsToNextFrameToolTip {
             get {
@@ -601,7 +655,7 @@ namespace AnimationEditorCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move Strokes To Previous Frame.
+        ///   Looks up a localized string similar to Move Strokes to Previous Frame.
         /// </summary>
         public static string MoveSelectedContentsToPreviousFrameToolTip {
             get {
@@ -646,11 +700,173 @@ namespace AnimationEditorCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sets the timeline scrubber to the first frame in the animation.
+        /// </summary>
+        public static string NavigateToFirstFrameDescription {
+            get {
+                return ResourceManager.GetString("NavigateToFirstFrameDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navigate to First Frame.
+        /// </summary>
+        public static string NavigateToFirstFrameToolTip {
+            get {
+                return ResourceManager.GetString("NavigateToFirstFrameToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets the timeline scrubber to the last frame in the animation.
+        /// </summary>
+        public static string NavigateToLastFrameDescription {
+            get {
+                return ResourceManager.GetString("NavigateToLastFrameDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navigate to Last Frame.
+        /// </summary>
+        public static string NavigateToLastFrameToolTip {
+            get {
+                return ResourceManager.GetString("NavigateToLastFrameToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changes the active layer to the one above the current layer.
+        /// </summary>
+        public static string NavigateToLayerAboveDescription {
+            get {
+                return ResourceManager.GetString("NavigateToLayerAboveDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navigate to Layer Above.
+        /// </summary>
+        public static string NavigateToLayerAboveToolTip {
+            get {
+                return ResourceManager.GetString("NavigateToLayerAboveToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changes the active layer to the one below the current layer.
+        /// </summary>
+        public static string NavigateToLayerBelowDescription {
+            get {
+                return ResourceManager.GetString("NavigateToLayerBelowDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navigate to Layer Below.
+        /// </summary>
+        public static string NavigateToLayerBelowToolTip {
+            get {
+                return ResourceManager.GetString("NavigateToLayerBelowToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets the timeline scrubber to the frame immediately following the current one.
+        /// </summary>
+        public static string NavigateToNextFrameDescription {
+            get {
+                return ResourceManager.GetString("NavigateToNextFrameDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navigate to Next Frame.
+        /// </summary>
+        public static string NavigateToNextFrameToolTip {
+            get {
+                return ResourceManager.GetString("NavigateToNextFrameToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets the timeline scrubber to the frame immediately preceding the current one.
+        /// </summary>
+        public static string NavigateToPreviousFrameDescription {
+            get {
+                return ResourceManager.GetString("NavigateToPreviousFrameDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navigate to Previous Frame.
+        /// </summary>
+        public static string NavigateToPreviousFrameToolTip {
+            get {
+                return ResourceManager.GetString("NavigateToPreviousFrameToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Onionskin Settings.
         /// </summary>
         public static string OnionSkinSettingsViewModelDisplayName {
             get {
                 return ResourceManager.GetString("OnionSkinSettingsViewModelDisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View or modify the animation properties.
+        /// </summary>
+        public static string OpenAnimationPropertiesWindowDescription {
+            get {
+                return ResourceManager.GetString("OpenAnimationPropertiesWindowDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Animation Properties.
+        /// </summary>
+        public static string OpenAnimationPropertiesWindowToolTip {
+            get {
+                return ResourceManager.GetString("OpenAnimationPropertiesWindowToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View or modify layer properties.
+        /// </summary>
+        public static string OpenLayerPropertiesDescription {
+            get {
+                return ResourceManager.GetString("OpenLayerPropertiesDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Layer Properties.
+        /// </summary>
+        public static string OpenLayerPropertiesToolTip {
+            get {
+                return ResourceManager.GetString("OpenLayerPropertiesToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open an existing animation workspace.
+        /// </summary>
+        public static string OpenWorkspaceDescription {
+            get {
+                return ResourceManager.GetString("OpenWorkspaceDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Workspace.
+        /// </summary>
+        public static string OpenWorkspaceToolTip {
+            get {
+                return ResourceManager.GetString("OpenWorkspaceToolTip", resourceCulture);
             }
         }
         
@@ -678,6 +894,42 @@ namespace AnimationEditorCore.Properties {
         public static string PasteStrokesFromClipboardUndoStateTitle {
             get {
                 return ResourceManager.GetString("PasteStrokesFromClipboardUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Redo the last action that was previously undone.
+        /// </summary>
+        public static string RedoDescription {
+            get {
+                return ResourceManager.GetString("RedoDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Redo.
+        /// </summary>
+        public static string RedoToolTip {
+            get {
+                return ResourceManager.GetString("RedoToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save the current active workspace.
+        /// </summary>
+        public static string SaveWorkspaceDescription {
+            get {
+                return ResourceManager.GetString("SaveWorkspaceDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Workspace.
+        /// </summary>
+        public static string SaveWorkspaceToolTip {
+            get {
+                return ResourceManager.GetString("SaveWorkspaceToolTip", resourceCulture);
             }
         }
         
@@ -736,6 +988,24 @@ namespace AnimationEditorCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View or modify the onionskin settings .
+        /// </summary>
+        public static string ShowOnionSkinSettingsWindowDescription {
+            get {
+                return ResourceManager.GetString("ShowOnionSkinSettingsWindowDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Onionskin Settings.
+        /// </summary>
+        public static string ShowOnionSkinSettingsWindowToolTip {
+            get {
+                return ResourceManager.GetString("ShowOnionSkinSettingsWindowToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stops animation playback.
         /// </summary>
         public static string StopPlaybackDescription {
@@ -768,6 +1038,24 @@ namespace AnimationEditorCore.Properties {
         public static string TogglePlaybackToolTip {
             get {
                 return ResourceManager.GetString("TogglePlaybackToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Undo the last action.
+        /// </summary>
+        public static string UndoDescription {
+            get {
+                return ResourceManager.GetString("UndoDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Undo.
+        /// </summary>
+        public static string UndoToolTip {
+            get {
+                return ResourceManager.GetString("UndoToolTip", resourceCulture);
             }
         }
     }

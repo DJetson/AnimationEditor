@@ -1,10 +1,13 @@
 ﻿using AnimationEditorCore.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.ViewModels;
 
 namespace AnimationEditorCore.Commands
 {
     public class NavigateToFirstFrameCommand : RequeryBase
     {
+        public override string Description => Resources.NavigateToFirstFrameDescription;
+        public override string ToolTip => Resources.NavigateToFirstFrameToolTip;
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is TimelineViewModel Parameter))
