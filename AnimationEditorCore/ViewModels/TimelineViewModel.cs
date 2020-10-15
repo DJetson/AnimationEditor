@@ -385,6 +385,8 @@ namespace AnimationEditorCore.ViewModels
             FrameCount = originalTimeline.FrameCount;
             FramesPerSecond = originalTimeline.FramesPerSecond;
             FrameWidth = originalTimeline.FrameWidth;
+            CanvasHeight = originalTimeline.CanvasHeight;
+            CanvasWidth = originalTimeline.CanvasWidth;
 
             Layers = new ObservableCollection<LayerViewModel>();
             InitializeLayerViewSource();
@@ -621,6 +623,8 @@ namespace AnimationEditorCore.ViewModels
             destination.FrameCount = original.FrameCount;
             destination.FramesPerSecond = original.FramesPerSecond;
             destination.FrameWidth = original.FrameWidth;
+            destination.CanvasHeight = original.CanvasHeight;
+            destination.CanvasWidth = original.CanvasWidth;
 
             destination.Layers = new ObservableCollection<LayerViewModel>();
 
