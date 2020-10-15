@@ -13,7 +13,7 @@ namespace AnimationEditorCore.Commands.Environment
             if (!(parameter is WorkspaceViewModel Parameter))
                 return false;
 
-            if (Parameter?.WorkspaceHistoryViewModel?.UndoStack.Count <= 1)
+            if (Parameter?.WorkspaceHistoryViewModel?.PreviousState == null)
                 return false;
 
             if (Parameter?.TimelineViewModel?.AnimationPlaybackViewModel == null)

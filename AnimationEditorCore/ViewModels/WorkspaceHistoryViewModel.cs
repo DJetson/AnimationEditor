@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace AnimationEditorCore.ViewModels
 {
-    public class WorkspaceHistoryViewModel : ViewModelBase, IMementoCaretaker
+    public class WorkspaceHistoryViewModel : ViewModelBase/*, IMementoCaretaker*/
     {
         public override string DisplayName => "Workspace History";
 
@@ -201,35 +201,35 @@ namespace AnimationEditorCore.ViewModels
 
         }
 
-        private Stack<IMemento> _UndoStack = new Stack<IMemento>();
-        public Stack<IMemento> UndoStack
-        {
-            get { return _UndoStack; }
-            set { _UndoStack = value; NotifyPropertyChanged(); }
-        }
+        //private Stack<IMemento> _UndoStack = new Stack<IMemento>();
+        //public Stack<IMemento> UndoStack
+        //{
+        //    get { return _UndoStack; }
+        //    set { _UndoStack = value; NotifyPropertyChanged(); }
+        //}
 
-        private Stack<IMemento> _RedoStack = new Stack<IMemento>();
-        public Stack<IMemento> RedoStack
-        {
-            get { return _RedoStack; }
-            set { _RedoStack = value; NotifyPropertyChanged(); }
-        }
+        //private Stack<IMemento> _RedoStack = new Stack<IMemento>();
+        //public Stack<IMemento> RedoStack
+        //{
+        //    get { return _RedoStack; }
+        //    set { _RedoStack = value; NotifyPropertyChanged(); }
+        //}
 
-        public IMemento PeekUndo()
-        {
-            if (UndoStack.Count == 0)
-                return null;
+        //public IMemento PeekUndo()
+        //{
+        //    if (UndoStack.Count == 0)
+        //        return null;
 
-            return UndoStack.Peek();
-        }
+        //    return UndoStack.Peek();
+        //}
 
-        public IMemento PeekRedo()
-        {
-            if (RedoStack.Count == 0)
-                return null;
+        //public IMemento PeekRedo()
+        //{
+        //    if (RedoStack.Count == 0)
+        //        return null;
 
-            return RedoStack.Peek();
-        }
+        //    return RedoStack.Peek();
+        //}
 
         public void AddHistoricalState(IMemento state, bool raiseChangedFlag = true)
         {
