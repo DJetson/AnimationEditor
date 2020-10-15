@@ -104,12 +104,17 @@ namespace AnimationEditorCore.Utilities
         //    }
         //}
 
-        public static List<System.Drawing.Image> RenderFrameBitmaps(InkCanvas canvas, List<LayerViewModel> layers, int startIndex = 0, int count = 0, bool excludeHiddenLayers = true)
+        public static List<System.Drawing.Image> RenderFrameBitmaps(InkCanvas canvas, List<LayerViewModel> layers, double width = 0, double height = 0, int startIndex = 0, int count = 0, bool excludeHiddenLayers = true)
         {
             var selectedLayers = excludeHiddenLayers ? GetVisibleLayers(layers) : layers;
             var flattenedLayers = FlattenFrames(selectedLayers, startIndex, count, excludeHiddenLayers);
 
-            RenderTargetBitmap rtb = new RenderTargetBitmap((int)canvas.ActualWidth, (int)canvas.ActualHeight, 96, 96, new System.Windows.Media.PixelFormat());
+            if (width == 0)
+                width = (int)canvas.ActualWidth;
+            if (height == 0)
+                height = (int)canvas.ActualHeight;
+
+            RenderTargetBitmap rtb = new RenderTargetBitmap((int)width, (int)height, 96, 96, new System.Windows.Media.PixelFormat());
             List<System.Drawing.Image> frameImages = new List<System.Drawing.Image>();
             foreach (var strokes in flattenedLayers)
             {

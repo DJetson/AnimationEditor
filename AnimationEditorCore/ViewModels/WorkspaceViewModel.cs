@@ -398,11 +398,11 @@ namespace AnimationEditorCore.ViewModels
                 using (FileStream fs = new FileStream(filepath, FileMode.Create))
                 {
                     GifEncoder gEnc = new GifEncoder(fs);
-                    var frameBitmaps = AnimationUtilities.RenderFrameBitmaps(canvas, TimelineViewModel.Layers.ToList());
+                    var frameBitmaps = AnimationUtilities.RenderFrameBitmaps(canvas, TimelineViewModel.Layers.ToList(), TimelineViewModel.CanvasWidth, TimelineViewModel.CanvasHeight);
                     var frameInterval = new TimeSpan((long)(TimeSpan.TicksPerSecond * (1.0 / (TimelineViewModel.FramesPerSecond))));
                     foreach (var frame in frameBitmaps)
                     {
-                        gEnc.AddFrame(frame, 0, 0, frameInterval);
+                        gEnc.AddFrame(frame, (int)TimelineViewModel.CanvasWidth, (int)TimelineViewModel.CanvasHeight, frameInterval);
                     }
                 }
             }
