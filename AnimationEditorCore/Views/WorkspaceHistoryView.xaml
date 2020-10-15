@@ -6,7 +6,7 @@
              xmlns:ViewModels="clr-namespace:AnimationEditorCore.ViewModels"
              mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ListBox x:Name="HistoryListBox" ItemsSource="{Binding HistoricalStates}" SelectedItem="{Binding SelectedItem}">
+        <ListBox x:Name="HistoryListBox" ItemsSource="{Binding HistoricalStates}" SelectedItem="{Binding CurrentState}">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Style.Setters>
@@ -19,10 +19,10 @@
                 </Style>
             </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
-                <DataTemplate DataType="{x:Type ViewModels:WorkspaceHistoryItemViewModel}">
+                <DataTemplate DataType="{x:Type ViewModels:UndoStateViewModel}">
                     <Button>
                         <Button.Content>
-                            <TextBlock Text="{Binding State.DisplayName}" TextTrimming="WordEllipsis"/>
+                            <TextBlock Text="{Binding DisplayName}" TextTrimming="WordEllipsis"/>
                         </Button.Content>
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
@@ -39,13 +39,13 @@
                                     <Setter Property="CommandParameter" Value="{Binding }"/>
                                 </Style.Setters>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding StateType}" Value="Undo">
+                                    <DataTrigger Binding="{Binding CurrentStateType}" Value="Undo">
                                         <Setter Property="Background" Value="LightGray"/>
                                         <Setter Property="BorderThickness" Value="1"/>
                                         <Setter Property="FontStyle" Value="Normal"/>
                                         <Setter Property="Command" Value="{Binding DataContext.RevertToState, ElementName=HistoryListBox}" />
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding StateType}" Value="Redo">
+                                    <DataTrigger Binding="{Binding CurrentStateType}" Value="Redo">
                                         <Setter Property="Background" Value="Gray"/>
                                         <Setter Property="BorderThickness" Value="1"/>
                                         <Setter Property="FontStyle" Value="Italic"/>

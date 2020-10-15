@@ -8,23 +8,9 @@ using System.Linq;
 
 namespace AnimationEditorCore.ViewModels
 {
-    public class WorkspaceHistoryViewModel : ViewModelBase/*, IMementoCaretaker*/
+    public class WorkspaceHistoryViewModel : ViewModelBase
     {
         public override string DisplayName => "Workspace History";
-
-        private ObservableCollection<WorkspaceHistoryItemViewModel> _HistoricalStates = new ObservableCollection<WorkspaceHistoryItemViewModel>();
-        public ObservableCollection<WorkspaceHistoryItemViewModel> HistoricalStates
-        {
-            get => _HistoricalStates;
-            set { _HistoricalStates = value; NotifyPropertyChanged(); }
-        }
-
-        private WorkspaceHistoryItemViewModel _SelectedItem;
-        public WorkspaceHistoryItemViewModel SelectedItem
-        {
-            get { return _SelectedItem; }
-            set { _SelectedItem = value; NotifyPropertyChanged(); }
-        }
 
         private WorkspaceViewModel _WorkspaceViewModel;
         public WorkspaceViewModel WorkspaceViewModel
@@ -42,13 +28,13 @@ namespace AnimationEditorCore.ViewModels
 
         private bool RevertToState_CanExecute(object parameter)
         {
-            if (!(parameter is WorkspaceHistoryItemViewModel Parameter))
+            if (!(parameter is UndoStateViewModel Parameter))
                 return false;
 
             if (WorkspaceViewModel.TimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive)
                 return false;
 
-            if (UndoRedoHistory.Contains(Parameter.State) == false)
+            if (HistoricalStates.Contains(Parameter) == false)
                 return false;
 
             return true;
@@ -56,9 +42,9 @@ namespace AnimationEditorCore.ViewModels
 
         private void RevertToState_Execute(object parameter)
         {
-            var Parameter = parameter as WorkspaceHistoryItemViewModel;
+            var Parameter = parameter as UndoStateViewModel;
 
-            UndoToState(Parameter.State);
+            UndoToState(Parameter);
         }
 
         private DelegateCommand _ResumeToState;
@@ -70,13 +56,13 @@ namespace AnimationEditorCore.ViewModels
 
         private bool ResumeToState_CanExecute(object parameter)
         {
-            if (!(parameter is WorkspaceHistoryItemViewModel Parameter))
+            if (!(parameter is UndoStateViewModel Parameter))
                 return false;
 
             if (WorkspaceViewModel.TimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive)
                 return false;
 
-            if (UndoRedoHistory.Contains(Parameter.State) == false)
+            if (HistoricalStates.Contains(Parameter) == false)
                 return false;
 
             return true;
@@ -84,9 +70,9 @@ namespace AnimationEditorCore.ViewModels
 
         private void ResumeToState_Execute(object parameter)
         {
-            var Parameter = parameter as WorkspaceHistoryItemViewModel;
+            var Parameter = parameter as UndoStateViewModel;
 
-            RedoToState(Parameter.State);
+            RedoToState(Parameter);
         }
 
         private UndoStateViewModel _CurrentState;
@@ -95,7 +81,7 @@ namespace AnimationEditorCore.ViewModels
             get { return _CurrentState; }
             set
             {
-                _CurrentState = value;
+                SetCurrentState(value);
                 NotifyPropertyChanged(nameof(CurrentState),
                                       nameof(CurrentStateIndex),
                                       nameof(PreviousState),
@@ -108,21 +94,39 @@ namespace AnimationEditorCore.ViewModels
             }
         }
 
-        private List<UndoStateViewModel> _UndoRedoHistory = new List<UndoStateViewModel>();
-        public List<UndoStateViewModel> UndoRedoHistory
+        private void SetCurrentState(UndoStateViewModel value)
         {
-            get { return _UndoRedoHistory; }
-            set { _UndoRedoHistory = value; NotifyPropertyChanged(); }
+            //Update outgoing CurrentState.
+            if (_CurrentState != null)
+            {
+                if (value?.CurrentStateType == StateType.Undo)
+                    _CurrentState.CurrentStateType = StateType.Redo;
+                else if (value?.CurrentStateType == StateType.Redo)
+                    _CurrentState.CurrentStateType = StateType.Undo;
+                else
+                    _CurrentState.CurrentStateType = StateType.Undo;
+            }
+
+            //Set and update incoming CurrentState
+            _CurrentState = value;
+            _CurrentState.CurrentStateType = StateType.Current;
+        }
+
+        private ObservableCollection<UndoStateViewModel> _HistoricalStates = new ObservableCollection<UndoStateViewModel>();
+        public ObservableCollection<UndoStateViewModel> HistoricalStates
+        {
+            get { return _HistoricalStates; }
+            set { _HistoricalStates = value; NotifyPropertyChanged(); }
         }
 
         public int CurrentStateIndex
         {
             get
             {
-                if (!UndoRedoHistory.Contains(CurrentState))
+                if (!HistoricalStates.Contains(CurrentState))
                     return -1;
 
-                return UndoRedoHistory.IndexOf(CurrentState);
+                return HistoricalStates.IndexOf(CurrentState);
             }
         }
 
@@ -131,7 +135,7 @@ namespace AnimationEditorCore.ViewModels
             get
             {
                 if (CurrentStateIndex > 0)
-                    return UndoRedoHistory[CurrentStateIndex - 1];
+                    return HistoricalStates[CurrentStateIndex - 1];
                 else
                     return null;
             }
@@ -141,8 +145,8 @@ namespace AnimationEditorCore.ViewModels
         {
             get
             {
-                if (CurrentStateIndex >= 0 && CurrentStateIndex < UndoRedoHistory.Count - 1)
-                    return UndoRedoHistory[CurrentStateIndex + 1];
+                if (CurrentStateIndex >= 0 && CurrentStateIndex < HistoricalStates.Count - 1)
+                    return HistoricalStates[CurrentStateIndex + 1];
                 else
                     return null;
             }
@@ -169,7 +173,6 @@ namespace AnimationEditorCore.ViewModels
             }
         }
 
-
         public WorkspaceHistoryViewModel(WorkspaceViewModel workspace, UndoStateViewModel initialState = null)
         {
             WorkspaceViewModel = workspace;
@@ -178,68 +181,13 @@ namespace AnimationEditorCore.ViewModels
             InitializeCommands();
         }
 
-        public void PopulateHistory()
-        {
-            var undoRange = new List<WorkspaceHistoryItemViewModel>();
-            foreach (UndoStateViewModel item in UndoRedoHistory)
-            {
-                if (UndoRedoHistory.IndexOf(item) < CurrentStateIndex)
-                    undoRange.Add(new WorkspaceHistoryItemViewModel(item) { StateType = HistoryStateType.Undo });
-                else if (UndoRedoHistory.IndexOf(item) > CurrentStateIndex)
-                    undoRange.Add(new WorkspaceHistoryItemViewModel(item) { StateType = HistoryStateType.Redo });
-                else
-                {
-                    var selected = new WorkspaceHistoryItemViewModel(item) { StateType = HistoryStateType.Current };
-                    undoRange.Add(selected);
-                    SelectedItem = selected;
-                }
-            }
-
-            HistoricalStates.Clear();
-
-            HistoricalStates = new ObservableCollection<WorkspaceHistoryItemViewModel>(undoRange/*.Concat(redoRange)*/);
-
-        }
-
-        //private Stack<IMemento> _UndoStack = new Stack<IMemento>();
-        //public Stack<IMemento> UndoStack
-        //{
-        //    get { return _UndoStack; }
-        //    set { _UndoStack = value; NotifyPropertyChanged(); }
-        //}
-
-        //private Stack<IMemento> _RedoStack = new Stack<IMemento>();
-        //public Stack<IMemento> RedoStack
-        //{
-        //    get { return _RedoStack; }
-        //    set { _RedoStack = value; NotifyPropertyChanged(); }
-        //}
-
-        //public IMemento PeekUndo()
-        //{
-        //    if (UndoStack.Count == 0)
-        //        return null;
-
-        //    return UndoStack.Peek();
-        //}
-
-        //public IMemento PeekRedo()
-        //{
-        //    if (RedoStack.Count == 0)
-        //        return null;
-
-        //    return RedoStack.Peek();
-        //}
-
         public void AddHistoricalState(IMemento state, bool raiseChangedFlag = true)
         {
-            ClearFutureStates(); //new undo architecture
+            ClearFutureStates();
 
-            UndoRedoHistory.Add(state as UndoStateViewModel); // new undo architecture
+            HistoricalStates.Add(state as UndoStateViewModel);
 
-            CurrentState = state as UndoStateViewModel;//NextState; //new undo architecture
-
-            PopulateHistory(); //new undo architecture
+            CurrentState = state as UndoStateViewModel;
 
             if (raiseChangedFlag)
             {
@@ -250,11 +198,11 @@ namespace AnimationEditorCore.ViewModels
 
         public void ClearFutureStates()
         {
-            var futureStates = UndoRedoHistory.Where(e => UndoRedoHistory.IndexOf(e) > CurrentStateIndex).ToList();
+            var futureStates = HistoricalStates.Where(e => e.CurrentStateType == StateType.Redo).ToList();
 
             foreach (var state in futureStates)
             {
-                UndoRedoHistory.Remove(state);
+                HistoricalStates.Remove(state);
             }
         }
 
@@ -263,16 +211,15 @@ namespace AnimationEditorCore.ViewModels
             if (PreviousState == null)
                 return;
 
-            CurrentState = PreviousState; 
+            CurrentState = PreviousState;
             CurrentState.LoadState();
 
-            PopulateHistory();
             WorkspaceViewModel.WriteToTempFile();
         }
 
         public void UndoToState(IMemento state)
         {
-            if (!UndoRedoHistory.Contains(state))
+            if (!HistoricalStates.Contains(state))
                 throw new IndexOutOfRangeException($"The historical state \"{state}\" could not be found");
 
             var originalCurrentState = CurrentState;
@@ -284,12 +231,10 @@ namespace AnimationEditorCore.ViewModels
                     return;
                 }
 
-                CurrentState = PreviousState; //new undo architecture;
+                CurrentState = PreviousState;
             }
 
             CurrentState.LoadState();
-
-            PopulateHistory();
             WorkspaceViewModel.WriteToTempFile();
         }
 
@@ -301,13 +246,12 @@ namespace AnimationEditorCore.ViewModels
             CurrentState = NextState;
             CurrentState.LoadState();
 
-            PopulateHistory();
             WorkspaceViewModel.WriteToTempFile();
         }
 
         public void RedoToState(IMemento state)
         {
-            if (!UndoRedoHistory.Contains(state))
+            if (!HistoricalStates.Contains(state))
                 throw new IndexOutOfRangeException($"The historical state \"{state}\" could not be found");
 
             var originalCurrentState = CurrentState;
@@ -322,8 +266,6 @@ namespace AnimationEditorCore.ViewModels
             }
 
             CurrentState.LoadState();
-
-            PopulateHistory();
             WorkspaceViewModel.WriteToTempFile();
         }
     }

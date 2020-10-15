@@ -101,7 +101,7 @@ namespace AnimationEditorCore.ViewModels
 
             stroke.Transform(new System.Windows.Media.TranslateTransform(offsetX: 1d, offsetY: 2d).Value, applyToStylusTip: false);
 
-            Assert.AreEqual(2, workspace.WorkspaceHistoryViewModel.UndoStack.Count);
+            Assert.AreEqual(2, workspace.WorkspaceHistoryViewModel.HistoricalStates.Count);
         }
 
         [DeploymentItem("DeploymentItems/dot.anws")]

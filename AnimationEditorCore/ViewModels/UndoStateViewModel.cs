@@ -2,8 +2,17 @@
 
 namespace AnimationEditorCore.ViewModels
 {
+    public enum StateType { Undo, Current, Redo };
     public class UndoStateViewModel : ViewModelBase, IMemento
     {
+
+        private StateType _CurrentStateType;
+        public StateType CurrentStateType
+        {
+            get { return _CurrentStateType; }
+            set { _CurrentStateType = value; NotifyPropertyChanged(); }
+        }
+
         public override string DisplayName
         {
             get => _DisplayName;
@@ -21,6 +30,7 @@ namespace AnimationEditorCore.ViewModels
         {
             Originator = viewModel;
             DisplayName = stateName;
+            CurrentStateType = StateType.Current;
         }
 
         public virtual void LoadState()
