@@ -37,7 +37,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
 
             if (!(Parameter.IsFrameIndexValid(Parameter.SelectedFrameIndex + 1)))
             {
-                Parameter.AddBlankFrameToTimeline(Parameter.SelectedFrameIndex + 1, false, false);
+                Parameter.AddBlankFrameToTimeline(Parameter.SelectedFrameIndex + 1, false);
             }
 
             var copyToFrame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex + 1);

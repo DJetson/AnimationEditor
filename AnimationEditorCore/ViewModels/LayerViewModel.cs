@@ -11,7 +11,7 @@ using System.Windows.Ink;
 
 namespace AnimationEditorCore.ViewModels
 {
-    public class LayerViewModel : ViewModelBase, IMementoOriginator
+    public class LayerViewModel : ViewModelBase
     {
         private StrokeCollection _StrokeCollection = new StrokeCollection();
         public StrokeCollection StrokeCollection
@@ -180,26 +180,14 @@ namespace AnimationEditorCore.ViewModels
             IsActive = model.IsActive;
         }
 
-        public TimelineState CreateUndoState(string title, List<UndoStateViewModel> additionalStates = null)
-        {
-            var state = TimelineViewModel.CreateUndoState(title);
+        //public IMemento SaveState()
+        //{
+        //    var memento = new LayerState(this);
 
-            return state;
-        }
+        //    memento.Originator = this;
 
-        public void PushUndoRecord(UndoStateViewModel nextState, bool raiseChangedFlag = true)
-        {
-            TimelineViewModel.WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(nextState, raiseChangedFlag);
-        }
-
-        public IMemento SaveState()
-        {
-            var memento = new LayerState(this);
-
-            memento.Originator = this;
-
-            return memento;
-        }
+        //    return memento;
+        //}
 
         //Cleans up all of the delegate assignments in the Strokes and StrokeCollections 
         //on each Frame in this layer
@@ -237,12 +225,12 @@ namespace AnimationEditorCore.ViewModels
             destination.IsActive = original.IsActive;
         }
 
-        public void LoadState(IMemento memento)
-        {
-            var Memento = (memento as LayerState);
+        //public void LoadState(IMemento memento)
+        //{
+        //    var Memento = (memento as LayerState);
 
-            CopyToLayer(Memento.Layer, this);
-        }
+        //    CopyToLayer(Memento.Layer, this);
+        //}
 
         public LayerViewModel Clone()
         {

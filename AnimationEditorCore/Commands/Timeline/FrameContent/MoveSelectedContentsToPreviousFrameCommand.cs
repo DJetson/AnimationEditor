@@ -37,7 +37,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             FrameViewModel copyToFrame = null;
             if (!(Parameter.IsFrameIndexValid(Parameter.SelectedFrameIndex - 1)))
             {
-                Parameter.AddBlankFrameToTimeline(Parameter.SelectedFrameIndex, true, false);
+                Parameter.AddBlankFrameToTimeline(Parameter.SelectedFrameIndex, true);
                 copyToFrame = Parameter.ActiveLayer.Frames[Parameter.SelectedFrameIndex];
             }
             else

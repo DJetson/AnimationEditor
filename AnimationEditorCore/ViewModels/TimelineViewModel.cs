@@ -232,7 +232,7 @@ namespace AnimationEditorCore.ViewModels
             set { _CanvasHeight = value; NotifyPropertyChanged(); }
         }
 
-        public void AddBlankFrameToTimeline(int index, bool updateSelected = true, bool createUndo = true)
+        public void AddBlankFrameToTimeline(int index, bool updateSelected = true)
         {
             foreach (var layer in Layers)
             {

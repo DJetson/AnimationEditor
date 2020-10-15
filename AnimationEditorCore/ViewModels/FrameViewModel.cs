@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace AnimationEditorCore.ViewModels
 {
-    public class FrameViewModel : ViewModelBase, IMementoOriginator
+    public class FrameViewModel : ViewModelBase/*, IMementoOriginator*/
     {
         private StrokeCollection _StrokeCollection = new StrokeCollection();
         public StrokeCollection StrokeCollection
@@ -169,26 +169,14 @@ namespace AnimationEditorCore.ViewModels
             LoadedInkCanvas = new DelegateCommand(LoadedInkCanvas_CanExecute, LoadedInkCanvas_Execute);
         }
 
-        public TimelineState CreateUndoState(string title, List<UndoStateViewModel> additionalStates = null)
-        {
-            var state = LayerViewModel.TimelineViewModel.CreateUndoState(title);
+        //public IMemento SaveState()
+        //{
+        //    var memento = new FrameState(this);
 
-            return state;
-        }
+        //    memento.Originator = this;
 
-        public void PushUndoRecord(UndoStateViewModel nextState, bool raiseChangedFlag = true)
-        {
-            LayerViewModel.TimelineViewModel.WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(nextState, raiseChangedFlag);
-        }
-
-        public IMemento SaveState()
-        {
-            var memento = new FrameState(this);
-
-            memento.Originator = this;
-
-            return memento;
-        }
+        //    return memento;
+        //}
 
         public void ClearStrokes()
         {
@@ -220,12 +208,12 @@ namespace AnimationEditorCore.ViewModels
             destination.SelectedStrokes.StrokesChanged += destination.SelectedStrokes_StrokesChanged;
         }
 
-        public void LoadState(IMemento memento)
-        {
-            var Memento = (memento as FrameState);
+        //public void LoadState(IMemento memento)
+        //{
+        //    var Memento = (memento as FrameState);
 
-            CopyToFrame(Memento.Frame, this);
-        }
+        //    CopyToFrame(Memento.Frame, this);
+        //}
 
         public FrameViewModel Clone()
         {
@@ -299,12 +287,12 @@ namespace AnimationEditorCore.ViewModels
         {
             if (EditorToolsViewModel.Instance.SelectedToolType == EditorToolType.Brush)
             {
-                PushUndoRecord(CreateUndoState($"Added Content to Layer {LayerViewModel.LayerId} on Frame {Order}"));
+                LayerViewModel.TimelineViewModel.PushUndoRecord(LayerViewModel.TimelineViewModel.CreateUndoState($"Added Content to Layer {LayerViewModel.LayerId} on Frame {Order}"));
             }
             else if (EditorToolsViewModel.Instance.SelectedToolType == EditorToolType.Lasso && _IsErasing == false)
             {
                 if (e.Removed.Count > 0)
-                    PushUndoRecord(CreateUndoState($"Deleted Content from Layer {LayerViewModel.LayerId} on Frame {Order}"));
+                    LayerViewModel.TimelineViewModel.PushUndoRecord(LayerViewModel.TimelineViewModel.CreateUndoState($"Deleted Content from Layer {LayerViewModel.LayerId} on Frame {Order}"));
             }
             else if (EditorToolsViewModel.Instance.SelectedToolType == EditorToolType.Eraser && _IsErasing == false)
             {
@@ -329,7 +317,7 @@ namespace AnimationEditorCore.ViewModels
 
             if (_StrokeMultiSelectOpCounter == 1)
             {
-                PushUndoRecord(CreateUndoState($"Modified Content in Layer {LayerViewModel.LayerId} on Frame {Order}"));
+                LayerViewModel.TimelineViewModel.PushUndoRecord(LayerViewModel.TimelineViewModel.CreateUndoState($"Modified Content in Layer {LayerViewModel.LayerId} on Frame {Order}"));
                 _StrokeMultiSelectOpCounter = 0;
             }
             else
@@ -344,14 +332,14 @@ namespace AnimationEditorCore.ViewModels
             {
                 _IsErasing = false;
 
-                PushUndoRecord(CreateUndoState($"Erased Content from Layer {LayerViewModel.LayerId} on Frame {Order}"));
+                LayerViewModel.TimelineViewModel.PushUndoRecord(LayerViewModel.TimelineViewModel.CreateUndoState($"Erased Content from Layer {LayerViewModel.LayerId} on Frame {Order}"));
                 Mouse.RemoveMouseUpHandler(Mouse.PrimaryDevice.ActiveSource.RootVisual as DependencyObject, EraserOperation_MouseUp);
             }
             else if (e.LeftButton == MouseButtonState.Released && EditorToolsViewModel.Instance.SelectedToolType == BaseClasses.EditorToolType.Lasso)
             {
                 _IsErasing = false;
 
-                PushUndoRecord(CreateUndoState($"Moved Content From Layer {LayerViewModel.LayerId} on Frame {Order}"));
+                LayerViewModel.TimelineViewModel.PushUndoRecord(LayerViewModel.TimelineViewModel.CreateUndoState($"Moved Content From Layer {LayerViewModel.LayerId} on Frame {Order}"));
                 Mouse.RemoveMouseUpHandler(Mouse.PrimaryDevice.ActiveSource.RootVisual as DependencyObject, EraserOperation_MouseUp);
             }
         }
