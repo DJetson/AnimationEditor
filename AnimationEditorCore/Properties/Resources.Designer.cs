@@ -835,6 +835,15 @@ namespace AnimationEditorCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Modified Animation Properties.
+        /// </summary>
+        public static string OpenAnimationPropertiesUndoStateTitle {
+            get {
+                return ResourceManager.GetString("OpenAnimationPropertiesUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View or modify layer properties.
         /// </summary>
         public static string OpenLayerPropertiesDescription {
@@ -849,6 +858,15 @@ namespace AnimationEditorCore.Properties {
         public static string OpenLayerPropertiesToolTip {
             get {
                 return ResourceManager.GetString("OpenLayerPropertiesToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modified Layer Properties.
+        /// </summary>
+        public static string OpenLayerPropertiesUndoStateTitle {
+            get {
+                return ResourceManager.GetString("OpenLayerPropertiesUndoStateTitle", resourceCulture);
             }
         }
         

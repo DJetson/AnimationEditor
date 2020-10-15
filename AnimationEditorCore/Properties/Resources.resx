@@ -461,6 +461,10 @@
     <value>Open Animation Properties</value>
     <comment>The tooltip text for a button that triggers the OpenAnimationPropertiesCommand</comment>
   </data>
+  <data name="OpenAnimationPropertiesUndoStateTitle" xml:space="preserve">
+    <value>Modified Animation Properties</value>
+    <comment>The title of the Undo Record created by the OpenAnimationPropertiesCommand</comment>
+  </data>
   <data name="OpenLayerPropertiesDescription" xml:space="preserve">
     <value>View or modify layer properties</value>
     <comment>Status bar message that is displayed when the mouse is over the Open Layer Properties button</comment>
@@ -468,6 +472,10 @@
   <data name="OpenLayerPropertiesToolTip" xml:space="preserve">
     <value>Open Layer Properties</value>
     <comment>The tooltip text for a button that triggers the OpenLayerPropertiesCommand</comment>
+  </data>
+  <data name="OpenLayerPropertiesUndoStateTitle" xml:space="preserve">
+    <value>Modified Layer Properties</value>
+    <comment>The title of the Undo Record created by the OpenLayerPropertiesCommand</comment>
   </data>
   <data name="OpenOnionskinSettingsDescription" xml:space="preserve">
     <value>View or modify the onionskin settings </value>

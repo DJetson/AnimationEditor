@@ -33,6 +33,7 @@ namespace AnimationEditorCore.Commands.Timeline.Frames
             var navigation = FrameNavigation.Next;
 
             Parameter.DuplicateCurrentFrameToTimeline(GetIndexForFrameNavigation(currentIndex, frameCount, navigation));
+            Parameter.PushUndoRecord(Parameter.CreateUndoState(UndoStateTitle));
         }
     }
 }

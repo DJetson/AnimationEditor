@@ -14,6 +14,8 @@ namespace AnimationEditorCore.Commands.Workspace
     {
         public override string Description => Resources.OpenAnimationPropertiesDescription;
         public override string ToolTip => Resources.OpenAnimationPropertiesToolTip;
+        public override string UndoStateTitle => Resources.OpenAnimationPropertiesUndoStateTitle;
+
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is TimelineViewModel Parameter))
@@ -27,7 +29,10 @@ namespace AnimationEditorCore.Commands.Workspace
             var Parameter = parameter as TimelineViewModel;
 
             var layerProperties = new AnimationPropertiesWindow() { Owner = System.Windows.Application.Current.MainWindow, DataContext = new AnimationPropertiesViewModel(Parameter) };
-            layerProperties.ShowDialog();
+            var result = layerProperties.ShowDialog();
+
+            if(result == true)
+                Parameter.PushUndoRecord(Parameter.CreateUndoState(UndoStateTitle));
         }
     }
 }

@@ -28,6 +28,7 @@ namespace AnimationEditorCore.Commands.Timeline.Frames
             var Parameter = parameter as TimelineViewModel;
 
             Parameter.DeleteCurrentFrame();
+            Parameter.PushUndoRecord(Parameter.CreateUndoState(UndoStateTitle));
         }
     }
 }

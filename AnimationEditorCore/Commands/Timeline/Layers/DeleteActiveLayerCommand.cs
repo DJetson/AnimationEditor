@@ -28,6 +28,7 @@ namespace AnimationEditorCore.Commands.Timeline.Layers
             var Parameter = parameter as TimelineViewModel;
 
             Parameter.DeleteLayerFromTimeline(Parameter.ActiveLayerIndex);
+            Parameter.PushUndoRecord(Parameter.CreateUndoState(UndoStateTitle));
         }
     }
 }

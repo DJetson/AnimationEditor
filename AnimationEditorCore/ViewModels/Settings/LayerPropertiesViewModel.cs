@@ -90,7 +90,8 @@ namespace AnimationEditorCore.ViewModels.Settings
 
             if(HasChanged)
             {
-                _SourceLayer.TimelineViewModel.PushUndoRecord(_SourceLayer.TimelineViewModel.CreateUndoState($"Modified Layer Properties"));
+                //_SourceLayer.TimelineViewModel.PushUndoRecord(_SourceLayer.TimelineViewModel.CreateUndoState($"Modified Layer Properties"));
+                Parameter.DialogResult = true;
             }
 
             Parameter.Close();
@@ -138,6 +139,7 @@ namespace AnimationEditorCore.ViewModels.Settings
         {
             var Parameter = parameter as Window;
 
+            Parameter.DialogResult = false;
             Parameter.Close();
         }
     }

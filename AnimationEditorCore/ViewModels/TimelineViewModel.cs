@@ -253,8 +253,8 @@ namespace AnimationEditorCore.ViewModels
                 SelectedFrameIndex = index;
             }
 
-            if (createUndo)
-                PushUndoRecord(CreateUndoState($"Insert Frame {index}"));
+            //if (createUndo)
+                //PushUndoRecord(CreateUndoState($"Insert Frame {index}"));
         }
 
         public void DuplicateCurrentFrameToTimeline(int index)
@@ -274,7 +274,7 @@ namespace AnimationEditorCore.ViewModels
 
             SelectedFrameIndex = index;
 
-            PushUndoRecord(CreateUndoState("Duplicate Frame"));
+            //PushUndoRecord(CreateUndoState("Duplicate Frame"));
         }
 
         public void RemoveFrame(int frameIndex)
@@ -339,7 +339,7 @@ namespace AnimationEditorCore.ViewModels
             }
             SelectedFrameIndex = Math.Max(SelectedFrameIndex - 1, 0);
 
-            PushUndoRecord(CreateUndoState("Delete Frame"));
+            //PushUndoRecord(CreateUndoState("Delete Frame"));
         }
 
         public TimelineViewModel(List<LayerModel> layers, WorkspaceViewModel workspace)
@@ -436,7 +436,7 @@ namespace AnimationEditorCore.ViewModels
 
             AddLayerAtIndex(newLayer, newLayer.LayerId);
             SortedLayers.Refresh();
-            PushUndoRecord(CreateUndoState("Added Layer"));
+            //PushUndoRecord(CreateUndoState("Added Layer"));
         }
 
         public void AddBlankLayerAtIndex(int index)
@@ -476,7 +476,7 @@ namespace AnimationEditorCore.ViewModels
 
             toRemove.ClearFrames();
 
-            PushUndoRecord(CreateUndoState("Deleted Layer"));
+            //PushUndoRecord(CreateUndoState("Deleted Layer"));
         }
 
         public void DuplicateActiveLayer(LayerNavigation direction)
@@ -491,7 +491,7 @@ namespace AnimationEditorCore.ViewModels
 
             AddLayerAtIndex(layerClone, layerClone.LayerId);
 
-            PushUndoRecord(CreateUndoState("Duplicate Layer"));
+            //PushUndoRecord(CreateUndoState("Duplicate Layer"));
         }
 
         public void AddLayerAtIndex(LayerViewModel layer, int index, bool createUndoState = true)

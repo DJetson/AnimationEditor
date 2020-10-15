@@ -90,12 +90,12 @@ namespace AnimationEditorCore.ViewModels.Settings
             if (UpdateFramesPerSecond())
                 HasChanged = true;
 
-            if (HasChanged && !IsDisplayForNewWorkspaceEnabled)
+            if (HasChanged || IsDisplayForNewWorkspaceEnabled)
             {
-                _Source.PushUndoRecord(_Source.CreateUndoState($"Modified Animation Properties"));
+                //_Source.PushUndoRecord(_Source.CreateUndoState($"Modified Animation Properties"));
+                Parameter.DialogResult = true;
             }
 
-            Parameter.DialogResult = true;
 
             Parameter.Close();
         }
