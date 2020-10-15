@@ -19,62 +19,6 @@ namespace AnimationEditorCore.ViewModels
             set { _WorkspaceViewModel = value; NotifyPropertyChanged(); }
         }
 
-        private DelegateCommand _RevertToState;
-        public DelegateCommand RevertToState
-        {
-            get { return _RevertToState; }
-            set { _RevertToState = value; NotifyPropertyChanged(); }
-        }
-
-        private bool RevertToState_CanExecute(object parameter)
-        {
-            if (!(parameter is UndoStateViewModel Parameter))
-                return false;
-
-            if (WorkspaceViewModel.TimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive)
-                return false;
-
-            if (HistoricalStates.Contains(Parameter) == false)
-                return false;
-
-            return true;
-        }
-
-        private void RevertToState_Execute(object parameter)
-        {
-            var Parameter = parameter as UndoStateViewModel;
-
-            UndoToState(Parameter);
-        }
-
-        private DelegateCommand _ResumeToState;
-        public DelegateCommand ResumeToState
-        {
-            get { return _ResumeToState; }
-            set { _ResumeToState = value; NotifyPropertyChanged(); }
-        }
-
-        private bool ResumeToState_CanExecute(object parameter)
-        {
-            if (!(parameter is UndoStateViewModel Parameter))
-                return false;
-
-            if (WorkspaceViewModel.TimelineViewModel.AnimationPlaybackViewModel.IsPlaybackActive)
-                return false;
-
-            if (HistoricalStates.Contains(Parameter) == false)
-                return false;
-
-            return true;
-        }
-
-        private void ResumeToState_Execute(object parameter)
-        {
-            var Parameter = parameter as UndoStateViewModel;
-
-            RedoToState(Parameter);
-        }
-
         private UndoStateViewModel _CurrentState;
         public UndoStateViewModel CurrentState
         {
@@ -152,11 +96,6 @@ namespace AnimationEditorCore.ViewModels
             }
         }
 
-        public void InitializeCommands()
-        {
-            RevertToState = new DelegateCommand(RevertToState_CanExecute, RevertToState_Execute);
-            ResumeToState = new DelegateCommand(ResumeToState_CanExecute, ResumeToState_Execute);
-        }
 
         private UndoStateViewModel _InitialState;
         public UndoStateViewModel InitialState
@@ -176,12 +115,10 @@ namespace AnimationEditorCore.ViewModels
         public WorkspaceHistoryViewModel(WorkspaceViewModel workspace, UndoStateViewModel initialState = null)
         {
             WorkspaceViewModel = workspace;
-
             InitialState = initialState;
-            InitializeCommands();
         }
 
-        public void AddHistoricalState(IMemento state, bool raiseChangedFlag = true)
+        public void AddHistoricalState(UndoStateViewModel state, bool raiseChangedFlag = true)
         {
             ClearFutureStates();
 
@@ -217,7 +154,7 @@ namespace AnimationEditorCore.ViewModels
             WorkspaceViewModel.WriteToTempFile();
         }
 
-        public void UndoToState(IMemento state)
+        public void UndoToState(UndoStateViewModel state)
         {
             if (!HistoricalStates.Contains(state))
                 throw new IndexOutOfRangeException($"The historical state \"{state}\" could not be found");
@@ -249,7 +186,7 @@ namespace AnimationEditorCore.ViewModels
             WorkspaceViewModel.WriteToTempFile();
         }
 
-        public void RedoToState(IMemento state)
+        public void RedoToState(UndoStateViewModel state)
         {
             if (!HistoricalStates.Contains(state))
                 throw new IndexOutOfRangeException($"The historical state \"{state}\" could not be found");

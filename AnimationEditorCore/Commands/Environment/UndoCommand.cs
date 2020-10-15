@@ -27,7 +27,9 @@ namespace AnimationEditorCore.Commands.Environment
 
         public override void Execute(object parameter)
         {
-            (parameter as WorkspaceViewModel).WorkspaceHistoryViewModel.Undo();
+            var Parameter = parameter as WorkspaceViewModel;
+
+            Parameter.WorkspaceHistoryViewModel.UndoToState(Parameter.WorkspaceHistoryViewModel.PreviousState);
         }
     }
 }

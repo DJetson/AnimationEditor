@@ -18,7 +18,7 @@ using System.Windows.Media.Imaging;
 
 namespace AnimationEditorCore.ViewModels
 {
-    public class TimelineViewModel : ViewModelBase, IMementoOriginator
+    public class TimelineViewModel : ViewModelBase
     {
         private ObservableCollection<LayerViewModel> _Layers = new ObservableCollection<LayerViewModel>();
         public ObservableCollection<LayerViewModel> Layers
@@ -580,7 +580,7 @@ namespace AnimationEditorCore.ViewModels
             WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(nextState, raiseChangedFlag);
         }
 
-        public IMemento SaveState()
+        public UndoStateViewModel SaveState()
         {
             var memento = new TimelineState(this);
 
@@ -641,9 +641,9 @@ namespace AnimationEditorCore.ViewModels
             destination.NotifyPropertyChanged(nameof(SortedLayers));
         }
 
-        public void LoadState(IMemento state)
+        public void LoadState(UndoStateViewModel state)
         {
-            var Memento = (state as TimelineState);
+            var Memento = state as TimelineState;
 
             CopyToTimeline(Memento.Timeline, this);
         }

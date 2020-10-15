@@ -115,9 +115,9 @@ namespace AnimationEditorCore.ViewModels
             var stroke = activeLayer.Frames[activeLayer.SelectedFrameIndex].StrokeCollection[0];
             stroke.Transform(new System.Windows.Media.TranslateTransform(offsetX: 1d, offsetY: 2d).Value, applyToStylusTip: false);
             var historyItem = workspace.WorkspaceHistoryViewModel.HistoricalStates.First();
-            Assert.IsTrue(workspace.WorkspaceHistoryViewModel.RevertToState.CanExecute(historyItem));
+            //Assert.IsTrue(workspace.WorkspaceHistoryViewModel.UndoToState(historyItem));
 
-            workspace.WorkspaceHistoryViewModel.RevertToState.Execute(historyItem);
+            workspace.WorkspaceHistoryViewModel.UndoToState(historyItem);
 
             // 😞 To reproduce this issue, I will have to replay some changes out of order.
             // The order I (re)fixed the issues resulted in *this* issue being fixed implicitly.

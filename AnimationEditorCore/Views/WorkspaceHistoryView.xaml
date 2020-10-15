@@ -35,7 +35,7 @@
                                     <Setter Property="BorderThickness" Value="2"/>
                                     <Setter Property="FontWeight" Value="SemiBold"/>
                                     <Setter Property="FontStyle" Value="Normal"/>
-                                    <Setter Property="Command" Value="{x:Null}"/>
+                                    <Setter Property="Command" Value="{StaticResource LoadHistoricalState}"/>
                                     <Setter Property="CommandParameter" Value="{Binding }"/>
                                 </Style.Setters>
                                 <Style.Triggers>
@@ -43,13 +43,11 @@
                                         <Setter Property="Background" Value="LightGray"/>
                                         <Setter Property="BorderThickness" Value="1"/>
                                         <Setter Property="FontStyle" Value="Normal"/>
-                                        <Setter Property="Command" Value="{Binding DataContext.RevertToState, ElementName=HistoryListBox}" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding CurrentStateType}" Value="Redo">
                                         <Setter Property="Background" Value="Gray"/>
                                         <Setter Property="BorderThickness" Value="1"/>
                                         <Setter Property="FontStyle" Value="Italic"/>
-                                        <Setter Property="Command" Value="{Binding DataContext.ResumeToState, ElementName=HistoryListBox}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

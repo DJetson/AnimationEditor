@@ -64,5 +64,6 @@
     <Environment:SelectToolCommand x:Key="SelectTool" DisplayName="Select Tool"/>
     <Environment:SetStatusBarMessageCommand x:Key="SetStatusBarMessage"/>
     <Environment:UndoCommand x:Key="Undo" DisplayName="Undo"/>
+    <Environment:LoadHistoricalStateCommand x:Key="LoadHistoricalState" />
 
 </ResourceDictionary>

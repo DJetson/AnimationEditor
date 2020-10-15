@@ -27,7 +27,9 @@ namespace AnimationEditorCore.Commands.Environment
 
         public override void Execute(object parameter)
         {
-            (parameter as WorkspaceViewModel).WorkspaceHistoryViewModel.Redo();
+            var Parameter = parameter as WorkspaceViewModel;
+
+            Parameter.WorkspaceHistoryViewModel.RedoToState(Parameter.WorkspaceHistoryViewModel.NextState);
         }
     }
 }

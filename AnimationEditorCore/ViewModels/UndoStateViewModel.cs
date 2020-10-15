@@ -3,7 +3,7 @@
 namespace AnimationEditorCore.ViewModels
 {
     public enum StateType { Undo, Current, Redo };
-    public class UndoStateViewModel : ViewModelBase, IMemento
+    public class UndoStateViewModel : ViewModelBase
     {
 
         private StateType _CurrentStateType;
@@ -19,14 +19,14 @@ namespace AnimationEditorCore.ViewModels
             set { _DisplayName = value; NotifyPropertyChanged(); }
         }
 
-        private IMementoOriginator _Originator;
-        public IMementoOriginator Originator
+        private TimelineViewModel _Originator;
+        public TimelineViewModel Originator
         {
             get => _Originator;
             set { _Originator = value; NotifyPropertyChanged(); }
         }
 
-        public UndoStateViewModel(IMementoOriginator viewModel, string stateName = "")
+        public UndoStateViewModel(TimelineViewModel viewModel, string stateName = "")
         {
             Originator = viewModel;
             DisplayName = stateName;
