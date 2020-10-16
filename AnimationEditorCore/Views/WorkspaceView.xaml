@@ -28,13 +28,23 @@
             <ScrollViewer HorizontalScrollBarVisibility="Visible" Background="LightGray" Focusable="False">
                 <Grid  Background="LightGray" >
                     <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Border x:Name="CanvasGrid" Width="{Binding TimelineViewModel.CanvasWidth}" Height="{Binding TimelineViewModel.CanvasHeight}">
+                        <Border x:Name="CanvasGrid" Width="{Binding TimelineViewModel.CanvasWidth}" Height="{Binding TimelineViewModel.CanvasHeight}" Background="White">
                             <Border.LayoutTransform>
                                 <ScaleTransform ScaleX="{Binding ZoomLevel}" ScaleY="{Binding ZoomLevel}"/>
                             </Border.LayoutTransform>
                             <Grid>
                                 <Views:AnimationPlaybackView MaxHeight="{Binding ActualHeight, ElementName=CanvasGrid}" MaxWidth="{Binding ActualWidth, ElementName=CanvasGrid}" DataContext="{Binding TimelineViewModel.AnimationPlaybackViewModel}"/>
                                 <Views:LayerCanvasView DataContext="{Binding TimelineViewModel}"/>
+                                <Grid.Background>
+                                    <VisualBrush TileMode="Tile" Stretch="Uniform" Viewport="0,0,16,16" ViewportUnits="Absolute">
+                                        <VisualBrush.Visual>
+                                            <Grid Margin="0,0,0,0">
+                                                <Border Width="32" Height="32" BorderThickness="0.25" BorderBrush="LightPink"/>
+                                                <!--<Border Width="{Binding ParentLevel.LevelProperties.PaletteViewModel.TileWidth}" Height="{Binding ParentLevel.LevelProperties.PaletteViewModel.TileHeight}" BorderThickness="1" BorderBrush="DarkGray"/>-->
+                                            </Grid>
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Grid.Background>
                             </Grid>
                         </Border>
                     </Border>

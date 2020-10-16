@@ -7,7 +7,7 @@
              xmlns:ViewModels="clr-namespace:AnimationEditorCore.ViewModels"
              mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ItemsControl ItemsSource="{Binding FrameLayers, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Background="White">
+        <ItemsControl ItemsSource="{Binding FrameLayers, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
             <ItemsControl.Resources>
                 <DataTemplate DataType="{x:Type ViewModels:FrameViewModel}">
                     <InkCanvas x:Name="LayerCanvas" Strokes="{Binding StrokeCollection}" Background="{x:Null}" DefaultDrawingAttributes="{Binding DrawingAttributes, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}">
