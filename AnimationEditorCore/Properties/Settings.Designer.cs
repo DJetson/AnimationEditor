@@ -94,5 +94,65 @@ namespace AnimationEditorCore.Properties {
                 this["NextFrameSkinOpacityFalloff"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsShowGridEnabled {
+            get {
+                return ((bool)(this["IsShowGridEnabled"]));
+            }
+            set {
+                this["IsShowGridEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double GridLineOpacity {
+            get {
+                return ((double)(this["GridLineOpacity"]));
+            }
+            set {
+                this["GridLineOpacity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFFF0000")]
+        public global::System.Windows.Media.Color GridLineColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["GridLineColor"]));
+            }
+            set {
+                this["GridLineColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0,0,16,16")]
+        public global::System.Windows.Rect GridUnitSize {
+            get {
+                return ((global::System.Windows.Rect)(this["GridUnitSize"]));
+            }
+            set {
+                this["GridUnitSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
+        public double GridLineThickness {
+            get {
+                return ((double)(this["GridLineThickness"]));
+            }
+            set {
+                this["GridLineThickness"] = value;
+            }
+        }
     }
 }

@@ -20,5 +20,20 @@
     <Setting Name="NextFrameSkinOpacityFalloff" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0.5</Value>
     </Setting>
+    <Setting Name="IsShowGridEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="GridLineOpacity" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="GridLineColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FFFF0000</Value>
+    </Setting>
+    <Setting Name="GridUnitSize" Type="System.Windows.Rect" Scope="User">
+      <Value Profile="(Default)">0,0,16,16</Value>
+    </Setting>
+    <Setting Name="GridLineThickness" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.5</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

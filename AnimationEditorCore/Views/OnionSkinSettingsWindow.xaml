@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:SettingsViewModels="clr-namespace:AnimationEditorCore.ViewModels.Settings"
         mc:Ignorable="d"
-        Height="252" Width="287" 
+        Height="252" Width="550" 
         Title="{Binding DisplayName}">
     <Window.DataContext>
         <SettingsViewModels:OnionSkinSettingsViewModel />
@@ -38,6 +38,10 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
         <GroupBox Grid.Row="0" Header="{Binding DisplayName}">
             <Grid>
                 <Grid.RowDefinitions>
@@ -84,7 +88,37 @@
                 </GroupBox>
             </Grid>
         </GroupBox>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+        <GroupBox Grid.Row="0" Grid.Column="1">
+            <GroupBox.Header>
+                <CheckBox Content="Show Grid" IsChecked="{Binding IsShowGridEnabled}" />
+            </GroupBox.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Grid Line Opacity" HorizontalAlignment="Left"/>
+                <TextBox   Grid.Row="0" Grid.Column="1" Text="{Binding GridLineOpacity}" MinWidth="30" HorizontalAlignment="Left"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Grid Line Thickness" HorizontalAlignment="Left"/>
+                <TextBox   Grid.Row="1" Grid.Column="1" Text="{Binding GridLineThickness}" MinWidth="30" HorizontalAlignment="Left"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Grid Unit Size" HorizontalAlignment="Left"/>
+                <TextBox   Grid.Row="2" Grid.Column="1" Text="{Binding GridUnitSize}" MinWidth="30" HorizontalAlignment="Left"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Grid Line Color" HorizontalAlignment="Left"/>
+                <Button Grid.Row="4" Grid.Column="1" Command="{Binding ShowColorPickerWindow}" CommandParameter="{Binding GridLineColor}" Width="25" Height="25">
+                    <Button.Background>
+                        <SolidColorBrush Color="{Binding GridLineColor}"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+        </GroupBox>
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="Discard Changes" Command="{Binding DiscardChanges}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
             <Button Content="Accept Changes" Command="{Binding AcceptChanges}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
         </StackPanel>
