@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:ViewModels="clr-namespace:AnimationEditorCore.ViewModels"
              mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
     <ScrollViewer CanContentScroll="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled" Background="WhiteSmoke">
@@ -73,23 +74,20 @@
                                             <RowDefinition/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-
                                         <ScrollContentPresenter Grid.Column="1"/>
-
                                         <ScrollBar Name="PART_VerticalScrollBar"
-                        Value="{TemplateBinding VerticalOffset}"
-                        Maximum="{TemplateBinding ScrollableHeight}"
-                        ViewportSize="{TemplateBinding ViewportHeight}"
-                        Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                                                   Value="{TemplateBinding VerticalOffset}"
+                                                   Maximum="{TemplateBinding ScrollableHeight}"
+                                                   ViewportSize="{TemplateBinding ViewportHeight}"
+                                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
                                         <ScrollBar Name="PART_HorizontalScrollBar"
-                        Orientation="Horizontal"
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Value="{TemplateBinding HorizontalOffset}"
-                        Maximum="{TemplateBinding ScrollableWidth}"
-                        ViewportSize="{TemplateBinding ViewportWidth}"
-                        Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
-
+                                                   Orientation="Horizontal"
+                                                   Grid.Row="1"
+                                                   Grid.Column="1"
+                                                   Value="{TemplateBinding HorizontalOffset}"
+                                                   Maximum="{TemplateBinding ScrollableWidth}"
+                                                   ViewportSize="{TemplateBinding ViewportWidth}"
+                                                   Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
                                     </Grid>
                                 </ControlTemplate>
                             </Setter.Value>
@@ -112,9 +110,14 @@
                                     <ColumnDefinition Width="40"/>
                                     <ColumnDefinition Width="40"/>
                                     <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="40"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis" ToolTip="{Binding DisplayName}"  VerticalAlignment="Center" />
-                                <Rectangle Width="15" Height="15" Margin="15,0,5,0" Stretch="UniformToFill" Grid.Column="1">
+                                <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Center">
+                                    <Button Padding="0,-5,0,-5" Background="Transparent" VerticalAlignment="Top" Width="25" Grid.Column="1" Style="{StaticResource ImageButtonStyle}" Content="{StaticResource LayerReorderUp}" Command="{StaticResource ReorderLayerUp}" CommandParameter="{Binding }"/>
+                                    <Button Padding="0,-5,0,-5" Background="Transparent" VerticalAlignment="Bottom" Width="25" Grid.Column="1" Style="{StaticResource ImageButtonStyle}" Content="{StaticResource LayerReorderDown}" Command="{StaticResource ReorderLayerDown}" CommandParameter="{Binding }"/>
+                                </StackPanel>
+                                <Rectangle Width="15" Height="15" Margin="15,0,5,0" Stretch="UniformToFill" Grid.Column="2">
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
                                             <Style.Setters>
@@ -128,7 +131,7 @@
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
-                                <ToggleButton Margin="0,0,15,0" Background="Transparent" Width="25" Height="25" Padding="2" Grid.Column="2" IsChecked="{Binding IsVisible}">
+                                <ToggleButton Margin="0,0,15,0" Background="Transparent" Width="25" Height="25" Padding="2" Grid.Column="3" IsChecked="{Binding IsVisible}">
                                     <ToggleButton.Style>
                                         <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource ImageToggleButtonStyle}">
                                             <Style.Setters>
@@ -144,7 +147,7 @@
                                         </Style>
                                     </ToggleButton.Style>
                                 </ToggleButton>
-                                <Button Margin="0,0,15,0" Background="Transparent" Width="25" Height="25" Padding="2" Grid.Column="3" Style="{StaticResource ImageButtonStyle}" Content="{StaticResource DetailsIcon}" Command="{StaticResource OpenLayerProperties}" CommandParameter="{Binding }"/>
+                                <Button Margin="0,0,15,0" Background="Transparent" Width="25" Height="25" Padding="2" Grid.Column="4" Style="{StaticResource ImageButtonStyle}" Content="{StaticResource DetailsIcon}" Command="{StaticResource OpenLayerProperties}" CommandParameter="{Binding }"/>
                             </Grid>
                             <ListBox x:Name="TimelineListBox" Margin="0,0,16,0" IsHitTestVisible="False" Grid.Column="1" ItemsSource="{Binding Frames}" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                                 <ListBox.Style>

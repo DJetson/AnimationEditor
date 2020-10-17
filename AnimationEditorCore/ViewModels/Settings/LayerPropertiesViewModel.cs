@@ -106,14 +106,14 @@ namespace AnimationEditorCore.ViewModels.Settings
         {
             if (LayerZIndex < 0)
                 LayerZIndex = 0;
-            else if (LayerZIndex > _SourceLayer.TimelineViewModel.Layers.Count - 1)
-                LayerZIndex = _SourceLayer.TimelineViewModel.Layers.Count - 1;
+            //else if (LayerZIndex > _SourceLayer.TimelineViewModel.Layers.Count - 1)
+            //    LayerZIndex = _SourceLayer.TimelineViewModel.Layers.Count - 1;
 
             if (LayerZIndex != _SourceLayer.LayerId)
             {
-                _SourceLayer.TimelineViewModel.Layers.Move(_SourceLayer.LayerId, LayerZIndex);
+                //_SourceLayer.LayerId = LayerZIndex;//.TimelineViewModel.Layers.Move(_SourceLayer.LayerId, LayerZIndex);
                 _SourceLayer.LayerId = LayerZIndex;
-                _SourceLayer.TimelineViewModel.UpdateLayerIds();
+                //_SourceLayer.TimelineViewModel.UpdateLayerIds();
                 _SourceLayer.TimelineViewModel.SortedLayers.Refresh();
             }
         }

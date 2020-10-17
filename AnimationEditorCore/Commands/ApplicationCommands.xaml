@@ -37,6 +37,8 @@
     <Layers:AddDuplicateLayerBelowCurrentCommand x:Key="AddDuplicateLayerBelowCurrent" />
     <Layers:DeleteActiveLayerCommand x:Key="DeleteActiveLayer" />
     <Layers:OpenLayerPropertiesCommand x:Key="OpenLayerProperties"/>
+    <Layers:ReorderLayerUpCommand x:Key="ReorderLayerUp"/>
+    <Layers:ReorderLayerDownCommand x:Key="ReorderLayerDown"/>
 
     <Playback:SelectPlaybackSpeedDoubleCommand x:Key="SelectPlaybackSpeedDouble"/>
     <Playback:SelectPlaybackSpeedHalfCommand x:Key="SelectPlaybackSpeedHalf"/>

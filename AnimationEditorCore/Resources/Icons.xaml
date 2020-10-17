@@ -58,6 +58,8 @@
             <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/StopIcon.xaml"/>
         <!--End of Animation Timeline ToolBar Icons-->
         <!--Layer Navigation Icons-->
+        <ResourceDictionary Source="./Icons/LayerNavigation/LayerReorderUp.xaml"/>
+        <ResourceDictionary Source="./Icons/LayerNavigation/LayerReorderDown.xaml"/>
         <ResourceDictionary Source="./Icons/LayerNavigation/DuplicateLayerAbove.xaml"/>
         <ResourceDictionary Source="./Icons/LayerNavigation/DuplicateLayerBelow.xaml"/>
         <ResourceDictionary Source="./Icons/LayerNavigation/InsertLayerAbove.xaml"/>
