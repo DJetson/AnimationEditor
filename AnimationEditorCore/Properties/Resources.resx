@@ -242,7 +242,7 @@
     <comment>The tooltip text for a button that triggers the CopySelectedContentsToNextLayerCommand</comment>
   </data>
   <data name="CopySelectedContentsToNextLayerUndoStateTitle" xml:space="preserve">
-    <value>Copy Strokes To Next Layer</value>
+    <value>Copy Strokes To Layer Above</value>
     <comment>The title of the Undo Record created by the CopySelectedContentsToNextLayerCommand</comment>
   </data>
   <data name="CopySelectedContentsToPreviousFrameDescription" xml:space="preserve">
@@ -266,7 +266,7 @@
     <comment>The tooltip text for a button that triggers the CopySelectedContentsToPreviousLayerCommand</comment>
   </data>
   <data name="CopySelectedContentsToPreviousLayerUndoStateTitle" xml:space="preserve">
-    <value>Copy Strokes To Previous Layer</value>
+    <value>Copy Strokes To Layer Below</value>
     <comment>The title of the Undo Record created by the CopySelectedContentsToPreviousLayerCommand</comment>
   </data>
   <data name="CopySelectedStrokesToClipboardDescription" xml:space="preserve">
@@ -284,6 +284,10 @@
   <data name="CreateNewWorkspaceToolTip" xml:space="preserve">
     <value>Create New Workspace</value>
     <comment>The tooltip text for a button that triggers the CreateNewWorkspaceCommand</comment>
+  </data>
+  <data name="CreateNewWorkspaceUndoStateTitle" xml:space="preserve">
+    <value>New Workspace</value>
+    <comment>The title of the Undo Record created by the CreateNewWorkspaceCommand</comment>
   </data>
   <data name="CutSelectedStrokesToClipboardDescription" xml:space="preserve">
     <value>Cuts the selected strokes into the clipboard</value>
@@ -386,7 +390,7 @@
     <comment>The tooltip text for a button that triggers the MoveSelectedContentsToNextLayerCommand</comment>
   </data>
   <data name="MoveSelectedContentsToNextLayerUndoStateTitle" xml:space="preserve">
-    <value>Move Strokes To Next Layer</value>
+    <value>Move Strokes To Layer Above</value>
     <comment>The title of the Undo Record created by the MoveSelectedContentsToNextLayerCommand</comment>
   </data>
   <data name="MoveSelectedContentsToPreviousFrameDescription" xml:space="preserve">
@@ -410,7 +414,7 @@
     <comment>The tooltip text for a button that triggers the MoveSelectedContentsToPreviousLayerCommand</comment>
   </data>
   <data name="MoveSelectedContentsToPreviousLayerUndoStateTitle" xml:space="preserve">
-    <value>Move Strokes To Previous Layer</value>
+    <value>Move Strokes To Layer Below</value>
     <comment>The title of the Undo Record created by the MoveSelectedContentsToPreviousLayerCommand</comment>
   </data>
   <data name="NavigateToFirstFrameDescription" xml:space="preserve">
@@ -504,6 +508,10 @@
   <data name="OpenWorkspaceToolTip" xml:space="preserve">
     <value>Open Workspace</value>
     <comment>The tooltip text for a button that triggers the OpenWorkspaceCommand</comment>
+  </data>
+  <data name="OpenWorkspaceUndoStateTitle" xml:space="preserve">
+    <value>Open Workspace</value>
+    <comment>The title of the Undo Record created by the OpenWorkspaceCommand</comment>
   </data>
   <data name="PasteStrokesFromClipboardDescription" xml:space="preserve">
     <value>Pastes the strokes from the clipboard into the current frame</value>

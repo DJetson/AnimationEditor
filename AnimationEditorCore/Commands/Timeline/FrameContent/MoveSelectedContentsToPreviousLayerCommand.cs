@@ -40,7 +40,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             if (!(Parameter.Layers.IsLayerIndexValid(Parameter.Layers.ActiveLayerIndex - 1)))
             {
                 //Create new layer to move selected contents to
-                Parameter.AddBlankLayerAtIndex(Parameter.Layers.ActiveLayerIndex);
+                Parameter.Layers.AddBlankLayerAtIndex(Parameter.Layers.ActiveLayerIndex);
             }
             else
             {

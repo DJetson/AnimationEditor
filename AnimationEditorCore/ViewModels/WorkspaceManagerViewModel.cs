@@ -1,5 +1,6 @@
 ﻿using AnimationEditorCore.Interfaces;
 using AnimationEditorCore.Models;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.Utilities;
 using AnimationEditorCore.ViewModels.Settings;
 using AnimationEditorCore.Views;
@@ -51,12 +52,13 @@ namespace AnimationEditorCore.ViewModels
         {
             var newWorkspace = new WorkspaceViewModel() { DisplayName = FileUtilities.GetUniquePlaceholderName(this), HasUnsavedChanges = true, Host = this };
 
+            TimelineViewModel timelineViewModel = newWorkspace.TimelineViewModel;
             if (promptForAnimationProperties)
             {
                 var layerProperties = new AnimationPropertiesWindow()
                 {
                     Owner = System.Windows.Application.Current.MainWindow,
-                    DataContext = new AnimationPropertiesViewModel(newWorkspace.TimelineViewModel)
+                    DataContext = new AnimationPropertiesViewModel(timelineViewModel)
                     {
                         IsDisplayForNewWorkspaceEnabled = true
                     }
@@ -107,6 +109,7 @@ namespace AnimationEditorCore.ViewModels
                 var f = WorkspaceFileModel.OpenWorkspaceFile(filepath, JsonSerializerOptions);
                 var w = new WorkspaceViewModel(f) { IsRecoveredFile = true, HasUnsavedChanges = true };
                 AddWorkspace(w);
+                w.TimelineViewModel.PushUndoRecord(w.TimelineViewModel.CreateUndoState(Resources.OpenWorkspaceUndoStateTitle), false);
             }
         }
     }

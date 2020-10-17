@@ -1,6 +1,7 @@
 ﻿using AnimationEditorCore.Commands.BaseClasses;
 using AnimationEditorCore.Interfaces;
 using AnimationEditorCore.Properties;
+using AnimationEditorCore.ViewModels;
 
 namespace AnimationEditorCore.Commands.Workspace
 {
@@ -8,6 +9,7 @@ namespace AnimationEditorCore.Commands.Workspace
     {
         public override string Description => Resources.CreateNewWorkspaceDescription;
         public override string ToolTip => Resources.CreateNewWorkspaceToolTip;
+        public override string UndoStateTitle => Resources.CreateNewWorkspaceUndoStateTitle;
         public override string DisplayName => "Create New Workspace";
 
         public override bool CanExecute(object parameter)
@@ -29,6 +31,9 @@ namespace AnimationEditorCore.Commands.Workspace
             var Parameter = parameter as IHasWorkspaceCollection;
 
             Parameter.CreateNewWorkspace();
+            TimelineViewModel timelineViewModel = Parameter.SelectedWorkspace.TimelineViewModel;
+
+            timelineViewModel.PushUndoRecord(timelineViewModel.CreateUndoState(UndoStateTitle), false);
         }
     }
 }

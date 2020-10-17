@@ -11,6 +11,7 @@ namespace AnimationEditorCore.Commands.Workspace
     {
         public override string Description => Resources.OpenWorkspaceDescription;
         public override string ToolTip => Resources.OpenWorkspaceToolTip;
+        public override string UndoStateTitle => Resources.OpenWorkspaceUndoStateTitle;
         public override string DisplayName => "Open Workspace";
 
         public OpenWorkspaceCommand()
@@ -61,6 +62,7 @@ namespace AnimationEditorCore.Commands.Workspace
             var f = WorkspaceFileModel.OpenWorkspaceFile(fileName, JsonSerializerOptions);
             var w = new WorkspaceViewModel(f);
             workspaceManager.AddWorkspace(w);
+            w.TimelineViewModel.PushUndoRecord(w.TimelineViewModel.CreateUndoState(UndoStateTitle), false);
         }
     }
 }

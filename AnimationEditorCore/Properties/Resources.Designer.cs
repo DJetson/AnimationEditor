@@ -340,7 +340,7 @@ namespace AnimationEditorCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copy Strokes To Next Layer.
+        ///   Looks up a localized string similar to Copy Strokes To Layer Above.
         /// </summary>
         public static string CopySelectedContentsToNextLayerUndoStateTitle {
             get {
@@ -394,7 +394,7 @@ namespace AnimationEditorCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copy Strokes To Previous Layer.
+        ///   Looks up a localized string similar to Copy Strokes To Layer Below.
         /// </summary>
         public static string CopySelectedContentsToPreviousLayerUndoStateTitle {
             get {
@@ -435,6 +435,15 @@ namespace AnimationEditorCore.Properties {
         public static string CreateNewWorkspaceToolTip {
             get {
                 return ResourceManager.GetString("CreateNewWorkspaceToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Workspace.
+        /// </summary>
+        public static string CreateNewWorkspaceUndoStateTitle {
+            get {
+                return ResourceManager.GetString("CreateNewWorkspaceUndoStateTitle", resourceCulture);
             }
         }
         
@@ -664,7 +673,7 @@ namespace AnimationEditorCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move Strokes To Next Layer.
+        ///   Looks up a localized string similar to Move Strokes To Layer Above.
         /// </summary>
         public static string MoveSelectedContentsToNextLayerUndoStateTitle {
             get {
@@ -718,7 +727,7 @@ namespace AnimationEditorCore.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move Strokes To Previous Layer.
+        ///   Looks up a localized string similar to Move Strokes To Layer Below.
         /// </summary>
         public static string MoveSelectedContentsToPreviousLayerUndoStateTitle {
             get {
@@ -930,6 +939,15 @@ namespace AnimationEditorCore.Properties {
         public static string OpenWorkspaceToolTip {
             get {
                 return ResourceManager.GetString("OpenWorkspaceToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Workspace.
+        /// </summary>
+        public static string OpenWorkspaceUndoStateTitle {
+            get {
+                return ResourceManager.GetString("OpenWorkspaceUndoStateTitle", resourceCulture);
             }
         }
         

@@ -1,7 +1,7 @@
 ﻿using AnimationEditorCore.ViewModels;
 using System.Windows;
 using System.Linq;
-
+using AnimationEditorCore.Properties;
 namespace AnimationEditorCore.Views
 {
     public partial class MainWindow : Window
@@ -38,7 +38,11 @@ namespace AnimationEditorCore.Views
                 return;
 
             if (dc.WorkspaceManager.Workspaces.Count == 0)
-                dc.WorkspaceManager.CreateNewWorkspace();
+            {
+                var workspace = dc.WorkspaceManager.CreateNewWorkspace();
+                TimelineViewModel timelineViewModel = workspace.TimelineViewModel;
+                timelineViewModel.PushUndoRecord(timelineViewModel.CreateUndoState(Properties.Resources.CreateNewWorkspaceUndoStateTitle), false);
+            }
         }
     }
 }

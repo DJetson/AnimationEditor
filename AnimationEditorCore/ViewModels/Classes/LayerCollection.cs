@@ -31,14 +31,6 @@ namespace AnimationEditorCore.ViewModels.Classes
             set { _TimelineViewModel = value; NotifyPropertyChanged(); }
         }
 
-
-        //private ObservableCollection<LayerViewModel> _Layers = new ObservableCollection<LayerViewModel>();
-        //public ObservableCollection<LayerViewModel> Layers
-        //{
-        //    get { return this.i; }
-        //    set { _Layers = value; NotifyPropertyChanged(); }
-        //}
-
         private CollectionViewSource _SortedLayers = new CollectionViewSource();
         public CollectionView SortedLayers
         {
@@ -243,6 +235,40 @@ namespace AnimationEditorCore.ViewModels.Classes
             var layer = Items.Where(e => e.ZIndex == zIndex).FirstOrDefault();
 
             return layer;
+        }
+
+        public void RemoveLayerAtZIndex(int zIndex)
+        {
+            var toRemoveIndex = zIndex;
+            var toRemove = Items[toRemoveIndex];
+
+            Items.Remove(toRemove);
+            LayerOrdering.ConsolidateZIndices(Items.ToList());
+            if (Items.Count == 0)
+            {
+                AddBlankLayerAtIndex(0);
+            }
+            else if (ActiveLayer == toRemove)
+            {
+                var newActiveIndex = LayerOrdering.GetNextLayerZIndexBelow(Items.ToList(), toRemoveIndex);
+                if (newActiveIndex == -1)
+                    ActiveLayer = GetLayerAtZIndex(BottomZIndex);
+                else
+                    ActiveLayer = GetLayerAtZIndex(newActiveIndex);
+            }
+
+            toRemove.ClearFrames();
+            Refresh();
+        }
+
+        public void DuplicateLayer(LayerViewModel layer, int insertAtZIndex)
+        {
+            var layerClone = layer.Clone();
+
+            layerClone.ZIndex = insertAtZIndex;
+            layerClone.SelectedFrameIndex = layer.SelectedFrameIndex;
+
+            AddLayerAtIndex(layerClone, layerClone.ZIndex);
         }
     }
 }
