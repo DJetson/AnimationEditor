@@ -474,6 +474,7 @@ namespace AnimationEditorCore.ViewModels
                 ActiveLayer = Layers[newActiveIndex];
             }
 
+            UpdateLayerIds();
             toRemove.ClearFrames();
 
             //PushUndoRecord(CreateUndoState("Deleted Layer"));
@@ -487,6 +488,7 @@ namespace AnimationEditorCore.ViewModels
             if (direction == LayerNavigation.Above)
                 duplicateLayerIndex += 1;
 
+            layerClone.LayerId = duplicateLayerIndex;
             layerClone.SelectedFrameIndex = SelectedFrameIndex;
 
             AddLayerAtIndex(layerClone, layerClone.LayerId);
