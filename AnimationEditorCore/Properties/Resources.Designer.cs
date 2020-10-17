@@ -511,6 +511,33 @@ namespace AnimationEditorCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete this layer and all of its contents from the timeline.
+        /// </summary>
+        public static string DeleteLayerDescription {
+            get {
+                return ResourceManager.GetString("DeleteLayerDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Layer.
+        /// </summary>
+        public static string DeleteLayerToolTip {
+            get {
+                return ResourceManager.GetString("DeleteLayerToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Layer.
+        /// </summary>
+        public static string DeleteLayerUndoStateTitle {
+            get {
+                return ResourceManager.GetString("DeleteLayerUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exports the current workspace to a GIF animation.
         /// </summary>
         public static string ExportToGifDescription {

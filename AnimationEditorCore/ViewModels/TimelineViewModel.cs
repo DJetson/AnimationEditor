@@ -419,8 +419,8 @@ namespace AnimationEditorCore.ViewModels
             {
                 InitializeTimeline();
             }
-            else
-            {
+            else if(Layers.ActiveLayer == toRemove)
+            { 
                 var newActiveIndex = LayerOrdering.GetNextLayerZIndexBelow(Layers.ToList(), toRemoveIndex);
                 if (newActiveIndex == -1)
                     Layers.ActiveLayer = Layers[Layers.BottomZIndex];

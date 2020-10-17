@@ -36,6 +36,7 @@
     <Layers:AddDuplicateLayerAboveCurrentCommand x:Key="AddDuplicateLayerAboveCurrent" />
     <Layers:AddDuplicateLayerBelowCurrentCommand x:Key="AddDuplicateLayerBelowCurrent" />
     <Layers:DeleteActiveLayerCommand x:Key="DeleteActiveLayer" />
+    <Layers:DeleteLayerCommand x:Key="DeleteLayer" />
     <Layers:OpenLayerPropertiesCommand x:Key="OpenLayerProperties"/>
     <Layers:ReorderLayerUpCommand x:Key="ReorderLayerUp"/>
     <Layers:ReorderLayerDownCommand x:Key="ReorderLayerDown"/>

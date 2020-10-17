@@ -317,6 +317,18 @@
     <value>Delete Current Frame</value>
     <comment>The title of the Undo Record created by the DeleteCurrentFrameCommand</comment>
   </data>
+  <data name="DeleteLayerDescription" xml:space="preserve">
+    <value>Delete this layer and all of its contents from the timeline</value>
+    <comment>Status bar message that is displayed when the mouse is over the Delete Layer button</comment>
+  </data>
+  <data name="DeleteLayerToolTip" xml:space="preserve">
+    <value>Delete Layer</value>
+    <comment>The tooltip text for a button that triggers the DeleteLayerCommand</comment>
+  </data>
+  <data name="DeleteLayerUndoStateTitle" xml:space="preserve">
+    <value>Delete Layer</value>
+    <comment>The title of the Undo Record created by the DeleteLayerCommand</comment>
+  </data>
   <data name="ExportToGifDescription" xml:space="preserve">
     <value>Exports the current workspace to a GIF animation</value>
     <comment>Status bar message that is displayed when the mouse is over the Export To Gif button</comment>

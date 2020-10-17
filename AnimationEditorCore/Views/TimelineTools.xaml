@@ -56,8 +56,8 @@
                 <Button Content="{StaticResource MoveSelectedToNextLayer}" Command="{StaticResource MoveSelectedContentsToNextLayer}" CommandParameter="{Binding }"/>
             </ToolBar>
             <ToolBar>
-                <Button Content="{StaticResource DeleteIcon}" Command="{StaticResource DeleteActiveLayer}" CommandParameter="{Binding }" />
-                <Separator/>
+                <!--<Button Content="{StaticResource DeleteIcon}" Command="{StaticResource DeleteActiveLayer}" CommandParameter="{Binding }" />-->
+                <!--<Separator/>-->
                 <Button Content="{StaticResource AddBlankLayerAbove}" Command="{StaticResource AddBlankLayerAboveCurrent}" CommandParameter="{Binding }" />
                 <Button Content="{StaticResource AddBlankLayerBelow}" Command="{StaticResource AddBlankLayerBelowCurrent}" CommandParameter="{Binding }" />
                 <Separator/>
