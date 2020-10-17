@@ -113,11 +113,7 @@
                                     <ColumnDefinition Width="40"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis" ToolTip="{Binding DisplayName}"  VerticalAlignment="Center" />
-                                <StackPanel Orientation="Vertical" Grid.Column="1" VerticalAlignment="Center">
-                                    <Button Padding="0,-5,0,-5" Background="Transparent" VerticalAlignment="Top" Width="25" Grid.Column="1" Style="{StaticResource ImageButtonStyle}" Content="{StaticResource LayerReorderUp}" Command="{StaticResource ReorderLayerUp}" CommandParameter="{Binding }"/>
-                                    <Button Padding="0,-5,0,-5" Background="Transparent" VerticalAlignment="Bottom" Width="25" Grid.Column="1" Style="{StaticResource ImageButtonStyle}" Content="{StaticResource LayerReorderDown}" Command="{StaticResource ReorderLayerDown}" CommandParameter="{Binding }"/>
-                                </StackPanel>
-                                <Rectangle Width="15" Height="15" Margin="15,0,5,0" Stretch="UniformToFill" Grid.Column="2">
+                                <Rectangle Width="15" Height="15" Margin="15,0,5,0" Stretch="UniformToFill" Grid.Column="1">
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
                                             <Style.Setters>
@@ -131,7 +127,7 @@
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
-                                <ToggleButton Margin="0,0,15,0" Background="Transparent" Width="25" Height="25" Padding="2" Grid.Column="3" IsChecked="{Binding IsVisible}">
+                                <ToggleButton Margin="0,0,0,0" Background="Transparent" Width="25" Height="25" Padding="2" Grid.Column="3" IsChecked="{Binding IsVisible}">
                                     <ToggleButton.Style>
                                         <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource ImageToggleButtonStyle}">
                                             <Style.Setters>
@@ -147,6 +143,10 @@
                                         </Style>
                                     </ToggleButton.Style>
                                 </ToggleButton>
+                                <StackPanel Orientation="Vertical" Grid.Column="2" VerticalAlignment="Center">
+                                    <Button Padding="0,-5,0,-5" Background="Transparent" VerticalAlignment="Top" Width="25" Grid.Column="1" Style="{StaticResource ImageButtonStyle}" Content="{StaticResource LayerReorderUp}" Command="{StaticResource ReorderLayerUp}" CommandParameter="{Binding }"/>
+                                    <Button Padding="0,-5,0,-5" Background="Transparent" VerticalAlignment="Bottom" Width="25" Grid.Column="1" Style="{StaticResource ImageButtonStyle}" Content="{StaticResource LayerReorderDown}" Command="{StaticResource ReorderLayerDown}" CommandParameter="{Binding }"/>
+                                </StackPanel>
                                 <Button Margin="0,0,15,0" Background="Transparent" Width="25" Height="25" Padding="2" Grid.Column="4" Style="{StaticResource ImageButtonStyle}" Content="{StaticResource DetailsIcon}" Command="{StaticResource OpenLayerProperties}" CommandParameter="{Binding }"/>
                             </Grid>
                             <ListBox x:Name="TimelineListBox" Margin="0,0,16,0" IsHitTestVisible="False" Grid.Column="1" ItemsSource="{Binding Frames}" ScrollViewer.HorizontalScrollBarVisibility="Hidden">

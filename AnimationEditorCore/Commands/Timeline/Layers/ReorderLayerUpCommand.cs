@@ -1,4 +1,5 @@
 ﻿using AnimationEditorCore.Commands.BaseClasses;
+using AnimationEditorCore.Properties;
 using AnimationEditorCore.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,9 @@ namespace AnimationEditorCore.Commands.Timeline.Layers
 {
     public class ReorderLayerUpCommand : RequeryBase
     {
+        public override string Description => Resources.ReorderLayerUpDescription;
+        public override string ToolTip => Resources.ReorderLayerUpToolTip;
+        public override string UndoStateTitle => Resources.ReorderLayerUpUndoStateTitle; 
         public override bool CanExecute(object parameter)
         {
             if (!(parameter is LayerViewModel Parameter))
@@ -33,6 +37,7 @@ namespace AnimationEditorCore.Commands.Timeline.Layers
             var swapWith = timeline.GetLayerAbove(Parameter);
 
             timeline.SwapLayerZIndex(Parameter, swapWith);
+            timeline.PushUndoRecord(timeline.CreateUndoState(UndoStateTitle));
         }
     }
 }

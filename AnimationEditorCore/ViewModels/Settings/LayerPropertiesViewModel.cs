@@ -1,8 +1,10 @@
 ﻿using AnimationEditorCore.BaseClasses;
 using AnimationEditorCore.Commands;
+using AnimationEditorCore.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows;
 
@@ -109,7 +111,12 @@ namespace AnimationEditorCore.ViewModels.Settings
 
             if (LayerZIndex != _SourceLayer.ZIndex)
             {
+                List<LayerViewModel> layers = _SourceLayer.TimelineViewModel.Layers.ToList();
+
+                LayerOrdering.CreateSpaceAtZIndex(layers.ToList(), LayerZIndex);
                 _SourceLayer.ZIndex = LayerZIndex;
+                LayerOrdering.ConsolidateZIndices(layers.ToList());
+
                 _SourceLayer.TimelineViewModel.SortedLayers.Refresh();
             }
         }

@@ -952,6 +952,60 @@ namespace AnimationEditorCore.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move this layer underneath of the one below it.
+        /// </summary>
+        public static string ReorderLayerDownDescription {
+            get {
+                return ResourceManager.GetString("ReorderLayerDownDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Down.
+        /// </summary>
+        public static string ReorderLayerDownToolTip {
+            get {
+                return ResourceManager.GetString("ReorderLayerDownToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Layer Down.
+        /// </summary>
+        public static string ReorderLayerDownUndoStateTitle {
+            get {
+                return ResourceManager.GetString("ReorderLayerDownUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move this layer on top of the one above it.
+        /// </summary>
+        public static string ReorderLayerUpDescription {
+            get {
+                return ResourceManager.GetString("ReorderLayerUpDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Up.
+        /// </summary>
+        public static string ReorderLayerUpToolTip {
+            get {
+                return ResourceManager.GetString("ReorderLayerUpToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Layer Up.
+        /// </summary>
+        public static string ReorderLayerUpUndoStateTitle {
+            get {
+                return ResourceManager.GetString("ReorderLayerUpUndoStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save the current active workspace.
         /// </summary>
         public static string SaveWorkspaceDescription {

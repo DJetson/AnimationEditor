@@ -513,6 +513,30 @@
     <value>Redo</value>
     <comment>The tooltip text for a button that triggers the RedoCommand</comment>
   </data>
+  <data name="ReorderLayerDownDescription" xml:space="preserve">
+    <value>Move this layer underneath of the one below it</value>
+    <comment>Status bar message that is displayed when the mouse is over the ReorderLayerDown button</comment>
+  </data>
+  <data name="ReorderLayerDownToolTip" xml:space="preserve">
+    <value>Move Down</value>
+    <comment>The tooltip text for a button that triggers the ReorderLayerDownCommand</comment>
+  </data>
+  <data name="ReorderLayerDownUndoStateTitle" xml:space="preserve">
+    <value>Move Layer Down</value>
+    <comment>The title of the Undo Record created by the ReorderLayerDownCommand</comment>
+  </data>
+  <data name="ReorderLayerUpDescription" xml:space="preserve">
+    <value>Move this layer on top of the one above it</value>
+    <comment>Status bar message that is displayed when the mouse is over the ReorderLayerUp button</comment>
+  </data>
+  <data name="ReorderLayerUpToolTip" xml:space="preserve">
+    <value>Move Up</value>
+    <comment>The tooltip text for a button that triggers the ReorderLayerUpCommand</comment>
+  </data>
+  <data name="ReorderLayerUpUndoStateTitle" xml:space="preserve">
+    <value>Move Layer Up</value>
+    <comment>The title of the Undo Record created by the ReorderLayerUpCommand</comment>
+  </data>
   <data name="SaveWorkspaceDescription" xml:space="preserve">
     <value>Save the current active workspace</value>
     <comment>Status bar message that is displayed when the mouse is over the Save Workspace button</comment>

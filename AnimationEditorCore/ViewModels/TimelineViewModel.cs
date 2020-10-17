@@ -503,6 +503,7 @@ namespace AnimationEditorCore.ViewModels
                 var newFrame = new FrameViewModel(newLayer, i);
                 newLayer.AddFrameAtIndex(newFrame, i);
             }
+
             newLayer.SelectedFrameIndex = SelectedFrameIndex;
 
             AddLayerAtIndex(newLayer, newLayer.ZIndex);
@@ -514,7 +515,7 @@ namespace AnimationEditorCore.ViewModels
         {
             var zIndexes = Layers.Select(e => e.ZIndex);
 
-            for(int i = zIndex; ; i++ )
+            for (int i = zIndex; ; i++)
             {
                 if (!zIndexes.Contains(i))
                     return i;
@@ -545,7 +546,7 @@ namespace AnimationEditorCore.ViewModels
             var toRemove = Layers[toRemoveIndex];
 
             Layers.Remove(toRemove);
-
+            LayerOrdering.ConsolidateZIndices(Layers.ToList());
             if (Layers.Count == 0)
             {
                 InitializeTimeline();
@@ -557,7 +558,7 @@ namespace AnimationEditorCore.ViewModels
             }
 
             toRemove.ClearFrames();
-
+            SortedLayers.Refresh();
             //PushUndoRecord(CreateUndoState("Deleted Layer"));
         }
 
@@ -588,12 +589,15 @@ namespace AnimationEditorCore.ViewModels
                 layer.DisplayName = FileUtilities.GetUniqueNameForCollection(Layers.Select(e => e.DisplayName).ToList(), layer.DisplayName);
             }
 
+
             if (index < 0)
             {
+                LayerOrdering.CreateSpaceAtZIndex(Layers.ToList(), index);
                 Layers.Insert(0, layer);
             }
             else if (index < Layers.Count)
             {
+                LayerOrdering.CreateSpaceAtZIndex(Layers.ToList(), index);
                 Layers.Insert(index, layer);
             }
             else
