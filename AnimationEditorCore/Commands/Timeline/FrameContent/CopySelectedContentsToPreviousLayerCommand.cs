@@ -42,7 +42,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             }
             else
             {
-                Parameter.ActiveLayer = Parameter.Layers[Parameter.ActiveLayerIndex - 1];
+                Parameter.ActiveLayer = Parameter.GetLayerAtZIndex(Parameter.ActiveLayerIndex - 1);
             }
             var copyToFrame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);
 

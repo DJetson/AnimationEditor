@@ -4,6 +4,7 @@ using AnimationEditorCore.Interfaces;
 using AnimationEditorCore.ViewModels.StateObjects;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Ink;
@@ -89,12 +90,12 @@ namespace AnimationEditorCore.ViewModels
 
             InkCanvas = Parameter;
 
-            if(SelectedStrokes.Count > 0)
+            if (SelectedStrokes.Count > 0)
             {
                 InkCanvas.Select(SelectedStrokes);
             }
 
-            if(_DeferredSelectionStrokes != null)
+            if (_DeferredSelectionStrokes != null)
             {
                 InkCanvas.Select(_DeferredSelectionStrokes);
                 _DeferredSelectionStrokes = null;
@@ -141,7 +142,7 @@ namespace AnimationEditorCore.ViewModels
                     _DeferredSelectionStrokes.Add(e.Added);
                 }
             }
-            if(e.Removed.Count > 0)
+            if (e.Removed.Count > 0)
             {
 
             }
@@ -150,12 +151,21 @@ namespace AnimationEditorCore.ViewModels
 
         public void RemoveStrokes(StrokeCollection strokes, bool createUndo = true)
         {
+            var matchingStrokes = new StrokeCollection(strokes.Where(e => StrokeCollection.Contains(e)));
+
+            System.Diagnostics.Debug.WriteLineIf((matchingStrokes != strokes), $"Attempting to remove strokes that do not exist in the target collection");
+
             if (createUndo == false)
             {
                 StrokeCollection.StrokesChanged -= StrokeCollection_StrokesChanged;
             }
 
-            StrokeCollection.Remove(strokes);
+            StrokeCollection.Remove(matchingStrokes);
+
+            foreach(var removedStroke in matchingStrokes)
+            {
+                removedStroke.StylusPointsChanged -= Stroke_StylusPointsChanged;
+            }
 
             if (createUndo == false)
             {

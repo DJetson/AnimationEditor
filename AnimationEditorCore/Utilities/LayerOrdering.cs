@@ -52,14 +52,35 @@ namespace AnimationEditorCore.Utilities
             return false;
         }
 
-        public static int GetNextLayerZIndexAbove(List<LayerViewModel> layers, int start)
+        public static int GetNextLayerZIndexAbove(List<LayerViewModel> layers, int zIndex)
         {
-            return GetAllLayersAboveZIndex(layers, start)?.Select(e => e.ZIndex)?.Min() ?? -1;
+            var layersAbove = GetAllLayersAboveZIndex(layers, zIndex);
+            
+            if (layersAbove == null || layersAbove.Count == 0)
+                return -1;
+
+            return layersAbove.Select(e => e.ZIndex).Min();
         }
 
-        public static List<LayerViewModel> GetAllLayersAboveZIndex(List<LayerViewModel> layers, int start)
+        public static int GetNextLayerZIndexBelow(List<LayerViewModel> layers, int zIndex)
         {
-            return layers.Where(e => e.ZIndex > start).ToList();
+            var layersBelow = GetAllLayersBelowZIndex(layers, zIndex);
+
+            if (layersBelow == null || layersBelow.Count == 0)
+                return -1;
+
+            return layersBelow.Select(e => e.ZIndex).Max();
+        }
+
+
+        public static List<LayerViewModel> GetAllLayersAboveZIndex(List<LayerViewModel> layers, int zIndex)
+        {
+            return layers.Where(e => e.ZIndex > zIndex).ToList();
+        }
+
+        public static List<LayerViewModel> GetAllLayersBelowZIndex(List<LayerViewModel> layers, int zIndex)
+        {
+            return layers.Where(e => e.ZIndex < zIndex).ToList();
         }
 
         public static void ConsolidateZIndices(List<LayerViewModel> layers)

@@ -60,7 +60,7 @@ namespace AnimationEditorCore.ViewModels
 
         public int ActiveLayerIndex
         {
-            get => Layers.IndexOf(ActiveLayer);
+            get => ActiveLayer.ZIndex;
         }
 
         public string CurrentIndexOutOfFrameCount
@@ -385,7 +385,7 @@ namespace AnimationEditorCore.ViewModels
         public void ActivateLayerAtIndex(int index)
         {
             if (IsLayerIndexValid(index))
-                ActiveLayer = Layers[index];
+                ActiveLayer = GetLayerAtZIndex(index);
         }
 
         public void DeleteCurrentFrame()
@@ -471,10 +471,14 @@ namespace AnimationEditorCore.ViewModels
 
             SelectedFrameIndex = originalTimeline.SelectedFrameIndex;
 
-            if (originalTimeline.Layers.Where(e => e.IsActive).Count() == 0)
-                ActiveLayer = Layers[0];
+            //if (originalTimeline.Layers.Where(e => e.IsActive).Count() == 0)
+            //    ActiveLayer = Layers[0];
+            //else
+            //    ActiveLayer = Layers[originalTimeline.Layers.IndexOf(originalTimeline.Layers.Where(e => e.IsActive).FirstOrDefault())];
+            if (originalTimeline.ActiveLayer == null)
+                ActiveLayer = GetLayerAtZIndex(BottomZIndex);
             else
-                ActiveLayer = Layers[originalTimeline.Layers.IndexOf(originalTimeline.Layers.Where(e => e.IsActive).FirstOrDefault())];
+                ActiveLayer = GetLayerAtZIndex(originalTimeline.ActiveLayerIndex);
         }
 
         public void InitializeTimeline()
@@ -537,13 +541,13 @@ namespace AnimationEditorCore.ViewModels
             AddLayerAtIndex(newLayer, newLayer.ZIndex);
         }
 
-        public void DeleteLayerFromTimeline(int index)
+        public void DeleteLayerFromTimeline(int zIndex)
         {
             //TODO: This should get a confirmation dialog that can optionally be skipped permanently (e.g. "Don't show this again" checkbox)
-            if (index < 0 || index >= Layers.Count)
-                throw new IndexOutOfRangeException($"No layer found at index:{index}.");
-            var toRemoveIndex = index;
-            var toRemove = Layers[toRemoveIndex];
+            if (zIndex < 0 || zIndex >= Layers.Count)
+                throw new IndexOutOfRangeException($"No layer found at index:{zIndex}.");
+            var toRemoveIndex = zIndex;
+            var toRemove = GetLayerAtZIndex(toRemoveIndex);
 
             Layers.Remove(toRemove);
             LayerOrdering.ConsolidateZIndices(Layers.ToList());
@@ -553,8 +557,11 @@ namespace AnimationEditorCore.ViewModels
             }
             else
             {
-                var newActiveIndex = Math.Max(toRemoveIndex - 1, 0);
-                ActiveLayer = Layers[newActiveIndex];
+                var newActiveIndex = LayerOrdering.GetNextLayerZIndexBelow(Layers.ToList(), toRemoveIndex);
+                if (newActiveIndex == -1)
+                    ActiveLayer = GetLayerAtZIndex(BottomZIndex);
+                else
+                    ActiveLayer = GetLayerAtZIndex(newActiveIndex);
             }
 
             toRemove.ClearFrames();
@@ -593,12 +600,12 @@ namespace AnimationEditorCore.ViewModels
             if (index < 0)
             {
                 LayerOrdering.CreateSpaceAtZIndex(Layers.ToList(), index);
-                Layers.Insert(0, layer);
+                Layers.Add(layer);
             }
             else if (index < Layers.Count)
             {
                 LayerOrdering.CreateSpaceAtZIndex(Layers.ToList(), index);
-                Layers.Insert(index, layer);
+                Layers.Add(layer);
             }
             else
             {
@@ -715,7 +722,7 @@ namespace AnimationEditorCore.ViewModels
 
             destination.InitializeLayerViewSource();
             destination.SelectedFrameIndex = original.SelectedFrameIndex;
-            destination.ActiveLayer = destination.Layers[original.Layers.IndexOf(original.ActiveLayer)];
+            destination.ActiveLayer = destination.GetLayerAtZIndex(original.ActiveLayerIndex);
             destination.NotifyPropertyChanged(nameof(SortedLayers));
         }
 
