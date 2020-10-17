@@ -34,14 +34,14 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
 
             StrokeCollection copiedStrokes = new StrokeCollection(frame.SelectedStrokes.Select(e => e.Clone()));
 
-            if (!(Parameter.IsLayerIndexValid(Parameter.Layers.ActiveLayerIndex + 1)))
+            if (!(Parameter.Layers.IsLayerIndexValid(Parameter.Layers.ActiveLayerIndex + 1)))
             {
                 //Create new layer to move selected contents to
                 Parameter.AddBlankLayerAtIndex(Parameter.Layers.ActiveLayerIndex + 1);
             }
             else
             {
-                Parameter.Layers.ActiveLayer = Parameter.GetLayerAtZIndex(Parameter.Layers.ActiveLayerIndex + 1);
+                Parameter.Layers.ActiveLayer = Parameter.Layers[Parameter.Layers.ActiveLayerIndex + 1];
             }
             //Parameter.Layers.ActiveLayer = Parameter.Layers[Parameter.Layers.ActiveLayerIndex + 1];
             var copyToFrame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);

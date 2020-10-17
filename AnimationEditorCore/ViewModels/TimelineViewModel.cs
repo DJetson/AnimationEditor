@@ -233,14 +233,6 @@ namespace AnimationEditorCore.ViewModels
             FrameCount = AnimationUtilities.GetFrameCount(Layers.ToList());
         }
 
-        public bool IsLayerIndexValid(int index)
-        {
-            if (Layers.Select(e => e.ZIndex).Contains(index))
-                return true;
-
-            return false;
-        }
-
         public FrameViewModel GetActiveFrameAtIndex(int index)
         {
             if (IsFrameIndexValid(index))
@@ -249,76 +241,7 @@ namespace AnimationEditorCore.ViewModels
                 return null;
         }
 
-        public int TopZIndex
-        {
-            get
-            {
-                return Layers.Select(e => e.ZIndex).Max();
-            }
-        }
-
-        public int BottomZIndex
-        {
-            get
-            {
-                return Layers.Select(e => e.ZIndex).Min();
-            }
-        }
-
-        public LayerViewModel GetLayerAbove(LayerViewModel layer)
-        {
-            if (layer == null)
-                return null;
-
-            if (layer.ZIndex == TopZIndex)
-                return null;
-
-            var layersAboveCurrent = Layers.Where(e => e.ZIndex > layer.ZIndex);
-
-            if (layersAboveCurrent.Count() == 0)
-                return null;
-
-            int aboveIndex = layersAboveCurrent.Select(e => e.ZIndex).Min();
-
-            return GetLayerAtZIndex(aboveIndex);
-        }
-
-        public LayerViewModel GetLayerBelow(LayerViewModel layer)
-        {
-            if (layer == null)
-                return null;
-
-            if (layer.ZIndex == BottomZIndex)
-                return null;
-
-            var layersBelowCurrent = Layers.Where(e => e.ZIndex < layer.ZIndex);
-
-            if (layersBelowCurrent.Count() == 0)
-                return null;
-
-            int belowIndex = layersBelowCurrent.Select(e => e.ZIndex).Max();
-
-            return GetLayerAtZIndex(belowIndex);
-        }
-
-        public void SwapLayerZIndex(LayerViewModel layerA, LayerViewModel layerB)
-        {
-            if (layerA == null || layerB == null)
-                return;
-
-            int tmp = layerA.ZIndex;
-            layerA.ZIndex = layerB.ZIndex;
-            layerB.ZIndex = tmp;
-
-            Layers.Refresh();
-        }
-
-        public LayerViewModel GetLayerAtZIndex(int zIndex)
-        {
-            var layer = Layers.Where(e => e.ZIndex == zIndex).FirstOrDefault();
-
-            return layer;
-        }
+        
 
         public bool IsFrameIndexValid(int index)
         {
@@ -328,11 +251,6 @@ namespace AnimationEditorCore.ViewModels
             return false;
         }
 
-        public void ActivateLayerAtIndex(int index)
-        {
-            if (IsLayerIndexValid(index))
-                Layers.ActiveLayer = GetLayerAtZIndex(index);
-        }
 
         public void DeleteCurrentFrame()
         {
@@ -422,9 +340,9 @@ namespace AnimationEditorCore.ViewModels
             //else
             //    Layers.ActiveLayer = Layers[originalTimeline.Layers.IndexOf(originalTimeline.Layers.Where(e => e.IsActive).FirstOrDefault())];
             if (originalTimeline.Layers.ActiveLayer == null)
-                Layers.ActiveLayer = GetLayerAtZIndex(BottomZIndex);
+                Layers.ActiveLayer = Layers[Layers.BottomZIndex];
             else
-                Layers.ActiveLayer = GetLayerAtZIndex(originalTimeline.Layers.ActiveLayerIndex);
+                Layers.ActiveLayer = Layers[originalTimeline.Layers.ActiveLayerIndex];
         }
 
         public void InitializeTimeline()
@@ -459,7 +377,6 @@ namespace AnimationEditorCore.ViewModels
 
             AddLayerAtIndex(newLayer, newLayer.ZIndex);
             Layers.Refresh();
-            //PushUndoRecord(CreateUndoState("Added Layer"));
         }
 
         public int GetFirstAvailableZIndexAbove(int zIndex = 0)
@@ -494,7 +411,7 @@ namespace AnimationEditorCore.ViewModels
             if (zIndex < 0 || zIndex >= Layers.Count)
                 throw new IndexOutOfRangeException($"No layer found at index:{zIndex}.");
             var toRemoveIndex = zIndex;
-            var toRemove = GetLayerAtZIndex(toRemoveIndex);
+            var toRemove = Layers[toRemoveIndex];
 
             Layers.Remove(toRemove);
             LayerOrdering.ConsolidateZIndices(Layers.ToList());
@@ -506,9 +423,9 @@ namespace AnimationEditorCore.ViewModels
             {
                 var newActiveIndex = LayerOrdering.GetNextLayerZIndexBelow(Layers.ToList(), toRemoveIndex);
                 if (newActiveIndex == -1)
-                    Layers.ActiveLayer = GetLayerAtZIndex(BottomZIndex);
+                    Layers.ActiveLayer = Layers[Layers.BottomZIndex];
                 else
-                    Layers.ActiveLayer = GetLayerAtZIndex(newActiveIndex);
+                    Layers.ActiveLayer = Layers[newActiveIndex];
             }
 
             toRemove.ClearFrames();
@@ -669,7 +586,7 @@ namespace AnimationEditorCore.ViewModels
 
             //destination.InitializeLayerViewSource();
             destination.SelectedFrameIndex = original.SelectedFrameIndex;
-            destination.Layers.ActiveLayer = destination.GetLayerAtZIndex(original.Layers.ActiveLayerIndex);
+            destination.Layers.ActiveLayer = destination.Layers[original.Layers.ActiveLayerIndex];
             destination.Layers.NotifyPropertyChanged(nameof(LayerCollection.SortedLayers));
         }
 

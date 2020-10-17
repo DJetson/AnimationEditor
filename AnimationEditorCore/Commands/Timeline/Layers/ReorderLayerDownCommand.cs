@@ -20,10 +20,10 @@ namespace AnimationEditorCore.Commands.Timeline.Layers
             if (Parameter.TimelineViewModel == null)
                 return false;
 
-            if (Parameter.ZIndex == Parameter.TimelineViewModel.BottomZIndex)
+            if (Parameter.ZIndex == Parameter.TimelineViewModel.Layers.BottomZIndex)
                 return false;
 
-            if (Parameter.TimelineViewModel.GetLayerBelow(Parameter) == null)
+            if (Parameter.TimelineViewModel.Layers.GetLayerBelow(Parameter) == null)
                 return false;
 
             return true;
@@ -34,9 +34,9 @@ namespace AnimationEditorCore.Commands.Timeline.Layers
             var Parameter = parameter as LayerViewModel;
             var timeline = Parameter.TimelineViewModel;
 
-            var swapWith = timeline.GetLayerBelow(Parameter);
+            var swapWith = timeline.Layers.GetLayerBelow(Parameter);
 
-            timeline.SwapLayerZIndex(Parameter, swapWith);
+            timeline.Layers.SwapLayerZIndex(Parameter, swapWith);
             timeline.PushUndoRecord(timeline.CreateUndoState(UndoStateTitle));
         }
     }

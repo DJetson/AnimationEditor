@@ -162,6 +162,21 @@ namespace AnimationEditorCore.ViewModels.Classes
             SortedLayers.Refresh();
         }
 
+        public bool IsLayerIndexValid(int index)
+        {
+            if (Items.Select(e => e.ZIndex).Contains(index))
+                return true;
+
+            return false;
+        }
+
+        public void ActivateLayerAtIndex(int index)
+        {
+            if (IsLayerIndexValid(index))
+                ActiveLayer = GetLayerAtZIndex(index);
+        }
+
+
         new public LayerViewModel this[int key]
         {
             get => Items.Where(e => e.ZIndex == key).First();
@@ -169,6 +184,65 @@ namespace AnimationEditorCore.ViewModels.Classes
             {
                 Items[value.ZIndex] = value;
             }
+        }
+
+        public int TopZIndex => Items.Select(e => e.ZIndex).Max();
+
+        public int BottomZIndex => Items.Select(e => e.ZIndex).Min();
+
+        public LayerViewModel GetLayerAbove(LayerViewModel layer)
+        {
+            if (layer == null)
+                return null;
+
+            if (layer.ZIndex == TopZIndex)
+                return null;
+
+            var layersAboveCurrent = Items.Where(e => e.ZIndex > layer.ZIndex);
+
+            if (layersAboveCurrent.Count() == 0)
+                return null;
+
+            int aboveIndex = layersAboveCurrent.Select(e => e.ZIndex).Min();
+
+            return GetLayerAtZIndex(aboveIndex);
+        }
+
+        public LayerViewModel GetLayerBelow(LayerViewModel layer)
+        {
+            if (layer == null)
+                return null;
+
+            if (layer.ZIndex == BottomZIndex)
+                return null;
+
+            var layersBelowCurrent = Items.Where(e => e.ZIndex < layer.ZIndex);
+
+            if (layersBelowCurrent.Count() == 0)
+                return null;
+
+            int belowIndex = layersBelowCurrent.Select(e => e.ZIndex).Max();
+
+            return GetLayerAtZIndex(belowIndex);
+        }
+
+        public void SwapLayerZIndex(LayerViewModel layerA, LayerViewModel layerB)
+        {
+            if (layerA == null || layerB == null)
+                return;
+
+            int tmp = layerA.ZIndex;
+            layerA.ZIndex = layerB.ZIndex;
+            layerB.ZIndex = tmp;
+
+            Refresh();
+        }
+
+        public LayerViewModel GetLayerAtZIndex(int zIndex)
+        {
+            var layer = Items.Where(e => e.ZIndex == zIndex).FirstOrDefault();
+
+            return layer;
         }
     }
 }
