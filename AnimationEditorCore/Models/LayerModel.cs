@@ -23,7 +23,7 @@ namespace AnimationEditorCore.Models
         {
             DisplayName = layer.DisplayName;
             IsVisible = layer.IsVisible;
-            LayerId = layer.LayerId;
+            LayerId = layer.ZIndex;
             ArrangedZIndex = layer.ArrangedZIndex;
             SelectedFrameIndex = layer.SelectedFrameIndex;
             IsActive = layer.IsActive;

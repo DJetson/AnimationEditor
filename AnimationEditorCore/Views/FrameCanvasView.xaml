@@ -42,7 +42,7 @@
                                 </Style.Setters>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding IsActive}" Value="False">
-                                        <Setter Property="Panel.ZIndex" Value="{Binding LayerId}"/>
+                                        <Setter Property="Panel.ZIndex" Value="{Binding ZIndex}"/>
                                         <Setter Property="EditingMode" Value="None"/>
                                         <Setter Property="IsHitTestVisible" Value="False"/>
                                     </DataTrigger>

@@ -45,7 +45,7 @@ namespace AnimationEditorCore.ViewModels.Settings
             _SourceLayer = layer;
             DisplayName = layer.DisplayName;
             LayerDisplayName = layer.DisplayName;
-            LayerZIndex = layer.LayerId;
+            LayerZIndex = layer.ZIndex;
         }
 
         private void InitializeCommands()
@@ -76,7 +76,7 @@ namespace AnimationEditorCore.ViewModels.Settings
             var Parameter = parameter as Window;
             bool HasChanged = false;
 
-            if (LayerZIndex != _SourceLayer.LayerId)
+            if (LayerZIndex != _SourceLayer.ZIndex)
             {
                 UpdateLayerOrder();
                 HasChanged = true;
@@ -106,14 +106,10 @@ namespace AnimationEditorCore.ViewModels.Settings
         {
             if (LayerZIndex < 0)
                 LayerZIndex = 0;
-            //else if (LayerZIndex > _SourceLayer.TimelineViewModel.Layers.Count - 1)
-            //    LayerZIndex = _SourceLayer.TimelineViewModel.Layers.Count - 1;
 
-            if (LayerZIndex != _SourceLayer.LayerId)
+            if (LayerZIndex != _SourceLayer.ZIndex)
             {
-                //_SourceLayer.LayerId = LayerZIndex;//.TimelineViewModel.Layers.Move(_SourceLayer.LayerId, LayerZIndex);
-                _SourceLayer.LayerId = LayerZIndex;
-                //_SourceLayer.TimelineViewModel.UpdateLayerIds();
+                _SourceLayer.ZIndex = LayerZIndex;
                 _SourceLayer.TimelineViewModel.SortedLayers.Refresh();
             }
         }

@@ -289,7 +289,7 @@ namespace AnimationEditorCore.ViewModels
 
         public bool IsLayerIndexValid(int index)
         {
-            if (Layers.Select(e => e.LayerId).Contains(index))
+            if (Layers.Select(e => e.ZIndex).Contains(index))
                 return true;
 
             return false;
@@ -303,19 +303,19 @@ namespace AnimationEditorCore.ViewModels
                 return null;
         }
 
-        public int TopLayerId
+        public int TopZIndex
         {
             get
             {
-                return Layers.Select(e => e.LayerId).Max();
+                return Layers.Select(e => e.ZIndex).Max();
             }
         }
 
-        public int BottomLayerId
+        public int BottomZIndex
         {
             get
             {
-                return Layers.Select(e => e.LayerId).Min();
+                return Layers.Select(e => e.ZIndex).Min();
             }
         }
 
@@ -324,17 +324,17 @@ namespace AnimationEditorCore.ViewModels
             if (layer == null)
                 return null;
 
-            if (layer.LayerId == TopLayerId)
+            if (layer.ZIndex == TopZIndex)
                 return null;
 
-            var layersAboveCurrent = Layers.Where(e => e.LayerId > layer.LayerId);
+            var layersAboveCurrent = Layers.Where(e => e.ZIndex > layer.ZIndex);
 
             if (layersAboveCurrent.Count() == 0)
                 return null;
 
-            int aboveIndex = layersAboveCurrent.Select(e => e.LayerId).Min();
+            int aboveIndex = layersAboveCurrent.Select(e => e.ZIndex).Min();
 
-            return GetLayerWithId(aboveIndex);
+            return GetLayerAtZIndex(aboveIndex);
         }
 
         public LayerViewModel GetLayerBelow(LayerViewModel layer)
@@ -342,34 +342,34 @@ namespace AnimationEditorCore.ViewModels
             if (layer == null)
                 return null;
 
-            if (layer.LayerId == BottomLayerId)
+            if (layer.ZIndex == BottomZIndex)
                 return null;
 
-            var layersBelowCurrent = Layers.Where(e => e.LayerId < layer.LayerId);
+            var layersBelowCurrent = Layers.Where(e => e.ZIndex < layer.ZIndex);
 
             if (layersBelowCurrent.Count() == 0)
                 return null;
 
-            int belowIndex = layersBelowCurrent.Select(e => e.LayerId).Max();
+            int belowIndex = layersBelowCurrent.Select(e => e.ZIndex).Max();
 
-            return GetLayerWithId(belowIndex);
+            return GetLayerAtZIndex(belowIndex);
         }
 
-        public void SwapLayerZOrder(LayerViewModel layerA, LayerViewModel layerB)
+        public void SwapLayerZIndex(LayerViewModel layerA, LayerViewModel layerB)
         {
             if (layerA == null || layerB == null)
                 return;
 
-            int tmp = layerA.LayerId;
-            layerA.LayerId = layerB.LayerId;
-            layerB.LayerId = tmp;
+            int tmp = layerA.ZIndex;
+            layerA.ZIndex = layerB.ZIndex;
+            layerB.ZIndex = tmp;
 
             SortedLayers.Refresh();
         }
 
-        public LayerViewModel GetLayerWithId(int layerId)
+        public LayerViewModel GetLayerAtZIndex(int zIndex)
         {
-            var layer = Layers.Where(e => e.LayerId == layerId).FirstOrDefault();
+            var layer = Layers.Where(e => e.ZIndex == zIndex).FirstOrDefault();
 
             return layer;
         }
@@ -505,9 +505,20 @@ namespace AnimationEditorCore.ViewModels
             }
             newLayer.SelectedFrameIndex = SelectedFrameIndex;
 
-            AddLayerAtIndex(newLayer, newLayer.LayerId);
+            AddLayerAtIndex(newLayer, newLayer.ZIndex);
             SortedLayers.Refresh();
             //PushUndoRecord(CreateUndoState("Added Layer"));
+        }
+
+        public int GetFirstAvailableZIndexAbove(int zIndex = 0)
+        {
+            var zIndexes = Layers.Select(e => e.ZIndex);
+
+            for(int i = zIndex; ; i++ )
+            {
+                if (!zIndexes.Contains(i))
+                    return i;
+            }
         }
 
         public void AddBlankLayerAtIndex(int index)
@@ -522,7 +533,7 @@ namespace AnimationEditorCore.ViewModels
             }
             newLayer.SelectedFrameIndex = SelectedFrameIndex;
 
-            AddLayerAtIndex(newLayer, newLayer.LayerId);
+            AddLayerAtIndex(newLayer, newLayer.ZIndex);
         }
 
         public void DeleteLayerFromTimeline(int index)
@@ -545,7 +556,6 @@ namespace AnimationEditorCore.ViewModels
                 ActiveLayer = Layers[newActiveIndex];
             }
 
-            //UpdateLayerIds();
             toRemove.ClearFrames();
 
             //PushUndoRecord(CreateUndoState("Deleted Layer"));
@@ -559,10 +569,10 @@ namespace AnimationEditorCore.ViewModels
             if (direction == LayerNavigation.Above)
                 duplicateLayerIndex += 1;
 
-            layerClone.LayerId = duplicateLayerIndex;
+            layerClone.ZIndex = duplicateLayerIndex;
             layerClone.SelectedFrameIndex = SelectedFrameIndex;
 
-            AddLayerAtIndex(layerClone, layerClone.LayerId);
+            AddLayerAtIndex(layerClone, layerClone.ZIndex);
 
             //PushUndoRecord(CreateUndoState("Duplicate Layer"));
         }
@@ -592,7 +602,6 @@ namespace AnimationEditorCore.ViewModels
             }
 
             ActiveLayer = layer;
-            //UpdateLayerIds();
             UpdateSelectedFrames();
             SortedLayers.Refresh();
         }
@@ -600,17 +609,9 @@ namespace AnimationEditorCore.ViewModels
         public void InitializeLayerViewSource()
         {
             _SortedLayers.Source = Layers;
-            SortedLayers.SortDescriptions.Add(new System.ComponentModel.SortDescription("LayerId", ListSortDirection.Descending));
+            SortedLayers.SortDescriptions.Add(new System.ComponentModel.SortDescription("ZIndex", ListSortDirection.Descending));
             SortedLayers.Refresh();
         }
-
-        //public void UpdateLayerIds(int startIndex = 0)
-        //{
-        //    foreach (var layer in Layers.Where(e => e.LayerId >= startIndex))
-        //    {
-        //        layer.LayerId = Layers.IndexOf(layer);
-        //    }
-        //}
 
         private List<StrokeCollection> _FlattenedFrameStrokes = new List<StrokeCollection>();
         public List<StrokeCollection> FlattenedFrameStrokes

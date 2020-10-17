@@ -54,16 +54,16 @@ namespace AnimationEditorCore.ViewModels
             set { _ArrangedZIndex = value; NotifyPropertyChanged(nameof(ArrangedZIndex), nameof(EffectiveZIndex)); }
         }
 
-        private int _LayerId;
-        public int LayerId
+        private int _ZIndex;
+        public int ZIndex
         {
-            get => _LayerId;
-            set { _LayerId = value; NotifyPropertyChanged(nameof(LayerId), nameof(EffectiveZIndex)); }
+            get => _ZIndex;
+            set { _ZIndex = value; NotifyPropertyChanged(nameof(ZIndex), nameof(EffectiveZIndex)); }
         }
 
         public int EffectiveZIndex
         {
-            get => LayerId + (IsActive ? 0 : 10000);
+            get => ZIndex + (IsActive ? 0 : 10000);
         }
 
         private DelegateCommand _UpdateSelectedStrokes;
@@ -98,14 +98,14 @@ namespace AnimationEditorCore.ViewModels
         public LayerViewModel(TimelineViewModel timeline, int zIndex, string displayName ="")
         {
             TimelineViewModel = timeline;
-            LayerId = zIndex;
+            ZIndex = zIndex;
             DisplayName = displayName;
         }
 
         public LayerViewModel(LayerViewModel originalLayer)
         {
             TimelineViewModel = originalLayer.TimelineViewModel;
-            LayerId = originalLayer.LayerId;
+            ZIndex = originalLayer.ZIndex;
             ArrangedZIndex = originalLayer.ArrangedZIndex;
             IsVisible = originalLayer.IsVisible;
             DisplayName = originalLayer.DisplayName;
@@ -171,7 +171,7 @@ namespace AnimationEditorCore.ViewModels
             TimelineViewModel = timeline;
             DisplayName = model.DisplayName;
             IsVisible = model.IsVisible;
-            LayerId = model.LayerId;
+            ZIndex = model.LayerId;
             ArrangedZIndex = model.ArrangedZIndex;
 
             Frames = new ObservableCollection<FrameViewModel>(model.Frames.Select(e => new FrameViewModel(e,this)));
@@ -180,17 +180,6 @@ namespace AnimationEditorCore.ViewModels
             IsActive = model.IsActive;
         }
 
-        //public IMemento SaveState()
-        //{
-        //    var memento = new LayerState(this);
-
-        //    memento.Originator = this;
-
-        //    return memento;
-        //}
-
-        //Cleans up all of the delegate assignments in the Strokes and StrokeCollections 
-        //on each Frame in this layer
         public void ClearFrames()
         {
             foreach (var frame in Frames)
@@ -206,7 +195,7 @@ namespace AnimationEditorCore.ViewModels
             destination.ClearFrames();
 
             destination.TimelineViewModel = original.TimelineViewModel;
-            destination.LayerId = original.LayerId;
+            destination.ZIndex = original.ZIndex;
             destination.ArrangedZIndex = original.ArrangedZIndex;
             destination.IsVisible = original.IsVisible;
             destination.DisplayName = original.DisplayName;
@@ -224,13 +213,6 @@ namespace AnimationEditorCore.ViewModels
             destination.SelectedFrame = destination.Frames[destination.SelectedFrameIndex];
             destination.IsActive = original.IsActive;
         }
-
-        //public void LoadState(IMemento memento)
-        //{
-        //    var Memento = (memento as LayerState);
-
-        //    CopyToLayer(Memento.Layer, this);
-        //}
 
         public LayerViewModel Clone()
         {

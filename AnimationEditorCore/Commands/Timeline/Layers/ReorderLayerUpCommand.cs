@@ -16,7 +16,7 @@ namespace AnimationEditorCore.Commands.Timeline.Layers
             if (Parameter.TimelineViewModel == null)
                 return false;
 
-            if (Parameter.LayerId == Parameter.TimelineViewModel.TopLayerId)
+            if (Parameter.ZIndex == Parameter.TimelineViewModel.TopZIndex)
                 return false;
 
             if (Parameter.TimelineViewModel.GetLayerAbove(Parameter) == null)
@@ -32,7 +32,7 @@ namespace AnimationEditorCore.Commands.Timeline.Layers
 
             var swapWith = timeline.GetLayerAbove(Parameter);
 
-            timeline.SwapLayerZOrder(Parameter, swapWith);
+            timeline.SwapLayerZIndex(Parameter, swapWith);
         }
     }
 }

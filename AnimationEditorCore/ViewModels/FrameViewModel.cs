@@ -287,12 +287,12 @@ namespace AnimationEditorCore.ViewModels
         {
             if (EditorToolsViewModel.Instance.SelectedToolType == EditorToolType.Brush)
             {
-                LayerViewModel.TimelineViewModel.PushUndoRecord(LayerViewModel.TimelineViewModel.CreateUndoState($"Added Content to Layer {LayerViewModel.LayerId} on Frame {Order}"));
+                LayerViewModel.TimelineViewModel.PushUndoRecord(LayerViewModel.TimelineViewModel.CreateUndoState($"Added Content to Layer {LayerViewModel.ZIndex} on Frame {Order}"));
             }
             else if (EditorToolsViewModel.Instance.SelectedToolType == EditorToolType.Lasso && _IsErasing == false)
             {
                 if (e.Removed.Count > 0)
-                    LayerViewModel.TimelineViewModel.PushUndoRecord(LayerViewModel.TimelineViewModel.CreateUndoState($"Deleted Content from Layer {LayerViewModel.LayerId} on Frame {Order}"));
+                    LayerViewModel.TimelineViewModel.PushUndoRecord(LayerViewModel.TimelineViewModel.CreateUndoState($"Deleted Content from Layer {LayerViewModel.ZIndex} on Frame {Order}"));
             }
             else if (EditorToolsViewModel.Instance.SelectedToolType == EditorToolType.Eraser && _IsErasing == false)
             {
@@ -317,7 +317,7 @@ namespace AnimationEditorCore.ViewModels
 
             if (_StrokeMultiSelectOpCounter == 1)
             {
-                LayerViewModel.TimelineViewModel.PushUndoRecord(LayerViewModel.TimelineViewModel.CreateUndoState($"Modified Content in Layer {LayerViewModel.LayerId} on Frame {Order}"));
+                LayerViewModel.TimelineViewModel.PushUndoRecord(LayerViewModel.TimelineViewModel.CreateUndoState($"Modified Content in Layer {LayerViewModel.ZIndex} on Frame {Order}"));
                 _StrokeMultiSelectOpCounter = 0;
             }
             else
@@ -332,14 +332,14 @@ namespace AnimationEditorCore.ViewModels
             {
                 _IsErasing = false;
 
-                LayerViewModel.TimelineViewModel.PushUndoRecord(LayerViewModel.TimelineViewModel.CreateUndoState($"Erased Content from Layer {LayerViewModel.LayerId} on Frame {Order}"));
+                LayerViewModel.TimelineViewModel.PushUndoRecord(LayerViewModel.TimelineViewModel.CreateUndoState($"Erased Content from Layer {LayerViewModel.ZIndex} on Frame {Order}"));
                 Mouse.RemoveMouseUpHandler(Mouse.PrimaryDevice.ActiveSource.RootVisual as DependencyObject, EraserOperation_MouseUp);
             }
             else if (e.LeftButton == MouseButtonState.Released && EditorToolsViewModel.Instance.SelectedToolType == BaseClasses.EditorToolType.Lasso)
             {
                 _IsErasing = false;
 
-                LayerViewModel.TimelineViewModel.PushUndoRecord(LayerViewModel.TimelineViewModel.CreateUndoState($"Moved Content From Layer {LayerViewModel.LayerId} on Frame {Order}"));
+                LayerViewModel.TimelineViewModel.PushUndoRecord(LayerViewModel.TimelineViewModel.CreateUndoState($"Moved Content From Layer {LayerViewModel.ZIndex} on Frame {Order}"));
                 Mouse.RemoveMouseUpHandler(Mouse.PrimaryDevice.ActiveSource.RootVisual as DependencyObject, EraserOperation_MouseUp);
             }
         }
