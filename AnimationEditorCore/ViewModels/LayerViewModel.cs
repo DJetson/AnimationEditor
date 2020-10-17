@@ -47,12 +47,12 @@ namespace AnimationEditorCore.ViewModels
             get => (IsActive && IsVisible);
         }
 
-        private int _ArrangedZIndex;
-        public int ArrangedZIndex
-        {
-            get { return _ArrangedZIndex; }
-            set { _ArrangedZIndex = value; NotifyPropertyChanged(nameof(ArrangedZIndex), nameof(EffectiveZIndex)); }
-        }
+        //private int _ArrangedZIndex;
+        //public int ArrangedZIndex
+        //{
+        //    get { return _ArrangedZIndex; }
+        //    set { _ArrangedZIndex = value; NotifyPropertyChanged(nameof(ArrangedZIndex), nameof(EffectiveZIndex)); }
+        //}
 
         private int _ZIndex;
         public int ZIndex
@@ -106,7 +106,7 @@ namespace AnimationEditorCore.ViewModels
         {
             TimelineViewModel = originalLayer.TimelineViewModel;
             ZIndex = originalLayer.ZIndex;
-            ArrangedZIndex = originalLayer.ArrangedZIndex;
+            //ArrangedZIndex = originalLayer.ArrangedZIndex;
             IsVisible = originalLayer.IsVisible;
             DisplayName = originalLayer.DisplayName;
 
@@ -172,7 +172,7 @@ namespace AnimationEditorCore.ViewModels
             DisplayName = model.DisplayName;
             IsVisible = model.IsVisible;
             ZIndex = model.LayerId;
-            ArrangedZIndex = model.ArrangedZIndex;
+            //ArrangedZIndex = model.ArrangedZIndex;
 
             Frames = new ObservableCollection<FrameViewModel>(model.Frames.Select(e => new FrameViewModel(e,this)));
 
@@ -196,7 +196,7 @@ namespace AnimationEditorCore.ViewModels
 
             destination.TimelineViewModel = original.TimelineViewModel;
             destination.ZIndex = original.ZIndex;
-            destination.ArrangedZIndex = original.ArrangedZIndex;
+            //destination.ArrangedZIndex = original.ArrangedZIndex;
             destination.IsVisible = original.IsVisible;
             destination.DisplayName = original.DisplayName;
 

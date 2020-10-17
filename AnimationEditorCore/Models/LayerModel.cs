@@ -24,7 +24,7 @@ namespace AnimationEditorCore.Models
             DisplayName = layer.DisplayName;
             IsVisible = layer.IsVisible;
             LayerId = layer.ZIndex;
-            ArrangedZIndex = layer.ArrangedZIndex;
+            ArrangedZIndex = layer.ZIndex;
             SelectedFrameIndex = layer.SelectedFrameIndex;
             IsActive = layer.IsActive;
             Frames = new List<FrameModel>(layer.Frames.Select(e => new FrameModel(e)));
