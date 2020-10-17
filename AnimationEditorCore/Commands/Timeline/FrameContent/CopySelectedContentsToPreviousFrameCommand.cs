@@ -23,7 +23,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             //if (!(Parameter.IsFrameIndexValid(Parameter.SelectedFrameIndex - 1)))
             //    return false;
 
-            if (Parameter.ActiveLayer.Frames[Parameter.SelectedFrameIndex].SelectedStrokes.Count == 0)
+            if (Parameter.Layers.ActiveLayer.Frames[Parameter.SelectedFrameIndex].SelectedStrokes.Count == 0)
                 return false;
 
             return true;
@@ -40,7 +40,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             if (!(Parameter.IsFrameIndexValid(Parameter.SelectedFrameIndex - 1)))
             {
                 Parameter.AddBlankFrameToTimeline(Parameter.SelectedFrameIndex, true);
-                copyToFrame = Parameter.ActiveLayer.Frames[Parameter.SelectedFrameIndex];
+                copyToFrame = Parameter.Layers.ActiveLayer.Frames[Parameter.SelectedFrameIndex];
             }
             else
             {

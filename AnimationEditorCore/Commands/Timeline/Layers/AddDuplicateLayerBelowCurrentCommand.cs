@@ -21,7 +21,7 @@ namespace AnimationEditorCore.Commands.Timeline.Layers
             if (Parameter.AnimationPlaybackViewModel.IsPlaybackActive)
                 return false;
 
-            if (Parameter.ActiveLayer == null)
+            if (Parameter.Layers.ActiveLayer == null)
                 return false;
 
             return true;

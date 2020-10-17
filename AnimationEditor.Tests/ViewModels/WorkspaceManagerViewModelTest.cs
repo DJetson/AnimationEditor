@@ -83,7 +83,7 @@ namespace AnimationEditorCore.ViewModels
 
             openCommand.OpenWorkspaceFile("dot.anws", workspaceManager);
 
-            Assert.IsNotNull(workspaceManager.SelectedWorkspace.TimelineViewModel.ActiveLayer);
+            Assert.IsNotNull(workspaceManager.SelectedWorkspace.TimelineViewModel.Layers.ActiveLayer);
         }
 
         [DeploymentItem("DeploymentItems/dot.anws")]
@@ -94,7 +94,7 @@ namespace AnimationEditorCore.ViewModels
             new Commands.Workspace.OpenWorkspaceCommand().OpenWorkspaceFile("dot.anws", workspaceManager);
             var workspace = workspaceManager.SelectedWorkspace;
 
-            LayerViewModel activeLayer = workspace.TimelineViewModel.ActiveLayer;
+            LayerViewModel activeLayer = workspace.TimelineViewModel.Layers.ActiveLayer;
 
             var stroke = activeLayer.Frames[activeLayer.SelectedFrameIndex].StrokeCollection[0];
             activeLayer.Frames[activeLayer.SelectedFrameIndex].SelectedStrokes = activeLayer.Frames[activeLayer.SelectedFrameIndex].StrokeCollection;
@@ -111,7 +111,7 @@ namespace AnimationEditorCore.ViewModels
             var workspaceManager = new WorkspaceManagerViewModel();
             new Commands.Workspace.OpenWorkspaceCommand().OpenWorkspaceFile("dot.anws", workspaceManager);
             var workspace = workspaceManager.SelectedWorkspace;
-            var activeLayer = workspace.TimelineViewModel.ActiveLayer;
+            var activeLayer = workspace.TimelineViewModel.Layers.ActiveLayer;
             var stroke = activeLayer.Frames[activeLayer.SelectedFrameIndex].StrokeCollection[0];
             stroke.Transform(new System.Windows.Media.TranslateTransform(offsetX: 1d, offsetY: 2d).Value, applyToStylusTip: false);
             var historyItem = workspace.WorkspaceHistoryViewModel.HistoricalStates.First();

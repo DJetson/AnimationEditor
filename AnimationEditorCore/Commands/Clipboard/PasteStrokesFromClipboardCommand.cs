@@ -23,7 +23,7 @@ namespace AnimationEditorCore.Commands.Clipboard
             if (!InternalClipboard.HasData())
                 return false;
 
-            //if (Parameter.ActiveLayer.Frames[Parameter.SelectedFrameIndex].SelectedStrokes.Count == 0)
+            //if (Parameter.Layers.ActiveLayer.Frames[Parameter.SelectedFrameIndex].SelectedStrokes.Count == 0)
             //    return false;
 
             return true;
@@ -34,7 +34,7 @@ namespace AnimationEditorCore.Commands.Clipboard
             var Parameter = parameter as TimelineViewModel;
 
             var copiedStrokes = InternalClipboard.GetData();
-            var copyToFrame = Parameter.ActiveLayer.Frames[Parameter.SelectedFrameIndex];
+            var copyToFrame = Parameter.Layers.ActiveLayer.Frames[Parameter.SelectedFrameIndex];
 
             copyToFrame.StrokeCollection.Add(copiedStrokes);
 

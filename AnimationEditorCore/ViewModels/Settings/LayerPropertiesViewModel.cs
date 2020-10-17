@@ -117,7 +117,7 @@ namespace AnimationEditorCore.ViewModels.Settings
                 _SourceLayer.ZIndex = LayerZIndex;
                 LayerOrdering.ConsolidateZIndices(layers.ToList());
 
-                _SourceLayer.TimelineViewModel.SortedLayers.Refresh();
+                _SourceLayer.TimelineViewModel.Layers.Refresh();
             }
         }
 

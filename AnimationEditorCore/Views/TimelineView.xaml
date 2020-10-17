@@ -58,7 +58,7 @@
                     </Slider>
                 </Border>
             </Grid>
-            <ListBox Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding SortedLayers}" SelectedItem="{Binding ActiveLayer, Mode=TwoWay}">
+            <ListBox Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding Layers.SortedLayers}" SelectedItem="{Binding Layers.ActiveLayer, Mode=TwoWay}">
                 <ListBox.Resources>
                     <Style TargetType="{x:Type ScrollViewer}">
                         <Setter Property="OverridesDefaultStyle" Value="True"/>

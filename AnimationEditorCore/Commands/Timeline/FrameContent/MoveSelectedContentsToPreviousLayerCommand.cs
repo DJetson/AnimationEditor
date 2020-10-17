@@ -19,7 +19,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             if (!(parameter is TimelineViewModel Parameter))
                 return false;
 
-            if (Parameter.ActiveLayer.Frames[Parameter.SelectedFrameIndex].SelectedStrokes.Count == 0)
+            if (Parameter.Layers.ActiveLayer.Frames[Parameter.SelectedFrameIndex].SelectedStrokes.Count == 0)
                 return false;
 
             return true;
@@ -29,7 +29,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
         {
             var Parameter = parameter as TimelineViewModel;
 
-            //var targetLayer = Parameter.GetLayerAtIndex(Parameter.ActiveLayerIndex + 1);
+            //var targetLayer = Parameter.GetLayerAtIndex(Parameter.Layers.ActiveLayerIndex + 1);
 
             var frame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);
 
@@ -37,14 +37,14 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
 
             frame.RemoveStrokes(frame.SelectedStrokes, false);
 
-            if (!(Parameter.IsLayerIndexValid(Parameter.ActiveLayerIndex - 1)))
+            if (!(Parameter.IsLayerIndexValid(Parameter.Layers.ActiveLayerIndex - 1)))
             {
                 //Create new layer to move selected contents to
-                Parameter.AddBlankLayerAtIndex(Parameter.ActiveLayerIndex);
+                Parameter.AddBlankLayerAtIndex(Parameter.Layers.ActiveLayerIndex);
             }
             else
             {
-                Parameter.ActiveLayer = Parameter.GetLayerAtZIndex(Parameter.ActiveLayerIndex - 1);
+                Parameter.Layers.ActiveLayer = Parameter.GetLayerAtZIndex(Parameter.Layers.ActiveLayerIndex - 1);
             }
             var copyToFrame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);
 

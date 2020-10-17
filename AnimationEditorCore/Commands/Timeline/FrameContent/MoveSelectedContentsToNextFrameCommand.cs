@@ -23,7 +23,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             //if (!(Parameter.IsFrameIndexValid(Parameter.SelectedFrameIndex + 1)))
             //    return false;
 
-            if (Parameter.ActiveLayer.Frames[Parameter.SelectedFrameIndex].SelectedStrokes.Count == 0)
+            if (Parameter.Layers.ActiveLayer.Frames[Parameter.SelectedFrameIndex].SelectedStrokes.Count == 0)
                 return false;
 
             return true;

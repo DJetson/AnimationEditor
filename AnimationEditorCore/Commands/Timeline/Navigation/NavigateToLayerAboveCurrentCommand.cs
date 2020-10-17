@@ -16,7 +16,7 @@ namespace AnimationEditorCore.Commands.Timeline.Navigation
             if (!(parameter is TimelineViewModel Parameter))
                 return false;
 
-            if (!(Parameter.IsLayerIndexValid(Parameter.ActiveLayerIndex + 1)))
+            if (!(Parameter.IsLayerIndexValid(Parameter.Layers.ActiveLayerIndex + 1)))
                 return false;
 
             return true;
@@ -25,7 +25,7 @@ namespace AnimationEditorCore.Commands.Timeline.Navigation
         public override void Execute(object parameter)
         {
             var Parameter = parameter as TimelineViewModel;
-            Parameter.ActivateLayerAtIndex(Parameter.ActiveLayerIndex + 1);
+            Parameter.ActivateLayerAtIndex(Parameter.Layers.ActiveLayerIndex + 1);
         }
     }
 }

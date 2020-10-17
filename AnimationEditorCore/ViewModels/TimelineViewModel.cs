@@ -1,6 +1,7 @@
 ﻿using AnimationEditorCore.BaseClasses;
 using AnimationEditorCore.Interfaces;
 using AnimationEditorCore.Models;
+using AnimationEditorCore.ViewModels.Classes;
 using AnimationEditorCore.Utilities;
 using AnimationEditorCore.ViewModels.StateObjects;
 using System;
@@ -20,17 +21,11 @@ namespace AnimationEditorCore.ViewModels
 {
     public class TimelineViewModel : ViewModelBase
     {
-        private ObservableCollection<LayerViewModel> _Layers = new ObservableCollection<LayerViewModel>();
-        public ObservableCollection<LayerViewModel> Layers
+        private LayerCollection _Layers;
+        public LayerCollection Layers
         {
             get { return _Layers; }
             set { _Layers = value; NotifyPropertyChanged(); }
-        }
-
-        private CollectionViewSource _SortedLayers = new CollectionViewSource();
-        public CollectionView SortedLayers
-        {
-            get => (CollectionView)_SortedLayers.View;
         }
 
         private AnimationPlaybackViewModel _AnimationPlaybackViewModel;
@@ -38,29 +33,6 @@ namespace AnimationEditorCore.ViewModels
         {
             get { return _AnimationPlaybackViewModel; }
             set { _AnimationPlaybackViewModel = value; NotifyPropertyChanged(); }
-        }
-
-        private LayerViewModel _ActiveLayer;
-        public LayerViewModel ActiveLayer
-        {
-            get { return _ActiveLayer; }
-            set
-            {
-                _ActiveLayer = value;
-                NotifyPropertyChanged(nameof(ActiveLayer), nameof(ActiveLayerIndex));
-                foreach (var layer in Layers)
-                {
-                    if (layer == ActiveLayer)
-                        layer.IsActive = true;
-                    else
-                        layer.IsActive = false;
-                }
-            }
-        }
-
-        public int ActiveLayerIndex
-        {
-            get => ActiveLayer.ZIndex;
         }
 
         public string CurrentIndexOutOfFrameCount
@@ -112,17 +84,6 @@ namespace AnimationEditorCore.ViewModels
                 {
                     return nextOnionSkins;
                 }
-
-                //if (NextFrame == null)
-                //    return new StrokeCollection();
-
-                //var strokes = FlattenFrames(NextFrame.ToList(), true).Clone();
-                //foreach (var item in strokes)
-                //{
-                //    item.DrawingAttributes.IsHighlighter = true;
-                //    item.DrawingAttributes.Color = System.Windows.Media.Color.FromArgb(128, 0, 255, 0);
-                //}
-                //return strokes;
             }
         }
 
@@ -146,16 +107,6 @@ namespace AnimationEditorCore.ViewModels
                 {
                     return previousOnionSkins;
                 }
-                //if (PreviousFrame == null)
-                //    return new StrokeCollection();
-
-                //var strokes = FlattenFrames(PreviousFrame.ToList(), true).Clone();
-                //foreach (var item in strokes)
-                //{
-                //    item.DrawingAttributes.IsHighlighter = true;
-                //    item.DrawingAttributes.Color = System.Windows.Media.Color.FromArgb(128, 255, 0, 0);
-                //}
-                //return strokes;
             }
         }
 
@@ -252,9 +203,6 @@ namespace AnimationEditorCore.ViewModels
 
                 SelectedFrameIndex = index;
             }
-
-            //if (createUndo)
-            //PushUndoRecord(CreateUndoState($"Insert Frame {index}"));
         }
 
         public void DuplicateCurrentFrameToTimeline(int index)
@@ -273,8 +221,6 @@ namespace AnimationEditorCore.ViewModels
                 SelectedFrameIndex++;
 
             SelectedFrameIndex = index;
-
-            //PushUndoRecord(CreateUndoState("Duplicate Frame"));
         }
 
         public void RemoveFrame(int frameIndex)
@@ -298,7 +244,7 @@ namespace AnimationEditorCore.ViewModels
         public FrameViewModel GetActiveFrameAtIndex(int index)
         {
             if (IsFrameIndexValid(index))
-                return ActiveLayer.Frames[index];
+                return Layers.ActiveLayer.Frames[index];
             else
                 return null;
         }
@@ -364,7 +310,7 @@ namespace AnimationEditorCore.ViewModels
             layerA.ZIndex = layerB.ZIndex;
             layerB.ZIndex = tmp;
 
-            SortedLayers.Refresh();
+            Layers.Refresh();
         }
 
         public LayerViewModel GetLayerAtZIndex(int zIndex)
@@ -385,7 +331,7 @@ namespace AnimationEditorCore.ViewModels
         public void ActivateLayerAtIndex(int index)
         {
             if (IsLayerIndexValid(index))
-                ActiveLayer = GetLayerAtZIndex(index);
+                Layers.ActiveLayer = GetLayerAtZIndex(index);
         }
 
         public void DeleteCurrentFrame()
@@ -418,8 +364,8 @@ namespace AnimationEditorCore.ViewModels
             WorkspaceViewModel = workspace;
             AnimationPlaybackViewModel = new AnimationPlaybackViewModel(this);
 
-            Layers = new ObservableCollection<LayerViewModel>();
-            InitializeLayerViewSource();
+            Layers = new LayerCollection(this);
+            //InitializeLayerViewSource();
 
             foreach (var item in layers)
             {
@@ -428,7 +374,7 @@ namespace AnimationEditorCore.ViewModels
                 FrameCount = Math.Max(FrameCount, newLayer.Frames.Count);
 
                 if (newLayer.IsActive)
-                    ActiveLayer = newLayer;
+                    Layers.ActiveLayer = newLayer;
             }
 
             SelectedFrameIndex = Layers.FirstOrDefault().SelectedFrameIndex;
@@ -441,7 +387,7 @@ namespace AnimationEditorCore.ViewModels
             WorkspaceViewModel = workspace;
             AnimationPlaybackViewModel = new AnimationPlaybackViewModel(this);
 
-            InitializeLayerViewSource();
+            //InitializeLayerViewSource();
             InitializeTimeline();
 
             PushUndoRecord(CreateUndoState("New Workspace"), false);
@@ -459,8 +405,8 @@ namespace AnimationEditorCore.ViewModels
             CanvasHeight = originalTimeline.CanvasHeight;
             CanvasWidth = originalTimeline.CanvasWidth;
 
-            Layers = new ObservableCollection<LayerViewModel>();
-            InitializeLayerViewSource();
+            Layers = new LayerCollection(this);
+            //InitializeLayerViewSource();
 
             foreach (var layer in originalTimeline.Layers)
             {
@@ -472,29 +418,30 @@ namespace AnimationEditorCore.ViewModels
             SelectedFrameIndex = originalTimeline.SelectedFrameIndex;
 
             //if (originalTimeline.Layers.Where(e => e.IsActive).Count() == 0)
-            //    ActiveLayer = Layers[0];
+            //    Layers.ActiveLayer = Layers[0];
             //else
-            //    ActiveLayer = Layers[originalTimeline.Layers.IndexOf(originalTimeline.Layers.Where(e => e.IsActive).FirstOrDefault())];
-            if (originalTimeline.ActiveLayer == null)
-                ActiveLayer = GetLayerAtZIndex(BottomZIndex);
+            //    Layers.ActiveLayer = Layers[originalTimeline.Layers.IndexOf(originalTimeline.Layers.Where(e => e.IsActive).FirstOrDefault())];
+            if (originalTimeline.Layers.ActiveLayer == null)
+                Layers.ActiveLayer = GetLayerAtZIndex(BottomZIndex);
             else
-                ActiveLayer = GetLayerAtZIndex(originalTimeline.ActiveLayerIndex);
+                Layers.ActiveLayer = GetLayerAtZIndex(originalTimeline.Layers.ActiveLayerIndex);
         }
 
         public void InitializeTimeline()
         {
+            Layers = new LayerCollection(this);
             var newLayer = new LayerViewModel(this, 0);
             var newFrame = new FrameViewModel(newLayer, 0);
             newLayer.AddFrameAtIndex(newFrame, 0);
-            AddLayerAtIndex(newLayer, 0);
+            Layers.AddLayerAtIndex(newLayer, 0);
             FrameCount = AnimationUtilities.GetFrameCount(Layers.ToList());
             SelectedFrameIndex = 0;
-            ActiveLayer = newLayer;
+            Layers.ActiveLayer = newLayer;
         }
 
         public void AddBlankLayer(LayerNavigation direction)
         {
-            var insertAtIndex = ActiveLayerIndex;
+            var insertAtIndex = Layers.ActiveLayerIndex;
 
             if (direction == LayerNavigation.Above)
                 insertAtIndex += 1;
@@ -511,7 +458,7 @@ namespace AnimationEditorCore.ViewModels
             newLayer.SelectedFrameIndex = SelectedFrameIndex;
 
             AddLayerAtIndex(newLayer, newLayer.ZIndex);
-            SortedLayers.Refresh();
+            Layers.Refresh();
             //PushUndoRecord(CreateUndoState("Added Layer"));
         }
 
@@ -559,20 +506,20 @@ namespace AnimationEditorCore.ViewModels
             {
                 var newActiveIndex = LayerOrdering.GetNextLayerZIndexBelow(Layers.ToList(), toRemoveIndex);
                 if (newActiveIndex == -1)
-                    ActiveLayer = GetLayerAtZIndex(BottomZIndex);
+                    Layers.ActiveLayer = GetLayerAtZIndex(BottomZIndex);
                 else
-                    ActiveLayer = GetLayerAtZIndex(newActiveIndex);
+                    Layers.ActiveLayer = GetLayerAtZIndex(newActiveIndex);
             }
 
             toRemove.ClearFrames();
-            SortedLayers.Refresh();
+            Layers.Refresh();
             //PushUndoRecord(CreateUndoState("Deleted Layer"));
         }
 
         public void DuplicateActiveLayer(LayerNavigation direction)
         {
-            var layerClone = ActiveLayer.Clone();
-            var duplicateLayerIndex = ActiveLayerIndex;
+            var layerClone = Layers.ActiveLayer.Clone();
+            var duplicateLayerIndex = Layers.ActiveLayerIndex;
 
             if (direction == LayerNavigation.Above)
                 duplicateLayerIndex += 1;
@@ -612,17 +559,17 @@ namespace AnimationEditorCore.ViewModels
                 Layers.Add(layer);
             }
 
-            ActiveLayer = layer;
+            Layers.ActiveLayer = layer;
             UpdateSelectedFrames();
-            SortedLayers.Refresh();
+            Layers.Refresh();
         }
 
-        public void InitializeLayerViewSource()
-        {
-            _SortedLayers.Source = Layers;
-            SortedLayers.SortDescriptions.Add(new System.ComponentModel.SortDescription("ZIndex", ListSortDirection.Descending));
-            SortedLayers.Refresh();
-        }
+        //public void InitializeLayerViewSource()
+        //{
+        //    _SortedLayers.Source = Layers;
+        //    SortedLayers.SortDescriptions.Add(new System.ComponentModel.SortDescription("ZIndex", ListSortDirection.Descending));
+        //    SortedLayers.Refresh();
+        //}
 
         private List<StrokeCollection> _FlattenedFrameStrokes = new List<StrokeCollection>();
         public List<StrokeCollection> FlattenedFrameStrokes
@@ -681,7 +628,7 @@ namespace AnimationEditorCore.ViewModels
             }
 
             Layers.Clear();
-            SortedLayers.Refresh();
+            Layers.Refresh();
         }
 
         //public void SwapLayers(int layerIndexOne, int layerIndexTwo)
@@ -711,7 +658,7 @@ namespace AnimationEditorCore.ViewModels
             destination.CanvasHeight = original.CanvasHeight;
             destination.CanvasWidth = original.CanvasWidth;
 
-            destination.Layers = new ObservableCollection<LayerViewModel>();
+            destination.Layers = new LayerCollection(destination);
 
             foreach (var layer in original.Layers)
             {
@@ -720,10 +667,10 @@ namespace AnimationEditorCore.ViewModels
                 destination.Layers.Add(clonedLayer);
             }
 
-            destination.InitializeLayerViewSource();
+            //destination.InitializeLayerViewSource();
             destination.SelectedFrameIndex = original.SelectedFrameIndex;
-            destination.ActiveLayer = destination.GetLayerAtZIndex(original.ActiveLayerIndex);
-            destination.NotifyPropertyChanged(nameof(SortedLayers));
+            destination.Layers.ActiveLayer = destination.GetLayerAtZIndex(original.Layers.ActiveLayerIndex);
+            destination.Layers.NotifyPropertyChanged(nameof(LayerCollection.SortedLayers));
         }
 
         public void LoadState(UndoStateViewModel state)

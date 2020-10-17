@@ -40,7 +40,7 @@ namespace AnimationEditorCore.ViewModels
 
             timeline.AddBlankFrameToTimeline(timeline.SelectedFrameIndex + 1);
 
-            Assert.IsNotNull(timeline.ActiveLayer);
+            Assert.IsNotNull(timeline.Layers.ActiveLayer);
         }
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace AnimationEditorCore.ViewModels
 
             timeline.AddBlankFrameToTimeline(timeline.SelectedFrameIndex + 1);
 
-            Assert.IsTrue(timeline.ActiveLayer.IsVisible);
+            Assert.IsTrue(timeline.Layers.ActiveLayer.IsVisible);
         }
 
         [TestMethod]
@@ -64,7 +64,7 @@ namespace AnimationEditorCore.ViewModels
 
             timeline.AddBlankFrameToTimeline(timeline.SelectedFrameIndex + 1);
 
-            Assert.AreEqual("Layer 0", timeline.ActiveLayer.DisplayName);
+            Assert.AreEqual("Layer 0", timeline.Layers.ActiveLayer.DisplayName);
         }
 
         [TestMethod]
@@ -114,7 +114,7 @@ namespace AnimationEditorCore.ViewModels
             var moveSelectedStrokes = new Commands.Timeline.FrameContent.MoveSelectedContentsToNextFrameCommand();
 
             var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
-            var selectedFrame = timeline.ActiveLayer.Frames[timeline.ActiveLayer.SelectedFrameIndex];
+            var selectedFrame = timeline.Layers.ActiveLayer.Frames[timeline.Layers.ActiveLayer.SelectedFrameIndex];
             selectedFrame.SelectedStrokes = selectedFrame.StrokeCollection;
             Assert.IsTrue(moveSelectedStrokes.CanExecute(workspaceManager.SelectedWorkspace.TimelineViewModel));
 
@@ -137,7 +137,7 @@ namespace AnimationEditorCore.ViewModels
             var moveSelectedStrokes = new Commands.Timeline.FrameContent.MoveSelectedContentsToPreviousFrameCommand();
 
             var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
-            var selectedFrame = timeline.ActiveLayer.Frames[timeline.ActiveLayer.SelectedFrameIndex];
+            var selectedFrame = timeline.Layers.ActiveLayer.Frames[timeline.Layers.ActiveLayer.SelectedFrameIndex];
             selectedFrame.SelectedStrokes = selectedFrame.StrokeCollection;
             Assert.IsTrue(moveSelectedStrokes.CanExecute(workspaceManager.SelectedWorkspace.TimelineViewModel));
 

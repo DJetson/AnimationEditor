@@ -28,7 +28,7 @@ namespace AnimationEditorCore.Commands.Timeline.Frames
         {
             var Parameter = parameter as TimelineViewModel;
 
-            var frameCount = Parameter?.ActiveLayer?.Frames?.Count ?? 0;
+            var frameCount = Parameter?.Layers?.ActiveLayer?.Frames?.Count ?? 0;
             var currentIndex = Parameter?.SelectedFrameIndex ?? 0;
             var navigation = FrameNavigation.Previous;
 
