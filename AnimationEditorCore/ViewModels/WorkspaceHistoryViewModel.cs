@@ -152,6 +152,7 @@ namespace AnimationEditorCore.ViewModels
 
             if (setAsInitialState)
             {
+                InitialState = state;
                 //WorkspaceViewModel.HasUnsavedChanges = raiseChangedFlag;
             }
 

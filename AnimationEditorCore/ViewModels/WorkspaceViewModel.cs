@@ -46,7 +46,13 @@ namespace AnimationEditorCore.ViewModels
         public bool IsRecoveredFile
         {
             get { return _IsRecoveredFile; }
-            set { _IsRecoveredFile = value; NotifyPropertyChanged(nameof(IsRecoveredFile), nameof(DisplayName)); }
+            set 
+            { 
+                _IsRecoveredFile = value; 
+                NotifyPropertyChanged(nameof(IsRecoveredFile), 
+                                      nameof(DisplayName),
+                                      nameof(DisplayNameWithInfo)); 
+            }
         }
 
 
@@ -86,13 +92,28 @@ namespace AnimationEditorCore.ViewModels
         public bool HasUnsavedChanges
         {
             get => _HasUnsavedChanges;
-            set { _HasUnsavedChanges = value; NotifyPropertyChanged(); NotifyPropertyChanged(nameof(DisplayName)); }
+            set 
+            { 
+                _HasUnsavedChanges = value; 
+                NotifyPropertyChanged(nameof(DisplayName),
+                                      nameof(DisplayNameWithInfo)); 
+            }
         }
 
         public override string DisplayName
         {
-            get => $"{_DisplayName}{(IsRecoveredFile ? "(recovered)" : "")}{(_HasUnsavedChanges ? "*" : "")}";
-            set { _DisplayName = value.Replace("(recovered)", "").TrimEnd('*'); NotifyPropertyChanged(); }
+            get => _DisplayName;
+            set 
+            { 
+                _DisplayName = value; 
+                NotifyPropertyChanged(nameof(DisplayName),
+                                      nameof(DisplayNameWithInfo)); 
+            }
+        }
+
+        public string DisplayNameWithInfo
+        {
+            get => $"{_DisplayName}{(IsRecoveredFile ? "(recovered)" : "")}{(HasUnsavedChanges ? "*" : "")}";
         }
 
         private DelegateCommand _ExportToGif;

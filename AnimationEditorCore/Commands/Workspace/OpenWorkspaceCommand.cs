@@ -61,6 +61,7 @@ namespace AnimationEditorCore.Commands.Workspace
         {
             var f = WorkspaceFileModel.OpenWorkspaceFile(fileName, JsonSerializerOptions);
             var w = new WorkspaceViewModel(f);
+            w.HasUnsavedChanges = false;
             workspaceManager.AddWorkspace(w);
             WorkspaceHistoryViewModel.PushUndoRecord(UndoStateTitle, true);
         }

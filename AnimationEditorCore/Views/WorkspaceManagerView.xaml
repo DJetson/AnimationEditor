@@ -12,7 +12,7 @@
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <DockPanel ToolTip="{Binding Filepath}">
-                        <TextBlock DockPanel.Dock="Left" Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis" />
+                        <TextBlock DockPanel.Dock="Left" Text="{Binding DisplayNameWithInfo}" TextTrimming="CharacterEllipsis" />
                         <Button DockPanel.Dock="Right" Height="15" Width="15" Margin="10,0,-5,0" Command="{StaticResource CloseWorkspace}" CommandParameter="{Binding }" >
                             <Rectangle Stretch="UniformToFill" Fill="{StaticResource CloseIcon}" />
                         </Button>

@@ -40,6 +40,7 @@ namespace AnimationEditorCore.Views
             if (dc.WorkspaceManager.Workspaces.Count == 0)
             {
                 var workspace = dc.WorkspaceManager.CreateNewWorkspace();
+                workspace.HasUnsavedChanges = false;
                 TimelineViewModel timelineViewModel = workspace.TimelineViewModel;
                 WorkspaceHistoryViewModel.PushUndoRecord(Properties.Resources.CreateNewWorkspaceUndoStateTitle, true);
             }
