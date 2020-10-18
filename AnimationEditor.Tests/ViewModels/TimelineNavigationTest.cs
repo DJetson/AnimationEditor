@@ -18,7 +18,7 @@ namespace AnimationEditorCore.ViewModels
             Assert.IsTrue(openCommand.CanExecute(workspaceManager));
 
             openCommand.OpenWorkspaceFile("TestFile.anws", workspaceManager);
-            Assert.AreEqual("TestFile*", workspaceManager.SelectedWorkspace.DisplayName, "selected workspace display name");
+            Assert.AreEqual("TestFile", workspaceManager.SelectedWorkspace.DisplayName, "selected workspace display name");
 
 
         }

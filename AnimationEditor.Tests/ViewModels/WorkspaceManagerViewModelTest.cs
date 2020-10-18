@@ -64,7 +64,7 @@ namespace AnimationEditorCore.ViewModels
         {
             var workspaceManager = new WorkspaceManagerViewModel();
             workspaceManager.CreateNewWorkspace(false);
-            Assert.AreEqual("Untitled*", workspaceManager.SelectedWorkspace.DisplayName, "initial workspace display name");
+            Assert.AreEqual("Untitled", workspaceManager.SelectedWorkspace.DisplayName, "initial workspace display name");
 
             var openCommand = new Commands.Workspace.OpenWorkspaceCommand();
             Assert.IsTrue(openCommand.CanExecute(workspaceManager));
