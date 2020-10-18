@@ -28,7 +28,7 @@ namespace AnimationEditorCore.Commands.Timeline.Layers
             var Parameter = parameter as TimelineViewModel;
 
             Parameter.Layers.RemoveLayerAtZIndex(Parameter.Layers.ActiveLayerIndex);
-            WorkspaceHistoryViewModel.PushUndoRecord(UndoStateTitle, false);
+            WorkspaceHistoryViewModel.PushUndoRecord(UndoStateTitle);
         }
     }
 }

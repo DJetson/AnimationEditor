@@ -46,7 +46,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             Parameter.SelectedFrameIndex = Parameter.SelectedFrameIndex + 1;
             copyToFrame.SelectedStrokes.Add(copiedStrokes);
 
-            WorkspaceHistoryViewModel.PushUndoRecord(UndoStateTitle, false);
+            WorkspaceHistoryViewModel.PushUndoRecord(UndoStateTitle);
         }
     }
 }

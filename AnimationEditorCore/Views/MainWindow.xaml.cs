@@ -41,7 +41,7 @@ namespace AnimationEditorCore.Views
             {
                 var workspace = dc.WorkspaceManager.CreateNewWorkspace();
                 TimelineViewModel timelineViewModel = workspace.TimelineViewModel;
-                timelineViewModel.PushUndoRecord(timelineViewModel.CreateUndoState(Properties.Resources.CreateNewWorkspaceUndoStateTitle), false);
+                WorkspaceHistoryViewModel.PushUndoRecord(Properties.Resources.CreateNewWorkspaceUndoStateTitle, true);
             }
         }
     }

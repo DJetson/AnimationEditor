@@ -109,7 +109,7 @@ namespace AnimationEditorCore.ViewModels
                 var f = WorkspaceFileModel.OpenWorkspaceFile(filepath, JsonSerializerOptions);
                 var w = new WorkspaceViewModel(f) { IsRecoveredFile = true, HasUnsavedChanges = true };
                 AddWorkspace(w);
-                w.TimelineViewModel.PushUndoRecord(w.TimelineViewModel.CreateUndoState(Resources.OpenWorkspaceUndoStateTitle), false);
+                WorkspaceHistoryViewModel.PushUndoRecord(Resources.OpenWorkspaceUndoStateTitle);
             }
         }
     }

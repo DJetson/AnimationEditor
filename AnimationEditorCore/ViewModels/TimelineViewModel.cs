@@ -392,15 +392,15 @@ namespace AnimationEditorCore.ViewModels
             set { _FrameWidth = value; NotifyPropertyChanged(nameof(FrameWidth), nameof(ScrubberLength)); }
         }
 
-        public TimelineState CreateUndoState(string title, List<UndoStateViewModel> additionalStates = null)
-        {
-            return new TimelineState(this, title);
-        }
+        //public TimelineState CreateUndoState(string title, List<UndoStateViewModel> additionalStates = null)
+        //{
+        //    return new TimelineState(this, title);
+        //}
 
-        public void PushUndoRecord(UndoStateViewModel nextState, bool raiseChangedFlag = true)
-        {
-            WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(nextState, raiseChangedFlag);
-        }
+        //public void PushUndoRecord(UndoStateViewModel nextState, bool raiseChangedFlag = true)
+        //{
+        //    WorkspaceViewModel.WorkspaceHistoryViewModel.AddHistoricalState(nextState, raiseChangedFlag);
+        //}
 
         public UndoStateViewModel SaveState()
         {

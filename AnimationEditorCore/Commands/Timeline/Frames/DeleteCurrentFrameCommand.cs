@@ -28,7 +28,7 @@ namespace AnimationEditorCore.Commands.Timeline.Frames
             var Parameter = parameter as TimelineViewModel;
 
             Parameter.DeleteCurrentFrame();
-            WorkspaceHistoryViewModel.PushUndoRecord(UndoStateTitle, false);
+            WorkspaceHistoryViewModel.PushUndoRecord(UndoStateTitle);
         }
     }
 }

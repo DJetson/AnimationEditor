@@ -130,10 +130,10 @@ namespace AnimationEditorCore.ViewModels
             _ActiveContext = workspace;
         }
 
-        public static void PushUndoRecord(string title, bool raiseChangedFlag = true)
+        public static void PushUndoRecord(string title, bool setAsInitialState = false)
         {
             var newState = new TimelineState(_ActiveContext.TimelineViewModel, title);
-            _ActiveContext.WorkspaceHistoryViewModel.AddHistoricalState(newState, raiseChangedFlag);
+            _ActiveContext.WorkspaceHistoryViewModel.AddHistoricalState(newState, setAsInitialState);
         }
 
         public WorkspaceHistoryViewModel(WorkspaceViewModel workspace, UndoStateViewModel initialState = null)
@@ -142,7 +142,7 @@ namespace AnimationEditorCore.ViewModels
             InitialState = initialState;
         }
 
-        public void AddHistoricalState(UndoStateViewModel state, bool raiseChangedFlag = true)
+        public void AddHistoricalState(UndoStateViewModel state, bool setAsInitialState = false)
         {
             ClearFutureStates();
 
@@ -150,11 +150,12 @@ namespace AnimationEditorCore.ViewModels
 
             CurrentState = state as UndoStateViewModel;
 
-            if (raiseChangedFlag)
+            if (setAsInitialState)
             {
-                WorkspaceViewModel.HasUnsavedChanges = raiseChangedFlag;
-                WorkspaceViewModel.WriteToTempFile();
+                //WorkspaceViewModel.HasUnsavedChanges = raiseChangedFlag;
             }
+
+            WorkspaceViewModel.WriteToTempFile();
         }
 
         public void ClearFutureStates()

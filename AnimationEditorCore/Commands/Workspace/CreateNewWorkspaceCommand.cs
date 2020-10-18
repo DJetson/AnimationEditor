@@ -33,7 +33,7 @@ namespace AnimationEditorCore.Commands.Workspace
             Parameter.CreateNewWorkspace();
             TimelineViewModel timelineViewModel = Parameter.SelectedWorkspace.TimelineViewModel;
 
-            timelineViewModel.PushUndoRecord(timelineViewModel.CreateUndoState(UndoStateTitle), false);
+            WorkspaceHistoryViewModel.PushUndoRecord(UndoStateTitle, true);
         }
     }
 }
