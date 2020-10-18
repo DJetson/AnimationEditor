@@ -1,6 +1,7 @@
 ﻿using AnimationEditorCore.BaseClasses;
 using AnimationEditorCore.Commands;
 using AnimationEditorCore.Interfaces;
+using AnimationEditorCore.ViewModels.StateObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -74,23 +75,33 @@ namespace AnimationEditorCore.ViewModels
             }
         }
 
-        public UndoStateViewModel PreviousState
+        public static UndoStateViewModel PreviousState
         {
             get
             {
-                if (CurrentStateIndex > 0)
-                    return HistoricalStates[CurrentStateIndex - 1];
+                var history = _ActiveContext.WorkspaceHistoryViewModel;
+
+                if (history == null)
+                    return null;
+
+                if (history.CurrentStateIndex > 0)
+                    return history.HistoricalStates[history.CurrentStateIndex - 1];
                 else
                     return null;
             }
         }
 
-        public UndoStateViewModel NextState
+        public static UndoStateViewModel NextState
         {
             get
             {
-                if (CurrentStateIndex >= 0 && CurrentStateIndex < HistoricalStates.Count - 1)
-                    return HistoricalStates[CurrentStateIndex + 1];
+                var history = _ActiveContext.WorkspaceHistoryViewModel;
+                
+                if (history == null)
+                    return null;
+
+                if (history.CurrentStateIndex >= 0 && history.CurrentStateIndex < history.HistoricalStates.Count - 1)
+                    return history.HistoricalStates[history.CurrentStateIndex + 1];
                 else
                     return null;
             }
@@ -110,6 +121,19 @@ namespace AnimationEditorCore.ViewModels
                     WorkspaceViewModel.HasUnsavedChanges = (CurrentState != _InitialState);
                 }
             }
+        }
+
+        private static WorkspaceViewModel _ActiveContext = null;
+
+        public static void SetActiveContext(WorkspaceViewModel workspace)
+        {
+            _ActiveContext = workspace;
+        }
+
+        public static void PushUndoRecord(string title, bool raiseChangedFlag = true)
+        {
+            var newState = new TimelineState(_ActiveContext.TimelineViewModel, title);
+            _ActiveContext.WorkspaceHistoryViewModel.AddHistoricalState(newState, raiseChangedFlag);
         }
 
         public WorkspaceHistoryViewModel(WorkspaceViewModel workspace, UndoStateViewModel initialState = null)
@@ -143,67 +167,49 @@ namespace AnimationEditorCore.ViewModels
             }
         }
 
-        public void Undo()
+        public static void UndoToState(UndoStateViewModel state)
         {
-            if (PreviousState == null)
-                return;
+            var history = _ActiveContext.WorkspaceHistoryViewModel;
 
-            CurrentState = PreviousState;
-            CurrentState.LoadState();
-
-            WorkspaceViewModel.WriteToTempFile();
-        }
-
-        public void UndoToState(UndoStateViewModel state)
-        {
-            if (!HistoricalStates.Contains(state))
+            if (!history.HistoricalStates.Contains(state))
                 throw new IndexOutOfRangeException($"The historical state \"{state}\" could not be found");
 
-            var originalCurrentState = CurrentState;
-            while (CurrentState != state)
+            var originalCurrentState = history.CurrentState;
+            while (history.CurrentState != state)
             {
                 if (PreviousState == null)
                 {
-                    CurrentState = originalCurrentState;
+                    history.CurrentState = originalCurrentState;
                     return;
                 }
 
-                CurrentState = PreviousState;
+                history.CurrentState = PreviousState;
             }
 
-            CurrentState.LoadState();
-            WorkspaceViewModel.WriteToTempFile();
+            history.CurrentState.LoadState();
+            _ActiveContext.WriteToTempFile();
         }
 
-        public void Redo()
+        public static void RedoToState(UndoStateViewModel state)
         {
-            if (NextState == null)
-                return;
+            var history = _ActiveContext.WorkspaceHistoryViewModel;
 
-            CurrentState = NextState;
-            CurrentState.LoadState();
-
-            WorkspaceViewModel.WriteToTempFile();
-        }
-
-        public void RedoToState(UndoStateViewModel state)
-        {
-            if (!HistoricalStates.Contains(state))
+            if (!history.HistoricalStates.Contains(state))
                 throw new IndexOutOfRangeException($"The historical state \"{state}\" could not be found");
 
-            var originalCurrentState = CurrentState;
-            while (CurrentState != state)
+            var originalCurrentState = history.CurrentState;
+            while (history.CurrentState != state)
             {
                 if (NextState == null)
                 {
-                    CurrentState = originalCurrentState;
+                    history.CurrentState = originalCurrentState;
                     return;
                 }
-                CurrentState = NextState;
+                history.CurrentState = NextState;
             }
 
-            CurrentState.LoadState();
-            WorkspaceViewModel.WriteToTempFile();
+            history.CurrentState.LoadState();
+            _ActiveContext.WriteToTempFile();
         }
     }
 }

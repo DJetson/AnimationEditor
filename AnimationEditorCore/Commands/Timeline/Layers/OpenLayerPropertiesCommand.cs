@@ -32,7 +32,7 @@ namespace AnimationEditorCore.Commands.Timeline.Layers
             var result = layerProperties.ShowDialog();
 
             if(result == true)
-                Parameter.TimelineViewModel.PushUndoRecord(Parameter.TimelineViewModel.CreateUndoState(UndoStateTitle));
+                WorkspaceHistoryViewModel.PushUndoRecord(UndoStateTitle, false);
         }
     }
 }

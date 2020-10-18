@@ -49,7 +49,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             copyToFrame.StrokeCollection.Add(copiedStrokes);
             copyToFrame.SelectedStrokes.Add(copiedStrokes);
 
-            Parameter.PushUndoRecord(Parameter.CreateUndoState(UndoStateTitle));
+            WorkspaceHistoryViewModel.PushUndoRecord(UndoStateTitle, false);
         }
     }
 }

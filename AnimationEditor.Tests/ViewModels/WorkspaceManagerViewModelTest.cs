@@ -117,7 +117,7 @@ namespace AnimationEditorCore.ViewModels
             var historyItem = workspace.WorkspaceHistoryViewModel.HistoricalStates.First();
             //Assert.IsTrue(workspace.WorkspaceHistoryViewModel.UndoToState(historyItem));
 
-            workspace.WorkspaceHistoryViewModel.UndoToState(historyItem);
+            WorkspaceHistoryViewModel.UndoToState(historyItem);
 
             // 😞 To reproduce this issue, I will have to replay some changes out of order.
             // The order I (re)fixed the issues resulted in *this* issue being fixed implicitly.

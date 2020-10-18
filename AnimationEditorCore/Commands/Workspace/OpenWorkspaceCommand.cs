@@ -62,7 +62,7 @@ namespace AnimationEditorCore.Commands.Workspace
             var f = WorkspaceFileModel.OpenWorkspaceFile(fileName, JsonSerializerOptions);
             var w = new WorkspaceViewModel(f);
             workspaceManager.AddWorkspace(w);
-            w.TimelineViewModel.PushUndoRecord(w.TimelineViewModel.CreateUndoState(UndoStateTitle), false);
+            WorkspaceHistoryViewModel.PushUndoRecord(UndoStateTitle, false);
         }
     }
 }

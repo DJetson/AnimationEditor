@@ -25,7 +25,7 @@ namespace AnimationEditorCore.ViewModels
         public WorkspaceViewModel SelectedWorkspace
         {
             get => _SelectedWorkspace;
-            set { _SelectedWorkspace = value; NotifyPropertyChanged(); }
+            set { _SelectedWorkspace = value; NotifyPropertyChanged(); WorkspaceHistoryViewModel.SetActiveContext(SelectedWorkspace); }
         }
 
         public WorkspaceManagerViewModel()

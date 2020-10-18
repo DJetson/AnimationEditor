@@ -29,9 +29,9 @@ namespace AnimationEditorCore.Commands.Environment
             var Parameter = parameter as UndoStateViewModel;
 
             if (Parameter.CurrentStateType == StateType.Undo)
-                Parameter.Originator.WorkspaceViewModel.WorkspaceHistoryViewModel.UndoToState(Parameter);
+                WorkspaceHistoryViewModel.UndoToState(Parameter);
             else if (Parameter.CurrentStateType == StateType.Redo)
-                Parameter.Originator.WorkspaceViewModel.WorkspaceHistoryViewModel.RedoToState(Parameter);
+                WorkspaceHistoryViewModel.RedoToState(Parameter);
             else
                 return;
         }

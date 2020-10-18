@@ -37,7 +37,7 @@ namespace AnimationEditorCore.Commands.Timeline.Layers
             var swapWith = timeline.Layers.GetLayerBelow(Parameter);
 
             timeline.Layers.SwapLayerZIndex(Parameter, swapWith);
-            timeline.PushUndoRecord(timeline.CreateUndoState(UndoStateTitle));
+            WorkspaceHistoryViewModel.PushUndoRecord(UndoStateTitle, false);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace AnimationEditorCore.Commands.Environment
             if (!(parameter is WorkspaceViewModel Parameter))
                 return false;
 
-            if (Parameter?.WorkspaceHistoryViewModel?.PreviousState == null)
+            if (WorkspaceHistoryViewModel.PreviousState == null)
                 return false;
 
             if (Parameter?.TimelineViewModel?.AnimationPlaybackViewModel == null)
@@ -29,7 +29,7 @@ namespace AnimationEditorCore.Commands.Environment
         {
             var Parameter = parameter as WorkspaceViewModel;
 
-            Parameter.WorkspaceHistoryViewModel.UndoToState(Parameter.WorkspaceHistoryViewModel.PreviousState);
+            WorkspaceHistoryViewModel.UndoToState(WorkspaceHistoryViewModel.PreviousState);
         }
     }
 }

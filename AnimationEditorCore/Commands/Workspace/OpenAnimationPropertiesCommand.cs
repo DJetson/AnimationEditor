@@ -32,7 +32,7 @@ namespace AnimationEditorCore.Commands.Workspace
             var result = layerProperties.ShowDialog();
 
             if(result == true)
-                Parameter.PushUndoRecord(Parameter.CreateUndoState(UndoStateTitle));
+                WorkspaceHistoryViewModel.PushUndoRecord(UndoStateTitle, false);
         }
     }
 }

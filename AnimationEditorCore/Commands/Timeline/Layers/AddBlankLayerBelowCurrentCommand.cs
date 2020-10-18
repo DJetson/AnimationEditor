@@ -29,7 +29,7 @@ namespace AnimationEditorCore.Commands.Timeline.Layers
             var Parameter = parameter as TimelineViewModel;
 
             Parameter.AddBlankLayer(LayerNavigation.Below);
-            Parameter.PushUndoRecord(Parameter.CreateUndoState(UndoStateTitle));
+            WorkspaceHistoryViewModel.PushUndoRecord(UndoStateTitle, false);
         }
     }
 }
