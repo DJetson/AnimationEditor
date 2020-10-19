@@ -33,7 +33,7 @@ namespace AnimationEditorCore.Commands.Timeline.Frames
             var currentIndex = Parameter?.SelectedFrameIndex ?? 0;
             var navigation = FrameNavigation.Start;
 
-            Parameter.AddBlankFrameToTimeline(GetIndexForFrameNavigation(currentIndex, frameCount, navigation));
+            Parameter.AddBlankKeyFrameToTimeline(GetIndexForFrameNavigation(currentIndex, frameCount, navigation));
             WorkspaceHistoryViewModel.PushUndoRecord(UndoStateTitle);
         }
     }

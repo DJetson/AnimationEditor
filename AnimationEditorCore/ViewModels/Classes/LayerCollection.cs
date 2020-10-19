@@ -1,4 +1,5 @@
-﻿using AnimationEditorCore.Utilities;
+﻿using AnimationEditorCore.Interfaces;
+using AnimationEditorCore.Utilities;
 using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Collections.Generic;
@@ -63,11 +64,11 @@ namespace AnimationEditorCore.ViewModels.Classes
         public void AddBlankLayerAtIndex(int index)
         {
             var newLayer = new LayerViewModel(TimelineViewModel, index, "");
-            newLayer.Frames = new ObservableCollection<FrameViewModel>();
+            newLayer.Frames = new ObservableCollection<IFrameViewModel>();
 
             for (int i = 0; i < TimelineViewModel.FrameCount; i++)
             {
-                var newFrame = new FrameViewModel(newLayer, i);
+                var newFrame = new KeyFrameViewModel(newLayer, i);
                 newLayer.AddFrameAtIndex(newFrame, i);
             }
             newLayer.SelectedFrameIndex = TimelineViewModel.SelectedFrameIndex;
@@ -109,7 +110,7 @@ namespace AnimationEditorCore.ViewModels.Classes
 
         public void UpdateSelectedFrames()
         {
-            var selected = new List<FrameViewModel>();
+            var selected = new List<IFrameViewModel>();
 
             foreach (var layer in Items)
             {
@@ -121,7 +122,7 @@ namespace AnimationEditorCore.ViewModels.Classes
                         selected.Add(frame);
                 }
             }
-            TimelineViewModel.SelectedFrames = new ObservableCollection<FrameViewModel>(selected);
+            TimelineViewModel.SelectedFrames = new ObservableCollection<IFrameViewModel>(selected);
         }
 
         public void InitializeLayerViewSource()

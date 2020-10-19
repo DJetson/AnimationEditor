@@ -30,7 +30,7 @@ namespace AnimationEditorCore.Models
             Frames = new List<FrameModel>(layer.Frames.Select(e => new FrameModel(e)));
         }
 
-        public LayerModel(Stream stream, string displayName, bool isVisible, int layerId, int arrangedZIndex, int selectedFrameIndex, bool isActive, List<FrameViewModel> frames)
+        public LayerModel(Stream stream, string displayName, bool isVisible, int layerId, int arrangedZIndex, int selectedFrameIndex, bool isActive, List<KeyFrameViewModel> frames)
         {
             DisplayName = displayName;
             IsVisible = isVisible;

@@ -22,8 +22,10 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
 
             //if (!(Parameter.IsFrameIndexValid(Parameter.SelectedFrameIndex - 1)))
             //    return false;
+            if (!(Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex) is KeyFrameViewModel keyFrame))
+                return false;
 
-            if (Parameter.Layers.ActiveLayer.Frames[Parameter.SelectedFrameIndex].SelectedStrokes.Count == 0)
+            if (keyFrame.SelectedStrokes.Count == 0)
                 return false;
 
             return true;
@@ -33,22 +35,21 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
         {
             var Parameter = parameter as TimelineViewModel;
 
-            var frame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);
-
-            FrameViewModel copyToFrame = null;
+            var sourceFrame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex) as KeyFrameViewModel;
+            KeyFrameViewModel copyToFrame = null;
 
             if (!(Parameter.IsFrameIndexValid(Parameter.SelectedFrameIndex - 1)))
             {
-                Parameter.AddBlankFrameToTimeline(Parameter.SelectedFrameIndex, true);
-                copyToFrame = Parameter.Layers.ActiveLayer.Frames[Parameter.SelectedFrameIndex];
+                Parameter.AddBlankKeyFrameToTimeline(Parameter.SelectedFrameIndex, true);
+                copyToFrame = Parameter.Layers.ActiveLayer.Frames[Parameter.SelectedFrameIndex] as KeyFrameViewModel;
             }
             else
             {
-                copyToFrame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex - 1);
+                copyToFrame = Parameter.Layers.ActiveLayer.ConvertToKeyFrame(Parameter.SelectedFrameIndex - 1);
                 Parameter.SelectedFrameIndex = Parameter.SelectedFrameIndex - 1;
             }
 
-            StrokeCollection copiedStrokes = new StrokeCollection(frame.SelectedStrokes.Select(e => e.Clone()));
+            StrokeCollection copiedStrokes = new StrokeCollection(sourceFrame.SelectedStrokes.Select(e => e.Clone()));
 
             copyToFrame.StrokeCollection.Add(copiedStrokes);
             copyToFrame.SelectedStrokes.Add(copiedStrokes);

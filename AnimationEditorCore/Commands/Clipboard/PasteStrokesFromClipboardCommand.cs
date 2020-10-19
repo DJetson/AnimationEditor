@@ -34,7 +34,7 @@ namespace AnimationEditorCore.Commands.Clipboard
             var Parameter = parameter as TimelineViewModel;
 
             var copiedStrokes = InternalClipboard.GetData();
-            var copyToFrame = Parameter.Layers.ActiveLayer.Frames[Parameter.SelectedFrameIndex];
+            var copyToFrame = Parameter.Layers.ActiveLayer.ConvertToKeyFrame(Parameter.SelectedFrameIndex);
 
             copyToFrame.StrokeCollection.Add(copiedStrokes);
 

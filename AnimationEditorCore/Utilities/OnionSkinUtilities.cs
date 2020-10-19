@@ -1,4 +1,5 @@
-﻿using AnimationEditorCore.ViewModels;
+﻿using AnimationEditorCore.Interfaces;
+using AnimationEditorCore.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace AnimationEditorCore.Utilities
 {
     public static class OnionSkinUtilities
     {
-        public static List<FrameViewModel> GetAllLayerFramesAtIndex(List<LayerViewModel> layers, int index)
+        public static List<IFrameViewModel> GetAllLayerFramesAtIndex(List<LayerViewModel> layers, int index)
         {
-            var frames = new List<FrameViewModel>();
+            var frames = new List<IFrameViewModel>();
 
             foreach (var layer in layers)
             {
@@ -24,16 +25,16 @@ namespace AnimationEditorCore.Utilities
             return frames;
         }
 
-        public static StrokeCollection FlattenFrames(List<FrameViewModel> frames, bool ExcludeHiddenLayers = false)
+        public static StrokeCollection FlattenFrames(List<IFrameViewModel> frames, bool ExcludeHiddenLayers = false)
         {
             var strokes = new StrokeCollection();
-            List<FrameViewModel> flattenFrames = frames;
+            List<IFrameViewModel> flattenFrames = frames;
             if (ExcludeHiddenLayers)
             {
                 flattenFrames = frames.Where(e => e.LayerViewModel.IsVisible).ToList();
             }
 
-            foreach (var frame in flattenFrames)
+            foreach (var frame in flattenFrames.OfType<KeyFrameViewModel>())
             {
                 strokes.Add(frame.StrokeCollection);
             }

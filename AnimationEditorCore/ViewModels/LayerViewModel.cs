@@ -24,9 +24,9 @@ namespace AnimationEditorCore.ViewModels
         public bool IsVisible
         {
             get { return _IsVisible; }
-            set 
-            { 
-                _IsVisible = value; 
+            set
+            {
+                _IsVisible = value;
                 NotifyPropertyChanged(nameof(IsVisible), nameof(IsAcceptingInput));
                 TimelineViewModel.NotifyPropertyChanged(nameof(TimelineViewModel.PreviousFrameStrokes),
                                                         nameof(TimelineViewModel.PreviousOnionSkins),
@@ -88,14 +88,14 @@ namespace AnimationEditorCore.ViewModels
             set { _TimelineViewModel = value; NotifyPropertyChanged(); }
         }
 
-        private ObservableCollection<FrameViewModel> _Frames = new ObservableCollection<FrameViewModel>();
-        public ObservableCollection<FrameViewModel> Frames
+        private ObservableCollection<IFrameViewModel> _Frames = new ObservableCollection<IFrameViewModel>();
+        public ObservableCollection<IFrameViewModel> Frames
         {
             get { return _Frames; }
             set { _Frames = value; NotifyPropertyChanged(); }
         }
 
-        public LayerViewModel(TimelineViewModel timeline, int zIndex, string displayName ="")
+        public LayerViewModel(TimelineViewModel timeline, int zIndex, string displayName = "")
         {
             TimelineViewModel = timeline;
             ZIndex = zIndex;
@@ -110,9 +110,9 @@ namespace AnimationEditorCore.ViewModels
             IsVisible = originalLayer.IsVisible;
             DisplayName = originalLayer.DisplayName;
 
-            Frames = new ObservableCollection<FrameViewModel>();
+            Frames = new ObservableCollection<IFrameViewModel>();
 
-            foreach(var frame in originalLayer.Frames)
+            foreach (var frame in originalLayer.Frames)
             {
                 var clonedFrame = frame.Clone();
                 clonedFrame.LayerViewModel = this;
@@ -123,6 +123,25 @@ namespace AnimationEditorCore.ViewModels
             SelectedFrame = Frames[SelectedFrameIndex];
 
             IsActive = originalLayer.IsActive;
+        }
+
+        public void AddFrameAtIndex(IFrameViewModel frame, int index)
+        {
+            frame.Order = index;
+            if (index < Frames.Count)
+            {
+                Frames.Insert(index, frame);
+            }
+            else if (index >= Frames.Count)
+            {
+                Frames.Add(frame);
+            }
+            else
+            {
+                Console.WriteLine($"WorkspaceViewModel.InsertFrame ERROR: Attempted to insert a frame at an invalid index = {index}");
+            }
+
+            UpdateFrameOrderIds();
         }
 
         public void AddFrameAtIndex(FrameViewModel frame, int index)
@@ -152,8 +171,8 @@ namespace AnimationEditorCore.ViewModels
             }
         }
 
-        private FrameViewModel _SelectedFrame;
-        public FrameViewModel SelectedFrame
+        private IFrameViewModel _SelectedFrame;
+        public IFrameViewModel SelectedFrame
         {
             get { return _SelectedFrame; }
             set { _SelectedFrame = value; NotifyPropertyChanged(); }
@@ -174,7 +193,7 @@ namespace AnimationEditorCore.ViewModels
             ZIndex = model.LayerId;
             //ArrangedZIndex = model.ArrangedZIndex;
 
-            Frames = new ObservableCollection<FrameViewModel>(model.Frames.Select(e => new FrameViewModel(e,this)));
+            Frames = new ObservableCollection<IFrameViewModel>(model.Frames.Select(e => new KeyFrameViewModel(e, this)));
 
             SelectedFrameIndex = model.SelectedFrameIndex;
             IsActive = model.IsActive;
@@ -182,13 +201,33 @@ namespace AnimationEditorCore.ViewModels
 
         public void ClearFrames()
         {
-            foreach (var frame in Frames)
+            foreach (var frame in Frames.OfType<KeyFrameViewModel>())
             {
                 frame.ClearStrokes();
             }
 
             Frames.Clear();
         }
+
+        public KeyFrameViewModel ConvertToKeyFrame(int index)
+        {
+            if (Frames[index] is KeyFrameViewModel keyFrame)
+                return keyFrame;
+
+            var converted = KeyFrameViewModel.FromBase(Frames[index]);
+            Frames[index] = converted;
+
+            return Frames[index] as KeyFrameViewModel;
+        }
+
+        //public KeyFrameViewModel ConvertToKeyFrame(IFrameViewModel frame)
+        //{
+        //    if (!(Frames[index] is FrameViewModel frame))
+        //        return;
+
+        //    var converted = KeyFrameViewModel.FromBase(frame);
+        //    Frames[index] = converted;
+        //}
 
         public static void CopyToLayer(LayerViewModel original, LayerViewModel destination)
         {
@@ -200,7 +239,7 @@ namespace AnimationEditorCore.ViewModels
             destination.IsVisible = original.IsVisible;
             destination.DisplayName = original.DisplayName;
 
-            destination.Frames = new ObservableCollection<FrameViewModel>();
+            destination.Frames = new ObservableCollection<IFrameViewModel>();
 
             foreach (var frame in original.Frames)
             {

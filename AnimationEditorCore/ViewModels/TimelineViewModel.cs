@@ -57,8 +57,8 @@ namespace AnimationEditorCore.ViewModels
             }
         }
 
-        private ObservableCollection<FrameViewModel> _SelectedFrames;
-        public ObservableCollection<FrameViewModel> SelectedFrames
+        private ObservableCollection<IFrameViewModel> _SelectedFrames;
+        public ObservableCollection<IFrameViewModel> SelectedFrames
         {
             get { return _SelectedFrames; }
             set { _SelectedFrames = value; NotifyPropertyChanged(); }
@@ -110,10 +110,10 @@ namespace AnimationEditorCore.ViewModels
             }
         }
 
-        public StrokeCollection FlattenFrames(List<FrameViewModel> frames, bool ExcludeHiddenLayers = false)
+        public StrokeCollection FlattenFrames(List<KeyFrameViewModel> frames, bool ExcludeHiddenLayers = false)
         {
             var strokes = new StrokeCollection();
-            List<FrameViewModel> flattenFrames = frames;
+            List<KeyFrameViewModel> flattenFrames = frames;
             if (ExcludeHiddenLayers)
             {
                 flattenFrames = frames.Where(e => e.LayerViewModel.IsVisible).ToList();
@@ -127,12 +127,12 @@ namespace AnimationEditorCore.ViewModels
             return strokes;
         }
 
-        public ObservableCollection<FrameViewModel> NextFrame => new ObservableCollection<FrameViewModel>(OnionSkinUtilities.GetAllLayerFramesAtIndex(Layers.ToList(), SelectedFrameIndex + 1));
-        public ObservableCollection<FrameViewModel> PreviousFrame => new ObservableCollection<FrameViewModel>(OnionSkinUtilities.GetAllLayerFramesAtIndex(Layers.ToList(), SelectedFrameIndex - 1));
+        public ObservableCollection<IFrameViewModel> NextFrame => new ObservableCollection<IFrameViewModel>(OnionSkinUtilities.GetAllLayerFramesAtIndex(Layers.ToList(), SelectedFrameIndex + 1));
+        public ObservableCollection<IFrameViewModel> PreviousFrame => new ObservableCollection<IFrameViewModel>(OnionSkinUtilities.GetAllLayerFramesAtIndex(Layers.ToList(), SelectedFrameIndex - 1));
 
         public void UpdateSelectedFrames()
         {
-            var selected = new List<FrameViewModel>();
+            var selected = new List<IFrameViewModel>();
 
             foreach (var layer in Layers)
             {
@@ -144,7 +144,7 @@ namespace AnimationEditorCore.ViewModels
                         selected.Add(frame);
                 }
             }
-            SelectedFrames = new ObservableCollection<FrameViewModel>(selected);
+            SelectedFrames = new ObservableCollection<IFrameViewModel>(selected);
         }
 
         private WorkspaceViewModel _WorkspaceViewModel;
@@ -183,6 +183,28 @@ namespace AnimationEditorCore.ViewModels
             set { _CanvasHeight = value; NotifyPropertyChanged(); }
         }
 
+        public void AddBlankKeyFrameToTimeline(int index, bool updateSelected = true)
+        {
+            foreach (var layer in Layers)
+            {
+                var newFrame = new KeyFrameViewModel(layer, index);
+
+                layer.AddFrameAtIndex(newFrame, index);
+                FrameCount = Math.Max(layer.Frames.Count, FrameCount);
+
+                if (updateSelected)
+                    layer.SelectedFrameIndex = index;
+            }
+
+            if (updateSelected)
+            {
+                if (index <= SelectedFrameIndex)
+                    SelectedFrameIndex++;
+
+                SelectedFrameIndex = index;
+            }
+        }
+
         public void AddBlankFrameToTimeline(int index, bool updateSelected = true)
         {
             foreach (var layer in Layers)
@@ -209,7 +231,7 @@ namespace AnimationEditorCore.ViewModels
         {
             foreach (var frame in SelectedFrames)
             {
-                var newFrame = FrameViewModel.DuplicateFrame(frame, index);
+                var newFrame = frame.Duplicate(index);
 
                 newFrame.LayerViewModel.AddFrameAtIndex(newFrame, index);
                 FrameCount = Math.Max(newFrame.LayerViewModel.Frames.Count, FrameCount);
@@ -233,7 +255,7 @@ namespace AnimationEditorCore.ViewModels
             FrameCount = AnimationUtilities.GetFrameCount(Layers.ToList());
         }
 
-        public FrameViewModel GetActiveFrameAtIndex(int index)
+        public IFrameViewModel GetActiveFrameAtIndex(int index)
         {
             if (IsFrameIndexValid(index))
                 return Layers.ActiveLayer.Frames[index];
@@ -259,10 +281,10 @@ namespace AnimationEditorCore.ViewModels
             {
                 foreach (var layer in Layers)
                 {
-                    FrameViewModel newFrame = null;
+                    KeyFrameViewModel newFrame = null;
                     if (layer.Frames.Count == 0)
                     {
-                        newFrame = new FrameViewModel(layer, 0);
+                        newFrame = new KeyFrameViewModel(layer, 0);
                         layer.AddFrameAtIndex(newFrame, 0);
                         continue;
                     }
@@ -333,7 +355,7 @@ namespace AnimationEditorCore.ViewModels
         {
             Layers = new LayerCollection(this);
             var newLayer = new LayerViewModel(this, 0);
-            var newFrame = new FrameViewModel(newLayer, 0);
+            var newFrame = new KeyFrameViewModel(newLayer, 0);
             newLayer.AddFrameAtIndex(newFrame, 0);
             Layers.AddLayerAtIndex(newLayer, 0);
             FrameCount = AnimationUtilities.GetFrameCount(Layers.ToList());

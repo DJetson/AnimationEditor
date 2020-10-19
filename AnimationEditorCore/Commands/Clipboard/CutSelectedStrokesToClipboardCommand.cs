@@ -19,7 +19,10 @@ namespace AnimationEditorCore.Commands.Clipboard
             if (!(parameter is TimelineViewModel Parameter))
                 return false;
 
-            if (Parameter.Layers.ActiveLayer.Frames[Parameter.SelectedFrameIndex].SelectedStrokes.Count == 0)
+            if (!(Parameter.Layers.ActiveLayer.Frames[Parameter.SelectedFrameIndex] is KeyFrameViewModel keyFrame))
+                return false;
+
+            if (keyFrame.SelectedStrokes.Count == 0)
                 return false;
 
             return true;
@@ -28,10 +31,10 @@ namespace AnimationEditorCore.Commands.Clipboard
         public override void Execute(object parameter)
         {
             var Parameter = parameter as TimelineViewModel;
-
-            var strokes = Parameter.Layers.ActiveLayer.Frames[Parameter.SelectedFrameIndex].SelectedStrokes;
+            var keyFrame = Parameter.Layers.ActiveLayer.Frames[Parameter.SelectedFrameIndex] as KeyFrameViewModel;
+            var strokes = keyFrame.SelectedStrokes;
             InternalClipboard.SetData(strokes);
-            Parameter.Layers.ActiveLayer.Frames[Parameter.SelectedFrameIndex].RemoveStrokes(strokes);
+            keyFrame.RemoveStrokes(strokes);
             //Parameter.PushUndoRecord(Parameter.CreateUndoState("Cut Selected Strokes"));
         }
     }

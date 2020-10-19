@@ -16,7 +16,7 @@
                 </Style>
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.Resources>
-                <DataTemplate DataType="{x:Type ViewModels:FrameViewModel}">
+                <DataTemplate DataType="{x:Type ViewModels:KeyFrameViewModel}">
                     <InkCanvas x:Name="LayerCanvas" Strokes="{Binding StrokeCollection}" Background="{x:Null}" DefaultDrawingAttributes="{Binding DrawingAttributes, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}">
                         <InkCanvas.InputBindings>
                             <KeyBinding Gesture="CTRL+SHIFT+Left" Command="{StaticResource CopySelectedContentsToPreviousFrame}" CommandParameter="{Binding LayerViewModel.TimelineViewModel}"/>

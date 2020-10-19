@@ -19,7 +19,10 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             if (!(parameter is TimelineViewModel Parameter))
                 return false;
 
-            if (Parameter.Layers.ActiveLayer.Frames[Parameter.SelectedFrameIndex].SelectedStrokes.Count == 0)
+            if (!(Parameter.Layers.ActiveLayer.Frames[Parameter.SelectedFrameIndex] is KeyFrameViewModel keyFrame))
+                return false;
+
+            if (keyFrame.SelectedStrokes.Count == 0)
                 return false;
 
             return true;
@@ -30,11 +33,11 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
             var Parameter = parameter as TimelineViewModel;
 
             //var targetLayer = Parameter.GetLayerAtIndex(Parameter.Layers.ActiveLayerIndex + 1);
-            var frame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);
+            var sourceFrame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex) as KeyFrameViewModel;
 
-            StrokeCollection copiedStrokes = new StrokeCollection(frame.SelectedStrokes.Select(e => e.Clone()));
+            StrokeCollection copiedStrokes = new StrokeCollection(sourceFrame.SelectedStrokes.Select(e => e.Clone()));
 
-            frame.RemoveStrokes(frame.SelectedStrokes, false);
+            sourceFrame.RemoveStrokes(sourceFrame.SelectedStrokes, false);
 
             if (!(Parameter.Layers.IsLayerIndexValid(Parameter.Layers.ActiveLayerIndex + 1)))
             {
@@ -46,7 +49,7 @@ namespace AnimationEditorCore.Commands.Timeline.FrameContent
                 Parameter.Layers.ActiveLayer = Parameter.Layers[Parameter.Layers.ActiveLayerIndex + 1];
             }
             //Parameter.Layers.ActiveLayer = Parameter.Layers[Parameter.Layers.ActiveLayerIndex + 1];
-            var copyToFrame = Parameter.GetActiveFrameAtIndex(Parameter.SelectedFrameIndex);
+            var copyToFrame = Parameter.Layers.ActiveLayer.ConvertToKeyFrame(Parameter.SelectedFrameIndex);
 
             copyToFrame.StrokeCollection.Add(copiedStrokes);
             //Reselect the copied Strokes

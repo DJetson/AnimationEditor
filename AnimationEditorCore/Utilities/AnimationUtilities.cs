@@ -71,11 +71,12 @@ namespace AnimationEditorCore.Utilities
                 foreach (var layer in selectedLayers)
                 {
                     //If the current layer contains a frame with the index currently being evaluated...
-                    if (layer.Frames.Select(e => e.Order).Contains(i))
+                    if (layer.Frames.OfType<KeyFrameViewModel>().Select(e => e.Order).Contains(i))
                     {
                         //Add the strokes from the frame at the current index from the current layer to the
                         //flattened stroke collection
-                        flattenedFrameStrokes[i].Add(layer.Frames[i].StrokeCollection);
+                        if (layer.Frames[i] is KeyFrameViewModel keyFrame)
+                            flattenedFrameStrokes[i].Add(keyFrame.StrokeCollection);
                     }
                 }
             }

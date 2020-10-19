@@ -58,7 +58,11 @@
                     </Slider>
                 </Border>
             </Grid>
-            <ListBox Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding Layers.SortedLayers}" SelectedItem="{Binding Layers.ActiveLayer, Mode=TwoWay}">
+            <ListBox Grid.Row="1" 
+                     ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
+                     ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                     ItemsSource="{Binding Layers.SortedLayers}" 
+                     SelectedItem="{Binding Layers.ActiveLayer, Mode=TwoWay}">
                 <ListBox.Resources>
                     <Style TargetType="{x:Type ScrollViewer}">
                         <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -151,7 +155,7 @@
                                 <Button Margin="0,0,0,0" Background="Transparent" Width="25" Height="25" Padding="2" Grid.Column="4" Style="{StaticResource ImageButtonStyle}" Content="{StaticResource DetailsIcon}" Command="{StaticResource OpenLayerProperties}" CommandParameter="{Binding }"/>
                                 <Button Margin="0,0,15,0" Background="Transparent" Width="25" Height="25" Padding="2" Grid.Column="5" Style="{StaticResource ImageButtonStyle}" Content="{StaticResource DeleteIcon}" Command="{StaticResource DeleteLayer}" CommandParameter="{Binding }" />
                             </Grid>
-                            <ListBox x:Name="TimelineListBox" Margin="0,0,16,0" IsHitTestVisible="False" Grid.Column="1" ItemsSource="{Binding Frames}" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                            <ListBox x:Name="TimelineListBox" Margin="0,0,16,0" IsHitTestVisible="True" Grid.Column="1" ItemsSource="{Binding Frames}" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                                 <ListBox.Style>
                                     <Style TargetType="{x:Type ListBox}">
                                         <Style.Setters>
@@ -160,7 +164,7 @@
                                     </Style>
                                 </ListBox.Style>
                                 <ListBox.Resources>
-                                    <DataTemplate DataType="{x:Type ViewModels:FrameViewModel}">
+                                    <DataTemplate DataType="{x:Type ViewModels:KeyFrameViewModel}">
                                         <Border BorderBrush="DarkGray" BorderThickness="1" Margin="0">
                                             <TextBlock Grid.Row="0" FontSize="10" Background="Transparent" FontWeight="Bold" VerticalAlignment="Center" TextAlignment="Center">
                                                 <TextBlock.Style>
@@ -170,7 +174,7 @@
                                                         </Style.Setters>
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding StrokeCollection.Count}" Value="0">
-                                                                <Setter Property="Text" Value=""/>
+                                                                <Setter Property="Text" Value="○"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
