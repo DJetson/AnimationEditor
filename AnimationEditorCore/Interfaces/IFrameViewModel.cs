@@ -4,11 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Controls;
+using System.Windows.Ink;
 
 namespace AnimationEditorCore.Interfaces
 {
     public interface IFrameViewModel
     {
+        StrokeCollection StrokeCollection { get; set; }
         WorkspaceViewModel WorkspaceViewModel { get; set; }
         LayerViewModel LayerViewModel { get; set; }
         int Order { get; set; }

@@ -23,6 +23,7 @@
     <Clipboard:CutSelectedStrokesToClipboardCommand x:Key="CutSelectedStrokesToClipboard" />
     <Clipboard:PasteStrokesFromClipboardCommand x:Key="PasteStrokesFromClipboard" />
 
+    <Frames:AddBlankKeyFrameAfterCurrentCommand x:Key="AddBlankKeyFrameAfterCurrent" />
     <Frames:AddBlankFrameAfterCurrentCommand x:Key="AddBlankFrameAfterCurrent" />
     <Frames:AddBlankFrameBeforeCurrentCommand x:Key="AddBlankFrameBeforeCurrent" />
     <Frames:AddBlankFrameToEndCommand x:Key="AddBlankFrameToEnd" />
@@ -30,7 +31,9 @@
     <Frames:DeleteCurrentFrameCommand x:Key="DeleteCurrentFrame" />
     <Frames:InsertDuplicateFrameAfterCurrentCommand x:Key="InsertDuplicateFrameAfterCurrent" />
     <Frames:InsertDuplicateFrameBeforeCurrentCommand x:Key="InsertDuplicateFrameBeforeCurrent" />
-    
+    <Frames:InsertBlankFrameCommand x:Key="InsertBlankFrame" />
+    <Frames:InsertBlankKeyFrameCommand x:Key="InsertBlankKeyFrame" />
+
     <Layers:AddBlankLayerAboveCurrentCommand x:Key="AddBlankLayerAboveCurrent" />
     <Layers:AddBlankLayerBelowCurrentCommand x:Key="AddBlankLayerBelowCurrent" />
     <Layers:AddDuplicateLayerAboveCurrentCommand x:Key="AddDuplicateLayerAboveCurrent" />

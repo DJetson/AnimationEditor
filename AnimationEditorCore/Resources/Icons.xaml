@@ -23,39 +23,41 @@
         <ResourceDictionary Source="./Icons/EditorTools/SelectIcon.xaml"/>
         <ResourceDictionary Source="./Icons/EditorTools/ZoomIcon.xaml"/>
         <!--Animation Timeline ToolBar Icons-->
-            <!--Animation Content ToolBar Icons-->
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AddBlankLayerAbove.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AddBlankLayerBelow.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AddDuplicateLayerBelow.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AddDuplicateLayerAbove.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AppendAfterLastFrame.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/DuplicateToNext.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/DuplicateToPrevious.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/InsertBeforeFirstFrame.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/InsertNewFrameNext.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/InsertNewFramePrevious.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AddBlankLayerIcon.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AddDuplicateLayer.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/RemoveActiveLayer.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/DuplicateLayerBelowAlt.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/CopySelectedToNextFrame.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/CopySelectedToNextLayer.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/CopySelectedToPreviousFrame.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/CopySelectedToPreviousLayer.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/MoveSelectedToNextFrame.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/MoveSelectedToNextLayer.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/MoveSelectedToPreviousFrame.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/MoveSelectedToPreviousLayer.xaml"/>
+        <!--Animation Content ToolBar Icons-->
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AddBlankLayerAbove.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AddBlankLayerBelow.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AddDuplicateLayerBelow.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AddDuplicateLayerAbove.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AppendAfterLastFrame.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/DuplicateToNext.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/DuplicateToPrevious.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/InsertBeforeFirstFrame.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/InsertNewFrameNext.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/InsertNewFramePrevious.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AddBlankLayerIcon.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/AddDuplicateLayer.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/RemoveActiveLayer.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/DuplicateLayerBelowAlt.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/CopySelectedToNextFrame.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/CopySelectedToNextLayer.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/CopySelectedToPreviousFrame.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/CopySelectedToPreviousLayer.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/MoveSelectedToNextFrame.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/MoveSelectedToNextLayer.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/MoveSelectedToPreviousFrame.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/MoveSelectedToPreviousLayer.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/InsertBlankFrameIcon.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/AnimationContent/InsertBlankKeyFrameIcon.xaml"/>
         <!--Timeline Navigation ToolBar Icons-->
-            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/JumpToFirstFrame.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/JumpToLastFrame.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/NextFrame.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PlayIcon.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PlaybackSpeedHalf.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PlaybackSpeedNormal.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PlaybackSpeedDouble.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PreviousFrame.xaml"/>
-            <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/StopIcon.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/JumpToFirstFrame.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/JumpToLastFrame.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/NextFrame.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PlayIcon.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PlaybackSpeedHalf.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PlaybackSpeedNormal.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PlaybackSpeedDouble.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/PreviousFrame.xaml"/>
+        <ResourceDictionary Source="./Icons/AnimationTimeline/Navigation/StopIcon.xaml"/>
         <!--End of Animation Timeline ToolBar Icons-->
         <!--Layer Navigation Icons-->
         <ResourceDictionary Source="./Icons/LayerNavigation/LayerReorderUp.xaml"/>

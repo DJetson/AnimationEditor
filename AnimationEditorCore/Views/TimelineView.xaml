@@ -182,6 +182,24 @@
                                             </TextBlock>
                                         </Border>
                                     </DataTemplate>
+                                    <DataTemplate DataType="{x:Type ViewModels:FrameViewModel}">
+                                        <Border BorderBrush="DarkGray" BorderThickness="1" Margin="0">
+                                            <!--<TextBlock Grid.Row="0" FontSize="10" Background="Transparent" FontWeight="Bold" VerticalAlignment="Center" TextAlignment="Center">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="{x:Type TextBlock}">-->
+                                                        <!--<Style.Setters>
+                                                            <Setter Property="Text" Value="●"/>
+                                                        </Style.Setters>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding StrokeCollection.Count}" Value="0">
+                                                                <Setter Property="Text" Value="○"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>-->
+                                                    <!--</Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>-->
+                                        </Border>
+                                    </DataTemplate>
                                 </ListBox.Resources>
                                 <ListBox.ItemContainerStyle>
                                     <Style TargetType="{x:Type ListBoxItem}">

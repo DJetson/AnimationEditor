@@ -4,11 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Controls;
+using System.Windows.Ink;
 
 namespace AnimationEditorCore.ViewModels
 {
     public class FrameViewModel : ViewModelBase, IFrameViewModel
     {
+        protected StrokeCollection _StrokeCollection = new StrokeCollection();
+        public virtual StrokeCollection StrokeCollection
+        {
+            get => _StrokeCollection;
+            set { _StrokeCollection = value; NotifyPropertyChanged(); }
+        }
+
         protected WorkspaceViewModel _WorkspaceViewModel;
         public virtual WorkspaceViewModel WorkspaceViewModel
         {
@@ -77,13 +85,19 @@ namespace AnimationEditorCore.ViewModels
 
             Order = model.Order;
             InitializeCommands();
+
+            var precedingKeyFrame = layer.GetPrecedingKeyFrame(this);
+            if (precedingKeyFrame != null)
+                StrokeCollection = precedingKeyFrame.StrokeCollection;
+
+            //StrokeCollection.StrokesChanged += StrokeCollection_StrokesChanged;
         }
 
         public FrameViewModel(LayerViewModel layer, int orderId)
         {
             LayerViewModel = layer;
             Order = orderId;
-         
+
             InitializeCommands();
         }
 

@@ -125,6 +125,19 @@ namespace AnimationEditorCore.ViewModels
             IsActive = originalLayer.IsActive;
         }
 
+        public KeyFrameViewModel GetPrecedingKeyFrame(IFrameViewModel frame)
+        {
+            KeyFrameViewModel nearestPrecedingKeyFrame = null;
+
+            foreach (var precedingKeyFrame in Frames.OfType<KeyFrameViewModel>().Where(e => e.Order < frame.Order))
+            {
+                if (nearestPrecedingKeyFrame == null || precedingKeyFrame.Order > nearestPrecedingKeyFrame.Order)
+                    nearestPrecedingKeyFrame = precedingKeyFrame;
+            }
+
+            return nearestPrecedingKeyFrame;
+        }
+
         public void AddFrameAtIndex(IFrameViewModel frame, int index)
         {
             frame.Order = index;
@@ -144,21 +157,29 @@ namespace AnimationEditorCore.ViewModels
             UpdateFrameOrderIds();
         }
 
-        public void AddFrameAtIndex(FrameViewModel frame, int index)
+        //public void AddFrameAtIndex(FrameViewModel frame, int index)
+        //{
+        //    frame.Order = index;
+        //    if (index < Frames.Count)
+        //    {
+        //        Frames.Insert(index, frame);
+        //    }
+        //    else if (index >= Frames.Count)
+        //    {
+        //        Frames.Add(frame);
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine($"WorkspaceViewModel.InsertFrame ERROR: Attempted to insert a frame at an invalid index = {index}");
+        //    }
+
+        //    UpdateFrameOrderIds();
+        //}
+
+        public void AppendFrame(IFrameViewModel frame)
         {
-            frame.Order = index;
-            if (index < Frames.Count)
-            {
-                Frames.Insert(index, frame);
-            }
-            else if (index >= Frames.Count)
-            {
-                Frames.Add(frame);
-            }
-            else
-            {
-                Console.WriteLine($"WorkspaceViewModel.InsertFrame ERROR: Attempted to insert a frame at an invalid index = {index}");
-            }
+            frame.Order = Frames.Count;
+            Frames.Add(frame);
 
             UpdateFrameOrderIds();
         }
@@ -168,6 +189,16 @@ namespace AnimationEditorCore.ViewModels
             foreach (var frame in Frames)
             {
                 frame.Order = Frames.IndexOf(frame);
+            }
+
+            foreach (var frame in Frames)
+            {
+                if (frame is KeyFrameViewModel)
+                    continue;
+
+                var precedingKeyFrame = GetPrecedingKeyFrame(frame);
+                if (precedingKeyFrame != null)
+                    frame.StrokeCollection = precedingKeyFrame.StrokeCollection;
             }
         }
 
@@ -193,8 +224,16 @@ namespace AnimationEditorCore.ViewModels
             ZIndex = model.LayerId;
             //ArrangedZIndex = model.ArrangedZIndex;
 
-            Frames = new ObservableCollection<IFrameViewModel>(model.Frames.Select(e => new KeyFrameViewModel(e, this)));
+            var frames = new ObservableCollection<IFrameViewModel>();
+            foreach (var frameModel in model.Frames)
+            {
+                if (frameModel.IsKeyFrame)
+                    frames.Add(new KeyFrameViewModel(frameModel, this));
+                else
+                    frames.Add(new FrameViewModel(frameModel, this));
+            }
 
+            Frames = frames;
             SelectedFrameIndex = model.SelectedFrameIndex;
             IsActive = model.IsActive;
         }

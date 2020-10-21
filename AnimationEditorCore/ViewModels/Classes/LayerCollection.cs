@@ -68,7 +68,7 @@ namespace AnimationEditorCore.ViewModels.Classes
 
             for (int i = 0; i < TimelineViewModel.FrameCount; i++)
             {
-                var newFrame = new KeyFrameViewModel(newLayer, i);
+                var newFrame = new FrameViewModel(newLayer, i);
                 newLayer.AddFrameAtIndex(newFrame, i);
             }
             newLayer.SelectedFrameIndex = TimelineViewModel.SelectedFrameIndex;

@@ -65,6 +65,33 @@
                         </InkCanvas.Style>
                     </InkCanvas>
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type ViewModels:FrameViewModel}">
+                    <InkCanvas x:Name="LayerCanvas" Strokes="{Binding StrokeCollection}" Background="{x:Null}" DefaultDrawingAttributes="{Binding DrawingAttributes, Source={x:Static ViewModels:EditorToolsViewModel.Instance}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Loaded">
+                                <i:InvokeCommandAction Command="{Binding LoadedInkCanvas}" CommandParameter="{Binding ElementName=LayerCanvas}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <InkCanvas.CacheMode>
+                            <BitmapCache RenderAtScale="{Binding LayerViewModel.TimelineViewModel.WorkspaceViewModel.ZoomLevel}"/>
+                        </InkCanvas.CacheMode>
+                        <InkCanvas.Style>
+                            <Style TargetType="{x:Type InkCanvas}">
+                                <Style.Setters>
+                                    <Setter Property="EditingMode" Value="None"/>
+                                    <Setter Property="Panel.ZIndex" Value="{Binding LayerViewModel.ZIndex}"/>
+                                    <Setter Property="IsHitTestVisible" Value="False"/>
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </Style.Setters>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding LayerViewModel.IsVisible}" Value="False">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </InkCanvas.Style>
+                    </InkCanvas>
+                </DataTemplate>
             </ItemsControl.Resources>
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>

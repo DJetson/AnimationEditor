@@ -187,7 +187,10 @@ namespace AnimationEditorCore.ViewModels
         {
             foreach (var layer in Layers)
             {
-                var newFrame = new KeyFrameViewModel(layer, index);
+                if (layer == Layers.ActiveLayer)
+                    continue;
+
+                var newFrame = new FrameViewModel(layer, index);
 
                 layer.AddFrameAtIndex(newFrame, index);
                 FrameCount = Math.Max(layer.Frames.Count, FrameCount);
@@ -195,6 +198,13 @@ namespace AnimationEditorCore.ViewModels
                 if (updateSelected)
                     layer.SelectedFrameIndex = index;
             }
+
+            var newKeyFrame = new KeyFrameViewModel(Layers.ActiveLayer, index);
+            Layers.ActiveLayer.AddFrameAtIndex(newKeyFrame, index);
+            FrameCount = Math.Max(Layers.ActiveLayer.Frames.Count, FrameCount);
+
+            if (updateSelected)
+                Layers.ActiveLayer.SelectedFrameIndex = index;
 
             if (updateSelected)
             {
@@ -475,6 +485,50 @@ namespace AnimationEditorCore.ViewModels
             var Memento = state as TimelineState;
 
             CopyToTimeline(Memento.Timeline, this);
+        }
+
+
+
+        public void InsertBlankFrame(LayerViewModel insertIntoLayer, int index)
+        {
+            var newFrame = new FrameViewModel(insertIntoLayer, index);
+
+            Layers.ActiveLayer.AddFrameAtIndex(newFrame, index);
+            FrameCount = Math.Max(Layers.ActiveLayer.Frames.Count, FrameCount);
+
+            PadInactiveLayers();
+
+            foreach (var layer in Layers)
+                layer.SelectedFrameIndex = index;
+
+            SelectedFrameIndex = index;
+
+        }
+
+        public void InsertBlankKeyFrame(LayerViewModel insertIntoLayer, int index)
+        {
+            var newFrame = new KeyFrameViewModel(insertIntoLayer, index);
+
+            Layers.ActiveLayer.AddFrameAtIndex(newFrame, index);
+            FrameCount = Math.Max(Layers.ActiveLayer.Frames.Count, FrameCount);
+
+            PadInactiveLayers();
+
+            foreach (var layer in Layers)
+                layer.SelectedFrameIndex = index;
+
+            SelectedFrameIndex = index;
+        }
+
+        private void PadInactiveLayers()
+        {
+            foreach (var layer in Layers)
+            {
+                while (layer.Frames.Count < Layers.ActiveLayer.Frames.Count)
+                {
+                    layer.AddFrameAtIndex(new FrameViewModel(layer, layer.SelectedFrameIndex), layer.SelectedFrameIndex);
+                }
+            }
         }
     }
 }

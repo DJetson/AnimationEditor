@@ -14,12 +14,12 @@ namespace AnimationEditorCore.ViewModels
 {
     public class KeyFrameViewModel : FrameViewModel, IFrameViewModel
     {
-        private StrokeCollection _StrokeCollection = new StrokeCollection();
-        public StrokeCollection StrokeCollection
-        {
-            get => _StrokeCollection;
-            set { _StrokeCollection = value; NotifyPropertyChanged(); }
-        }
+        //private StrokeCollection _StrokeCollection = new StrokeCollection();
+        //public StrokeCollection StrokeCollection
+        //{
+        //    get => _StrokeCollection;
+        //    set { _StrokeCollection = value; NotifyPropertyChanged(); }
+        //}
 
         private StrokeCollection _SelectedStrokes = new StrokeCollection();
         public StrokeCollection SelectedStrokes

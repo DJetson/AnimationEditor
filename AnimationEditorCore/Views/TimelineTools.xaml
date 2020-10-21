@@ -37,10 +37,13 @@
             <ToolBar>
                 <Button Content="{StaticResource DeleteIcon}" Command="{StaticResource DeleteCurrentFrame}" CommandParameter="{Binding }"/>
                 <Separator/>
-                <Button Content="{StaticResource InsertBeforeFirstFrame}" Command="{StaticResource AddBlankFrameToStart}" CommandParameter="{Binding }"/>
+                <!--<Button Content="{StaticResource InsertBeforeFirstFrame}" Command="{StaticResource AddBlankFrameToStart}" CommandParameter="{Binding }"/>
                 <Button Content="{StaticResource InsertNewFramePrevious}" Command="{StaticResource AddBlankFrameBeforeCurrent}" CommandParameter="{Binding }" />
-                <Button Content="{StaticResource InsertNewFrameNext}" Command="{StaticResource AddBlankFrameAfterCurrent}" CommandParameter="{Binding }"/>
-                <Button Content="{StaticResource AppendAfterLastFrame}" Command="{StaticResource AddBlankFrameToEnd}" CommandParameter="{Binding }" />
+                <Button Content="{StaticResource InsertNewFrameNext}" Command="{StaticResource AddBlankKeyFrameAfterCurrent}" CommandParameter="{Binding }"/>
+                <Button Content="{StaticResource AppendAfterLastFrame}" Command="{StaticResource AddBlankFrameToEnd}" CommandParameter="{Binding }" />-->
+                <Button Content="{StaticResource InsertBlankFrameIcon}" Command="{StaticResource InsertBlankFrame}" CommandParameter="{Binding }" />
+                <Button Content="{StaticResource InsertBlankKeyFrameIcon}" Command="{StaticResource InsertBlankKeyFrame}" CommandParameter="{Binding }" />
+
                 <Separator/>
                 <Button Content="{StaticResource DuplicateToPrevious}" Command="{StaticResource InsertDuplicateFrameBeforeCurrent}" CommandParameter="{Binding }" />
                 <Button Content="{StaticResource DuplicateToNext}" Command="{StaticResource InsertDuplicateFrameAfterCurrent}" CommandParameter="{Binding }"/>

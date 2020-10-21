@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<DrawingBrush x:Key="InsertBlankFrameIcon" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 128,216L 176,168L 80,168L 128,216 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 184,104L 232,104L 232,248L 184,248L 184,104 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 24,104L 72,104L 72,248L 24,248L 24,104 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 104,112L 152,112L 152,152L 104,152L 104,112 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 104,56L 152,56L 152,96L 104,96L 104,56 Z "/>
+					<GeometryDrawing Brush="#FF705FFF" Geometry="F1 M 104,-3.05176e-005L 152,-3.05176e-005L 152,40L 104,40L 104,-3.05176e-005 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+</ResourceDictionary>

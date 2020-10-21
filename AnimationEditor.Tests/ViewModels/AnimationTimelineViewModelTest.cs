@@ -114,7 +114,7 @@ namespace AnimationEditorCore.ViewModels
             var moveSelectedStrokes = new Commands.Timeline.FrameContent.MoveSelectedContentsToNextFrameCommand();
 
             var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
-            var selectedFrame = timeline.Layers.ActiveLayer.Frames[timeline.Layers.ActiveLayer.SelectedFrameIndex];
+            var selectedFrame = timeline.Layers.ActiveLayer.ConvertToKeyFrame(timeline.Layers.ActiveLayer.SelectedFrameIndex);
             selectedFrame.SelectedStrokes = selectedFrame.StrokeCollection;
             Assert.IsTrue(moveSelectedStrokes.CanExecute(workspaceManager.SelectedWorkspace.TimelineViewModel));
 
@@ -137,7 +137,7 @@ namespace AnimationEditorCore.ViewModels
             var moveSelectedStrokes = new Commands.Timeline.FrameContent.MoveSelectedContentsToPreviousFrameCommand();
 
             var timeline = workspaceManager.SelectedWorkspace.TimelineViewModel;
-            var selectedFrame = timeline.Layers.ActiveLayer.Frames[timeline.Layers.ActiveLayer.SelectedFrameIndex];
+            var selectedFrame = timeline.Layers.ActiveLayer.ConvertToKeyFrame(timeline.Layers.ActiveLayer.SelectedFrameIndex);
             selectedFrame.SelectedStrokes = selectedFrame.StrokeCollection;
             Assert.IsTrue(moveSelectedStrokes.CanExecute(workspaceManager.SelectedWorkspace.TimelineViewModel));
 
